@@ -26,10 +26,22 @@
 @import "~@ionic/angular/css/flex-utils.css";
 @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Quicksand:wght@300;400;600&display=swap');
 
-ion-app {
-  --ion-font-family: 'Poppins', sans-serif;
-}
+/* Colors */
+$color-kuis: #12B39A;
+$color-kuisBlack: #303030;
+$color-kuisGray: #D9D9D9;
+$color-kuisOrange: #FF9500;
 
+/* Fonts */
+$font-header: 'Poppins', sans-serif;
+$font-body: 'Quicksand', bold sans-serif;
+
+ion-app {
+  --ion-background-color: #D9D9D9;
+  --ion-toolbar-background: #12B39A;
+  --ion-font-family: $font-header;
+}
 ion-content {
-  --ion-font-family: 'Quicksand', sans-serif;
+  --ion-font-family: $font-body;
+  font-family: $font-body;
 }
