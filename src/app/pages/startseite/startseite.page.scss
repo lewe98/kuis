@@ -1,0 +1,80 @@
+@import 'src/global.scss';
+
+ion-grid {
+  max-width: 812px;
+}
+.card-color-white {
+  background: white;
+}
+
+.button-background {
+  padding: 2vh;
+  width: 100%;
+  height: 100%;
+  background: $color-kuis;
+}
+
+.button-icon {
+  width: 100%;
+  height: 13vh;
+  color: white;
+}
+
+ion-card{
+  border-radius: 20px;
+}
+
+ion-card-title {
+  text-align: center;
+  color: $color-kuisBlack;
+  font-size: 14px;
+  font-weight: 600;
+}
+h1 {
+  color: $color-kuis;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #505050;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+@media screen and (max-height: 691px) {
+  .button-background {
+    padding: 1vh;
+  }
+  .button-icon {
+    height: 12vh;
+  }
+}
+
+@media screen and (max-height: 598px) {
+  .button-background {
+    padding: 1vh;
+  }
+  .button-icon {
+    height: 10vh;
+  }
+}
+
+@media screen and (max-height: 539px) {
+  .button-background {
+    padding: 0;
+  }
+  .button-icon {
+    height: 60px;
+  }
+}
+
+@media screen and (min-height: 539px) {
+  a {
+    width: 100%;
+    position: absolute;
+    transform: translateX(50%);
+    right: 50%;
+    top: 95%
+  }
+}
