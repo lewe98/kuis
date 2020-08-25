@@ -1,3 +1,11 @@
+## Client Documentation
+To review the client documentation run:
+> npm run compodoc
+
+
+#Vorlage
+
+
 ## DoDay - Do it. Today.
 ###### *CS2365 Swift-Programmierung unter iOS - Sommersemester 2020*
 
