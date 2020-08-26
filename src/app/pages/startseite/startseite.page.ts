@@ -12,5 +12,4 @@ export class StartseitePage implements OnInit {
 
     ngOnInit() {
     }
-
 }
