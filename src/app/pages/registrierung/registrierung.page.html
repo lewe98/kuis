@@ -1,9 +1,59 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>registrierung</ion-title>
+    <ion-toolbar color="primary">
+        <ion-title>Registrierung</ion-title>
+
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-list lines="full">
+
+        <ion-item>
+            <ion-label>Nutzername*</ion-label>
+            <ion-input #nutzername type="text" required [(ngModel)]="user.nutzername"></ion-input>
+        </ion-item>
+
+        <!--<p class="ion-text-end ion-padding-end" style="color:var(&#45;&#45;ion-color-danger)" *ngIf="errors.get('nutzername')">
+            {{errors.get('nutzername')}} </p>-->
+
+
+        <ion-item>
+            <ion-label>Email*</ion-label>
+            <ion-input required [(ngModel)]="user.email"></ion-input>
+        </ion-item>
+
+        <!--<p class="ion-text-end ion-padding-end" style="color:var(&#45;&#45;ion-color-danger)" *ngIf="errors.get('email')">
+            {{errors.get('email')}} </p>-->
+
+
+        <ion-item>
+            <ion-label>Passwort*</ion-label>
+            <ion-input type="password" required [(ngModel)]="user.passwort"></ion-input>
+        </ion-item>
+
+        <!--<p class="ion-text-end ion-padding-end" style="color:var(&#45;&#45;ion-color-danger)"
+           *ngIf="errors.get('passwort')">{{errors.get('passwort')}}</p>-->
+
+
+        <!--  <ion-item>
+              <ion-label>Passwort bestätigen*</ion-label>
+              <ion-input type="password" required [(ngModel)]="user.passwort"></ion-input>
+          </ion-item>
+
+          <p class="ion-text-end ion-padding-end" style="color:var(&#45;&#45;ion-color-danger)"
+             *ngIf="errors.get('passwort')">{{errors.get('passwort')}}</p>-->
+
+
+    </ion-list>
+
+    <ion-button class="ion-padding-horizontal" expand="block" (click)="submit()">
+        Registrieren
+    </ion-button>
+
+    <a class="already-registered" (click)="redirectToLogin()">Bereits registriert? Hier einloggen!</a>
+
 
 </ion-content>
