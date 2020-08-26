@@ -29,7 +29,7 @@ const routes: Routes = [
         loadChildren: () =>
             import('./pages/startseite/startseite.module').then((m) => m.StartseitePageModule),
         canActivate: [AuthGuard]
-    }
+    },
 ];
 
 @NgModule({
