@@ -9,5 +9,6 @@ export class NavbarComponent implements OnInit {
   constructor() { }
 
   @Input() name: string;
+  @Input() target;
   ngOnInit() {}
 }
