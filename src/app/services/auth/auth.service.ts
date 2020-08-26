@@ -30,7 +30,9 @@ export class AuthService {
     }
 
     logOut() {
-        this.afAuth.signOut();
+        this.afAuth.signOut().then(r => {
+            this.router.navigate(['/login']);
+        });
         localStorage.removeItem('user');
     }
 }

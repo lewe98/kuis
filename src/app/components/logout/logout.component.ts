@@ -9,15 +9,12 @@ import {Router} from '@angular/router';
 })
 export class LogoutComponent implements OnInit {
 
-  @Input()isSignedInFromLogIn: boolean;
-
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit() {}
 
     handleLogout() {
       this.authService.logOut();
-      this.router.navigate(['/login']);
     }
 
 }
