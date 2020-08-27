@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {User} from '../../models/user';
 import {Observable, Subscription} from 'rxjs';
-import {first, map} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -55,8 +55,16 @@ export class AuthService {
         return copy;
     }
 
-    checkIfLoggedIn() {
-        return this.afAuth.authState.pipe(first());
+    checkIfLoggedIn(): Promise<boolean> {
+        return new Promise<boolean>((resolve) => {
+            this.afAuth.authState.pipe(take(1)).subscribe(user => {
+                if (user) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        });
     }
 
     // CRUD
