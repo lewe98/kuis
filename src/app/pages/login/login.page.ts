@@ -13,7 +13,6 @@ export class LoginPage implements OnInit {
     isOnline: boolean;
     passwordForLogIn: string;
     emailForLogIn: string;
-    isSession: boolean;
 
     errors: Map<string, string> = new Map<string, string>();
 
@@ -25,12 +24,10 @@ export class LoginPage implements OnInit {
     constructor(private router: Router, private authService: AuthService ){
     }
 
-
-
     ngOnInit() {
         this.isOnline = false;
         // If an user is found in Storage
-        this.isOnline = (sessionStorage.getItem('user') !== null) || (localStorage.getItem('user') !== null);
+        this.isOnline = (sessionStorage.getItem('userID') !== null) || (localStorage.getItem('userID') !== null);
         // dont allows to nav to loginpage while log in;
         if (this.isOnline) {
             this.router.navigate(['/startseite']);
@@ -44,14 +41,20 @@ export class LoginPage implements OnInit {
     async login(email: string, password: string) {
         this.errors.clear();
         await this.authService.signIn(email, password).catch((error) => {
-            if (error.code === 'auth/argument-error'){
-                this.errors.set('wrongData', 'password or email should not be empty');
-            } else if (error.code === 'auth/invalid-email'){
-                this.errors.set('wrongData', ' the email adress is not correctly');
-            } else if (error.code === 'auth/user-not-found'){
-                this.errors.set('wrongData', 'email adress is not found in database. Create an Account!');
+            if (error.code === 'auth/invalid-email'){
+                this.errors.set('wrongData', 'Fehlerhaftes Email Format!');
+            }else if (!email && !password) {
+                this.errors.set('wrongData', 'E-Mail und Passwort darf nicht leer sein!');
+            }else if (!email) {
+                this.errors.set('wrongData', 'Email darf nicht leer sein!');
+            }else if (!password) {
+                this.errors.set('wrongData', 'Passwort darf nicht leer sein!');
+            }else if (password.length < 6) {
+                this.errors.set('wrongData', 'Passwort muss mindestens 6 Zeichen lang sein!');
+            }else if (error.code === 'auth/user-not-found'){
+                this.errors.set('wrongData', 'E-Mail oder Passwort wurde falsch eingegeben!');
             } else if (error.code === 'auth/wrong-password') {
-                this.errors.set('wrongData', 'wrong password');
+                this.errors.set('wrongData', 'E-Mail oder Passwort wurde falsch eingegeben!');
             }
         });
         if (this.authService.isLoggedIn) {
