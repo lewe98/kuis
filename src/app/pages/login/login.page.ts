@@ -56,4 +56,10 @@ export class LoginPage implements OnInit {
             this.router.navigate(['/startseite']);
         }
     }
+
+    googleLogin() {
+        this.authService.GoogleAuth().then(() => {
+            this.router.navigate(['/home']);
+        });
+    }
 }

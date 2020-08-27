@@ -5,6 +5,7 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 import {User} from '../../models/user';
 import {Observable, Subscription} from 'rxjs';
 import {map, take} from 'rxjs/operators';
+import {auth} from 'firebase';
 
 @Injectable({
     providedIn: 'root'
@@ -154,6 +155,48 @@ export class AuthService {
             }));
 
             localStorage.setItem('userID', JSON.stringify(res.user.uid));
+        });
+    }
+
+    // GOOGLE LOGIN
+
+    /**
+     * Method to authenticate with google login data
+     */
+    GoogleAuth() {
+        return this.AuthLogin(new auth.GoogleAuthProvider());
+    }
+
+    /**
+     * Method to login a user
+     * If successful, the user object will be overwritten with the user data from the database
+     * @param provider id of a user
+     * @return promise
+     */
+    AuthLogin(provider): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.afAuth.signInWithPopup(provider)
+                .then((result) => {
+                    this.findById(result.user.uid)
+                        .pipe(take(1))
+                        .subscribe((res) => {
+                            if (res.id !== undefined) {
+                                this.subs.push(this.findById(res.id).subscribe((u) => {
+                                    this.user = u;
+                                    resolve();
+                                }));
+                            } else {
+                                this.user = new User(result.user.displayName, result.user.email, '');
+                                this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
+                                this.subs.push(this.findById(result.user.uid).subscribe((user) => {
+                                    this.user = user;
+                                    resolve();
+                                }));
+                            }
+                        });
+                }).catch((error) => {
+                reject(error);
+            });
         });
     }
 }
