@@ -48,6 +48,10 @@ const routes: Routes = [
         redirectTo: 'startseite',
         pathMatch: 'full'
     },
+  {
+    path: 'landing',
+    loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingPageModule)
+  },
 ];
 
 @NgModule({
