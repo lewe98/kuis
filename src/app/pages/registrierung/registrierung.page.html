@@ -56,4 +56,19 @@
     <a class="already-registered" (click)="redirectToLogin()">Bereits registriert? Hier einloggen!</a>
 
 
+<ion-item>
+    <ion-label>E-Mail*</ion-label>
+    <ion-input class="ion-text-end formControl" placeholder="Email-Adress" [(ngModel)]="emailForSignUp" type="text" maxlength="30"
+               required></ion-input>
+</ion-item>
+
+<ion-item>
+    <ion-label>Passwort*</ion-label>
+    <ion-input class="ion-text-end formControl" placeholder="password" [(ngModel)]="passwordForSignUp" type="password" maxlength="30"
+               required></ion-input>
+</ion-item>
+
+<ion-button (click)="signUp(emailForSignUp,passwordForSignUp)">
+    Sign Up
+</ion-button>
 </ion-content>
