@@ -7,13 +7,13 @@
     <ion-content>
         <ion-item>
             <ion-label>E-Mail*</ion-label>
-            <ion-input class="ion-text-end" #email [(ngModel)]="emailForLogIn" type="text" maxlength="30"
+            <ion-input class="ion-text-end" #email placeholder="E-Mail" [(ngModel)]="emailForLogIn" type="text" maxlength="30"
                        required></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label>Passwort*</ion-label>
-            <ion-input class="ion-text-end" #password [(ngModel)]="passwordForLogIn" type="password" maxlength="30"
+            <ion-input class="ion-text-end" #password placeholder="Passwort" [(ngModel)]="passwordForLogIn" type="password" maxlength="30"
                        required></ion-input>
         </ion-item>
         <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"

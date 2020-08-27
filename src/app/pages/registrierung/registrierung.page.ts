@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-registrierung',
@@ -8,25 +9,19 @@ import {AuthService} from '../../services/auth/auth.service';
 })
 export class RegistrierungPage implements OnInit {
 
-    // isSignedIn = false;
     emailForSignUp: string;
     passwordForSignUp: string;
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService, private router: Router) {
     }
 
     ngOnInit() {
-        // if (localStorage.getItem('user') !== null) {
-        //     this.isSignedIn = true;
-        // } else {
-        //     this.isSignedIn = false;
-        // }
     }
 
-    async signUp(email: string, password: string){
-    //     await this.authService.signUp(email, password);
-    //     if (this.authService.isLoggedIn){
-    //         this.isSignedIn = true;
-    //     }
+    signUp(email: string, password: string){
+     this.authService.signUp(email, password).then(() =>
+         this.router.navigate(['/startseite'])
+     );
+
      }
 }
