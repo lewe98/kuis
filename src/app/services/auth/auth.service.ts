@@ -9,14 +9,21 @@ import {AngularFirestore} from '@angular/fire/firestore';
 export class AuthService {
 
     isLoggedIn = false;
+    isSession = false;
 
     constructor(private router: Router, private afs: AngularFirestore, private afAuth: AngularFireAuth) {
+
     }
 
-    async signIn(email: string, password: string){
+    async signIn(email: string, password: string) {
         await this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
             this.isLoggedIn = true;
-            localStorage.setItem('user', JSON.stringify(res.user.uid));
+            console.log(this.isSession);
+            if (!this.isSession) {
+                 sessionStorage.setItem('user', JSON.stringify(res.user.uid));
+            } else {
+                localStorage.setItem('user', JSON.stringify(res.user.uid));
+            }
         });
     }
 
@@ -25,6 +32,7 @@ export class AuthService {
             this.isLoggedIn = false;
             this.router.navigate(['/login']);
         });
+        sessionStorage.removeItem('user');
         localStorage.removeItem('user');
     }
 

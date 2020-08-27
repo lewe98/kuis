@@ -10,14 +10,17 @@ import {IonInput} from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-    isSignedIn: boolean;
+    isOnline: boolean;
     passwordForLogIn: string;
     emailForLogIn: string;
+    isSession: boolean;
 
     errors: Map<string, string> = new Map<string, string>();
 
     @ViewChild('email')
     private email: IonInput;
+
+
 
     constructor(private router: Router, private authService: AuthService ){
     }
@@ -25,11 +28,11 @@ export class LoginPage implements OnInit {
 
 
     ngOnInit() {
-        this.isSignedIn = false;
+        this.isOnline = false;
         // If an user is found in Storage
-        this.isSignedIn = localStorage.getItem('user') !== null;
+        this.isOnline = (sessionStorage.getItem('user') !== null) || (localStorage.getItem('user') !== null);
         // dont allows to nav to loginpage while log in;
-        if (this.isSignedIn) {
+        if (this.isOnline) {
             this.router.navigate(['/startseite']);
         }
     }
@@ -52,8 +55,12 @@ export class LoginPage implements OnInit {
             }
         });
         if (this.authService.isLoggedIn) {
-            this.isSignedIn = true;
+            this.isOnline = true;
             this.router.navigate(['/startseite']);
         }
+    }
+    toggleSession(){
+        this.authService.isSession = !this.authService.isSession;
+        console.log(this.authService.isSession);
     }
 }
