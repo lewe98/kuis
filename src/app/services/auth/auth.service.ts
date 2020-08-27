@@ -56,6 +56,10 @@ export class AuthService {
         return copy;
     }
 
+    /**
+     * Method to check whether a user is logged in or not
+     * @return Promise true, if logged in
+     */
     checkIfLoggedIn(): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
             this.afAuth.authState.pipe(take(1)).subscribe(user => {
@@ -80,7 +84,7 @@ export class AuthService {
     /**
      * Method to find a user by id
      * @param id id of a user
-     * @return promise
+     * @return Observable<User> user that was found
      */
     findById(id): Observable<User> {
         const changeAction = this.userCollection.doc<User>(id);
@@ -104,7 +108,7 @@ export class AuthService {
     }
 
     /**
-     * Method to delete a user
+     * Method to delete a user in the database
      * @param user user to be deleted
      */
     delete(user: User): void {
@@ -113,7 +117,11 @@ export class AuthService {
     }
 
     // LOGIN
-
+    /**
+     * Method to sign in a user
+     * @param email user's email
+     * @param password user's password
+     */
     async signIn(email: string, password: string) {
         // await this.afAuth.signInWithEmailAndPassword(email, bcrypt.hashSync(password, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
@@ -128,6 +136,9 @@ export class AuthService {
         });
     }
 
+    /**
+     * Method to sign out a user
+     */
     logOut() {
         this.afAuth.signOut().then(() => {
             this.isLoggedIn = false;
@@ -142,7 +153,12 @@ export class AuthService {
     }
 
     // REGISTER
-
+    /**
+     * Method to sign up a user
+     * @param nutzername user's username
+     * @param email user's email
+     * @param passwort user's password
+     */
     async signUp(nutzername: string, email: string, passwort: string) {
         // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
@@ -161,17 +177,16 @@ export class AuthService {
     // GOOGLE LOGIN
 
     /**
-     * Method to authenticate with google login data
+     * Method to provide a google authentication provider
      */
     GoogleAuth() {
         return this.AuthLogin(new auth.GoogleAuthProvider());
     }
 
     /**
-     * Method to login a user
-     * If successful, the user object will be overwritten with the user data from the database
-     * @param provider id of a user
-     * @return promise
+     * Method to authenticate with google login credentials
+     * @param provider google authentication provider
+     * @return Promise resolves, if user could be logged in
      */
     AuthLogin(provider): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -181,10 +196,11 @@ export class AuthService {
                         .pipe(take(1))
                         .subscribe((res) => {
                             if (res.id !== undefined) {
-                                this.subs.push(this.findById(res.id).subscribe((u) => {
-                                    this.user = u;
-                                    resolve();
-                                }));
+                                this.subs.push(this.findById(res.id)
+                                    .subscribe((u) => {
+                                        this.user = u;
+                                        resolve();
+                                    }));
                             } else {
                                 this.user = new User(result.user.displayName, result.user.email, '');
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
