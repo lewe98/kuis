@@ -3,15 +3,16 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {User} from '../../models/user';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable, Subscription} from 'rxjs';
+import {first, map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    user: Observable<User>;
+    subs: Subscription[] = [];
+    user: User;
     isLoggedIn = false;
     userCollection: AngularFirestoreCollection<User>;
 
@@ -19,6 +20,16 @@ export class AuthService {
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth) {
         this.userCollection = afs.collection<User>('users');
+
+        if (this.checkIfLoggedIn()) {
+            this.afAuth.authState.subscribe(user => {
+                if (user) {
+                    this.subs.push(this.findById(user.uid).subscribe(u => {
+                        this.user = u;
+                    }));
+                }
+            });
+        }
     }
 
     // COPY AND PREPARE
@@ -42,6 +53,10 @@ export class AuthService {
         copy.importierteModule = copy.importierteModule || null;
 
         return copy;
+    }
+
+    checkIfLoggedIn() {
+        return this.afAuth.authState.pipe(first());
     }
 
     // CRUD
@@ -96,9 +111,9 @@ export class AuthService {
 
             this.isLoggedIn = true;
 
-            this.user = this.findById(res.user.uid);
-
-            alert(JSON.stringify(this.user));
+            this.subs.push(this.findById(res.user.uid).subscribe(u => {
+                this.user = u;
+            }));
 
             localStorage.setItem('userID', JSON.stringify(res.user.uid));
         });
@@ -107,7 +122,11 @@ export class AuthService {
     logOut() {
         this.afAuth.signOut().then(() => {
             this.isLoggedIn = false;
-
+            this.subs.forEach((sub) => {
+                if (sub) {
+                    sub.unsubscribe();
+                }
+            });
             this.router.navigate(['/login']);
         });
         localStorage.removeItem('userID');
@@ -121,7 +140,10 @@ export class AuthService {
             this.isLoggedIn = true;
 
             this.persist(new User(nutzername, email, passwort), res.user.uid);
-            this.user = this.findById(res.user.uid);
+
+            this.subs.push(this.findById(res.user.uid).subscribe(u => {
+                this.user = u;
+            }));
 
             localStorage.setItem('userID', JSON.stringify(res.user.uid));
         });
