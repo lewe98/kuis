@@ -1,15 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {AuthService} from '../../services/auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.page.html',
-  styleUrls: ['./landing.page.scss'],
+    selector: 'app-landing',
+    templateUrl: './landing.page.html',
+    styleUrls: ['./landing.page.scss'],
 })
-export class LandingPage implements OnInit {
+export class LandingPage {
 
-  constructor() { }
+    slideOpts = {
+        initialSlide: 1,
+        speed: 400
+    };
 
-  ngOnInit() {
-  }
+    constructor(private authService: AuthService, private router: Router) {
+    }
+
+    redirectToLogin() {
+        this.router.navigate(['/login']);
+    }
+
+    redirectToRegister() {
+        this.router.navigate(['/registrierung']);
+    }
+
+    googleLogin() {
+        this.authService.GoogleAuth().then(() => {
+            this.router.navigate(['/home']);
+        });
+    }
 
 }
