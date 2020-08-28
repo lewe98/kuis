@@ -25,11 +25,9 @@ export class AuthService {
     }
 
     // COPY AND PREPARE
-
     private static copyAndPrepare(user: User): User {
         const copy = {...user};
         delete copy.id;
-
 
         copy.nutzername = copy.nutzername || null;
         copy.email = copy.email || null;
@@ -46,8 +44,8 @@ export class AuthService {
 
         return copy;
     }
-    // CRUD
 
+    // CRUD
     /**
      * Method to persist the user's data in the database
      */
@@ -85,7 +83,7 @@ export class AuthService {
      * Method to delete a user in the database
      * @param user user to be deleted
      */
-    delete(user: User): void {
+    delete(user: User) {
         this.userCollection.doc(user.id).delete();
         this.logOut();
     }
@@ -101,11 +99,19 @@ export class AuthService {
         await this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
             this.isLoggedIn = true;
             if (!this.isSession) {
-                 sessionStorage.setItem('user', JSON.stringify(res.user.uid));
+                sessionStorage.setItem('userID', JSON.stringify(res.user.uid));
             } else {
-                localStorage.setItem('user', JSON.stringify(res.user.uid));
+                localStorage.setItem('userID', JSON.stringify(res.user.uid));
             }
         });
+    }
+
+    /**
+     * Method to check whether a user is logged in or not
+     * @return boolean true, if logged in (ID stored in local storage / session storage)
+     */
+    checkIfLoggedIn(): boolean {
+        return !!localStorage.getItem('userID') || !!sessionStorage.getItem('userID');
     }
 
     /**
@@ -114,6 +120,13 @@ export class AuthService {
     logOut() {
         this.afAuth.signOut().then(() => {
             this.isLoggedIn = false;
+
+            this.subs.forEach((sub) => {
+                if (sub) {
+                    sub.unsubscribe();
+                }
+            });
+
             this.router.navigate(['/login']);
         });
         sessionStorage.removeItem('userID');
@@ -128,6 +141,7 @@ export class AuthService {
      * @param passwort user's password
      */
     async signUp(nutzername: string, email: string, passwort: string) {
+        // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
             this.isLoggedIn = true;
 
@@ -165,15 +179,18 @@ export class AuthService {
                                 this.subs.push(this.findById(res.id)
                                     .subscribe((u) => {
                                         this.user = u;
+                                        sessionStorage.setItem('userID', JSON.stringify(u.id));
                                         resolve();
                                     }));
                             } else {
                                 this.user = new User(result.user.displayName, result.user.email, '');
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
-                                this.subs.push(this.findById(result.user.uid).subscribe((user) => {
-                                    this.user = user;
-                                    resolve();
-                                }));
+                                this.subs.push(this.findById(result.user.uid)
+                                    .subscribe((u) => {
+                                        this.user = u;
+                                        sessionStorage.setItem('userID', JSON.stringify(u.id));
+                                        resolve();
+                                    }));
                             }
                         });
                 }).catch((error) => {
