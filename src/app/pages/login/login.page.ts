@@ -19,10 +19,10 @@ export class LoginPage implements OnInit {
     @ViewChild('email')
     private email: IonInput;
 
-
-
     constructor(private router: Router, private authService: AuthService ){
     }
+
+
 
     ngOnInit() {
         this.isOnline = false;
@@ -65,5 +65,11 @@ export class LoginPage implements OnInit {
     toggleSession(){
         this.authService.isSession = !this.authService.isSession;
         console.log(this.authService.isSession);
+    }
+
+    googleLogin() {
+        this.authService.GoogleAuth().then(() => {
+            this.router.navigate(['/home']);
+        });
     }
 }

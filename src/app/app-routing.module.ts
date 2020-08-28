@@ -18,7 +18,40 @@ const routes: Routes = [
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'
-    }
+    },
+    {
+        path: 'lernmodus',
+        loadChildren: () => import('./pages/lernmodus/lernmodus.module').then(m => m.LernmodusPageModule)
+    },
+    {
+        path: 'moduluebersicht',
+        loadChildren: () => import('./pages/moduluebersicht/moduluebersicht.module').then(m => m.ModuluebersichtPageModule)
+    },
+    {
+        path: 'statistik',
+        loadChildren: () => import('./pages/statistik/statistik.module').then(m => m.StatistikPageModule)
+    },
+    {
+        path: 'abzeichen',
+        loadChildren: () => import('./pages/abzeichen/abzeichen.module').then(m => m.AbzeichenPageModule)
+    },
+    {
+        path: 'profil',
+        loadChildren: () => import('./pages/profil/profil.module').then(m => m.ProfilPageModule)
+    },
+    {
+        path: 'hilfe',
+        loadChildren: () => import('./pages/hilfe/hilfe.module').then(m => m.HilfePageModule)
+    },
+    {
+        path: '**',
+        redirectTo: 'startseite',
+        pathMatch: 'full'
+    },
+  {
+    path: 'landing',
+    loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingPageModule)
+  },
 ];
 
 @NgModule({
