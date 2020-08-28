@@ -15,22 +15,13 @@ export class AuthService {
     subs: Subscription[] = [];
     user: User;
     isLoggedIn = false;
+    isSession = false;
     userCollection: AngularFirestoreCollection<User>;
 
     constructor(private router: Router,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth) {
         this.userCollection = afs.collection<User>('users');
-
-        if (this.checkIfLoggedIn()) {
-            this.afAuth.authState.subscribe(user => {
-                if (user) {
-                    this.subs.push(this.findById(user.uid).subscribe(u => {
-                        this.user = u;
-                    }));
-                }
-            });
-        }
     }
 
     // COPY AND PREPARE
@@ -55,23 +46,6 @@ export class AuthService {
 
         return copy;
     }
-
-    /**
-     * Method to check whether a user is logged in or not
-     * @return Promise true, if logged in
-     */
-    checkIfLoggedIn(): Promise<boolean> {
-        return new Promise<boolean>((resolve) => {
-            this.afAuth.authState.pipe(take(1)).subscribe(user => {
-                if (user) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
-            });
-        });
-    }
-
     // CRUD
 
     /**
@@ -125,14 +99,12 @@ export class AuthService {
     async signIn(email: string, password: string) {
         // await this.afAuth.signInWithEmailAndPassword(email, bcrypt.hashSync(password, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
-
             this.isLoggedIn = true;
-
-            this.subs.push(this.findById(res.user.uid).subscribe(u => {
-                this.user = u;
-            }));
-
-            localStorage.setItem('userID', JSON.stringify(res.user.uid));
+            if (!this.isSession) {
+                 sessionStorage.setItem('user', JSON.stringify(res.user.uid));
+            } else {
+                localStorage.setItem('user', JSON.stringify(res.user.uid));
+            }
         });
     }
 
@@ -142,13 +114,9 @@ export class AuthService {
     logOut() {
         this.afAuth.signOut().then(() => {
             this.isLoggedIn = false;
-            this.subs.forEach((sub) => {
-                if (sub) {
-                    sub.unsubscribe();
-                }
-            });
             this.router.navigate(['/login']);
         });
+        sessionStorage.removeItem('userID');
         localStorage.removeItem('userID');
     }
 
@@ -160,7 +128,6 @@ export class AuthService {
      * @param passwort user's password
      */
     async signUp(nutzername: string, email: string, passwort: string) {
-        // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
             this.isLoggedIn = true;
 
@@ -169,7 +136,6 @@ export class AuthService {
             this.subs.push(this.findById(res.user.uid).subscribe(u => {
                 this.user = u;
             }));
-
             localStorage.setItem('userID', JSON.stringify(res.user.uid));
         });
     }
