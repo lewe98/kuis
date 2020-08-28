@@ -185,6 +185,7 @@ export class AuthService {
                                     .subscribe((u) => {
                                         this.user = u;
                                         sessionStorage.setItem('userID', JSON.stringify(u.id));
+                                        this.router.navigate(['/startseite']);
                                         resolve();
                                     }));
                             } else {
@@ -194,6 +195,7 @@ export class AuthService {
                                     .subscribe((u) => {
                                         this.user = u;
                                         sessionStorage.setItem('userID', JSON.stringify(u.id));
+                                        this.router.navigate(['/startseite']);
                                         resolve();
                                     }));
                             }

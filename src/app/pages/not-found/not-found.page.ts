@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-not-found',
-  templateUrl: './not-found.page.html',
-  styleUrls: ['./not-found.page.scss'],
+    selector: 'app-not-found',
+    templateUrl: './not-found.page.html',
+    styleUrls: ['./not-found.page.scss'],
 })
-export class NotFoundPage implements OnInit {
+export class NotFoundPage {
 
-  constructor() { }
+    constructor(private router: Router) {
+    }
 
-  ngOnInit() {
-  }
-
+    redirectToHomepage() {
+        this.router.navigate(['/landing']);
+    }
 }

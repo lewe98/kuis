@@ -1,35 +1,35 @@
-<ion-header>
-        <app-navbar name="Landing" [showLogout]="false"></app-navbar>
-</ion-header>
+<app-navbar name="Login" [showLogout]="false"></app-navbar>
 
-    <ion-content>
-        <ion-item>
-            <ion-label>E-Mail*</ion-label>
-            <ion-input class="ion-text-end" #email placeholder="E-Mail" [(ngModel)]="emailForLogIn" type="text" maxlength="30"
-                       required></ion-input>
-        </ion-item>
+<ion-content>
+    <ion-item>
+        <ion-label>E-Mail*</ion-label>
+        <ion-input class="ion-text-end" #email placeholder="E-Mail" [(ngModel)]="emailForLogIn" type="text"
+                   maxlength="30"
+                   required></ion-input>
+    </ion-item>
 
-        <ion-item>
-            <ion-label>Passwort*</ion-label>
-            <ion-input class="ion-text-end" #password placeholder="Passwort" [(ngModel)]="passwordForLogIn" type="password" maxlength="30"
-                       required></ion-input>
-        </ion-item>
-        <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-           *ngIf="errors.get('wrongData')"> {{errors.get('wrongData')}}</p>
-        <ion-button (click)="login(emailForLogIn,passwordForLogIn)">
-            login
-        </ion-button>
-        <ion-item>
-            <ion-label> Eingeloggt bleiben?</ion-label>
-            <ion-checkbox slot="end" (click)="toggleSession()"></ion-checkbox>
-        </ion-item>
+    <ion-item>
+        <ion-label>Passwort*</ion-label>
+        <ion-input class="ion-text-end" #password placeholder="Passwort" [(ngModel)]="passwordForLogIn" type="password"
+                   maxlength="30"
+                   required></ion-input>
+    </ion-item>
+    <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+       *ngIf="errors.get('wrongData')"> {{errors.get('wrongData')}}</p>
+    <ion-button (click)="login(emailForLogIn,passwordForLogIn)">
+        login
+    </ion-button>
+    <ion-item>
+        <ion-label> Eingeloggt bleiben?</ion-label>
+        <ion-checkbox slot="end" (click)="toggleSession()"></ion-checkbox>
+    </ion-item>
 
-        <ion-button (click)="googleLogin()">
-            <ion-icon name="logo-google"></ion-icon>
-        </ion-button>
+    <ion-button (click)="googleLogin()">
+        <ion-icon name="logo-google"></ion-icon>
+    </ion-button>
 
-        <p> Noch keinen Account? Dann registriere dich <a [routerLink]="['/registrierung']">
-            hier!</a>.</p>
-    </ion-content>
+    <p> Noch keinen Account? Dann registriere dich <a [routerLink]="['/registrierung']">
+        hier!</a>.</p>
+</ion-content>
 
 

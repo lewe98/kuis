@@ -4,13 +4,15 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {RegistrierungPageRoutingModule} from './registrierung-routing.module';
 import {RegistrierungPage} from './registrierung.page';
+import {LandingPageModule} from '../landing/landing.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        RegistrierungPageRoutingModule
+        RegistrierungPageRoutingModule,
+        LandingPageModule
     ],
     declarations: [RegistrierungPage]
 })
