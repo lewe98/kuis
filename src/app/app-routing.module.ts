@@ -1,64 +1,77 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from './services/auth/auth.guard';
 
 const routes: Routes = [
     {
-        path: 'login',
-        loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+        path: '',
+        redirectTo: 'landing',
+        pathMatch: 'full'
     },
     {
-        path: 'startseite',
-        loadChildren: () => import('./pages/startseite/startseite.module').then(m => m.StartseitePageModule)
+        path: 'landing',
+        loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingPageModule)
+    },
+    {
+        path: 'login',
+        loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
     },
     {
         path: 'registrierung',
         loadChildren: () => import('./pages/registrierung/registrierung.module').then(m => m.RegistrierungPageModule)
     },
     {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
+        path: 'startseite',
+        loadChildren: () => import('./pages/startseite/startseite.module').then(m => m.StartseitePageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'lernmodus',
-        loadChildren: () => import('./pages/lernmodus/lernmodus.module').then(m => m.LernmodusPageModule)
+        loadChildren: () => import('./pages/lernmodus/lernmodus.module').then(m => m.LernmodusPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'moduluebersicht',
-        loadChildren: () => import('./pages/moduluebersicht/moduluebersicht.module').then(m => m.ModuluebersichtPageModule)
+        loadChildren: () => import('./pages/moduluebersicht/moduluebersicht.module').then(m => m.ModuluebersichtPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'statistik',
-        loadChildren: () => import('./pages/statistik/statistik.module').then(m => m.StatistikPageModule)
+        loadChildren: () => import('./pages/statistik/statistik.module').then(m => m.StatistikPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'abzeichen',
-        loadChildren: () => import('./pages/abzeichen/abzeichen.module').then(m => m.AbzeichenPageModule)
+        loadChildren: () => import('./pages/abzeichen/abzeichen.module').then(m => m.AbzeichenPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'profil',
-        loadChildren: () => import('./pages/profil/profil.module').then(m => m.ProfilPageModule)
+        loadChildren: () => import('./pages/profil/profil.module').then(m => m.ProfilPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'hilfe',
-        loadChildren: () => import('./pages/hilfe/hilfe.module').then(m => m.HilfePageModule)
+        loadChildren: () => import('./pages/hilfe/hilfe.module').then(m => m.HilfePageModule),
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'not-found',
+        loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundPageModule)
     },
     {
         path: '**',
-        redirectTo: 'startseite',
+        redirectTo: 'not-found',
         pathMatch: 'full'
-    },
-  {
-    path: 'landing',
-    loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingPageModule)
-  },
+    }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
     ],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [AuthGuard]
 })
 export class AppRoutingModule {
 }

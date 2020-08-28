@@ -57,7 +57,7 @@ export class RegistrierungPage implements ViewDidEnter {
     }
 
     redirectToLogin() {
-        this.router.navigate(['login']);
+        this.router.navigate(['/login']);
     }
 
     ionViewDidEnter() {
