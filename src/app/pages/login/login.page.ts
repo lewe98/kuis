@@ -22,8 +22,6 @@ export class LoginPage implements OnInit {
     constructor(private router: Router, private authService: AuthService ){
     }
 
-
-
     ngOnInit() {
         this.isOnline = false;
         // If an user is found in Storage
