@@ -9,6 +9,8 @@ export class NavbarComponent implements OnInit {
   constructor() { }
 
   @Input() name: string;
-  @Input() target;
+  @Input() showLogout: boolean;
   ngOnInit() {}
+
+
 }
