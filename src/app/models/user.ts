@@ -5,13 +5,14 @@ export class User {
     public id: string;
     public nutzername: string;
     public email: string;
-    public emailBestaetigt: boolean;
     public passwort: string;
+
+    public emailBestaetigt: boolean;
     public isOnboarded: boolean;
     public abzeichen: string[];
     public statistik: Statistik;
     public importierteModule: Modul[];
-/*
+
     constructor(nutzername: string,
                 email: string,
                 passwort: string) {
@@ -19,10 +20,10 @@ export class User {
         this.email = email;
         this.passwort = passwort;
 
-        this.isOnboarded = false;
-        this.statistik = new Statistik();
         this.emailBestaetigt = false;
+        this.isOnboarded = false;
+        // this.statistik = new Statistik();
         this.abzeichen = [];
         this.importierteModule = [];
-    }*/
+    }
 }

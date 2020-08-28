@@ -21,9 +21,17 @@
         <ion-button (click)="login(emailForLogIn,passwordForLogIn)">
             login
         </ion-button>
+        <ion-item>
+            <ion-label> Eingelogt bleiben?</ion-label>
+            <ion-checkbox slot="end" (click)="toggleSession()"></ion-checkbox>
+        </ion-item>
 
-        <p> Noch kein Account? Dann Registrier Dich <a [routerLink]="['/registrierung']">
-            hier</a>.</p>
+        <ion-button (click)="googleLogin()">
+            <ion-icon name="logo-google"></ion-icon>
+        </ion-button>
+
+        <p> Noch keinen Account? Dann registriere dich <a [routerLink]="['/registrierung']">
+            hier!</a>.</p>
     </ion-content>
 
 
