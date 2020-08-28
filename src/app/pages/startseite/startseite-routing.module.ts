@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {StartseitePage} from './startseite.page';
 import {LogoutComponent} from '../../components/logout/logout.component';
+import {IonicModule} from '@ionic/angular';
 
 const routes: Routes = [
     {
@@ -12,7 +13,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(routes), IonicModule],
     exports: [RouterModule, LogoutComponent],
     declarations: [
         LogoutComponent

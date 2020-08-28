@@ -34,14 +34,22 @@ $color-kuisOrange: #FF9500;
 
 /* Fonts */
 $font-header: 'Poppins', sans-serif;
-$font-body: 'Quicksand', bold sans-serif;
+$font-body: 'Quicksand', sans-serif bold;
 
 ion-app {
   --ion-background-color: #D9D9D9;
   --ion-toolbar-background: #12B39A;
+  --ion-text-color: #FFFF;
   --ion-font-family: $font-header;
 }
+
 ion-content {
   --ion-font-family: $font-body;
   font-family: $font-body;
+  --ion-text-color: #303030;
 }
+
+ion-back-button {
+  color: white;
+}
+

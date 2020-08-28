@@ -7,13 +7,17 @@ import {IonicModule} from '@ionic/angular';
 import {LoginPageRoutingModule} from './login-routing.module';
 
 import {LoginPage} from './login.page';
+import {LandingPageRoutingModule} from '../landing/landing-routing.module';
+import {LandingPageModule} from '../landing/landing.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        LoginPageRoutingModule
+        LoginPageRoutingModule,
+        LandingPageRoutingModule,
+        LandingPageModule
     ],
     declarations: [LoginPage]
 })
