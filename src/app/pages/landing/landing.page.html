@@ -1,29 +1,43 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>landing</ion-title>
-    </ion-toolbar>
-</ion-header>
+<ion-content force-overscroll="false" class="landing-page bg-gradient">
 
-<ion-content>
+    <div class="vertical-layout">
+        <div class="ion-padding slider">
+            <ion-slides pager="true" [options]="slidesOptions" #slideWithNav>
+                <ion-slide *ngFor="let s of sliderOne.slidesItems">
+                    <ion-grid>
+                        <ion-row>
+                            <app-aspect-ratio class="center" [ratio]="{w:3, h:4}">
+                                <img class="image" [src]="s.path" [alt]="'about the app...'">
+                            </app-aspect-ratio>
+                        </ion-row>
 
-    <ion-slides pager="true" [options]="slideOpts">
-        <ion-slide>
-            <h1>Pimmel</h1>
-        </ion-slide>
-        <ion-slide>
-            <h1>hallo</h1>
-        </ion-slide>
-        <ion-slide>
-            <h1>Penis</h1>
-        </ion-slide>
-    </ion-slides>
+                        <ion-row class="bottom-row">
+                            <span class="slide-text">{{s.text}}</span>
+                        </ion-row>
+                    </ion-grid>
+                </ion-slide>
+            </ion-slides>
 
+        </div>
 
-    <ion-button (click)="redirectToLogin()">Login</ion-button>
-    <ion-button (click)="redirectToRegister()">Registrieren</ion-button>
+        <div class="section-buttons ion-padding">
+            <ion-button expand="block" fill="outline" shape="round"
+                        class="button-landing" [routerLink]="['/registrierung']">
+                REGISTRIEREN
+            </ion-button>
 
-    <ion-button (click)="googleLogin()">
-        <ion-icon name="logo-google"></ion-icon>
-    </ion-button>
+            <ion-button expand="block" fill="outline" shape="round" class="button-landing"
+                        [routerLink]="['/login']">
+                EINLOGGEN
+            </ion-button>
 
+            <ion-button expand="block" fill="outline" shape="round" class="button-landing"
+                        (click)="googleLogin()">
+                LOGIN MIT&nbsp;
+                <ion-icon name="logo-google"></ion-icon>
+                OOGLE
+            </ion-button>
+
+        </div>
+    </div>
 </ion-content>
