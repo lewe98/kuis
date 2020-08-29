@@ -14,7 +14,8 @@ export class LandingPage {
         speed: 400
     };
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private authService: AuthService,
+                private router: Router) {
     }
 
     redirectToLogin() {
@@ -27,7 +28,7 @@ export class LandingPage {
 
     googleLogin() {
         this.authService.GoogleAuth().then(() => {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/startseite']);
         });
     }
 

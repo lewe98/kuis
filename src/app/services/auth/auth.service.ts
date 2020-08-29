@@ -88,7 +88,7 @@ export class AuthService {
         this.logOut();
     }
 
-    // LOGIN
+    // LOGIN / LOGOUT
     /**
      * Method to sign in a user
      * @param email user's email
@@ -160,7 +160,6 @@ export class AuthService {
     }
 
     // GOOGLE LOGIN
-
     /**
      * Method to provide a google authentication provider
      */
@@ -181,21 +180,25 @@ export class AuthService {
                         .pipe(take(1))
                         .subscribe((res) => {
                             if (res.id !== undefined) {
+
+                                this.isLoggedIn = true;
+                                sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
+
                                 this.subs.push(this.findById(res.id)
                                     .subscribe((u) => {
                                         this.user = u;
-                                        sessionStorage.setItem('userID', JSON.stringify(u.id));
-                                        this.router.navigate(['/startseite']);
                                         resolve();
                                     }));
                             } else {
                                 this.user = new User(result.user.displayName, result.user.email, '');
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
+
+                                this.isLoggedIn = true;
+                                sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
+
                                 this.subs.push(this.findById(result.user.uid)
                                     .subscribe((u) => {
                                         this.user = u;
-                                        sessionStorage.setItem('userID', JSON.stringify(u.id));
-                                        this.router.navigate(['/startseite']);
                                         resolve();
                                     }));
                             }
