@@ -1,59 +1,71 @@
 <app-navbar name="Registrierung" [showLogout]="false"></app-navbar>
 
 <ion-content>
-    <ion-list lines="full">
+    <ng-container>
+        <ion-list lines="full">
 
-        <ion-item>
-            <ion-label>Nutzername*</ion-label>
-            <ion-input #focus class="ion-text-end formControl" placeholder="Nutzername..." [(ngModel)]="nutzername"
-                       type="text"
-                       required></ion-input>
-        </ion-item>
+            <ion-item>
+                <ion-label>Nutzername*</ion-label>
+                <ion-input #focus class="ion-text-end formControl" placeholder="Nutzername..." [(ngModel)]="nutzername"
+                           type="text"
+                           required></ion-input>
+            </ion-item>
 
-        <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)" *ngIf="errors.get('nutzername')">
-            {{errors.get('nutzername')}} </p>
-
-
-        <ion-item>
-            <ion-label>E-Mail*</ion-label>
-            <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="email" type="email"
-                       required></ion-input>
-        </ion-item>
-
-        <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)" *ngIf="errors.get('email')">
-            {{errors.get('email')}} </p>
+            <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('nutzername')">
+                {{errors.get('nutzername')}} </p>
 
 
-        <ion-item>
-            <ion-label>Passwort*</ion-label>
-            <ion-input class="ion-text-end formControl" placeholder="Passwort..." [(ngModel)]="passwort" type="password"
-                       required></ion-input>
-        </ion-item>
+            <ion-item>
+                <ion-label>E-Mail*</ion-label>
+                <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="email" type="email"
+                           required></ion-input>
+            </ion-item>
 
-        <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)" *ngIf="errors.get('passwort')">
-            {{errors.get('passwort')}} </p>
-
-
-        <ion-item>
-            <ion-label>Passwort bestätigen*</ion-label>
-            <ion-input class="ion-text-end formControl" placeholder="Passwort bestätigen..."
-                       [(ngModel)]="passwortConfirm" type="password"
-                       required></ion-input>
-        </ion-item>
-
-        <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-           *ngIf="errors.get('passwortConfirm')">
-            {{errors.get('passwortConfirm')}} </p>
-
-    </ion-list>
+            <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)" *ngIf="errors.get('email')">
+                {{errors.get('email')}} </p>
 
 
-    <ion-button class="ion-padding-horizontal" expand="block" (click)="signUp(nutzername, email, passwort)">
-        Registrieren
-    </ion-button>
+            <ion-item>
+                <ion-label>Passwort*</ion-label>
+                <ion-input class="ion-text-end formControl" placeholder="Passwort..." [(ngModel)]="passwort"
+                           type="password"
+                           required></ion-input>
+            </ion-item>
 
+            <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('passwort')">
+                {{errors.get('passwort')}} </p>
+
+
+            <ion-item>
+                <ion-label>Passwort bestätigen*</ion-label>
+                <ion-input class="ion-text-end formControl" placeholder="Passwort bestätigen..."
+                           [(ngModel)]="passwortConfirm" type="password"
+                           required></ion-input>
+            </ion-item>
+
+            <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('passwortConfirm')">
+                {{errors.get('passwortConfirm')}} </p>
+
+        </ion-list>
+    </ng-container>
 
     <a (click)="redirectToLogin()">Bereits registriert? Hier einloggen!</a>
+
+    <div class="section-buttons ion-padding">
+        <ion-button class="ion-padding-horizontal" expand="block" (click)="signUp(nutzername, email, passwort)">
+            Registrieren
+        </ion-button>
+    </div>
+
+    <ion-note>
+        Mit der Erstellung eines Accounts stimmst du unserer <a class="legal-action" (click)="showPrivacyModal()">
+        Datenschutzbestimmung </a>
+        und unseren
+        <a class="legal-action" (click)="showTermsModal()">Nutzungsbedingungen</a> zu.
+    </ion-note>
 
     <ion-note>*Pflichtfeld</ion-note>
 
