@@ -21,6 +21,14 @@ const routes: Routes = [
         loadChildren: () => import('./pages/registrierung/registrierung.module').then(m => m.RegistrierungPageModule)
     },
     {
+        path: 'hilfe',
+        loadChildren: () => import('./pages/hilfe/hilfe.module').then(m => m.HilfePageModule)
+    },
+    {
+        path: 'not-found',
+        loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundPageModule)
+    },
+    {
         path: 'startseite',
         loadChildren: () => import('./pages/startseite/startseite.module').then(m => m.StartseitePageModule),
         canActivate: [AuthGuard]
@@ -49,15 +57,6 @@ const routes: Routes = [
         path: 'profil',
         loadChildren: () => import('./pages/profil/profil.module').then(m => m.ProfilPageModule),
         canActivate: [AuthGuard]
-    },
-    {
-        path: 'hilfe',
-        loadChildren: () => import('./pages/hilfe/hilfe.module').then(m => m.HilfePageModule),
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'not-found',
-        loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundPageModule)
     },
     {
         path: '**',

@@ -1,7 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
-import {IonInput, ViewDidEnter} from '@ionic/angular';
+import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
+import {PrivacyPage} from '../legal/privacy/privacy.page';
+import {TermsPage} from '../legal/terms/terms.page';
 
 @Component({
     selector: 'app-registrierung',
@@ -20,7 +22,8 @@ export class RegistrierungPage implements ViewDidEnter {
     @ViewChild('focus') private nutzernameRef: IonInput;
 
     constructor(private authService: AuthService,
-                private router: Router) {
+                private router: Router,
+                public modalController: ModalController) {
     }
 
     signUp(nutzername, email: string, passwort: string) {
@@ -58,6 +61,26 @@ export class RegistrierungPage implements ViewDidEnter {
 
     redirectToLogin() {
         this.router.navigate(['/login']);
+    }
+
+    /**
+     * Method to display terms of use
+     */
+    async showTermsModal() {
+        const modal = await this.modalController.create({
+            component: TermsPage
+        });
+        return await modal.present();
+    }
+
+    /**
+     * Method to display privacy policy
+     */
+    async showPrivacyModal() {
+        const modal = await this.modalController.create({
+            component: PrivacyPage
+        });
+        return await modal.present();
     }
 
     ionViewDidEnter() {
