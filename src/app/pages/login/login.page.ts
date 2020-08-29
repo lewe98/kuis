@@ -19,7 +19,8 @@ export class LoginPage implements OnInit, ViewDidEnter {
     @ViewChild('email')
     private email: IonInput;
 
-    constructor(private router: Router, private authService: AuthService) {
+    constructor(private router: Router,
+                private authService: AuthService) {
     }
 
     async login(email: string, password: string) {
@@ -53,7 +54,7 @@ export class LoginPage implements OnInit, ViewDidEnter {
 
     googleLogin() {
         this.authService.GoogleAuth().then(() => {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/startseite']);
         });
     }
 
