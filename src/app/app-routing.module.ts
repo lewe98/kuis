@@ -25,14 +25,6 @@ const routes: Routes = [
         loadChildren: () => import('./pages/hilfe/hilfe.module').then(m => m.HilfePageModule)
     },
     {
-        path: 'terms',
-        loadChildren: () => import('./pages/legal/terms/terms.module').then(m => m.TermsPageModule)
-    },
-    {
-        path: 'privacy',
-        loadChildren: () => import('./pages/legal/privacy/privacy.module').then(m => m.PrivacyPageModule)
-    },
-    {
         path: 'not-found',
         loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundPageModule)
     },
