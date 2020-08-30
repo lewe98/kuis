@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Quicksand:wght@300;400;600&display=swap');
+@import 'src/global.scss';
+
+.content {
+  padding: 20px;
+  margin: auto;
+  max-width: 812px;
+}
+
+ion-list {
+  background: $color-kuisGray;
+}
+
+.item-content {
+  background-color:#ffffff;
+}
+
+.item .item-content {
+  background-color: $color-kuis !important;
+}
+
+ion-item {
+  margin: 10px;
+  color: $color-kuisBlack;
+  --background: white;
+  border: solid $color-kuis 2px;
+  border-radius: 30px;
+}
+
+.kuis-button {
+  --ion-font-family: $font-body!important;
+  --ion-font-weight: 400!important;
+}
+
+.margin {
+  margin: 0 20px 0 20px;
+}

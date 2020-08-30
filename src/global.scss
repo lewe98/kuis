@@ -33,11 +33,12 @@ $color-kuisGray: #D9D9D9;
 $color-kuisOrange: #FF9500;
 
 /* Fonts */
-$font-header: 'Poppins', sans-serif;
-$font-body: 'Quicksand', sans-serif bold;
+$font-header: 'Poppins', normal;
+$font-body: 'Quicksand', normal;
 
 ion-app {
   --ion-background-color: #D9D9D9;
+  --ion-color-primary: #12B39A;
   --ion-toolbar-background: #12B39A;
   --ion-text-color: #FFFF;
   --ion-font-family: $font-header;

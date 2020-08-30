@@ -1,8 +1,9 @@
 <app-navbar name="Registrierung" [showLogout]="false"></app-navbar>
 
 <ion-content>
+    <div class="content">
     <ng-container>
-        <ion-list lines="full">
+        <ion-list>
 
             <ion-item>
                 <ion-label>Nutzername*</ion-label>
@@ -16,7 +17,7 @@
                 {{errors.get('nutzername')}} </p>
 
 
-            <ion-item>
+            <ion-item class="item-content">
                 <ion-label>E-Mail*</ion-label>
                 <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="email" type="email"
                            required></ion-input>
@@ -52,21 +53,21 @@
         </ion-list>
     </ng-container>
 
-    <a (click)="redirectToLogin()">Bereits registriert? Hier einloggen!</a>
+    <a class="margin" (click)="redirectToLogin()">Bereits registriert? Hier einloggen!</a>
 
     <div class="section-buttons ion-padding">
-        <ion-button class="ion-padding-horizontal" expand="block" (click)="signUp(nutzername, email, passwort)">
+        <ion-button class="kuis-button ion-padding-horizontal" expand="block" color="" shape="round" fill="solid" size="large" (click)="signUp(nutzername, email, passwort)">
             Registrieren
         </ion-button>
     </div>
 
-    <ion-note>
+    <ion-note class="margin">
         Mit der Erstellung eines Accounts stimmst du unserer <a class="legal-action" (click)="showPrivacyModal()">
         Datenschutzbestimmung </a>
         und unseren
         <a class="legal-action" (click)="showTermsModal()">Nutzungsbedingungen</a> zu.
     </ion-note>
 
-    <ion-note>*Pflichtfeld</ion-note>
-
+    <ion-note class="margin">*Pflichtfeld</ion-note>
+    </div>
 </ion-content>
