@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
 import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
@@ -10,12 +10,13 @@ import {TermsPage} from '../legal/terms/terms.page';
     templateUrl: './registrierung.page.html',
     styleUrls: ['./registrierung.page.scss'],
 })
-export class RegistrierungPage implements ViewDidEnter {
+export class RegistrierungPage implements OnInit, ViewDidEnter {
 
     nutzername: string;
     email: string;
     passwort: string;
     passwortConfirm: string;
+    isOnline: boolean;
 
     errors: Map<string, string> = new Map<string, string>();
 
@@ -24,6 +25,16 @@ export class RegistrierungPage implements ViewDidEnter {
     constructor(private authService: AuthService,
                 private router: Router,
                 public modalController: ModalController) {
+    }
+
+    ngOnInit() {
+        this.isOnline = false;
+        // If an user is found in Storage
+        this.isOnline = (sessionStorage.getItem('userID') !== null) || (localStorage.getItem('userID') !== null);
+        // dont allows to nav to loginpage while log in;
+        if (this.isOnline) {
+            this.router.navigate(['/startseite']);
+        }
     }
 
     signUp(nutzername, email: string, passwort: string) {
