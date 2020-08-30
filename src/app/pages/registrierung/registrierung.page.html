@@ -17,7 +17,7 @@
                 {{errors.get('nutzername')}} </p>
 
 
-            <ion-item class="item-content">
+            <ion-item>
                 <ion-label>E-Mail*</ion-label>
                 <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="email" type="email"
                            required></ion-input>
@@ -61,12 +61,12 @@
         </ion-button>
     </div>
 
-    <ion-note class="margin">
+    <p class="margin">
         Mit der Erstellung eines Accounts stimmst du unserer <a class="legal-action" (click)="showPrivacyModal()">
         Datenschutzbestimmung </a>
         und unseren
         <a class="legal-action" (click)="showTermsModal()">Nutzungsbedingungen</a> zu.
-    </ion-note>
+    </p>
 
     <ion-note class="margin">*Pflichtfeld</ion-note>
     </div>
