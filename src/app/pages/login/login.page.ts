@@ -8,6 +8,9 @@ import {IonInput, ViewDidEnter} from '@ionic/angular';
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
 })
+/**
+ * Represents the LoginPage
+ */
 export class LoginPage implements OnInit, ViewDidEnter {
 
     isOnline: boolean;
@@ -19,10 +22,20 @@ export class LoginPage implements OnInit, ViewDidEnter {
     @ViewChild('email')
     private email: IonInput;
 
+    /**
+     * Constructor
+     * @param router - is used to naviagte
+     * @param authService - to use the Service with all authentification functions
+     */
     constructor(private router: Router,
                 private authService: AuthService) {
     }
 
+    /**
+     * checks if the input is correct and logged the user in if it is
+     * @param email - user's email
+     * @param password - user's password
+     */
     async login(email: string, password: string) {
         this.errors.clear();
         await this.authService.signIn(email, password).catch((error) => {
@@ -48,16 +61,25 @@ export class LoginPage implements OnInit, ViewDidEnter {
         }
     }
 
+    /**
+     * method to toggle the form of session
+     */
     toggleSession() {
         this.authService.isSession = !this.authService.isSession;
     }
 
+    /**
+     * method to use the google login
+     */
     googleLogin() {
         this.authService.GoogleAuth().then(() => {
             this.router.navigate(['/startseite']);
         });
     }
 
+    /**
+     * checks on init if the user is logged in and blocks the navigate to the loginview if he is logged in
+     */
     ngOnInit() {
         this.isOnline = false;
         // If an user is found in Storage
@@ -68,6 +90,9 @@ export class LoginPage implements OnInit, ViewDidEnter {
         }
     }
 
+    /**
+     * sets the focus on the email input
+     */
     ionViewDidEnter() {
         setTimeout(() => this.email.setFocus(), 10);
     }

@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
 import {IonSlides} from '@ionic/angular';
@@ -8,8 +8,10 @@ import {IonSlides} from '@ionic/angular';
     templateUrl: './landing.page.html',
     styleUrls: ['./landing.page.scss', './responsive.scss'],
 })
-export class LandingPage {
+export class LandingPage implements OnInit{
     @ViewChild('slideWithNav', {static: false}) slideWithNav: IonSlides;
+
+    isOnline: boolean;
 
     sliderOne = {
         isBeginningSlide: true,
@@ -44,6 +46,16 @@ export class LandingPage {
     constructor(private authService: AuthService,
                 private router: Router) {
     }
+
+   ngOnInit() {
+       this.isOnline = false;
+       // If an user is found in Storage
+       this.isOnline = (sessionStorage.getItem('userID') !== null) || (localStorage.getItem('userID') !== null);
+       // dont allows to nav to loginpage while log in;
+       if (this.isOnline) {
+           this.router.navigate(['/startseite']);
+       }
+   }
 
     googleLogin() {
         this.authService.GoogleAuth().then(() => {

@@ -103,7 +103,6 @@ export class AuthService {
             } else {
                 localStorage.setItem('userID', JSON.stringify(res.user.uid));
             }
-
             this.subs.push(this.findById(res.user.uid).subscribe(u => {
                 this.user = u;
             }));
