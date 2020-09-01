@@ -9,6 +9,7 @@ import { LandingPageRoutingModule } from './landing-routing.module';
 import { LandingPage } from './landing.page';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {StartseitePageRoutingModule} from '../startseite/startseite-routing.module';
+import {FooterComponent} from '../../components/footer/footer.component';
 
 @NgModule({
   imports: [
@@ -18,9 +19,10 @@ import {StartseitePageRoutingModule} from '../startseite/startseite-routing.modu
     LandingPageRoutingModule,
     StartseitePageRoutingModule
   ],
-  exports: [
-    NavbarComponent
-  ],
-  declarations: [LandingPage, NavbarComponent]
+    exports: [
+        NavbarComponent,
+        FooterComponent
+    ],
+    declarations: [LandingPage, NavbarComponent, FooterComponent]
 })
 export class LandingPageModule {}

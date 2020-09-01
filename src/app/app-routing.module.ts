@@ -62,7 +62,11 @@ const routes: Routes = [
         path: '**',
         redirectTo: 'not-found',
         pathMatch: 'full'
-    }
+    },
+  {
+    path: 'impress',
+    loadChildren: () => import('./pages/legal/impress/impress.module').then(m => m.ImpressPageModule)
+  }
 ];
 
 @NgModule({
