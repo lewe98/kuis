@@ -24,13 +24,15 @@ export class AuthService {
         this.userCollection = afs.collection<User>('users');
 
         if (localStorage.getItem('userID')) {
-            this.subs.push(this.findById(localStorage.getItem('userID')).subscribe(u => {
-                Object.assign(this.user, u);
-            }));
+            this.subs.push(this.findById(localStorage.getItem('userID'))
+                .subscribe(u => {
+                    this.user = u;
+                }));
         } else if (sessionStorage.getItem('userID')) {
-            this.subs.push(this.findById(sessionStorage.getItem('userID')).subscribe(u => {
-                Object.assign(this.user, u);
-            }));
+            this.subs.push(this.findById(sessionStorage.getItem('userID'))
+                .subscribe(u => {
+                    this.user = u;
+                }));
         }
     }
 
@@ -113,7 +115,9 @@ export class AuthService {
             } else {
                 localStorage.setItem('userID', JSON.stringify(res.user.uid));
             }
-
+            this.subs.push(this.findById(res.user.uid).subscribe(u => {
+                Object.assign(this.user, u);
+            }));
         });
     }
 
@@ -159,7 +163,9 @@ export class AuthService {
 
             this.persist(new User(nutzername, email, passwort), res.user.uid);
 
-
+            this.subs.push(this.findById(res.user.uid).subscribe(u => {
+                this.user = u;
+            }));
             localStorage.setItem('userID', JSON.stringify(res.user.uid));
         });
     }
@@ -189,7 +195,11 @@ export class AuthService {
                                 this.isLoggedIn = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
 
-                                resolve();
+                                this.subs.push(this.findById(res.id)
+                                    .subscribe((u) => {
+                                        this.user = u;
+                                        resolve();
+                                    }));
                             } else {
                                 this.user = new User(result.user.displayName, result.user.email, '');
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
@@ -197,7 +207,11 @@ export class AuthService {
                                 this.isLoggedIn = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
 
-                                resolve();
+                                this.subs.push(this.findById(result.user.uid)
+                                    .subscribe((u) => {
+                                        this.user = u;
+                                        resolve();
+                                    }));
                             }
                         });
                 }).catch((error) => {
