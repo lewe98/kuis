@@ -1,17 +1,16 @@
 <ion-header>
+    <ion-toolbar mode="ios">
 
-  <ion-toolbar mode="ios">
-    <ion-buttons slot="start">
-      <ion-back-button text="" slot="start"></ion-back-button>
-    </ion-buttons>
+        <ion-title>{{name}}</ion-title>
 
-    <ion-title>{{name}}</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button text="" defaultHref="{{defaultHref}}"></ion-back-button>
+        </ion-buttons>
 
-    <div *ngIf="showLogout">
-    <ion-buttons slot="end">
-      <app-logout></app-logout>
-    </ion-buttons>
-    </div>
-  </ion-toolbar>
-
+        <div *ngIf="showLogout">
+            <ion-buttons slot="end">
+                <app-logout></app-logout>
+            </ion-buttons>
+        </div>
+    </ion-toolbar>
 </ion-header>

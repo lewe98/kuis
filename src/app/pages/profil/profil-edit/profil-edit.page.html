@@ -1,4 +1,14 @@
-<app-navbar name="Registrierung" [showLogout]="false"></app-navbar>
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss(); save(user.nutzername, user.email, user.passwort)">Speichern</ion-button>
+        </ion-buttons>
+
+        <ion-title>
+            Profil bearbeiten
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
 
 <ion-content>
     <div class="content">
@@ -8,7 +18,7 @@
                 <ion-item>
                     <ion-label>Nutzername*</ion-label>
                     <ion-input #focus class="ion-text-end formControl" placeholder="Nutzername..."
-                               [(ngModel)]="nutzername"
+                               [(ngModel)]="user.nutzername"
                                type="text"
                                required></ion-input>
                 </ion-item>
@@ -20,7 +30,7 @@
 
                 <ion-item>
                     <ion-label>E-Mail*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="email" type="email"
+                    <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="user.email" type="email"
                                required></ion-input>
                 </ion-item>
 
@@ -31,7 +41,7 @@
 
                 <ion-item>
                     <ion-label>Passwort*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Passwort..." [(ngModel)]="passwort"
+                    <ion-input class="ion-text-end formControl" placeholder="Passwort..." [(ngModel)]="user.passwort"
                                type="password"
                                required></ion-input>
                 </ion-item>
@@ -58,21 +68,13 @@
 
         </ng-container>
 
-
         <div class="section-buttons ion-padding">
             <ion-button class="kuis-button ion-padding-horizontal" expand="block" color="" shape="round" fill="solid"
-                        size="large" (click)="signUp(nutzername, email, passwort)">
-                Registrieren
+                        size="large" (click)="save(user.nutzername, user.email, user.passwort)">
+                Speichern
             </ion-button>
         </div>
-
-        <p class="margin">
-            Mit der Erstellung eines Accounts stimmst du unserer <a class="legal-action" (click)="showPrivacyModal()">
-            Datenschutzbestimmung </a>
-            und unseren
-            <a class="legal-action" (click)="showTermsModal()">Nutzungsbedingungen</a> zu.
-        </p>
     </div>
 
-    <a class="margin" (click)="redirectToLogin()">Bereits registriert? Hier einloggen!</a>
 </ion-content>
+

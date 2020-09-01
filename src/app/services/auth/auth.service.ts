@@ -13,7 +13,7 @@ import {auth} from 'firebase';
 export class AuthService {
 
     subs: Subscription[] = [];
-    user: User;
+    user = new User('loading...', 'loading...', 'loading...');
     isLoggedIn = false;
     isSession = false;
     userCollection: AngularFirestoreCollection<User>;
@@ -75,15 +75,15 @@ export class AuthService {
      * Method to update the user's data in the database
      * @param user user to be updated
      */
-    update(user: User) {
-        this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+    updateProfile(user: User): Promise<any> {
+        return this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
     }
 
     /**
      * Method to delete a user in the database
      * @param user user to be deleted
      */
-    delete(user: User) {
+    deleteProfile(user: User) {
         this.userCollection.doc(user.id).delete();
         this.logOut();
     }
@@ -104,7 +104,7 @@ export class AuthService {
                 localStorage.setItem('userID', JSON.stringify(res.user.uid));
             }
             this.subs.push(this.findById(res.user.uid).subscribe(u => {
-                this.user = u;
+                Object.assign(this.user, u);
             }));
         });
     }
@@ -171,9 +171,9 @@ export class AuthService {
      * @param provider google authentication provider
      * @return Promise resolves, if user could be logged in
      */
-    AuthLogin(provider): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.afAuth.signInWithPopup(provider)
+    async AuthLogin(provider): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await this.afAuth.signInWithPopup(provider)
                 .then((result) => {
                     this.findById(result.user.uid)
                         .pipe(take(1))
@@ -203,8 +203,8 @@ export class AuthService {
                             }
                         });
                 }).catch((error) => {
-                reject(error);
-            });
+                    reject(error);
+                });
         });
     }
 }

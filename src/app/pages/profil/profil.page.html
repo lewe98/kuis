@@ -1,9 +1,26 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>profil</ion-title>
-    </ion-toolbar>
-</ion-header>
+<app-navbar name="Profil" [showLogout]="true"></app-navbar>
 
 <ion-content>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{user.nutzername}}</ion-card-title>
+        </ion-card-header>
 
+        <ion-card-content>
+            <ion-item>
+                <ion-icon name="mail-outline"></ion-icon>
+                {{user.email}}
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="key-outline"></ion-icon>
+                {{user.passwort}}
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-button expand="block" shape="round" (click)="showEditModal()">Profil bearbeiten</ion-button>
+    <ion-button expand="block" shape="round" (click)="authService.logOut()">Logout</ion-button>
+    <ion-button expand="block" shape="round" (click)="authService.deleteProfile(user)">Account löschen
+    </ion-button>
 </ion-content>

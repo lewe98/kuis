@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
@@ -14,9 +15,11 @@ import {Component, Input} from '@angular/core';
 export class NavbarComponent {
     @Input() name: string;
     @Input() showLogout: boolean;
+    defaultHref = 'startseite';
 
     constructor() {
+        if (window.location.pathname === 'login' || window.location.pathname === 'registrierung') {
+            this.defaultHref = 'landing';
+        }
     }
-
-
 }
