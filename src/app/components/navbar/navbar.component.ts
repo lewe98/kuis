@@ -18,7 +18,6 @@ export class NavbarComponent {
     defaultHref = 'startseite';
 
     constructor() {
-        alert(window.location.pathname);
         if (window.location.pathname === '/login' || window.location.pathname === '/registrierung') {
             this.defaultHref = 'landing';
         }
