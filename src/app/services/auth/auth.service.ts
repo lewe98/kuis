@@ -22,18 +22,18 @@ export class AuthService {
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth) {
         this.userCollection = afs.collection<User>('users');
-
-        if (localStorage.getItem('userID')) {
-            this.subs.push(this.findById(localStorage.getItem('userID'))
-                .subscribe(u => {
-                    this.user = u;
-                }));
-        } else if (sessionStorage.getItem('userID')) {
-            this.subs.push(this.findById(sessionStorage.getItem('userID'))
-                .subscribe(u => {
-                    this.user = u;
-                }));
-        }
+        /*if (localStorage.getItem('userID')) {
+                    this.subs.push(this.findById(localStorage.getItem('userID'))
+                        .subscribe(u => {
+                            this.user = u;
+                        }));
+                } else if (sessionStorage.getItem('userID')) {
+                    this.subs.push(this.findById(sessionStorage.getItem('userID'))
+                        .subscribe(u => {
+                            this.user = u;
+                        }));
+                }
+         */
     }
 
     // COPY AND PREPARE

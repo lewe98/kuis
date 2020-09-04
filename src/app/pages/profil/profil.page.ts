@@ -12,13 +12,13 @@ import {Subscription} from 'rxjs';
 })
 export class ProfilPage implements OnInit, OnDestroy {
 
-    user = new User('', '', '');
+    user = new User('profil', 'profil', 'profil');
     subUser: Subscription;
 
     constructor(public authService: AuthService,
                 private modalController: ModalController,
                 private alertController: AlertController) {
-        Object.assign(this.user, this.authService.user);
+        // Object.assign(this.user, this.authService.user);
     }
 
     async showEditModal() {
@@ -52,14 +52,14 @@ export class ProfilPage implements OnInit, OnDestroy {
     }
 
 
-    async ngOnInit() {
+    ngOnInit() {
         if (localStorage.getItem('userID')) {
-            this.subUser = await this.authService.findById(localStorage.getItem('userID'))
+            this.subUser = this.authService.findById(localStorage.getItem('userID'))
                 .subscribe(u => {
                     this.user = u;
                 });
         } else if (sessionStorage.getItem('userID')) {
-            this.subUser = await this.authService.findById(sessionStorage.getItem('userID'))
+            this.subUser = this.authService.findById(sessionStorage.getItem('userID'))
                 .subscribe(u => {
                     this.user = u;
                 });
