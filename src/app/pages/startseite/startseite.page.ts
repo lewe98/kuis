@@ -9,10 +9,13 @@ import {AuthService} from '../../services/auth/auth.service';
 })
 export class StartseitePage {
 
-    constructor(private router: Router,
-                private authService: AuthService) {
+    constructor(private router: Router) {
     }
 
+    /**
+     * Method navigates the Router to a Page.
+     * @param route is the Path to navigate.
+     */
     routerNavigate(route: string) {
         this.router.navigate([route]);
     }
