@@ -6,7 +6,7 @@ import {IonInput, ViewDidEnter} from '@ionic/angular';
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
+    styleUrls: ['./login.page.scss', './../registrierung/registrierung.page.scss'],
 })
 /**
  * Represents the LoginPage
