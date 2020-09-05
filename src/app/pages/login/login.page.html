@@ -1,14 +1,15 @@
 <app-navbar name="Login" [showLogout]="false"></app-navbar>
 
 <ion-content>
-    <ion-item>
+    <div class="content">
+    <ion-item class="roundetInput">
         <ion-label>E-Mail*</ion-label>
         <ion-input class="ion-text-end" #email placeholder="E-Mail" [(ngModel)]="emailForLogIn" type="text"
                    maxlength="30"
                    required></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="roundetInput">
         <ion-label>Passwort*</ion-label>
         <ion-input class="ion-text-end" #password placeholder="Passwort" [(ngModel)]="passwordForLogIn" type="password"
                    maxlength="30"
@@ -16,20 +17,25 @@
     </ion-item>
     <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
        *ngIf="errors.get('wrongData')"> {{errors.get('wrongData')}}</p>
-    <ion-button (click)="login(emailForLogIn,passwordForLogIn)">
+
+    <div class="section-buttons ion-padding">
+        <ion-button class="kuis-button ion-padding-horizontal" expand="block" shape="round" fill="solid" size="large" (click)="login(emailForLogIn,passwordForLogIn)">
         login
-    </ion-button>
-    <ion-item>
-        <ion-label> Eingeloggt bleiben?</ion-label>
-        <ion-checkbox slot="end" (click)="toggleSession()"></ion-checkbox>
-    </ion-item>
+        </ion-button>
+    </div>
 
-    <ion-button (click)="googleLogin()">
-        <ion-icon name="logo-google"></ion-icon>
-    </ion-button>
+    <p class="margin"> Eingeloggt bleiben? <ion-checkbox slot="end" (click)="toggleSession()"></ion-checkbox>
+    </p>
 
-    <p> Noch keinen Account? Dann registriere dich <a [routerLink]="['/registrierung']">
-        hier!</a>.</p>
+    <div class="section-buttons ion-padding">
+        <ion-button class="kuis-button ion-padding-horizontal" expand="block" shape="round" fill="solid" size="large" (click)="googleLogin()">
+            Login mit <ion-icon name="logo-google"></ion-icon>oogle
+        </ion-button>
+    </div>
+
+    <p class="margin"> Noch keinen Account? Dann registriere dich <a [routerLink]="['/registrierung']">
+        hier!</a></p>
+    </div>
 </ion-content>
 
 
