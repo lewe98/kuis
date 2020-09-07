@@ -6,7 +6,6 @@ export class User {
     public nutzername: string;
     public email: string;
     public passwort: string;
-
     public emailBestaetigt: boolean;
     public isOnboarded: boolean;
     public abzeichen: string[];

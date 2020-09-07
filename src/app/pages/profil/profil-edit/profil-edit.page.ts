@@ -10,7 +10,7 @@ import {AuthService} from '../../../services/auth/auth.service';
 })
 export class ProfilEditPage implements ViewDidEnter {
 
-    user = new User('', '', '');
+    user: User;
     passwortConfirm: string;
 
     errors: Map<string, string> = new Map<string, string>();
@@ -19,6 +19,7 @@ export class ProfilEditPage implements ViewDidEnter {
 
     constructor(private authService: AuthService,
                 private modalController: ModalController) {
+        this.user = this.authService.getUser();
     }
 
     save(nutzername, email: string, passwort: string) {

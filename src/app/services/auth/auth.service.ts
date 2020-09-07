@@ -5,6 +5,7 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 import {User} from '../../models/user';
 import {Observable, Subscription} from 'rxjs';
 import {map, take} from 'rxjs/operators';
+import * as firebase from 'firebase';
 import {auth} from 'firebase';
 
 @Injectable({
@@ -12,30 +13,17 @@ import {auth} from 'firebase';
 })
 export class AuthService {
 
-    subs: Subscription;
     user: User;
+    subUser: Subscription;
+    userCollection: AngularFirestoreCollection<User>;
+
     isLoggedIn = false;
     isSession = false;
-    userCollection: AngularFirestoreCollection<User>;
-    testUser: User;
 
     constructor(private router: Router,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth) {
         this.userCollection = afs.collection<User>('users');
-        if (localStorage.getItem('userID')) {
-                    this.subs = this.findById(localStorage.getItem('userID'))
-                        .subscribe(u => {
-                            this.user = u;
-                            console.log(this.subs);
-                        });
-                } else if (sessionStorage.getItem('userID')) {
-                    this.subs = this.findById(sessionStorage.getItem('userID'))
-                        .subscribe(u => {
-                            this.user = u;
-                            console.log(this.subs);
-                        });
-                }
     }
 
     // COPY AND PREPARE
@@ -68,6 +56,14 @@ export class AuthService {
     }
 
     /**
+     * Method to return the authenticated user
+     * @return user current user
+     */
+    getUser(): User {
+        return this.user;
+    }
+
+    /**
      * Method to find a user by id
      * @param id id of a user
      * @return Observable<User> user that was found
@@ -90,6 +86,9 @@ export class AuthService {
      * @param user user to be updated
      */
     updateProfile(user: User): Promise<any> {
+        firebase.auth().currentUser.updateEmail(user.email);
+        firebase.auth().currentUser.updatePassword(user.passwort);
+        firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
         return this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
     }
 
@@ -98,8 +97,10 @@ export class AuthService {
      * @param user user to be deleted
      */
     deleteProfile(user: User) {
-        this.userCollection.doc(user.id).delete();
-        this.logOut();
+        firebase.auth().currentUser.delete().then(() => {
+            this.userCollection.doc(user.id).delete();
+            this.logOut();
+        });
     }
 
     // LOGIN / LOGOUT
@@ -117,21 +118,11 @@ export class AuthService {
             } else {
                 localStorage.setItem('userID', JSON.stringify(res.user.uid));
             }
-            console.log(res.user.uid);
-            this.subs = this.findById(res.user.uid).subscribe(u => {
-                console.log(Object.assign(this.user, u));
-                Object.assign(this.user, u);
-                console.log(this.user);
-                this.testUser = this.user;
-            });
+            this.subUser = this.findById(res.user.uid)
+                .subscribe(u => {
+                    this.user = u;
+                });
         });
-    }
-
-    getUser(): User {
-        console.log('getUser');
-        console.log(this.testUser);
-        console.log(this.user);
-        return this.user;
     }
 
     /**
@@ -148,14 +139,11 @@ export class AuthService {
     logOut() {
         this.afAuth.signOut().then(() => {
             this.isLoggedIn = false;
-
-            this.subs.unsubscribe();
-
+            sessionStorage.clear();
+            localStorage.clear();
+            this.subUser.unsubscribe();
             this.router.navigate(['/login']);
         });
-
-        sessionStorage.removeItem('userID');
-        localStorage.removeItem('userID');
     }
 
     // REGISTER
@@ -172,11 +160,10 @@ export class AuthService {
 
             this.persist(new User(nutzername, email, passwort), res.user.uid);
 
-            this.subs = this.findById(res.user.uid).subscribe(u => {
-                this.user = u;
-                console.log('signup');
-                console.log(u);
-            });
+            this.subUser = this.findById(res.user.uid)
+                .subscribe(u => {
+                    this.user = u;
+                });
             localStorage.setItem('userID', JSON.stringify(res.user.uid));
         });
     }
@@ -206,7 +193,7 @@ export class AuthService {
                                 this.isLoggedIn = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
 
-                                this.subs = this.findById(res.id)
+                                this.subUser = this.findById(res.id)
                                     .subscribe((u) => {
                                         this.user = u;
                                         resolve();
@@ -218,7 +205,7 @@ export class AuthService {
                                 this.isLoggedIn = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
 
-                                this.subs = this.findById(result.user.uid)
+                                this.subUser = this.findById(result.user.uid)
                                     .subscribe((u) => {
                                         this.user = u;
                                         resolve();

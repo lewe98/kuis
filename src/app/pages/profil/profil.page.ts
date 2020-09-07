@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {User} from '../../models/user';
 import {AlertController, ModalController} from '@ionic/angular';
@@ -9,15 +9,14 @@ import {ProfilEditPage} from './profil-edit/profil-edit.page';
     templateUrl: './profil.page.html',
     styleUrls: ['./profil.page.scss'],
 })
-export class ProfilPage implements OnInit, OnDestroy {
+export class ProfilPage {
 
-    user: User = new User('profil', 'profil', 'profil');
+    user: User;
 
     constructor(public authService: AuthService,
                 private modalController: ModalController,
                 private alertController: AlertController) {
-            this.user =  this.authService.getUser();
-            console.log(this.user);
+        this.user = this.authService.getUser();
     }
 
     async showEditModal() {
@@ -48,24 +47,5 @@ export class ProfilPage implements OnInit, OnDestroy {
             ]
         });
         await alert.present();
-    }
-
-
-    ngOnInit() {
-       /* console.log('Profil');
-        if (localStorage.getItem('userID')) {
-            this.subUser = this.authService.findById(localStorage.getItem('userID'))
-                .subscribe(u => {
-                    this.user = u;
-                });
-        } else if (sessionStorage.getItem('userID')) {
-            this.subUser = this.authService.findById(sessionStorage.getItem('userID'))
-                .subscribe(u => {
-                    this.user = u;
-                });
-        }*/
-    }
-
-    ngOnDestroy() {
     }
 }
