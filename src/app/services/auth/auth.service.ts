@@ -85,11 +85,11 @@ export class AuthService {
      * Method to update the user's data in the database
      * @param user user to be updated
      */
-    updateProfile(user: User): Promise<any> {
-        firebase.auth().currentUser.updateEmail(user.email);
-        firebase.auth().currentUser.updatePassword(user.passwort);
-        firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
-        return this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+    async updateProfile(user: User) {
+        await firebase.auth().currentUser.updateEmail(user.email);
+        await firebase.auth().currentUser.updatePassword(user.passwort);
+        await firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
+        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
     }
 
     /**
@@ -98,8 +98,10 @@ export class AuthService {
      */
     deleteProfile(user: User) {
         firebase.auth().currentUser.delete().then(() => {
-            this.userCollection.doc(user.id).delete();
-            this.logOut();
+            this.userCollection.doc(user.id).delete().then(() => {
+                this.logOut();
+            });
+
         });
     }
 

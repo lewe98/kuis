@@ -45,9 +45,8 @@ export class ProfilEditPage implements ViewDidEnter {
         }
 
         if (this.errors.size === 0) {
-            this.authService.updateProfile(this.user).then(() =>
-                this.dismiss()
-            );
+            this.authService.updateProfile(this.user);
+            this.dismiss();
         }
     }
 
