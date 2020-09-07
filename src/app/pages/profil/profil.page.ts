@@ -3,7 +3,6 @@ import {AuthService} from '../../services/auth/auth.service';
 import {User} from '../../models/user';
 import {AlertController, ModalController} from '@ionic/angular';
 import {ProfilEditPage} from './profil-edit/profil-edit.page';
-import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-profil',
@@ -12,13 +11,13 @@ import {Subscription} from 'rxjs';
 })
 export class ProfilPage implements OnInit, OnDestroy {
 
-    user = new User('profil', 'profil', 'profil');
-    subUser: Subscription;
+    user: User = new User('profil', 'profil', 'profil');
 
     constructor(public authService: AuthService,
                 private modalController: ModalController,
                 private alertController: AlertController) {
-        // Object.assign(this.user, this.authService.user);
+            this.user =  this.authService.getUser();
+            console.log(this.user);
     }
 
     async showEditModal() {
@@ -53,6 +52,7 @@ export class ProfilPage implements OnInit, OnDestroy {
 
 
     ngOnInit() {
+       /* console.log('Profil');
         if (localStorage.getItem('userID')) {
             this.subUser = this.authService.findById(localStorage.getItem('userID'))
                 .subscribe(u => {
@@ -63,10 +63,9 @@ export class ProfilPage implements OnInit, OnDestroy {
                 .subscribe(u => {
                     this.user = u;
                 });
-        }
+        }*/
     }
 
     ngOnDestroy() {
-        this.subUser.unsubscribe();
     }
 }
