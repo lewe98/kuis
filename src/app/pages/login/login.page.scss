@@ -1,0 +1,9 @@
+@import 'src/global.scss';
+
+ion-checkbox {
+  margin-left: 10px;
+  position: relative;
+  top: 3px;
+  --background: white;
+  --border-color: #12B39A;
+}

@@ -5,7 +5,7 @@
         <ng-container>
             <ion-list>
 
-                <ion-item>
+                <ion-item class="roundetInput">
                     <ion-label>Nutzername*</ion-label>
                     <ion-input #focus class="ion-text-end formControl" placeholder="Nutzername..."
                                [(ngModel)]="nutzername"
@@ -18,7 +18,7 @@
                     {{errors.get('nutzername')}} </p>
 
 
-                <ion-item>
+                <ion-item class="roundetInput">
                     <ion-label>E-Mail*</ion-label>
                     <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="email" type="email"
                                required></ion-input>
@@ -29,7 +29,7 @@
                     {{errors.get('email')}} </p>
 
 
-                <ion-item>
+                <ion-item class="roundetInput">
                     <ion-label>Passwort*</ion-label>
                     <ion-input class="ion-text-end formControl" placeholder="Passwort..." [(ngModel)]="passwort"
                                type="password"
@@ -41,7 +41,7 @@
                     {{errors.get('passwort')}} </p>
 
 
-                <ion-item>
+                <ion-item class="roundetInput">
                     <ion-label>Passwort bestätigen*</ion-label>
                     <ion-input class="ion-text-end formControl" placeholder="Passwort bestätigen..."
                                [(ngModel)]="passwortConfirm" type="password"
@@ -65,6 +65,11 @@
                 Registrieren
             </ion-button>
         </div>
+    <div class="section-buttons ion-padding">
+        <ion-button class="kuis-button ion-padding-horizontal" expand="block" shape="round" fill="solid" size="large" (click)="signUp(nutzername, email, passwort)">
+            Registrieren
+        </ion-button>
+    </div>
 
         <p class="margin">
             Mit der Erstellung eines Accounts stimmst du unserer <a class="legal-action" (click)="showPrivacyModal()">

@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Quicksand:wght@300;400;600&display=swap');
 @import 'src/global.scss';
 
 .content {
@@ -15,7 +14,7 @@ ion-list {
   background-color: $color-kuis !important;
 }
 
-ion-item {
+.roundetInput {
   margin: 10px;
   color: $color-kuisBlack;
   --background: white;
@@ -24,8 +23,9 @@ ion-item {
 }
 
 .kuis-button {
+  padding: 0;
   --ion-font-family: $font-body!important;
-  --ion-font-weight: 400!important;
+  --ion-font-weight: 500!important;
 }
 
 .margin {
