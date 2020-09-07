@@ -7,13 +7,15 @@ import {IonicModule} from '@ionic/angular';
 import {AbzeichenPageRoutingModule} from './abzeichen-routing.module';
 
 import {AbzeichenPage} from './abzeichen.page';
+import {LandingPageModule} from '../landing/landing.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        AbzeichenPageRoutingModule
+        AbzeichenPageRoutingModule,
+        LandingPageModule
     ],
     declarations: [AbzeichenPage]
 })

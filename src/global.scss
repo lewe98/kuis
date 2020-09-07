@@ -48,6 +48,13 @@ ion-content {
   --ion-font-family: $font-body;
   font-family: $font-body;
   --ion-text-color: #303030;
+  --ion-item-background: white;
+  --ion-card-background: white;
+}
+
+.kuis-content {
+  max-width: 812px;
+  margin: auto;
 }
 
 ion-back-button {
