@@ -1,12 +1,6 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>Startseite</ion-title>
-        <app-logout></app-logout>
-    </ion-toolbar>
-</ion-header>
-
+<app-navbar [name]="'Startseite'" [showLogout]="true" [showBack]="false" ></app-navbar>
 <ion-content>
-    <ion-grid>
+    <ion-grid class="kuis-content">
         <ion-row>
             <ion-col>
                 <ion-card class="card-color-white" (click)="routerNavigate('lernmodus')">

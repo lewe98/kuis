@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-
+import {Router} from '@angular/router';
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
@@ -15,11 +15,18 @@ import {Component, Input} from '@angular/core';
 export class NavbarComponent {
     @Input() name: string;
     @Input() showLogout: boolean;
-    defaultHref = 'startseite';
+    @Input() showBack: boolean;
 
-    constructor() {
-        if (window.location.pathname === '/login' || window.location.pathname === '/registrierung') {
-            this.defaultHref = 'landing';
-        }
+    constructor(private router: Router) {
+        this.showBack = true;
     }
+
+    /**
+     * Method navigates the Router to the 'Startseite'.
+     */
+    backStartseite() {
+        this.router.navigate(['startseite']);
+    }
+
+
 }
