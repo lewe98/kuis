@@ -1,0 +1,34 @@
+@import 'src/global.scss';
+
+ion-content {
+  --ion-item-background: white;
+  --ion-card-background: white;
+}
+
+.trophyList {
+  padding: 0;
+}
+
+ion-card-title {
+  color: $color-kuisBlack;
+}
+
+.card-border-rounded {
+  border-radius: 20px;
+}
+
+.trophyBackground {
+  color: white !important;
+  padding: 10px;
+  background: $color-kuis;
+  border-radius: 100%;
+}
+
+.trophyIsGray {
+  background: $color-kuisGray !important;
+}
+
+ion-item-group {
+  border-bottom: solid 1px $color-kuisGray;
+  margin: 10px;
+}
