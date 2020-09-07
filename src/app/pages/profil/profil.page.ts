@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {User} from '../../models/user';
 import {AlertController, ModalController} from '@ionic/angular';
@@ -9,7 +9,7 @@ import {ProfilEditPage} from './profil-edit/profil-edit.page';
     templateUrl: './profil.page.html',
     styleUrls: ['./profil.page.scss'],
 })
-export class ProfilPage {
+export class ProfilPage implements OnInit {
 
     user: User;
 
@@ -17,6 +17,10 @@ export class ProfilPage {
                 private modalController: ModalController,
                 private alertController: AlertController) {
         this.user = this.authService.getUser();
+    }
+
+    ngOnInit() {
+        alert(this.authService.googleLogin);
     }
 
     async showEditModal() {

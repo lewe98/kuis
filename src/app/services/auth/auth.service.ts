@@ -20,6 +20,8 @@ export class AuthService {
     isLoggedIn = false;
     isSession = false;
 
+    googleLogin;
+
     constructor(private router: Router,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth) {
@@ -115,6 +117,7 @@ export class AuthService {
         // await this.afAuth.signInWithEmailAndPassword(email, bcrypt.hashSync(password, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
             this.isLoggedIn = true;
+            this.googleLogin = false;
             if (!this.isSession) {
                 sessionStorage.setItem('userID', JSON.stringify(res.user.uid));
             } else {
@@ -159,6 +162,7 @@ export class AuthService {
         // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
             this.isLoggedIn = true;
+            this.googleLogin = false;
 
             this.persist(new User(nutzername, email, passwort), res.user.uid);
 
@@ -193,6 +197,7 @@ export class AuthService {
                             if (res.id !== undefined) {
 
                                 this.isLoggedIn = true;
+                                this.googleLogin = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
 
                                 this.subUser = this.findById(res.id)
@@ -205,6 +210,7 @@ export class AuthService {
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
 
                                 this.isLoggedIn = true;
+                                this.googleLogin = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
 
                                 this.subUser = this.findById(result.user.uid)

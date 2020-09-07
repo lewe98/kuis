@@ -19,7 +19,7 @@
 
             <br>
 
-            <ion-button expand="block" shape="round" (click)="showEditModal()">Profil bearbeiten</ion-button>
+            <ion-button [disabled]="authService.googleLogin" expand="block" shape="round" (click)="showEditModal()">Profil bearbeiten</ion-button>
             <ion-button expand="block" shape="round" (click)="deleteWarning(user)">Account löschen
             </ion-button>
 
