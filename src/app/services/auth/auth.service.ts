@@ -98,13 +98,10 @@ export class AuthService {
      * Method to delete a user in the database
      * @param user user to be deleted
      */
-    deleteProfile(user: User) {
-        firebase.auth().currentUser.delete().then(() => {
-            this.userCollection.doc(user.id).delete().then(() => {
-                this.logOut();
-            });
-
-        });
+    async deleteProfile(user: User) {
+        await this.logOut();
+        await this.userCollection.doc(user.id).delete();
+        await firebase.auth().currentUser.delete();
     }
 
     // LOGIN / LOGOUT

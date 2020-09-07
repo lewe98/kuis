@@ -9,7 +9,7 @@ import {ProfilEditPage} from './profil-edit/profil-edit.page';
     templateUrl: './profil.page.html',
     styleUrls: ['./profil.page.scss'],
 })
-export class ProfilPage implements OnInit {
+export class ProfilPage {
 
     user: User;
 
@@ -17,10 +17,6 @@ export class ProfilPage implements OnInit {
                 private modalController: ModalController,
                 private alertController: AlertController) {
         this.user = this.authService.getUser();
-    }
-
-    ngOnInit() {
-        alert(this.authService.googleLogin);
     }
 
     async showEditModal() {
