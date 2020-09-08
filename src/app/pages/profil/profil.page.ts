@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth/auth.service';
 import {User} from '../../models/user';
 import {AlertController, ModalController} from '@ionic/angular';
 import {ProfilEditPage} from './profil-edit/profil-edit.page';
+import {ToastService} from '../../services/toast/toast.service';
 
 @Component({
     selector: 'app-profil',
@@ -15,7 +16,8 @@ export class ProfilPage {
 
     constructor(public authService: AuthService,
                 private modalController: ModalController,
-                private alertController: AlertController) {
+                private alertController: AlertController,
+                private toastService: ToastService) {
         this.user = this.authService.getUser();
     }
 
