@@ -126,21 +126,21 @@ export class AuthService {
 
         // TODO: - Passwort hashen
         // await this.afAuth.signInWithEmailAndPassword(email, bcrypt.hashSync(password, bcrypt.genSaltSync(10))).then(res => {
-        await this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
-            this.isLoggedIn = true;
-            this.googleLogin = false;
-            if (!this.isSession) {
-                sessionStorage.setItem('userID', JSON.stringify(res.user.uid));
-            } else {
-                localStorage.setItem('userID', JSON.stringify(res.user.uid));
-            }
-            this.subUser = this.findById(res.user.uid)
-                .subscribe(u => {
-                    this.user = u;
-                });
-        });
-
-        await this.toastService.dismissLoading();
+        await this.afAuth.signInWithEmailAndPassword(email, password)
+            .then(res => {
+                this.isLoggedIn = true;
+                this.googleLogin = false;
+                if (!this.isSession) {
+                    sessionStorage.setItem('userID', JSON.stringify(res.user.uid));
+                } else {
+                    localStorage.setItem('userID', JSON.stringify(res.user.uid));
+                }
+                this.subUser = this.findById(res.user.uid)
+                    .subscribe(u => {
+                        this.user = u;
+                    });
+                this.toastService.dismissLoading();
+            });
     }
 
     /**
