@@ -90,23 +90,23 @@ export class AuthService {
      * Method to update the user's data in the database
      * @param user user to be updated
      */
-    async updateProfile(user: User) {
-        await this.toastService.presentToast('Profil erfolgreich aktualisiert');
-        await firebase.auth().currentUser.updateEmail(user.email);
-        await firebase.auth().currentUser.updatePassword(user.passwort);
-        await firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
-        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+    updateProfile(user: User) {
+        this.toastService.presentToast('Profil erfolgreich aktualisiert');
+        firebase.auth().currentUser.updateEmail(user.email);
+        firebase.auth().currentUser.updatePassword(user.passwort);
+        firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
+        this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
     }
 
     /**
      * Method to delete a user in the database
      * @param user user to be deleted
      */
-    async deleteProfile(user: User) {
-        await this.logOut();
-        await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest automatisch ausgeloggt.');
-        await this.userCollection.doc(user.id).delete();
-        await firebase.auth().currentUser.delete();
+    deleteProfile(user: User) {
+        this.logOut();
+        this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest automatisch ausgeloggt.');
+        this.userCollection.doc(user.id).delete();
+        firebase.auth().currentUser.delete();
     }
 
     // LOGIN / LOGOUT
@@ -116,6 +116,9 @@ export class AuthService {
      * @param password user's password
      */
     async signIn(email: string, password: string) {
+
+        await this.toastService.presentLoading('Bitte warten...');
+
         // await this.afAuth.signInWithEmailAndPassword(email, bcrypt.hashSync(password, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
             this.isLoggedIn = true;
@@ -130,6 +133,8 @@ export class AuthService {
                     this.user = u;
                 });
         });
+
+        await this.toastService.dismissLoading();
     }
 
     /**
@@ -161,6 +166,9 @@ export class AuthService {
      * @param passwort user's password
      */
     async signUp(nutzername: string, email: string, passwort: string) {
+
+        await this.toastService.presentLoading('Bitte warten...');
+
         // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
             this.isLoggedIn = true;
@@ -173,6 +181,8 @@ export class AuthService {
                 });
             localStorage.setItem('userID', JSON.stringify(res.user.uid));
         });
+
+        await this.toastService.dismissLoading();
     }
 
     // GOOGLE LOGIN
@@ -190,12 +200,16 @@ export class AuthService {
      */
     async AuthLogin(provider): Promise<any> {
         return new Promise(async (resolve, reject) => {
+
+            await this.toastService.presentLoading('Bitte warten...');
+
             await this.afAuth.signInWithPopup(provider)
                 .then((result) => {
                     this.findById(result.user.uid)
                         .pipe(take(1))
                         .subscribe((res) => {
                             if (res.id !== undefined) {
+
                                 this.isLoggedIn = true;
                                 this.googleLogin = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
@@ -206,6 +220,7 @@ export class AuthService {
                                         resolve();
                                     });
                             } else {
+
                                 this.user = new User(result.user.displayName, result.user.email, '');
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
                                 this.isLoggedIn = true;
@@ -222,6 +237,7 @@ export class AuthService {
                 }).catch((error) => {
                     reject(error);
                 });
+            await this.toastService.dismissLoading();
         });
     }
 }
