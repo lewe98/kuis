@@ -3,15 +3,15 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
 
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {AppComponent} from './app.component';
+import {LogoutComponent} from './components/logout/logout.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {environment} from '../environments/environment';
+import {NavbarComponent} from './components/navbar/navbar.component';
 
 @NgModule({
     declarations: [AppComponent],
@@ -25,8 +25,8 @@ import {environment} from '../environments/environment';
         AngularFireAuthModule
     ],
     providers: [
-        StatusBar,
-        SplashScreen,
+        LogoutComponent,
+        NavbarComponent,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

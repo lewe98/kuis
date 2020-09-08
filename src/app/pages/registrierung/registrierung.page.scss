@@ -1,0 +1,34 @@
+@import 'src/global.scss';
+
+.content {
+  padding: 20px;
+  margin: auto;
+  max-width: 812px;
+}
+
+ion-list {
+  background: $color-kuisGray;
+}
+
+.item .item-content {
+  background-color: $color-kuis !important;
+}
+
+.roundetInput {
+  margin: 10px;
+  color: $color-kuisBlack;
+  --background: white;
+  border: solid $color-kuis 2px;
+  border-radius: 30px;
+}
+
+.kuis-button {
+  padding: 0;
+  --ion-font-family: $font-body!important;
+  --ion-font-weight: 500!important;
+}
+
+.margin {
+  width: 100%;
+  margin: 0 20px 0 20px;
+}

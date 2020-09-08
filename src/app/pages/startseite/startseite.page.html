@@ -1,0 +1,72 @@
+<app-navbar [name]="'Startseite'" [showLogout]="true" [showBack]="false" ></app-navbar>
+<ion-content>
+    <ion-grid class="kuis-content">
+        <ion-row>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="routerNavigate('lernmodus')">
+                    <div class="button-background">
+                        <ion-icon class="button-icon" name="play-outline"></ion-icon>
+                    </div>
+                    <ion-card-header>
+                        <ion-card-title>Lern Modus</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="routerNavigate('moduluebersicht')">
+                    <div class="button-background">
+                        <ion-icon class="button-icon" name="list-outline"></ion-icon>
+                    </div>
+                    <ion-card-header>
+                        <ion-card-title>Modul Übersicht</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="routerNavigate('statistik')">
+                    <div class="button-background">
+                        <ion-icon class="button-icon" name="stats-chart-outline"></ion-icon>
+                    </div>
+                    <ion-card-header>
+                        <ion-card-title>Statistik</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="routerNavigate('abzeichen')">
+                    <div class="button-background">
+                        <ion-icon class="button-icon" name="trophy-outline"></ion-icon>
+                    </div>
+                    <ion-card-header>
+                        <ion-card-title>Abzeichen</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="routerNavigate('profil')">
+                    <div class="button-background">
+                        <ion-icon class="button-icon" name="person-outline"></ion-icon>
+                    </div>
+                    <ion-card-header>
+                        <ion-card-title>Profil</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="routerNavigate('hilfe')">
+                    <div class="button-background">
+                        <ion-icon class="button-icon" name="help-outline"></ion-icon>
+                    </div>
+                    <ion-card-header>
+                        <ion-card-title>Hilfe</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <app-footer></app-footer>
+</ion-content>
