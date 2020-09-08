@@ -8,7 +8,7 @@ import {Subscription} from 'rxjs';
     templateUrl: './startseite.page.html',
     styleUrls: ['./startseite.page.scss'],
 })
-export class StartseitePage implements OnDestroy {
+export class StartseitePage {
 
     subUser: Subscription;
 
@@ -18,6 +18,8 @@ export class StartseitePage implements OnDestroy {
             this.subUser = this.authService.findById(localStorage.getItem('userID'))
                 .subscribe(u => {
                     this.authService.user = u;
+                    this.authService.subUser = this.subUser;
+                    this.subUser.unsubscribe();
                 });
         }
     }
@@ -28,9 +30,5 @@ export class StartseitePage implements OnDestroy {
      */
     routerNavigate(route: string) {
         this.router.navigate([route]);
-    }
-
-    ngOnDestroy() {
-        this.subUser.unsubscribe();
     }
 }
