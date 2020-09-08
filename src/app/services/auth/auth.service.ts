@@ -90,23 +90,28 @@ export class AuthService {
      * Method to update the user's data in the database
      * @param user user to be updated
      */
-    updateProfile(user: User) {
-        this.toastService.presentToast('Profil erfolgreich aktualisiert');
-        firebase.auth().currentUser.updateEmail(user.email);
-        firebase.auth().currentUser.updatePassword(user.passwort);
-        firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
-        this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+    async updateProfile(user: User) {
+        await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...');
+        await firebase.auth().currentUser.updateEmail(user.email);
+        await firebase.auth().currentUser.updatePassword(user.passwort);
+        await firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
+        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+        await this.toastService.dismissLoading();
+        await this.toastService.presentToast('Profil erfolgreich aktualisiert');
     }
 
     /**
      * Method to delete a user in the database
      * @param user user to be deleted
      */
-    deleteProfile(user: User) {
-        this.logOut();
-        this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest automatisch ausgeloggt.');
+    async deleteProfile(user: User) {
         this.userCollection.doc(user.id).delete();
         firebase.auth().currentUser.delete();
+
+        await this.toastService.presentLoading('Bitte warten. \n Dies kann einige Sekunden dauern.');
+        await this.logOut();
+        await this.toastService.dismissLoading();
+        await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest ausgeloggt.');
     }
 
     // LOGIN / LOGOUT
@@ -119,6 +124,7 @@ export class AuthService {
 
         await this.toastService.presentLoading('Bitte warten...');
 
+        // TODO: - Passwort hashen
         // await this.afAuth.signInWithEmailAndPassword(email, bcrypt.hashSync(password, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
             this.isLoggedIn = true;
@@ -169,6 +175,7 @@ export class AuthService {
 
         await this.toastService.presentLoading('Bitte warten...');
 
+        // TODO: - Passwort hashen
         // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
             this.isLoggedIn = true;
