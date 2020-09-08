@@ -1,0 +1,19 @@
+@import 'src/global.scss';
+
+ion-content {
+  --ion-item-background: white;
+  --ion-card-background: white;
+}
+
+ion-card-title {
+  color: $color-kuisBlack;
+}
+
+.card-border-rounded {
+  border-radius: 20px;
+}
+
+ion-item-group {
+  border-bottom: solid 1px $color-kuisGray;
+  margin: 10px;
+}

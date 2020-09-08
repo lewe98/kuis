@@ -19,7 +19,12 @@
 
             <br>
 
-            <ion-button [disabled]="authService.googleLogin" expand="block" shape="round" (click)="showEditModal()">Profil bearbeiten</ion-button>
+            <div *ngIf="!authService.googleLogin; else google">
+                <ion-button [disabled]="authService.googleLogin" expand="block" shape="round" (click)="showEditModal()">
+                    Profil bearbeiten
+                </ion-button>
+            </div>
+
             <ion-button expand="block" shape="round" (click)="deleteWarning(user)">Account löschen
             </ion-button>
 
@@ -30,5 +35,11 @@
     </ion-card>
 
     <app-footer></app-footer>
+
+    <ng-template #google>
+        <ion-button expand="block" shape="round" href="https://myaccount.google.com/">
+            Google Account bearbeiten
+        </ion-button>
+    </ng-template>
 
 </ion-content>

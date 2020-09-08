@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth/auth.service';
+
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
@@ -11,22 +12,20 @@ import {Router} from '@angular/router';
  *
  * @param name: Manages the title of the page the navbar is displayed on. The title will be displayed centered in the Navbar.
  * @param showLogout: Either displays an additional Logout-Button in the HTML or not. Uses the logout-component.
+ * @param showLogout: Displays the back button.
  */
 export class NavbarComponent {
     @Input() name: string;
     @Input() showLogout: boolean;
     @Input() showBack: boolean;
 
-    constructor(private router: Router) {
+    defaultHref = 'startseite';
+
+
+    constructor(public authService: AuthService) {
         this.showBack = true;
+        if (window.location.pathname === '/login' || window.location.pathname === '/registrierung') {
+            this.defaultHref = 'landing';
+        }
     }
-
-    /**
-     * Method navigates the Router to the 'Startseite'.
-     */
-    backStartseite() {
-        this.router.navigate(['startseite']);
-    }
-
-
 }
