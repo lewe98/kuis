@@ -7,6 +7,7 @@ import {Observable, Subscription} from 'rxjs';
 import {map, take} from 'rxjs/operators';
 import * as firebase from 'firebase';
 import {auth} from 'firebase';
+import {ToastService} from '../toast/toast.service';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +25,8 @@ export class AuthService {
 
     constructor(private router: Router,
                 private afs: AngularFirestore,
-                private afAuth: AngularFireAuth) {
+                private afAuth: AngularFireAuth,
+                private toastService: ToastService) {
         this.userCollection = afs.collection<User>('users');
     }
 
@@ -54,6 +56,7 @@ export class AuthService {
      * Method to persist the user's data in the database
      */
     persist(user: User, id: string) {
+        this.toastService.presentToast('Erfolgreich registriert!');
         this.userCollection.doc(id).set(AuthService.copyAndPrepare(user));
     }
 
@@ -88,6 +91,7 @@ export class AuthService {
      * @param user user to be updated
      */
     async updateProfile(user: User) {
+        await this.toastService.presentToast('Profil erfolgreich aktualisiert');
         await firebase.auth().currentUser.updateEmail(user.email);
         await firebase.auth().currentUser.updatePassword(user.passwort);
         await firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
@@ -100,6 +104,7 @@ export class AuthService {
      */
     async deleteProfile(user: User) {
         await this.logOut();
+        await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest automatisch ausgeloggt.');
         await this.userCollection.doc(user.id).delete();
         await firebase.auth().currentUser.delete();
     }
@@ -160,7 +165,6 @@ export class AuthService {
         await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
             this.isLoggedIn = true;
             this.googleLogin = false;
-
             this.persist(new User(nutzername, email, passwort), res.user.uid);
 
             this.subUser = this.findById(res.user.uid)
@@ -192,7 +196,6 @@ export class AuthService {
                         .pipe(take(1))
                         .subscribe((res) => {
                             if (res.id !== undefined) {
-
                                 this.isLoggedIn = true;
                                 this.googleLogin = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
@@ -205,7 +208,6 @@ export class AuthService {
                             } else {
                                 this.user = new User(result.user.displayName, result.user.email, '');
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
-
                                 this.isLoggedIn = true;
                                 this.googleLogin = true;
                                 sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
