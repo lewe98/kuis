@@ -1,7 +1,8 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
 import {Subscription} from 'rxjs';
+import {ToastService} from '../../services/toast/toast.service';
 
 @Component({
     selector: 'app-startseite',
@@ -13,13 +14,17 @@ export class StartseitePage {
     subUser: Subscription;
 
     constructor(private router: Router,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private toastService: ToastService) {
+
         if (!this.authService.user) {
             this.subUser = this.authService.findById(localStorage.getItem('userID'))
-                .subscribe(u => {
+                .subscribe(async u => {
+                    await this.toastService.presentLoading('Bitte warten...');
                     this.authService.user = u;
                     this.authService.subUser = this.subUser;
                     this.subUser.unsubscribe();
+                    await this.toastService.dismissLoading();
                 });
         }
     }

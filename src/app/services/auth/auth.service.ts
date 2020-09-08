@@ -177,19 +177,23 @@ export class AuthService {
 
         // TODO: - Passwort hashen
         // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
-        await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
-            this.isLoggedIn = true;
-            this.googleLogin = false;
-            this.persist(new User(nutzername, email, passwort), res.user.uid);
+        await this.afAuth.createUserWithEmailAndPassword(email, passwort)
+            .then(res => {
+                this.isLoggedIn = true;
+                this.googleLogin = false;
+                this.persist(new User(nutzername, email, passwort), res.user.uid);
 
-            this.subUser = this.findById(res.user.uid)
-                .subscribe(u => {
-                    this.user = u;
-                });
-            localStorage.setItem('userID', res.user.uid);
-        });
-
-        await this.toastService.dismissLoading();
+                this.subUser = this.findById(res.user.uid)
+                    .subscribe(u => {
+                        this.user = u;
+                    });
+                localStorage.setItem('userID', res.user.uid);
+                this.router.navigate(['/startseite']);
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
+                this.toastService.dismissLoading();
+            });
     }
 
     // GOOGLE LOGIN
