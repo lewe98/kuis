@@ -60,9 +60,7 @@ export class RegistrierungPage implements OnInit, ViewDidEnter {
         }
 
         if (this.errors.size === 0) {
-            this.authService.signUp(nutzername, email, passwort).then(() =>
-                this.router.navigate(['/startseite'])
-            );
+            this.authService.signUp(nutzername, email, passwort);
         }
     }
 
