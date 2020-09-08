@@ -144,7 +144,7 @@ export class AuthService {
             sessionStorage.clear();
             localStorage.clear();
             this.subUser.unsubscribe();
-            this.router.navigate(['/login']);
+            this.router.navigate(['/landing']);
         });
     }
 

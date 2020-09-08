@@ -1,16 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-hilfe',
     templateUrl: './hilfe.page.html',
     styleUrls: ['./hilfe.page.scss'],
 })
-export class HilfePage implements OnInit {
+export class HilfePage {
 
     constructor() {
     }
 
-    ngOnInit() {
-    }
 
 }
