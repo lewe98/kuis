@@ -99,8 +99,7 @@ export class ToastService {
      */
     async presentLoading(message) {
         this.loading = await this.loadingController.create({
-            message,
-            duration: 20000
+            message
         });
         await this.loading.present();
     }
