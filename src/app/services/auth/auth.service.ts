@@ -131,9 +131,9 @@ export class AuthService {
                 this.isLoggedIn = true;
                 this.googleLogin = false;
                 if (!this.isSession) {
-                    sessionStorage.setItem('userID', JSON.stringify(res.user.uid));
+                    sessionStorage.setItem('userID', res.user.uid);
                 } else {
-                    localStorage.setItem('userID', JSON.stringify(res.user.uid));
+                    localStorage.setItem('userID', res.user.uid);
                 }
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(u => {
@@ -186,7 +186,7 @@ export class AuthService {
                 .subscribe(u => {
                     this.user = u;
                 });
-            localStorage.setItem('userID', JSON.stringify(res.user.uid));
+            localStorage.setItem('userID', res.user.uid);
         });
 
         await this.toastService.dismissLoading();
@@ -219,7 +219,7 @@ export class AuthService {
 
                                 this.isLoggedIn = true;
                                 this.googleLogin = true;
-                                sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
+                                sessionStorage.setItem('userID', result.user.uid);
 
                                 this.subUser = this.findById(res.id)
                                     .subscribe((u) => {
@@ -232,7 +232,7 @@ export class AuthService {
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
                                 this.isLoggedIn = true;
                                 this.googleLogin = true;
-                                sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
+                                sessionStorage.setItem('userID', result.user.uid);
 
                                 this.subUser = this.findById(result.user.uid)
                                     .subscribe((u) => {

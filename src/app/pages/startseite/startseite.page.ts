@@ -1,15 +1,25 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-startseite',
     templateUrl: './startseite.page.html',
     styleUrls: ['./startseite.page.scss'],
 })
-export class StartseitePage {
+export class StartseitePage implements OnDestroy {
 
-    constructor(private router: Router) {
+    subUser: Subscription;
+
+    constructor(private router: Router,
+                private authService: AuthService) {
+        if (!this.authService.user) {
+            this.subUser = this.authService.findById(localStorage.getItem('userID'))
+                .subscribe(u => {
+                    this.authService.user = u;
+                });
+        }
     }
 
     /**
@@ -20,4 +30,7 @@ export class StartseitePage {
         this.router.navigate([route]);
     }
 
+    ngOnDestroy() {
+        this.subUser.unsubscribe();
+    }
 }
