@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ImpressPageRoutingModule } from './impress-routing.module';
+import { ImprintPageRoutingModule } from './imprint-routing.module';
 
-import { ImpressPage } from './impress.page';
+import { ImprintPage } from './imprint.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ImpressPageRoutingModule
+    ImprintPageRoutingModule
   ],
-  declarations: [ImpressPage]
+  declarations: [ImprintPage]
 })
-export class ImpressPageModule {}
+export class ImprintPageModule {}

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ImpressPage } from './impress.page';
+import { ImprintPage } from './imprint.page';
 
-describe('ImpressPage', () => {
-  let component: ImpressPage;
-  let fixture: ComponentFixture<ImpressPage>;
+describe('ImprintPage', () => {
+  let component: ImprintPage;
+  let fixture: ComponentFixture<ImprintPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImpressPage ],
+      declarations: [ ImprintPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ImpressPage);
+    fixture = TestBed.createComponent(ImprintPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
