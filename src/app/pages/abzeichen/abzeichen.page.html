@@ -3,11 +3,14 @@
     <div class="kuis-content" *ngIf="abzeichenArray.length > 0">
         <ion-card class="card-border-rounded">
             <ion-card-header>
-                <ion-card-title>Abzeichen Übersicht</ion-card-title>
+                <ion-card-title><b>Abzeichen Übersicht</b></ion-card-title>
             </ion-card-header>
-            <ion-card-content>
-                <!--TODO-->
-            </ion-card-content>
+
+                <div class="abzeichenContent">
+                    <p class="abzeichenH1">{{authService.getUser().abzeichen.length}}</p>
+                    <p class="abzeichenP">/{{abzeichenArray.length}}</p>
+                    <ion-icon class="abzeichenIcon" name="trophy-outline"></ion-icon>
+                </div>
         </ion-card>
         <ion-card class="card-border-rounded">
             <ion-card-content class="trophyList">

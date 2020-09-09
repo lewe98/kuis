@@ -5,6 +5,37 @@ ion-content {
   --ion-card-background: white;
 }
 
+.abzeichenContent {
+  display: table;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+
+}
+
+.abzeichenH1 {
+  margin: 0;
+  display: inline-block;
+  font-weight: 900;
+  font-size: clamp(120px, 15vw, 200px);
+  color: $color-kuis;
+}
+
+.abzeichenP {
+  margin: 0;
+  display: inline-block;
+  font-weight: 900;
+  font-size: clamp(40px, 8vw, 120px);
+  color: $color-kuis;
+}
+
+.abzeichenIcon {
+  margin: 0;
+  display: inline-block;
+  color: $color-kuis;
+  font-size: clamp(120px, 15vw, 200px);
+}
+
 .trophyList {
   padding: 0;
 }
@@ -31,4 +62,16 @@ ion-card-title {
 ion-item-group {
   border-bottom: solid 1px $color-kuisGray;
   margin: 10px;
+}
+
+@media screen and (max-width: 365px) {
+  .abzeichenH1 {
+    font-size: 20vw;
+  }
+  .abzeichenP {
+    font-size: 10vw;
+  }
+  .abzeichenIcon {
+    font-size: 20vw;
+  }
 }
