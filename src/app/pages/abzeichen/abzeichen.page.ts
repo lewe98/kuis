@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Abzeichen} from '../../models/abzeichen';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 import {ToastService} from '../../services/toast/toast.service';
@@ -15,14 +15,15 @@ export class AbzeichenPage implements OnInit, OnDestroy {
     constructor(private abzeichenService: AbzeichenService,
                 private authService: AuthService,
                 private toastService: ToastService) {
-        this.abzeichenService.findAllAbzeichen().subscribe(async data => {
-                await this.toastService.presentLoading('Abzeichen werden geladen!');
+        this.toastService.presentLoading('Abzeichen werden geladen...').then(() => {
+            this.abzeichenService.findAllAbzeichen().subscribe(async data => {
                 // await this.authService.checkIfLoggedIn();
                 this.abzeichenArray = data;
                 await this.checkAbzeichenBestanden();
                 await this.toastService.dismissLoading();
-            }
-        );
+            });
+        });
+
         /*
         this.abzeichenArray.push(new Abzeichen( '1', 'Schnellster Lauf', 'Du erreichst diese Trophäe in dem du einen Record aufstellst.'));
         this.abzeichenArray.push(new Abzeichen( '2', 'Intelligenz Bolzen', 'Du erreichst diese Trophäe in dem du der Schlauste bist.'));
@@ -45,6 +46,7 @@ export class AbzeichenPage implements OnInit, OnDestroy {
             }
         });
     }
+
     checkAbzeichenBestanden() {
         const userAbzeichenArray = this.authService.getUser().abzeichen;
         // tslint:disable-next-line:prefer-for-of

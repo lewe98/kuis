@@ -12,6 +12,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {environment} from '../environments/environment';
 import {NavbarComponent} from './components/navbar/navbar.component';
+import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -27,6 +28,7 @@ import {NavbarComponent} from './components/navbar/navbar.component';
     providers: [
         LogoutComponent,
         NavbarComponent,
+        InAppBrowser,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

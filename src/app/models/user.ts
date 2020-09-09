@@ -11,13 +11,16 @@ export class User {
     public abzeichen: string[];
     public statistik: Statistik;
     public importierteModule: Modul[];
+    public googleAccount: boolean;
 
     constructor(nutzername: string,
                 email: string,
-                passwort: string) {
+                passwort: string,
+                googleAccount: boolean) {
         this.nutzername = nutzername;
         this.email = email;
         this.passwort = passwort;
+        this.googleAccount = googleAccount;
 
         this.emailBestaetigt = false;
         this.isOnboarded = false;
