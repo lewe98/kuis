@@ -21,8 +21,6 @@ export class AuthService {
     isLoggedIn = false;
     isSession = false;
 
-    googleLogin;
-
     constructor(private router: Router,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth,
@@ -129,7 +127,6 @@ export class AuthService {
         await this.afAuth.signInWithEmailAndPassword(email, password)
             .then(res => {
                 this.isLoggedIn = true;
-                this.googleLogin = false;
                 if (!this.isSession) {
                     sessionStorage.setItem('userID', res.user.uid);
                 } else {
@@ -139,6 +136,10 @@ export class AuthService {
                     .subscribe(u => {
                         this.user = u;
                     });
+                this.toastService.dismissLoading();
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
                 this.toastService.dismissLoading();
             });
     }
@@ -180,8 +181,7 @@ export class AuthService {
         await this.afAuth.createUserWithEmailAndPassword(email, passwort)
             .then(res => {
                 this.isLoggedIn = true;
-                this.googleLogin = false;
-                this.persist(new User(nutzername, email, passwort), res.user.uid);
+                this.persist(new User(nutzername, email, passwort, false), res.user.uid);
 
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(u => {
@@ -222,8 +222,7 @@ export class AuthService {
                             if (res.id !== undefined) {
 
                                 this.isLoggedIn = true;
-                                this.googleLogin = true;
-                                sessionStorage.setItem('userID', result.user.uid);
+                                localStorage.setItem('userID', result.user.uid);
 
                                 this.subUser = this.findById(res.id)
                                     .subscribe((u) => {
@@ -232,11 +231,10 @@ export class AuthService {
                                     });
                             } else {
 
-                                this.user = new User(result.user.displayName, result.user.email, '');
+                                this.user = new User(result.user.displayName, result.user.email, '', true);
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
                                 this.isLoggedIn = true;
-                                this.googleLogin = true;
-                                sessionStorage.setItem('userID', result.user.uid);
+                                localStorage.setItem('userID', result.user.uid);
 
                                 this.subUser = this.findById(result.user.uid)
                                     .subscribe((u) => {
