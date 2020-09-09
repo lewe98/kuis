@@ -4,6 +4,8 @@ import {User} from '../../models/user';
 import {AlertController, ModalController} from '@ionic/angular';
 import {ProfilEditPage} from './profil-edit/profil-edit.page';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
+import {Subscription} from 'rxjs';
+import {ToastService} from '../../services/toast/toast.service';
 
 @Component({
     selector: 'app-profil',
@@ -13,12 +15,30 @@ import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 export class ProfilPage {
 
     user: User;
+    subUser: Subscription;
 
     constructor(public authService: AuthService,
+                private toastService: ToastService,
                 private modalController: ModalController,
                 private alertController: AlertController,
                 private iab: InAppBrowser) {
-        this.user = this.authService.getUser();
+
+        if (this.authService.user !== undefined) {
+            this.user = this.authService.getUser();
+        } else {
+            this.toastService.presentLoading('Bitte warten...')
+                .then(async () => {
+                    await this.authService.findById(localStorage.getItem('userID'))
+                        .subscribe(async u => {
+                            this.user = u;
+                        });
+                    await this.toastService.dismissLoading();
+                })
+                .catch((error) => {
+                    this.toastService.presentWarningToast('Error!', error);
+                    this.toastService.dismissLoading();
+                });
+        }
     }
 
     openGoogleEdit() {

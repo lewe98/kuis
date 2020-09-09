@@ -15,14 +15,16 @@ export class AbzeichenPage implements OnInit, OnDestroy {
     constructor(private abzeichenService: AbzeichenService,
                 private authService: AuthService,
                 private toastService: ToastService) {
-        this.toastService.presentLoading('Abzeichen werden geladen...').then(() => {
-            this.abzeichenService.findAllAbzeichen().subscribe(async data => {
-                // await this.authService.checkIfLoggedIn();
-                this.abzeichenArray = data;
-                await this.checkAbzeichenBestanden();
+        this.toastService.presentLoading('Abzeichen werden geladen...')
+            .then(async () => {
+                await this.abzeichenService.findAllAbzeichen()
+                    .subscribe(async data => {
+                        // await this.authService.checkIfLoggedIn();
+                        this.abzeichenArray = data;
+                        await this.checkAbzeichenBestanden();
+                    });
                 await this.toastService.dismissLoading();
             });
-        });
 
         /*
         this.abzeichenArray.push(new Abzeichen( '1', 'Schnellster Lauf', 'Du erreichst diese Trophäe in dem du einen Record aufstellst.'));

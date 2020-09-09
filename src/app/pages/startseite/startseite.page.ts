@@ -16,17 +16,23 @@ export class StartseitePage {
     constructor(private router: Router,
                 private authService: AuthService,
                 private toastService: ToastService) {
-        this.toastService.presentLoading('Bitte warten...').then(() => {
-            if (this.authService.user === undefined) {
-                this.subUser = this.authService.findById(localStorage.getItem('userID'))
-                    .subscribe(async u => {
-                        this.authService.user = await u;
-                        this.authService.subUser = await this.subUser;
-                        await this.subUser.unsubscribe();
-                        await this.toastService.dismissLoading();
-                    });
-            }
-        });
+        this.toastService.presentLoading('Bitte warten...')
+            .then(() => {
+                if (this.authService.user === undefined) {
+                    this.subUser = this.authService.findById(localStorage.getItem('userID'))
+                        .subscribe(async u => {
+                            this.authService.user = await u;
+                            this.authService.subUser = await this.subUser;
+                            await this.subUser.unsubscribe();
+                            await this.toastService.dismissLoading();
+                        });
+                }
+                this.toastService.dismissLoading();
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
+                this.toastService.dismissLoading();
+            });
     }
 
     /**
