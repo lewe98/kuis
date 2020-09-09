@@ -3,6 +3,8 @@ export class Abzeichen {
         this.id = id;
         this.titel = titel;
         this.beschreibung = beschreibung;
+        this.showBeschreibung = false;
+        this.erreicht = false;
     }
     public id: string;
     public titel: string;
