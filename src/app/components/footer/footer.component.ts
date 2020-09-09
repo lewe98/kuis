@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {TermsPage} from '../../pages/legal/terms/terms.page';
 import {PrivacyPage} from '../../pages/legal/privacy/privacy.page';
 import {ModalController} from '@ionic/angular';
-import {ImpressPage} from '../../pages/legal/impress/impress.page';
+import {ImprintPage} from '../../pages/legal/imprint/imprint.page';
 
 @Component({
     selector: 'app-footer',
@@ -15,11 +15,11 @@ export class FooterComponent {
     }
 
     /**
-     * Method to display impress
+     * Method to display imprint
      */
-    async showImpressModal() {
+    async showImprintModal() {
         const modal = await this.modalController.create({
-            component: ImpressPage
+            component: ImprintPage
         });
         return await modal.present();
     }

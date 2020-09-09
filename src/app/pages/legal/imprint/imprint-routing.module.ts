@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ImpressPage } from './impress.page';
+import { ImprintPage } from './imprint.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ImpressPage
+    component: ImprintPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ImpressPageRoutingModule {}
+export class ImprintPageRoutingModule {}
