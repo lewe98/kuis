@@ -1,0 +1,34 @@
+@import 'src/global.scss';
+
+ion-content {
+  --ion-item-background: white;
+  --ion-card-background: white;
+}
+
+.hilfeContent {
+  display: table;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hilfeList {
+  padding: 0;
+}
+
+ion-card-title {
+  color: $color-kuisBlack;
+}
+
+ion-card-content {
+  color: $color-kuisBlack;
+}
+
+.card-border-rounded {
+  border-radius: 20px;
+}
+
+ion-item-group {
+  border-bottom: solid 1px $color-kuisGray;
+  margin: 10px;
+}

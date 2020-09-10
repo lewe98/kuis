@@ -1,3 +1,69 @@
+<app-navbar [showLogout]="authService.checkIfLoggedIn()" [name]="'Hilfe'"></app-navbar>
 
 <ion-content>
+    <div class="kuis-content">
+
+        <ion-card class="card-border-rounded">
+            <ion-card-header>
+                <ion-card-title><b>Die App</b></ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+                <h6>
+                    Mit der Kuis App kannst du Bilderrätsel lösen und dein Allgemeinwissen verbessern.
+                    Jede Frage bietet vier Antwortmöglichkeiten.
+                    Du kannst Fragenpakete sowohl speichern als auch neue herunterladen.
+                </h6>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card class="card-border-rounded">
+            <ion-card-content class="hilfeList">
+
+                <ion-item>
+                    <ion-input (ionInput)="doSearch()"
+                               clearOnEdit="false"
+                               color="primary"
+                               inputmode="text"
+                               placeholder="Frage suchen..." required="true">
+                    </ion-input>
+
+                    <ion-icon *ngIf="filteredFragenArray.length < fragenArray.length" name="close-outline"
+                              (click)="clear()" color="primary" slot="end"></ion-icon>
+                    <ion-icon name="search-outline" color="primary" slot="end"></ion-icon>
+
+                </ion-item>
+
+                <ion-list *ngIf="filteredFragenArray.length > 0; else empty">
+                    <ion-item-group *ngFor="let frage of filteredFragenArray" (click)="showAntwort(frage.f)">
+
+                        <ion-item lines="none">
+                            <ion-label>
+                                <h4>{{frage.f}}</h4>
+                            </ion-label>
+                            <ion-icon *ngIf="frage.show" color="#000" slot="end"
+                                      name="chevron-up-outline"></ion-icon>
+                            <ion-icon *ngIf="!frage.show" color="#000" slot="end"
+                                      name="chevron-down-outline"></ion-icon>
+                        </ion-item>
+
+                        <ion-item *ngIf="frage.show" lines="none" class="item item-text-wrap">
+                            <h6>{{frage.a}}</h6>
+                        </ion-item>
+
+                    </ion-item-group>
+                </ion-list>
+
+            </ion-card-content>
+        </ion-card>
+    </div>
+
 </ion-content>
+
+<ng-template #empty>
+    <ion-item lines="none">
+        <ion-label>
+            <h4>Die Suche ergab keinen Treffer.</h4>
+        </ion-label>
+    </ion-item>
+</ng-template>
