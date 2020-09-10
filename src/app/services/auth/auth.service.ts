@@ -189,6 +189,7 @@ export class AuthService {
                     });
                 localStorage.setItem('userID', res.user.uid);
                 this.router.navigate(['/startseite']);
+                this.toastService.dismissLoading();
             })
             .catch((error) => {
                 this.toastService.presentWarningToast('Error!', error);
