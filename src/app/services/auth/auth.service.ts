@@ -8,6 +8,7 @@ import {map, take} from 'rxjs/operators';
 import * as firebase from 'firebase';
 import {auth} from 'firebase';
 import {ToastService} from '../toast/toast.service';
+// import * as crypto from 'crypto-js';
 
 @Injectable({
     providedIn: 'root'
@@ -89,12 +90,27 @@ export class AuthService {
      * @param user user to be updated
      */
     async updateProfile(user: User) {
-        await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...');
-        await firebase.auth().currentUser.updateEmail(user.email);
-        await firebase.auth().currentUser.updatePassword(user.passwort);
-        await firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
-        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-        await this.toastService.dismissLoading();
+        await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
+            .then(async () => {
+                await firebase.auth().currentUser.updateEmail(user.email)
+                    .catch((error) => {
+                        this.toastService.presentWarningToast('Error!', error);
+                        this.toastService.dismissLoading();
+                    });
+                await firebase.auth().currentUser.updatePassword(user.passwort)
+                    .catch((error) => {
+                        this.toastService.presentWarningToast('Error!', error);
+                        this.toastService.dismissLoading();
+                    });
+                await firebase.auth().currentUser.updateProfile({displayName: user.nutzername})
+                    .catch((error) => {
+                        this.toastService.presentWarningToast('Error!', error);
+                        this.toastService.dismissLoading();
+                    });
+                await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                await this.toastService.dismissLoading();
+            });
+
         await this.toastService.presentToast('Profil erfolgreich aktualisiert');
     }
 
@@ -103,8 +119,8 @@ export class AuthService {
      * @param user user to be deleted
      */
     async deleteProfile(user: User) {
-        this.userCollection.doc(user.id).delete();
-        firebase.auth().currentUser.delete();
+        await this.userCollection.doc(user.id).delete();
+        await firebase.auth().currentUser.delete();
 
         await this.toastService.presentLoading('Bitte warten. \n Dies kann einige Sekunden dauern.');
         await this.logOut();
@@ -121,9 +137,8 @@ export class AuthService {
     async signIn(email: string, password: string) {
 
         await this.toastService.presentLoading('Bitte warten...');
+        // const pw = crypto.AES.encrypt(password, '').toString();
 
-        // TODO: - Passwort hashen
-        // await this.afAuth.signInWithEmailAndPassword(email, bcrypt.hashSync(password, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.signInWithEmailAndPassword(email, password)
             .then(res => {
                 this.isLoggedIn = true;
@@ -176,8 +191,8 @@ export class AuthService {
 
         await this.toastService.presentLoading('Bitte warten...');
 
-        // TODO: - Passwort hashen
-        // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
+        // const pw = crypto.AES.encrypt(passwort, '').toString();
+
         await this.afAuth.createUserWithEmailAndPassword(email, passwort)
             .then(res => {
                 this.isLoggedIn = true;
