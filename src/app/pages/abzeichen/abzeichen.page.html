@@ -31,7 +31,7 @@
 
                 <ion-list *ngIf="filteredAbzeichenArray.length > 0; else empty">
                     <ion-item-group *ngFor="let abzeichen of filteredAbzeichenArray" (click)="showAbzeichen(abzeichen)">
-                        <ion-item lines="none">
+                        <ion-item lines="none" class="klickbar">
                             <ion-label>
                                 <h4>{{abzeichen.titel}}</h4>
                             </ion-label>

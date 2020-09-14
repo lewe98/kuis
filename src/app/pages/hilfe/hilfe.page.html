@@ -37,7 +37,7 @@
                 <ion-list *ngIf="filteredFragenArray.length > 0; else empty">
                     <ion-item-group *ngFor="let frage of filteredFragenArray" (click)="showAntwort(frage.f)">
 
-                        <ion-item lines="none">
+                        <ion-item lines="none" class="klickbar">
                             <ion-label>
                                 <h4>{{frage.f}}</h4>
                             </ion-label>
