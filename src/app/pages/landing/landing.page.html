@@ -1,18 +1,23 @@
 <ion-content force-overscroll="false" class="landing-page bg-gradient">
 
-    <div class="vertical-layout">
-        <div class="ion-padding slider">
+    <div class="headerText">
+        <h1>Willkommen bei Kuis!</h1>
+        <h2>Dem Bilder Quiz</h2>
+    </div>
+    <div class="kuis-content">
+    <div class="ion-padding slider">
             <ion-slides pager="true" [options]="slidesOptions" #slideWithNav>
                 <ion-slide *ngFor="let s of sliderOne.slidesItems">
                     <ion-grid>
                         <ion-row>
-                            <app-aspect-ratio class="center" [ratio]="{w:3, h:4}">
+                            <ion-col>
                                 <img class="image" [src]="s.path" [alt]="'about the app...'">
-                            </app-aspect-ratio>
+                            </ion-col>
                         </ion-row>
-
                         <ion-row class="bottom-row">
-                            <span class="slide-text">{{s.text}}</span>
+                            <ion-col>
+                                <span class="slide-text">{{s.text}}</span>
+                            </ion-col>
                         </ion-row>
                     </ion-grid>
                 </ion-slide>
@@ -21,22 +26,22 @@
         </div>
 
         <div class="section-buttons ion-padding">
-            <ion-button expand="block" fill="outline" shape="round"
+            <ion-button expand="block" fill="solid" shape="round"
                         class="button-landing" [routerLink]="['/registrierung']">
                 REGISTRIEREN
             </ion-button>
 
-            <ion-button expand="block" fill="outline" shape="round" class="button-landing"
+            <ion-button expand="block" fill="solid" shape="round" class="button-landing"
                         [routerLink]="['/login']">
                 EINLOGGEN
             </ion-button>
 
-            <ion-button expand="block" fill="solid" color="white" shape="round" class="button-landing"
+            <ion-button expand="block" fill="solid" color="#000" shape="round" class="button-landing white"
                         (click)="googleLogin()">
-                <ion-img src="assets/icon/google.png" alt="Sign in with Google"></ion-img>
+                <ion-img class="googleIMG" src="assets/icon/google.png" alt="Sign in with Google"></ion-img>
             </ion-button>
 
-            <ion-button expand="block" fill="outline" shape="round" class="button-landing"
+            <ion-button expand="block" fill="outline" shape="round"
                         [routerLink]="['/hilfe']">
                 DU BRAUCHST HILFE?
             </ion-button>
