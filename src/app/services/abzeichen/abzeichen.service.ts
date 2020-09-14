@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, DocumentChangeAction} from '@angular/fire/firestore';
 import {Observable, Subscription} from 'rxjs';
 import {Abzeichen} from '../../models/abzeichen';
-import {User} from '../../models/user';
 import {map} from 'rxjs/operators';
 
 
@@ -21,6 +20,11 @@ export class AbzeichenService {
             this.abzeichen = data;
         });
     }
+
+    /***
+     * This Method returns a Observable of all 'Abzeichen'.
+     * @return Observable<Abzeichen[]> are all of the 'Abzeichen' in the Database.
+     */
     findAllAbzeichen(): Observable<Abzeichen[]> {
         const changeActions: Observable<DocumentChangeAction<Abzeichen>[]> =
             this.abzeichenCollection.snapshotChanges();
