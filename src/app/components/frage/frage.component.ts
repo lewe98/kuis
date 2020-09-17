@@ -22,16 +22,15 @@ export class FrageComponent {
         this.initialize();
     }
 
-    async initialize() {
-        await this.storageService.getPicture(this.storageService.module[this.counter].bild).then(() => {
-            this.f.id = this.storageService.module[this.counter].id;
-            this.f.frage = this.storageService.module[this.counter].frage;
-            this.f.antworten = this.storageService.module[this.counter].antworten;
-            this.f.richtigeAntwort = this.storageService.module[this.counter].richtigeAntwort;
-            this.bild = this.storageService.url;
-            alert(this.bild);
-        });
-
+   async initialize() {
+        this.f.id = this.storageService.module[this.counter].id;
+        this.f.frage = this.storageService.module[this.counter].frage;
+        this.f.antworten = this.storageService.module[this.counter].antworten;
+        this.f.richtigeAntwort = this.storageService.module[this.counter].richtigeAntwort;
+        this.f.bild = this.storageService.module[this.counter].bild;
+        this.storageService.getPicture(this.f.bild);
+        this.bild = this.storageService.url;
+        alert(this.bild);
     }
 
 }
