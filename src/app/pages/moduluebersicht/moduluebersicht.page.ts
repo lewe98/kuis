@@ -9,13 +9,21 @@ import {Router} from '@angular/router';
 })
 export class ModuluebersichtPage {
 
+    url = '';
+
     constructor(public storageService: StorageService,
                 private router: Router) {
         this.storageService.findAllModules();
     }
 
-    chooseQuiz(name: string, id: string) {
-        this.storageService.findAll(id, name)
-            .then(() => this.router.navigate(['/quiz']));
+    chooseQuiz(name: string, id: string, bild: string) {
+        this.storageService.findAll(id, name, bild)
+            .then(() => {
+                this.storageService.getPicture(bild).then((res) => {
+                    this.url = res;
+                });
+                this.router.navigate(['/quiz']);
+                console.log(this.storageService.module[0]);
+            });
     }
 }
