@@ -8,20 +8,15 @@ import {StorageService} from '../../services/storage/storage.service';
 })
 export class ModuluebersichtPage {
 
-    quizzes = [
-        {
-            titel: 'Fußball Quiz',
-            bild: ''
-        },
-        {
-            titel: 'Musik Quiz',
-            bild: ''
-        },
-        {
-            titel: 'Film Quiz',
-            bild: ''
-        }];
+    fragen = [];
 
     constructor(public storageService: StorageService) {
+        this.storageService.findAllModules();
+    }
+
+    async chooseQuiz(name: string, id: string) {
+        this.storageService.findAll(id, name).then((res) => {
+            this.fragen = res;
+        });
     }
 }

@@ -15,23 +15,34 @@ export class StorageService {
     modulCollection: AngularFirestoreCollection<Modul>;
     url = '';
     module = [];
-
+    fragen = [];
 
     constructor(private afs: AngularFirestore,
                 private toastService: ToastService) {
         this.modulCollection = afs.collection<Modul>('module');
-
-        this.findAll();
     }
 
     getID(doc) {
         return {id: doc.id, ...doc.data()};
     }
 
-    findAll() {
+    findAll(id: string, name: string): Promise<any[]> {
+        return new Promise((resolve) => {
+            this.afs.collection('module')
+                .doc(id)
+                .collection(name)
+                .get()
+                .toPromise()
+                .then(snapshot => {
+                    this.fragen = snapshot.docs.map(this.getID);
+                    console.log(this.fragen);
+                    resolve(this.fragen);
+                });
+        });
+    }
+
+    findAllModules() {
         this.afs.collection('module')
-            .doc('42LVdVpFY7xQew72tsM5')
-            .collection('musik-quiz')
             .get()
             .toPromise()
             .then(snapshot => {

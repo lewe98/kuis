@@ -23,12 +23,12 @@ export class FrageComponent {
     }
 
     async initialize() {
-        this.f.id = this.storageService.module[this.counter].id;
-        this.f.frage = this.storageService.module[this.counter].frage;
-        this.f.antworten = this.storageService.module[this.counter].antworten;
+        this.f.id = this.storageService.fragen[this.counter].id;
+        this.f.frage = this.storageService.fragen[this.counter].frage;
+        this.f.antworten = this.storageService.fragen[this.counter].antworten;
         this.shuffleAntworten(this.f.antworten);
-        this.f.richtigeAntwort = this.storageService.module[this.counter].richtigeAntwort;
-        this.f.bild = this.storageService.module[this.counter].bild;
+        this.f.richtigeAntwort = this.storageService.fragen[this.counter].richtigeAntwort;
+        this.f.bild = this.storageService.fragen[this.counter].bild;
 
         await this.storageService.getPicture(this.f.bild)
             .then((url) => {
