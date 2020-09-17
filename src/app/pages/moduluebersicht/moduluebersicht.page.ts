@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-moduluebersicht',
@@ -8,15 +9,13 @@ import {StorageService} from '../../services/storage/storage.service';
 })
 export class ModuluebersichtPage {
 
-    fragen = [];
-
-    constructor(public storageService: StorageService) {
+    constructor(public storageService: StorageService,
+                private router: Router) {
         this.storageService.findAllModules();
     }
 
-    async chooseQuiz(name: string, id: string) {
-        this.storageService.findAll(id, name).then((res) => {
-            this.fragen = res;
-        });
+    chooseQuiz(name: string, id: string) {
+        this.storageService.findAll(id, name)
+            .then(() => this.router.navigate(['/quiz']));
     }
 }

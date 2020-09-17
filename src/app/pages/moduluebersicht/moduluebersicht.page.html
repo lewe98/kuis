@@ -6,7 +6,7 @@
         <ion-icon name="settings-outline"></ion-icon>
         <ion-icon name="options-outline"></ion-icon>
     </ion-row>
-    <app-quiz-wrapper (click)="chooseQuiz(quiz.name, quiz.id)" [name]="quiz.name" *ngFor="let quiz of storageService.module" [routerLink]="['/quiz']">
+    <app-quiz-wrapper (click)="chooseQuiz(quiz.name, quiz.id)" [name]="quiz.name" *ngFor="let quiz of storageService.module">
     </app-quiz-wrapper>
 
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">

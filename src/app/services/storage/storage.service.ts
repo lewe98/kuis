@@ -26,7 +26,7 @@ export class StorageService {
         return {id: doc.id, ...doc.data()};
     }
 
-    findAll(id: string, name: string): Promise<any[]> {
+    findAll(id: string, name: string): Promise<any> {
         return new Promise((resolve) => {
             this.afs.collection('module')
                 .doc(id)
@@ -35,8 +35,7 @@ export class StorageService {
                 .toPromise()
                 .then(snapshot => {
                     this.fragen = snapshot.docs.map(this.getID);
-                    console.log(this.fragen);
-                    resolve(this.fragen);
+                    resolve();
                 });
         });
     }
