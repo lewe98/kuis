@@ -11,6 +11,7 @@ import {Modul} from '../../models/modul';
 })
 export class ModuluebersichtPage {
     module: Modul[];
+    filteredModules: Modul[] = [];
     url = '';
 
     constructor(private modulService: ModulService,
@@ -19,6 +20,7 @@ export class ModuluebersichtPage {
         modulService.findAllModule().subscribe(data => {
             console.log('Ich lade mich neu!');
             this.module = data;
+            this.filteredModules = this.module;
         });
     }
 
@@ -30,5 +32,20 @@ export class ModuluebersichtPage {
                 });
                 this.router.navigate(['/quiz']);
             });
+    }
+
+    /**
+     * This function returns an filtered array of the modules based on a given query.
+     *
+     * @param $event is the given query.
+     */
+   async search($event: any) {
+        const query = $event.target.value;
+        if (!query) {
+            return this.module = this.filteredModules;
+        }
+        this.module = this.filteredModules.filter(m => {
+            return (m.titel.toLowerCase().indexOf(query.toLowerCase()) > -1);
+        });
     }
 }
