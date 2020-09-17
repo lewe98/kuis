@@ -17,13 +17,12 @@ export class ModuluebersichtPage {
     }
 
     chooseQuiz(name: string, id: string, bild: string) {
-        this.storageService.findAll(id, name, bild)
+        this.storageService.findAll(id, name)
             .then(() => {
                 this.storageService.getPicture(bild).then((res) => {
                     this.url = res;
                 });
                 this.router.navigate(['/quiz']);
-                console.log(this.storageService.module[0]);
             });
     }
 }
