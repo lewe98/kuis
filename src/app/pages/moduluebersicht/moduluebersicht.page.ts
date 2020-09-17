@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
+import {ModulService} from '../../services/modul/modul.service';
+import {Modul} from '../../models/modul';
 
 @Component({
     selector: 'app-moduluebersicht',
@@ -8,12 +10,16 @@ import {Router} from '@angular/router';
     styleUrls: ['./moduluebersicht.page.scss'],
 })
 export class ModuluebersichtPage {
-
+    module: Modul[];
     url = '';
 
-    constructor(public storageService: StorageService,
+    constructor(private modulService: ModulService,
+                public storageService: StorageService,
                 private router: Router) {
-        this.storageService.findAllModules();
+        modulService.findAllModule().subscribe(data => {
+            console.log('Ich lade mich neu!');
+            this.module = data;
+        });
     }
 
     chooseQuiz(name: string, id: string, bild: string) {

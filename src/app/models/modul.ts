@@ -2,16 +2,13 @@ import {Frage} from './frage';
 
 export class Modul {
     public id: string;
-    public fragen: Frage[];
     public titel: string;
+    public anzahlFragen: number;
     public bild: string;
-    public isImported: boolean;
 
-    constructor(id: string, fragen: Frage[], titel: string, bild: string, isImported: boolean) {
+    constructor(id: string, titel: string, bild: string) {
         this.id = id;
-        this.fragen = fragen;
         this.titel = titel;
         this.bild = bild;
-        this.isImported = isImported;
     }
 }
