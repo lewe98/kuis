@@ -22,35 +22,7 @@ export class StorageService {
         this.modulCollection = afs.collection<Modul>('module');
 
         this.findAll();
-
-        /*
-        afs.collection('modules/42LVdVpFY7xQew72tsM5/musik-quiz')
-             .get()
-             .subscribe(elem => {
-                 console.log(elem);
-             });
-
-         this.findAll().subscribe(data => {
-             this.module = data;
-             console.log('Data: ' + JSON.stringify(data));
-         });
-         */
     }
-
-    /*
-    findAll(): Observable<Modul[]> {
-         const changeActions: Observable<DocumentChangeAction<Modul>[]> =
-             this.modulCollection.snapshotChanges();
-         const lol = this.afs.collection('modules/42LVdVpFY7xQew72tsM5/musik-quiz');
-
-         return changeActions.pipe(
-             map(actions => actions.map(a => {
-                 const data = a.payload.doc.data();
-                 data.id = a.payload.doc.id;
-                 return data;
-             })));
-     }
-     */
 
     getID(doc) {
         return {id: doc.id, ...doc.data()};
@@ -68,19 +40,22 @@ export class StorageService {
             });
     }
 
-    async getPicture(name: string) {
-        await this.toastService.presentLoading('Bitte warten...').then(() => {
-            this.gsReference
-                .child(name)
-                .getDownloadURL()
-                .then((url) => {
-                    this.url = url;
+    async getPicture(name: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.toastService.presentLoading('Bitte warten...').then(() => {
+                this.gsReference
+                    .child(name)
+                    .getDownloadURL()
+                    .then(async (url) => {
+                        this.url = await url;
+                        resolve(url);
+                        await this.toastService.dismissLoading();
+                    }).catch((error) => {
+                    this.toastService.presentWarningToast('Error', error);
                     this.toastService.dismissLoading();
-                }).catch((error) => {
-                this.toastService.presentWarningToast('Error', error);
-                this.toastService.dismissLoading();
+                    reject(error);
+                });
             });
         });
-
     }
 }

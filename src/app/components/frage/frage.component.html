@@ -5,7 +5,7 @@
             <ion-col>
                 <ion-card class="card-color-white">
                     <ion-card-header>
-                        <ion-img [src]="bild"></ion-img>
+                        <ion-img [alt]="'Bild'" [src]="bild"></ion-img>
                         <ion-card-title>{{f.frage}}</ion-card-title>
                     </ion-card-header>
                 </ion-card>
@@ -14,7 +14,7 @@
 
         <ion-row>
             <ion-col>
-                <ion-card class="card-color-white">
+                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[0])">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[0]}}</ion-card-title>
                     </ion-card-header>
@@ -22,7 +22,7 @@
             </ion-col>
 
             <ion-col>
-                <ion-card class="card-color-white">
+                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[1])">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[1]}}</ion-card-title>
                     </ion-card-header>
@@ -32,7 +32,7 @@
 
         <ion-row>
             <ion-col>
-                <ion-card class="card-color-white">
+                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[2])">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[2]}}</ion-card-title>
                     </ion-card-header>
@@ -40,7 +40,7 @@
             </ion-col>
 
             <ion-col>
-                <ion-card class="card-color-white">
+                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[3])">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[3]}}</ion-card-title>
                     </ion-card-header>
@@ -49,7 +49,5 @@
         </ion-row>
 
     </ion-grid>
-
-    <ion-button (click)="showNextQuestion()">WEITER</ion-button>
 
 </ion-content>
