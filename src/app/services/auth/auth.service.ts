@@ -8,6 +8,7 @@ import {map, take} from 'rxjs/operators';
 import * as firebase from 'firebase';
 import {auth} from 'firebase';
 import {ToastService} from '../toast/toast.service';
+
 // import * as crypto from 'crypto-js';
 
 @Injectable({
