@@ -38,6 +38,7 @@ export class ModuluebersichtPage {
      * This function returns an filtered array of the modules based on a given query.
      *
      * @param $event is the given query.
+     * @return either an filtered Array based on the given query, or if the query is empty, returns the full module list.
      */
    async search($event: any) {
         const query = $event.target.value;
