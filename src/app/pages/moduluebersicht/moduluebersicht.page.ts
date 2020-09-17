@@ -49,4 +49,8 @@ export class ModuluebersichtPage {
             return (m.titel.toLowerCase().indexOf(query.toLowerCase()) > -1);
         });
     }
+
+    deleteModule() {
+        console.log('Yet to be implemented!');
+    }
 }
