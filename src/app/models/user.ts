@@ -10,7 +10,7 @@ export class User {
     public isOnboarded: boolean;
     public abzeichen: string[];
     public statistik: Statistik;
-    public importierteModule: string[];
+    public importierteModule: any[];
     public googleAccount: boolean;
 
     constructor(nutzername: string,

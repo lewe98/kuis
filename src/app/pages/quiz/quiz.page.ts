@@ -2,6 +2,8 @@ import {Component, OnDestroy} from '@angular/core';
 import {ModulService} from '../../services/modul/modul.service';
 import {StorageService} from '../../services/storage/storage.service';
 import {ToastService} from '../../services/toast/toast.service';
+import {AuthService} from '../../services/auth/auth.service';
+import {User} from '../../models/user';
 
 @Component({
     selector: 'app-quiz',
@@ -16,10 +18,15 @@ export class QuizPage implements OnDestroy {
 
     globalCounter = 0;
 
+    user: User;
+
     constructor(public modulService: ModulService,
                 private storageService: StorageService,
+                private authService: AuthService,
                 private toastService: ToastService) {
         this.initialize();
+        this.user = this.authService.getUser();
+        alert(JSON.stringify(this.user));
     }
 
     ngOnDestroy() {
@@ -35,12 +42,14 @@ export class QuizPage implements OnDestroy {
                             this.alleModule = res;
 
                             // TODO: - forEach umgehen
-                            this.alleModule.forEach(elem => {
+                            this.user.importierteModule.forEach(elem => {
                                 this.storageService.findAllFragenLernmodus(elem.id, elem.titel)
                                     .then(() => {
+                                        alert(elem.id);
+                                        alert(elem.titel);
                                         this.alleFragen.push(this.storageService.fragen);
                                         this.globalCounter++;
-                                        if (this.globalCounter === this.alleModule.length) {
+                                        if (this.globalCounter === this.user.importierteModule.length) {
                                             this.pushFrage();
                                         }
                                     });
