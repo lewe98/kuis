@@ -1,6 +1,7 @@
 <app-navbar [name]="'Modulübersicht'" [showBack]="true" [showLogout]="true"></app-navbar>
 
 <ion-content>
+    <div class="kuis-content">
     <ion-row>
         <ion-item>
             <ion-input (ionInput)="doSearch()"
@@ -31,7 +32,6 @@
         <ion-icon name="options-outline">
         </ion-icon>
     </ion-row>
-
     <div *ngIf="filteredModules.length > 0; else empty">
         <app-quiz-wrapper (click)="chooseQuiz(modul.titel, modul.id, modul.bild)" [titel]="modul.titel"
                           [bild]="modul.bild" *ngFor="let modul of filteredModules">
@@ -44,6 +44,7 @@
             <ion-icon name="add-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
+    </div>
 </ion-content>
 
 <ng-template #empty>

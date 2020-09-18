@@ -7,9 +7,13 @@
         </ion-card-header>
         <ion-card-content>
             <img [src]="bild">
+            <div *ngIf="add||edit" class="overlay">
+                <ion-icon *ngIf="edit"class="icon-overlay" slot="icon-only" name="trash-outline"></ion-icon>
+                <ion-icon *ngIf="add"class="icon-overlay" slot="icon-only" name="add-outline"></ion-icon>
+            </div>
         </ion-card-content>
 
     </ion-card>
 </ion-col>
 
-<app-kuis-button [title]="'Starten'"></app-kuis-button>
+<app-kuis-button [title]="button"></app-kuis-button>

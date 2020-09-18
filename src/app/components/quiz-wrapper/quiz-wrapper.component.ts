@@ -10,6 +10,9 @@ export class QuizWrapperComponent implements OnInit {
 
     @Input() titel: string;
     @Input() bild: string;
+    @Input() add = false;
+    @Input() edit = false;
+    button = 'Starten';
 
     constructor(private storageService: StorageService) {
         /* alert(this.bild);
@@ -22,6 +25,11 @@ export class QuizWrapperComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.add) {
+            this.button = 'Hinzufügen';
+        } else if (this.edit) {
+            this.button = 'Löschen';
+        }
     }
 
 }
