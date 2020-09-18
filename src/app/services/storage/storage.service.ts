@@ -12,7 +12,6 @@ export class StorageService {
     storage = firebase.storage();
     gsReference = this.storage.refFromURL('gs://pictures-app-68662.appspot.com/');
     modulCollection: AngularFirestoreCollection<Modul>;
-    module = [];
     fragen = [];
 
     constructor(private afs: AngularFirestore) {
@@ -23,8 +22,22 @@ export class StorageService {
         return {id: doc.id, ...doc.data()};
     }
 
-    findAll(id: string, name: string): Promise<any> {
+    findAllFragen(id: string, name: string): Promise<any> {
         return new Promise((resolve) => {
+            this.afs.collection('module')
+                .doc(id)
+                .collection(name)
+                .get()
+                .toPromise()
+                .then(snapshot => {
+                    this.fragen = snapshot.docs.map(this.getID);
+                    resolve();
+                });
+        });
+    }
+
+    findAllFragenLernmodus(id: string, name: string): Promise<any> {
+        return new Promise<any>(resolve => {
             this.afs.collection('module')
                 .doc(id)
                 .collection(name)

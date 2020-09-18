@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Frage} from '../../models/frage';
 import {Router} from '@angular/router';
