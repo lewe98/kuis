@@ -40,20 +40,6 @@ export class StorageService {
         });
     }
 
-    findAllModules() {
-        this.afs.collection('module')
-            .get()
-            .toPromise()
-            .then(snapshot => {
-                this.module = snapshot.docs.map(this.getID);
-                this.module.forEach((elem) => {
-                    this.getPicture(elem.bild).then((url) => {
-                        elem.bild = url;
-                    });
-                });
-            });
-    }
-
     async getPicture(name: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.gsReference
