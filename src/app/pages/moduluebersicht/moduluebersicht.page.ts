@@ -5,6 +5,7 @@ import {ModulService} from '../../services/modul/modul.service';
 import {Modul} from '../../models/modul';
 import {IonInput, ViewDidEnter} from '@ionic/angular';
 import {ToastService} from '../../services/toast/toast.service';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-moduluebersicht',
@@ -26,6 +27,9 @@ export class ModuluebersichtPage implements ViewDidEnter {
                 await modulService.findAllModule()
                     .subscribe(async data => {
                         this.module = data;
+                        // this.myModule = this.module.filter(a => {
+                        //  return this.authService.getUser().importierteModule.includes(a.id);
+                        // });
                         this.filteredModules = data;
                     });
                 await this.toastService.dismissLoading();

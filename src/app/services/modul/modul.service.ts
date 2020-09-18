@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {StorageService} from '../storage/storage.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ModulService {
     modulCollection: AngularFirestoreCollection<Modul>;

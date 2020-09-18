@@ -27,20 +27,11 @@
         </ion-button>
     </div>
 
-    <ion-button expand="block" shape="round" (click)="authService.logOut()">
-        Logout
-    </ion-button>
-
+    <app-kuis-button [title]="'Logout'" (click)="authService.logOut()"></app-kuis-button>
     <ng-template #google>
-        <ion-button expand="block" shape="round" (click)="openGoogleEdit()">
-            Google Profil öffnen
-        </ion-button>
+        <app-kuis-button [title]="'Google Profil öffnen'" (click)="openGoogleEdit()"></app-kuis-button>
     </ng-template>
-
-
-    <ion-button expand="block" shape="round" (click)="deleteWarning(user)">
-        Account löschen
-    </ion-button>
+    <app-kuis-button [title]="'Account löschen'" (click)="deleteWarning(user)"></app-kuis-button>
     <app-footer>
     </app-footer>
     </div>

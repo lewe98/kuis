@@ -1,12 +1,15 @@
 <ion-col>
-    <ion-card>
+    <ion-card class="card-border-rounded">
 
         <ion-card-header>
-            <ion-img [src]="bild"></ion-img>
-            <ion-card-title>{{name}}</ion-card-title>
+            <ion-card-title class="kuis-block">{{titel}}</ion-card-title>
+            <ion-note class="kuis-block ion-float-right">{{titel}}</ion-note>
         </ion-card-header>
+        <ion-card-content>
+            <img [src]="bild">
+        </ion-card-content>
 
     </ion-card>
 </ion-col>
 
-<ion-button>Starten</ion-button>
+<app-kuis-button [title]="'Starten'"></app-kuis-button>
