@@ -3,7 +3,7 @@
     <ion-grid class="kuis-content">
         <ion-row>
             <ion-col>
-                <ion-card class="card-color-white" (click)="routerNavigate('lernmodus')">
+                <ion-card class="card-color-white" (click)="routerNavigate('quiz'); modulService.toggleLernmodus()">
                     <div class="button-background">
                         <ion-icon class="button-icon" name="play-outline"></ion-icon>
                     </div>
