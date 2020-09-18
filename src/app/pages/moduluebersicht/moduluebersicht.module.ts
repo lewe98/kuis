@@ -9,6 +9,7 @@ import {ModuluebersichtPageRoutingModule} from './moduluebersicht-routing.module
 import {ModuluebersichtPage} from './moduluebersicht.page';
 import {QuizWrapperComponent} from '../../components/quiz-wrapper/quiz-wrapper.component';
 import {LandingPageModule} from '../landing/landing.module';
+import {KuisButtonComponent} from '../../components/button/kuis-button/kuis-button.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,10 @@ import {LandingPageModule} from '../landing/landing.module';
         ModuluebersichtPageRoutingModule,
         LandingPageModule
     ],
-    declarations: [ModuluebersichtPage, QuizWrapperComponent]
+    exports: [
+        KuisButtonComponent
+    ],
+    declarations: [ModuluebersichtPage, QuizWrapperComponent, KuisButtonComponent]
 })
 export class ModuluebersichtPageModule {
 }

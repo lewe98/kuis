@@ -1,19 +1,22 @@
 <app-navbar [name]="'Modulübersicht'" [showBack]="true" [showLogout]="true"></app-navbar>
 
 <ion-content>
-    <ion-row>
-    <ion-searchbar></ion-searchbar>
-        <ion-icon name="settings-outline"></ion-icon>
-        <ion-icon name="options-outline"></ion-icon>
-    </ion-row>
-    <app-quiz-wrapper (click)="chooseQuiz(modul.titel, modul.id, modul.bild)" [name]="modul.titel" [bild]="modul.bild" *ngFor="let modul of module">
-    </app-quiz-wrapper>
+    <div class="kuis-content">
+        <ion-row>
+            <ion-searchbar></ion-searchbar>
+            <ion-icon name="settings-outline"></ion-icon>
+            <ion-icon name="options-outline"></ion-icon>
+        </ion-row>
+        <app-quiz-wrapper (click)="chooseQuiz(modul.titel, modul.id, modul.bild)" [titel]="modul.titel"
+                          [bild]="modul.bild" *ngFor="let modul of myModule">
+        </app-quiz-wrapper>
 
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-        <ion-fab-button>
-            <ion-icon name="add-outline"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
+        <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+            <ion-fab-button>
+                <ion-icon name="add-outline"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
+    </div>
 </ion-content>
 
 <app-footer></app-footer>

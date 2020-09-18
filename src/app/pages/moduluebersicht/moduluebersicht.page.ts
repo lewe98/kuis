@@ -3,6 +3,7 @@ import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
 import {ModulService} from '../../services/modul/modul.service';
 import {Modul} from '../../models/modul';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-moduluebersicht',
@@ -11,14 +12,19 @@ import {Modul} from '../../models/modul';
 })
 export class ModuluebersichtPage {
     module: Modul[];
+    myModule: Modul[];
     url = '';
 
     constructor(private modulService: ModulService,
                 public storageService: StorageService,
-                private router: Router) {
-        modulService.findAllModule().subscribe(data => {
-            console.log('Ich lade mich neu!');
+                private router: Router,
+                private authService: AuthService) {
+        modulService.findAllModule().subscribe( data => {
             this.module = data;
+            // this.myModule = this.module.filter(a => {
+              //  return this.authService.getUser().importierteModule.includes(a.id);
+            // });
+            this.myModule = data;
         });
     }
 

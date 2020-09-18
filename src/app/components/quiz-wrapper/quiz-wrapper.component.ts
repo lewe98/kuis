@@ -8,7 +8,7 @@ import {StorageService} from '../../services/storage/storage.service';
 })
 export class QuizWrapperComponent implements OnInit {
 
-    @Input() name: string;
+    @Input() titel: string;
     @Input() bild: string;
 
     constructor(private storageService: StorageService) {

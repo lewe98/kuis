@@ -8,6 +8,7 @@ import {ProfilPageRoutingModule} from './profil-routing.module';
 
 import {ProfilPage} from './profil.page';
 import {LandingPageModule} from '../landing/landing.module';
+import {ModuluebersichtPageModule} from '../moduluebersicht/moduluebersicht.module';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import {LandingPageModule} from '../landing/landing.module';
         FormsModule,
         IonicModule,
         ProfilPageRoutingModule,
-        LandingPageModule
+        LandingPageModule,
+        ModuluebersichtPageModule
     ],
     declarations: [ProfilPage]
 })
