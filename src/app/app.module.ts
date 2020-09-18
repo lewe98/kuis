@@ -13,6 +13,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {environment} from '../environments/environment';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
+import {KuisButtonComponent} from './components/button/kuis-button/kuis-button.component';
 
 @NgModule({
     declarations: [AppComponent],
@@ -29,6 +30,7 @@ import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
         LogoutComponent,
         NavbarComponent,
         InAppBrowser,
+        KuisButtonComponent,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

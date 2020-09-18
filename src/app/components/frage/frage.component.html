@@ -5,47 +5,47 @@
             <ion-col>
                 <ion-card class="card-color-white">
                     <ion-card-header>
-                        <ion-card-subtitle>Bild</ion-card-subtitle>
-                      <ion-card-title>Frage</ion-card-title>
+                        <ion-img [alt]="'Bild'" [src]="bild"></ion-img>
+                        <ion-card-title>{{f.frage}}</ion-card-title>
                     </ion-card-header>
                 </ion-card>
             </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col>
-            <ion-card class="card-color-white">
-              <ion-card-header>
-                <ion-card-title>Antwort 1</ion-card-title>
-              </ion-card-header>
-            </ion-card>
-          </ion-col>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[0])">
+                    <ion-card-header>
+                        <ion-card-title>{{f.antworten[0]}}</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
 
-          <ion-col>
-            <ion-card class="card-color-white">
-              <ion-card-header>
-                <ion-card-title>Antwort 2</ion-card-title>
-              </ion-card-header>
-            </ion-card>
-          </ion-col>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[1])">
+                    <ion-card-header>
+                        <ion-card-title>{{f.antworten[1]}}</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col>
-            <ion-card class="card-color-white">
-              <ion-card-header>
-                <ion-card-title>Antwort 3</ion-card-title>
-              </ion-card-header>
-            </ion-card>
-          </ion-col>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[2])">
+                    <ion-card-header>
+                        <ion-card-title>{{f.antworten[2]}}</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
 
-          <ion-col>
-            <ion-card class="card-color-white">
-              <ion-card-header>
-                <ion-card-title>Antwort 4</ion-card-title>
-              </ion-card-header>
-            </ion-card>
-          </ion-col>
+            <ion-col>
+                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[3])">
+                    <ion-card-header>
+                        <ion-card-title>{{f.antworten[3]}}</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
         </ion-row>
 
     </ion-grid>

@@ -1,9 +1,5 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>quiz</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-navbar [showBack]="false" [name]="'Quiz'" [showLogout]="false"></app-navbar>
 
-<ion-content>
-<app-frage></app-frage>
+<ion-content *ngIf="this.modulService.started">
+    <app-frage></app-frage>
 </ion-content>

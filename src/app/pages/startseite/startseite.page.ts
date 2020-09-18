@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
 import {Subscription} from 'rxjs';
 import {ToastService} from '../../services/toast/toast.service';
+import {ModulService} from '../../services/modul/modul.service';
 
 @Component({
     selector: 'app-startseite',
@@ -15,6 +16,7 @@ export class StartseitePage {
 
     constructor(private router: Router,
                 private authService: AuthService,
+                public modulService: ModulService,
                 private toastService: ToastService) {
         this.toastService.presentLoading('Bitte warten...')
             .then(() => {

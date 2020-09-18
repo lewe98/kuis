@@ -67,7 +67,14 @@ const routes: Routes = [
         path: '**',
         redirectTo: 'not-found',
         pathMatch: 'full'
-    }
+    },
+  {
+    path: 'moduluebersicht-edit',
+    loadChildren: () => import('./pages/moduluebersicht-edit/moduluebersicht-edit/moduluebersicht-edit.module')
+        .then(m => m.ModuluebersichtEditPageModule)
+  },
+
+
 ];
 
 @NgModule({
