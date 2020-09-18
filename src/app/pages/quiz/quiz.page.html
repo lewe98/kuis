@@ -1,5 +1,5 @@
 <app-navbar [showBack]="false" [name]="'Quiz'" [showLogout]="false"></app-navbar>
 
-<ion-content>
+<ion-content *ngIf="!this.modulService.isLernmodus">
     <app-frage></app-frage>
 </ion-content>
