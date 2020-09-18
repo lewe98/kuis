@@ -7,13 +7,15 @@ import {IonicModule} from '@ionic/angular';
 import {StatistikPageRoutingModule} from './statistik-routing.module';
 
 import {StatistikPage} from './statistik.page';
+import {LandingPageModule} from '../landing/landing.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        StatistikPageRoutingModule
+        StatistikPageRoutingModule,
+        LandingPageModule
     ],
     declarations: [StatistikPage]
 })

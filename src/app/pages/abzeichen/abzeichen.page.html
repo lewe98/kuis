@@ -1,6 +1,7 @@
 <app-navbar [showLogout]="false" [name]="'Abzeichen'"></app-navbar>
 <ion-content>
     <div class="kuis-content" *ngIf="abzeichenArray.length > 0">
+
         <ion-card class="card-border-rounded">
             <ion-card-header>
                 <ion-card-title><b>Abzeichen Übersicht</b></ion-card-title>
@@ -12,6 +13,7 @@
                 <ion-icon class="abzeichenIcon" name="trophy-outline"></ion-icon>
             </div>
         </ion-card>
+
         <ion-card class="card-border-rounded">
             <ion-card-content class="trophyList">
 
@@ -20,13 +22,21 @@
                                clearOnEdit="false"
                                color="primary"
                                inputmode="text"
-                               placeholder="Abzeichen suchen..." required="true">
+                               placeholder="Abzeichen suchen..."
+                               required="true">
                     </ion-input>
 
-                    <ion-icon *ngIf="filteredAbzeichenArray.length < abzeichenArray.length" name="close-outline"
-                              (click)="clear()" color="primary" slot="end"></ion-icon>
-                    <ion-icon name="search-outline" color="primary" slot="end"></ion-icon>
+                    <ion-icon *ngIf="filteredAbzeichenArray.length < abzeichenArray.length"
+                              name="close-outline"
+                              (click)="clear()"
+                              color="primary"
+                              slot="end">
+                    </ion-icon>
 
+                    <ion-icon name="search-outline"
+                              color="primary"
+                              slot="end">
+                    </ion-icon>
                 </ion-item>
 
                 <ion-list *ngIf="filteredAbzeichenArray.length > 0; else empty">
