@@ -15,14 +15,11 @@ export class QuizPage implements OnDestroy {
     lernmodusFragen = [];
 
     globalCounter = 0;
-    started = false;
 
-    constructor(private modulService: ModulService,
+    constructor(public modulService: ModulService,
                 private storageService: StorageService,
                 private toastService: ToastService) {
-        this.modulService.isLernmodus = true;
         this.initialize();
-
     }
 
     ngOnDestroy() {
@@ -36,7 +33,8 @@ export class QuizPage implements OnDestroy {
                     this.modulService.findAllModuleLernmodus()
                         .then(res => {
                             this.alleModule = res;
-                            // TODO: - forEach/Counter umgehen
+
+                            // TODO: - forEach umgehen
                             this.alleModule.forEach(elem => {
                                 this.storageService.findAllFragenLernmodus(elem.id, elem.titel)
                                     .then(() => {
@@ -90,7 +88,7 @@ export class QuizPage implements OnDestroy {
             console.log(this.lernmodusFragen);
             this.storageService.fragen = [];
             this.storageService.fragen = this.lernmodusFragen;
-            this.modulService.isLernmodus = false;
+            this.modulService.started = true;
         }
     }
 

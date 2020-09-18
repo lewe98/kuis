@@ -33,6 +33,7 @@ export class ModuluebersichtPage implements ViewDidEnter {
     }
 
     chooseQuiz(name: string, id: string, bild: string) {
+        this.modulService.started = true;
         this.storageService.findAllFragen(id, name)
             .then(() => {
                 this.storageService.getPicture(bild)

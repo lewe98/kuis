@@ -12,6 +12,7 @@ export class ModulService {
     modulCollection: AngularFirestoreCollection<Modul>;
     module = [];
     isLernmodus = false;
+    started = false;
 
     constructor(private afs: AngularFirestore,
                 private storageService: StorageService) {
