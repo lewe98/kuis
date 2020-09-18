@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import * as firebase from 'firebase';
-import {ToastService} from '../toast/toast.service';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {Modul} from '../../models/modul';
 
@@ -15,10 +14,8 @@ export class StorageService {
     modulCollection: AngularFirestoreCollection<Modul>;
     module = [];
     fragen = [];
-    url = '';
 
-    constructor(private afs: AngularFirestore,
-                private toastService: ToastService) {
+    constructor(private afs: AngularFirestore) {
         this.modulCollection = afs.collection<Modul>('module');
     }
 
@@ -46,20 +43,11 @@ export class StorageService {
                 .child(name)
                 .getDownloadURL()
                 .then((url) => {
-                    this.url = url;
-                    // this.toastService.dismissLoading();
                     resolve(url);
                 })
                 .catch((error) => {
-                    // this.toastService.presentWarningToast('Error', error);
-                    // this.toastService.dismissLoading();
                     reject(error);
                 });
-
-            /* this.toastService.presentLoading('Bitte warten...')
-                 .then(() => {
-        });
-        */
         });
     }
 }
