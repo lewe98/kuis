@@ -1,5 +1,16 @@
 <app-navbar [showBack]="false" [name]="'Quiz'" [showLogout]="false"></app-navbar>
 
-<ion-content *ngIf="this.modulService.started">
-    <app-frage></app-frage>
+<ion-content>
+    <app-frage *ngIf="this.modulService.started && !genugFragen else noQuestions">
+    </app-frage>
+
+    <ng-template #noQuestions>
+        <ion-item lines="none">
+            <ion-label>
+                <h1>Nicht genug Fragen importiert.</h1>
+            </ion-label>
+        </ion-item>
+    </ng-template>
 </ion-content>
+
+
