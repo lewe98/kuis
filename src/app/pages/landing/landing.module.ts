@@ -11,6 +11,7 @@ import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {StartseitePageRoutingModule} from '../startseite/startseite-routing.module';
 import {FooterComponent} from '../../components/footer/footer.component';
 import {ModuluebersichtPageModule} from '../moduluebersicht/moduluebersicht.module';
+import {KuisButtonComponent} from '../../components/button/kuis-button/kuis-button.component';
 
 @NgModule({
     imports: [
@@ -18,12 +19,13 @@ import {ModuluebersichtPageModule} from '../moduluebersicht/moduluebersicht.modu
         FormsModule,
         IonicModule,
         LandingPageRoutingModule,
-        StartseitePageRoutingModule
+        StartseitePageRoutingModule,
     ],
     exports: [
         NavbarComponent,
-        FooterComponent
+        FooterComponent,
+        KuisButtonComponent,
     ],
-    declarations: [LandingPage, NavbarComponent, FooterComponent]
+    declarations: [LandingPage, NavbarComponent, FooterComponent, KuisButtonComponent]
 })
 export class LandingPageModule {}

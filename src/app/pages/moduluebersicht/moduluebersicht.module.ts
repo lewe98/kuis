@@ -17,12 +17,10 @@ import {KuisButtonComponent} from '../../components/button/kuis-button/kuis-butt
         FormsModule,
         IonicModule,
         ModuluebersichtPageRoutingModule,
-        LandingPageModule
+        LandingPageModule,
     ],
-    exports: [
-        KuisButtonComponent
-    ],
-    declarations: [ModuluebersichtPage, QuizWrapperComponent, KuisButtonComponent]
+    exports: [],
+    declarations: [ModuluebersichtPage, QuizWrapperComponent]
 })
 export class ModuluebersichtPageModule {
 }
