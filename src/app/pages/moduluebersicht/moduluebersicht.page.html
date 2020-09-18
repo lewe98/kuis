@@ -2,12 +2,42 @@
 
 <ion-content>
     <ion-row>
-    <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
-        <ion-icon name="settings-outline" (click)="deleteModule()" ></ion-icon>
-        <ion-icon name="options-outline"></ion-icon>
+        <ion-item>
+            <ion-input (ionInput)="doSearch()"
+                       clearOnEdit="false"
+                       color="primary"
+                       inputmode="text"
+                       placeholder="Fragenmodule suchen..." required="true">
+            </ion-input>
+
+            <ion-icon *ngIf="filteredModules.length < module.length"
+                      name="close-outline"
+                      (click)="clear()"
+                      color="primary"
+                      slot="end">
+            </ion-icon>
+
+            <ion-icon name="search-outline"
+                      color="primary"
+                      slot="end">
+            </ion-icon>
+
+        </ion-item>
+
+        <ion-icon name="settings-outline"
+                  (click)="deleteModule()">
+        </ion-icon>
+
+        <ion-icon name="options-outline">
+        </ion-icon>
     </ion-row>
-    <app-quiz-wrapper (click)="chooseQuiz(modul.titel, modul.id, modul.bild)" [name]="modul.titel" [bild]="modul.bild" *ngFor="let modul of module">
-    </app-quiz-wrapper>
+
+    <div *ngIf="filteredModules.length > 0; else empty">
+        <app-quiz-wrapper (click)="chooseQuiz(modul.titel, modul.id, modul.bild)" [name]="modul.titel"
+                          [bild]="modul.bild"
+                          *ngFor="let modul of filteredModules">
+        </app-quiz-wrapper>
+    </div>
 
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
         <ion-fab-button>
@@ -15,5 +45,15 @@
         </ion-fab-button>
     </ion-fab>
 </ion-content>
+
+<ng-template #empty>
+    <ion-col>
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title><h4>Die Suche ergab keinen Treffer.</h4></ion-card-title>
+            </ion-card-header>
+        </ion-card>
+    </ion-col>
+</ng-template>
 
 <app-footer></app-footer>

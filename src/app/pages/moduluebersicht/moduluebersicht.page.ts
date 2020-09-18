@@ -1,27 +1,35 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
 import {ModulService} from '../../services/modul/modul.service';
 import {Modul} from '../../models/modul';
+import {IonInput, ViewDidEnter} from '@ionic/angular';
+import {ToastService} from '../../services/toast/toast.service';
 
 @Component({
     selector: 'app-moduluebersicht',
     templateUrl: './moduluebersicht.page.html',
     styleUrls: ['./moduluebersicht.page.scss'],
 })
-export class ModuluebersichtPage {
-    module: Modul[];
+export class ModuluebersichtPage implements ViewDidEnter {
+    module: Modul[] = [];
     filteredModules: Modul[] = [];
     url = '';
+    @ViewChild(IonInput) search: IonInput;
 
     constructor(private modulService: ModulService,
                 public storageService: StorageService,
+                private toastService: ToastService,
                 private router: Router) {
-        modulService.findAllModule().subscribe(data => {
-            console.log('Ich lade mich neu!');
-            this.module = data;
-            this.filteredModules = this.module;
-        });
+        this.toastService.presentLoading('Fragenmodule werden geladen...')
+            .then(async () => {
+                await modulService.findAllModule()
+                    .subscribe(async data => {
+                        this.module = data;
+                        this.filteredModules = data;
+                    });
+                await this.toastService.dismissLoading();
+            });
     }
 
     chooseQuiz(name: string, id: string, bild: string) {
@@ -35,22 +43,26 @@ export class ModuluebersichtPage {
     }
 
     /**
-     * This function returns an filtered array of the modules based on a given query.
-     *
-     * @param $event is the given query.
-     * @return either an filtered Array based on the given query, or if the query is empty, returns the full module list.
+     * This function returns a filtered array of the modules based on a given query.
      */
-   async search($event: any) {
-        const query = $event.target.value;
-        if (!query) {
-            return this.module = this.filteredModules;
-        }
-        this.module = this.filteredModules.filter(m => {
-            return (m.titel.toLowerCase().indexOf(query.toLowerCase()) > -1);
+    async doSearch() {
+        const input = await this.search.getInputElement();
+        const searchValue = input.value;
+        this.filteredModules = this.module.filter(a => {
+            return a.titel.toLowerCase().includes(searchValue.toLowerCase());
         });
+    }
+
+    clear() {
+        this.search.value = '';
+        this.filteredModules = this.module;
     }
 
     deleteModule() {
         console.log('Yet to be implemented!');
+    }
+
+    ionViewDidEnter() {
+        setTimeout(() => this.search.setFocus(), 10);
     }
 }

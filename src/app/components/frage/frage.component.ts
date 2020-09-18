@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Frage} from '../../models/frage';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-frage',
@@ -13,13 +14,18 @@ export class FrageComponent {
     bild = '';
     counter = 0;
 
-    constructor(public storageService: StorageService) {
+    constructor(public storageService: StorageService,
+                private router: Router) {
         this.initialize();
     }
 
     showNextQuestion() {
         this.counter++;
-        this.initialize();
+        if (this.counter === this.storageService.fragen.length) {
+            this.router.navigate(['/statistik']);
+        } else {
+            this.initialize();
+        }
     }
 
     async initialize() {
