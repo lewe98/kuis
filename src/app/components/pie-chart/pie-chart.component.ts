@@ -39,17 +39,24 @@ export class PieChartComponent implements OnInit {
     ];
 
     user: User;
-    sum = 0;
+    richtig = 0;
     falsch = 0;
+    sumFragen = 0;
+    counter = [];
+    counterElem = 1;
 
     constructor(public authService: AuthService) {
         this.user = this.authService.getUser();
 
+        this.sumFragen = this.user.historieLernmodus.length * 10;
+
         this.user.historieLernmodus.forEach(elem => {
-            this.sum += elem;
+            this.counter.push(this.counterElem);
+            this.richtig += elem;
+            this.counterElem++;
         });
-        this.falsch = (this.user.historieLernmodus.length * 10) - this.sum;
-        this.pieChartData.push(this.falsch, this.sum);
+        this.falsch = this.sumFragen - this.richtig;
+        this.pieChartData.push(this.falsch, this.richtig);
     }
 
     ngOnInit() {
