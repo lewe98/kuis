@@ -17,7 +17,9 @@ export class FrageComponent {
     f = new Frage();
     bild = '';
     counter = 0;
-    richtigBeantwortetCounter = 0;
+    richtigBeantwortetLernmodusCounter = 0;
+    // TODO: - Fortschritt Freier Modus (Modulübersicht)
+    richtigBeantwortetFreiermodusCounter = 0;
     user: User;
     timer = 0;
     interval;
@@ -35,22 +37,31 @@ export class FrageComponent {
         }
     }
 
+    /**
+     * Method to increment the timer every second.
+     */
     startTimer() {
         this.interval = setInterval(() => {
             this.timer++;
         }, 1000);
     }
 
+    /**
+     * Method to pause the incrementation of the timer.
+     */
     pauseTimer() {
         clearInterval(this.interval);
     }
 
+    /**
+     * Method to show the next question, if the quiz is not finished yet.
+     */
     showNextQuestion() {
         this.counter++;
         if (this.counter === this.storageService.fragen.length) {
             if (this.modulService.isLernmodus) {
                 this.pauseTimer();
-                this.user.historieLernmodus.push(this.richtigBeantwortetCounter);
+                this.user.historieLernmodus.push(this.richtigBeantwortetLernmodusCounter);
                 this.user.gesamtzeit = this.user.gesamtzeit + this.timer;
                 this.modulService.isLernmodus = false;
                 this.authService.updateProfile(this.user);
@@ -58,12 +69,17 @@ export class FrageComponent {
             } else {
                 this.toastService.presentToast('Das Modul wurde abgeschlossen.');
                 this.router.navigate(['/moduluebersicht']);
+                // TODO: - Fortschritt Freier Modus (Modulübersicht)
+                // this.authService.updateProfile(this.user);
             }
         } else {
             this.initialize();
         }
     }
 
+    /**
+     * Method to overwrite the current question with the values of the upcoming question.
+     */
     async initialize() {
         this.f.id = this.storageService.fragen[this.counter].id;
         this.f.frage = this.storageService.fragen[this.counter].frage;
@@ -81,6 +97,9 @@ export class FrageComponent {
             });
     }
 
+    /**
+     * Method to shuffle the array containing the answers.
+     */
     shuffleAntworten(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -90,11 +109,19 @@ export class FrageComponent {
         }
     }
 
+    /**
+     * Method to submit the answer and receive feedback.
+     */
     submitAnswer(gewaehlteAntwort: string) {
         if (this.f.richtigeAntwort === gewaehlteAntwort) {
             // TODO: - Style (grün, Konfetti)
             alert('richtig :)');
-            this.richtigBeantwortetCounter++;
+            if (this.modulService.isLernmodus) {
+                this.richtigBeantwortetLernmodusCounter++;
+            } else {
+                // TODO: - Fortschritt Freier Modus (Modulübersicht)
+                this.richtigBeantwortetFreiermodusCounter++;
+            }
             setTimeout(() => {
                 this.showNextQuestion();
             }, 2500);
