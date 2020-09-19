@@ -1,0 +1,23 @@
+<div *ngIf="user.historieLernmodus.length != 0; else noHistory">
+    <div>
+        <div class="chart">
+            <canvas baseChart
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    [chartType]="pieChartType"
+                    [options]="pieChartOptions"
+                    [plugins]="pieChartPlugins"
+                    [colors]="pieChartColors"
+                    [legend]="pieChartLegend">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<ng-template #noHistory>
+    <ion-item lines="none">
+        <ion-label>
+            <h1> Keine Historie vorhanden.</h1>
+        </ion-label>
+    </ion-item>
+</ng-template>

@@ -38,13 +38,12 @@ export class AuthService {
         copy.nutzername = copy.nutzername || null;
         copy.email = copy.email || null;
         copy.passwort = copy.passwort || null;
+        copy.googleAccount = copy.googleAccount || null;
 
         copy.emailBestaetigt = copy.emailBestaetigt || false;
         copy.isOnboarded = copy.isOnboarded || false;
-
-        // TODO: - Statistik in Firebase
-        copy.statistik = copy.statistik || null;
-
+        copy.gesamtzeit = copy.gesamtzeit || null;
+        copy.historieLernmodus = copy.historieLernmodus || null;
         copy.abzeichen = copy.abzeichen || null;
         copy.importierteModule = copy.importierteModule || null;
 

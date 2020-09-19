@@ -3,13 +3,13 @@
 
         <ion-card-header>
             <ion-card-title class="kuis-block">{{titel}}</ion-card-title>
-            <ion-note class="kuis-block ion-float-right">{{titel}}</ion-note>
         </ion-card-header>
+
         <ion-card-content>
-            <img [src]="bild">
+            <img [alt]="'Bild'" [src]="bild">
             <div *ngIf="add||edit" class="overlay">
-                <ion-icon *ngIf="edit"class="icon-overlay" slot="icon-only" name="trash-outline"></ion-icon>
-                <ion-icon *ngIf="add"class="icon-overlay" slot="icon-only" name="add-outline"></ion-icon>
+                <ion-icon *ngIf="edit" class="icon-overlay" slot="icon-only" name="trash-outline"></ion-icon>
+                <ion-icon *ngIf="add" class="icon-overlay" slot="icon-only" name="add-outline"></ion-icon>
             </div>
         </ion-card-content>
 

@@ -73,7 +73,6 @@ export class QuizPage implements OnDestroy {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.alleFragen.length; i++) {
             this.sum = this.sum + this.alleFragen[i].length;
-            alert(this.sum);
         }
 
         if (this.sum < 10) {

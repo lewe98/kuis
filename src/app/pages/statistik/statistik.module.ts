@@ -8,6 +8,8 @@ import {StatistikPageRoutingModule} from './statistik-routing.module';
 
 import {StatistikPage} from './statistik.page';
 import {LandingPageModule} from '../landing/landing.module';
+import {PieChartComponent} from '../../components/pie-chart/pie-chart.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
     imports: [
@@ -15,9 +17,10 @@ import {LandingPageModule} from '../landing/landing.module';
         FormsModule,
         IonicModule,
         StatistikPageRoutingModule,
-        LandingPageModule
+        LandingPageModule,
+        ChartsModule
     ],
-    declarations: [StatistikPage]
+    declarations: [StatistikPage, PieChartComponent]
 })
 export class StatistikPageModule {
 }

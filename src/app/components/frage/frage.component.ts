@@ -1,7 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Frage} from '../../models/frage';
 import {Router} from '@angular/router';
+import {User} from '../../models/user';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-frage',
@@ -13,15 +15,20 @@ export class FrageComponent {
     f = new Frage();
     bild = '';
     counter = 0;
+    richtigBeantwortetCounter = 0;
+    user: User;
 
     constructor(public storageService: StorageService,
+                private authService: AuthService,
                 private router: Router) {
         this.initialize();
+        this.user = this.authService.getUser();
     }
 
     showNextQuestion() {
         this.counter++;
         if (this.counter === this.storageService.fragen.length) {
+            this.user.historieLernmodus.push(this.richtigBeantwortetCounter);
             this.router.navigate(['/statistik']);
         } else {
             this.initialize();
@@ -58,6 +65,7 @@ export class FrageComponent {
         if (this.f.richtigeAntwort === gewaehlteAntwort) {
             // TODO: - Style (grün, Konfetti)
             alert('richtig :)');
+            this.richtigBeantwortetCounter++;
             setTimeout(() => {
                 this.showNextQuestion();
             }, 2500);
