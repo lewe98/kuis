@@ -44,9 +44,19 @@ export class PieChartComponent implements OnInit {
     sumFragen = 0;
     counter = [];
     counterElem = 1;
+    sekunden = 0;
+    minuten = 0;
+    stunden = 0;
+    tage = 0;
 
     constructor(public authService: AuthService) {
         this.user = this.authService.getUser();
+
+        this.tage = Math.floor(this.user.gesamtzeit / (3600 * 24));
+        this.stunden = Math.floor(this.user.gesamtzeit % (3600 * 24) / 3600);
+        this.user.gesamtzeit %= 3600;
+        this.minuten = Math.floor(this.user.gesamtzeit / 60);
+        this.sekunden = this.user.gesamtzeit % 60;
 
         this.sumFragen = this.user.historieLernmodus.length * 10;
 

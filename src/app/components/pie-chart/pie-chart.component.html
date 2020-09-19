@@ -1,6 +1,6 @@
 <ion-card>
-    <ion-card-title>Gesamt-Statistik</ion-card-title>
-    <ion-card-title>{{sumFragen}} Fragen</ion-card-title>
+    <ion-card-title>Statistik</ion-card-title>
+    <ion-card-title>{{sumFragen}} Fragen beantwortet</ion-card-title>
     <div *ngIf="user.historieLernmodus.length != 0; else noHistory">
         <div>
             <div class="chart">
@@ -17,10 +17,11 @@
         </div>
     </div>
 
-    <ion-card-title>Spielzeit ...h</ion-card-title>
+    <ion-card-title>Spielzeit: {{tage}}d {{stunden}}h {{minuten}}m {{sekunden}}s</ion-card-title>
 </ion-card>
 
 <ion-list>
+    <ion-list-header>Historie des Lernmodus</ion-list-header>
     <ion-item-group *ngFor="let spiel of user.historieLernmodus; let i = index">
         <ion-item lines="none">
             <ion-label>

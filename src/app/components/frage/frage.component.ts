@@ -4,6 +4,8 @@ import {Frage} from '../../models/frage';
 import {Router} from '@angular/router';
 import {User} from '../../models/user';
 import {AuthService} from '../../services/auth/auth.service';
+import {ModulService} from '../../services/modul/modul.service';
+import {ToastService} from '../../services/toast/toast.service';
 
 @Component({
     selector: 'app-frage',
@@ -21,18 +23,22 @@ export class FrageComponent {
     interval;
 
     constructor(public storageService: StorageService,
+                public modulService: ModulService,
                 private authService: AuthService,
+                private toastService: ToastService,
                 private router: Router) {
         this.initialize();
         this.user = this.authService.getUser();
         // TODO nur wenn im Lernmodus
-        this.startTimer();
+        if (this.modulService.isLernmodus) {
+            this.startTimer();
+        }
     }
 
     startTimer() {
         this.interval = setInterval(() => {
-                this.timer++;
-            }, 1000);
+            this.timer++;
+        }, 1000);
     }
 
     pauseTimer() {
@@ -42,12 +48,17 @@ export class FrageComponent {
     showNextQuestion() {
         this.counter++;
         if (this.counter === this.storageService.fragen.length) {
-            // TODO nur wenn im Lernmodus
-            this.user.historieLernmodus.push(this.richtigBeantwortetCounter);
-            this.pauseTimer();
-
-
-            this.router.navigate(['/statistik']);
+            if (this.modulService.isLernmodus) {
+                this.pauseTimer();
+                this.user.historieLernmodus.push(this.richtigBeantwortetCounter);
+                this.user.gesamtzeit = this.user.gesamtzeit + this.timer;
+                this.modulService.isLernmodus = false;
+                this.authService.updateProfile(this.user);
+                this.router.navigate(['/statistik']);
+            } else {
+                this.toastService.presentToast('Das Modul wurde abgeschlossen.');
+                this.router.navigate(['/moduluebersicht']);
+            }
         } else {
             this.initialize();
         }
