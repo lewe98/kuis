@@ -4,6 +4,7 @@ import {Modul} from '../../models/modul';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {StorageService} from '../storage/storage.service';
+import {AuthService} from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class ModulService {
     started = false;
 
     constructor(private afs: AngularFirestore,
-                private storageService: StorageService) {
+                private storageService: StorageService,
+                private authService: AuthService) {
         this.modulCollection = afs.collection<Modul>('module');
         this.findAllModule().subscribe(data => {
             this.module = data;
@@ -26,6 +28,10 @@ export class ModulService {
         this.isLernmodus = true;
     }
 
+    /***
+     * This Method gets all Modules from Firebase.
+     * @return is a Observable Stream of the Module in the Firebase Database.
+     */
     findAllModule(): Observable<Modul[]> {
         const changeActions: Observable<DocumentChangeAction<Modul>[]> =
             this.modulCollection.snapshotChanges();
@@ -57,29 +63,9 @@ export class ModulService {
         return {id: doc.id, ...doc.data()};
     }
 
-    findImportedModule(): Observable<Modul[]> {
-        const changeActions: Observable<DocumentChangeAction<Modul>[]> =
-            this.modulCollection.snapshotChanges();
-        return changeActions.pipe(
-            map(actions => actions.map(a => {
-                const data = a.payload.doc.data();
-                data.id = a.payload.doc.id;
-                this.storageService.getPicture(data.bild).then((url) => {
-                    data.bild = url;
-                });
-                return data;
-            })));
-        /* this.afs.collection('module')
-            .get()
-            .toPromise()
-            .then(snapshot => {
-              this.module = snapshot.docs.map(this.getID);
-              this.module.forEach((elem) => {
-                this.getPicture(elem.bild).then((url) => {
-                  elem.bild = url;
-                });
-              });
-            });
-         */
+    importModule(modul: Modul) {
+        const newUser = this.authService.getUser();
+        newUser.importierteModule.push(modul);
+        this.authService.updateProfile(newUser);
     }
 }
