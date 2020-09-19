@@ -11,6 +11,9 @@ export class User {
     public importierteModule: any[];
     public googleAccount: boolean;
 
+    // TODO: - Fortschritt Lernmodus
+    // public lernModus: [Map<string, string>];
+
     constructor(nutzername: string, email: string, passwort: string, googleAccount: boolean) {
         this.nutzername = nutzername;
         this.email = email;
