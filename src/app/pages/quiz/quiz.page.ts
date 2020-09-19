@@ -15,7 +15,6 @@ export class QuizPage implements OnDestroy {
     alleModule = [];
     alleFragen = [];
     lernmodusFragen = [];
-
     globalCounter = 0;
     sum = 0;
     genugFragen = false;

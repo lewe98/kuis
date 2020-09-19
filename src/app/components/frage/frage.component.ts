@@ -17,18 +17,36 @@ export class FrageComponent {
     counter = 0;
     richtigBeantwortetCounter = 0;
     user: User;
+    timer = 0;
+    interval;
 
     constructor(public storageService: StorageService,
                 private authService: AuthService,
                 private router: Router) {
         this.initialize();
         this.user = this.authService.getUser();
+        // TODO nur wenn im Lernmodus
+        this.startTimer();
+    }
+
+    startTimer() {
+        this.interval = setInterval(() => {
+                this.timer++;
+            }, 1000);
+    }
+
+    pauseTimer() {
+        clearInterval(this.interval);
     }
 
     showNextQuestion() {
         this.counter++;
         if (this.counter === this.storageService.fragen.length) {
+            // TODO nur wenn im Lernmodus
             this.user.historieLernmodus.push(this.richtigBeantwortetCounter);
+            this.pauseTimer();
+
+
             this.router.navigate(['/statistik']);
         } else {
             this.initialize();
