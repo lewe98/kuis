@@ -5,7 +5,6 @@ import {ModulService} from '../../services/modul/modul.service';
 import {Modul} from '../../models/modul';
 import {IonInput, ViewDidEnter} from '@ionic/angular';
 import {ToastService} from '../../services/toast/toast.service';
-import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-moduluebersicht',
@@ -36,6 +35,12 @@ export class ModuluebersichtPage implements ViewDidEnter {
             });
     }
 
+    /**
+     * Method to receive all questions from a quiz module.
+     * @param name name of the chosen quiz.
+     * @param id id of the chosen quiz.
+     * @param bild name of the picture of the chosen quiz.
+     */
     chooseQuiz(name: string, id: string, bild: string) {
         this.modulService.started = true;
         this.storageService.findAllFragen(id, name)
@@ -49,7 +54,7 @@ export class ModuluebersichtPage implements ViewDidEnter {
     }
 
     /**
-     * This function returns a filtered array of the modules based on a given query.
+     * Method to fill an array with the filtered values.
      */
     async doSearch() {
         const input = await this.search.getInputElement();
@@ -59,11 +64,17 @@ export class ModuluebersichtPage implements ViewDidEnter {
         });
     }
 
+    /**
+     * Method to remove the search value.
+     */
     clear() {
         this.search.value = '';
         this.filteredModules = this.module;
     }
 
+    /**
+     * Method to delete an imported module.
+     */
     deleteModule() {
         console.log('Yet to be implemented!');
     }

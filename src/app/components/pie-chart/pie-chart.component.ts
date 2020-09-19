@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ChartOptions, ChartType} from 'chart.js';
 import {Label} from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
@@ -10,7 +10,7 @@ import {AuthService} from '../../services/auth/auth.service';
     templateUrl: './pie-chart.component.html',
     styleUrls: ['./pie-chart.component.scss'],
 })
-export class PieChartComponent implements OnInit {
+export class PieChartComponent {
     // Quelle: https://valor-software.com/ng2-charts/
 
     // Pie
@@ -67,8 +67,5 @@ export class PieChartComponent implements OnInit {
         });
         this.falsch = this.sumFragen - this.richtig;
         this.pieChartData.push(this.falsch, this.richtig);
-    }
-
-    ngOnInit() {
     }
 }

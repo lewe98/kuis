@@ -99,6 +99,7 @@ export class FrageComponent {
 
     /**
      * Method to shuffle the array containing the answers.
+     * @param array array that will be shuffled.
      */
     shuffleAntworten(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -111,6 +112,7 @@ export class FrageComponent {
 
     /**
      * Method to submit the answer and receive feedback.
+     * @param gewaehlteAntwort answer that the user has chosen.
      */
     submitAnswer(gewaehlteAntwort: string) {
         if (this.f.richtigeAntwort === gewaehlteAntwort) {
