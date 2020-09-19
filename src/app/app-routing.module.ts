@@ -34,11 +34,6 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'lernmodus',
-        loadChildren: () => import('./pages/lernmodus/lernmodus.module').then(m => m.LernmodusPageModule),
-        canActivate: [AuthGuard]
-    },
-    {
         path: 'moduluebersicht',
         loadChildren: () => import('./pages/moduluebersicht/moduluebersicht.module').then(m => m.ModuluebersichtPageModule),
         canActivate: [AuthGuard]
