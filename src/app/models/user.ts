@@ -1,6 +1,3 @@
-import {Statistik} from './statistik';
-import {Modul} from './modul';
-
 export class User {
     public id: string;
     public nutzername: string;
@@ -9,14 +6,12 @@ export class User {
     public emailBestaetigt: boolean;
     public isOnboarded: boolean;
     public abzeichen: string[];
-    public statistik: Statistik;
+    public gesamtzeit: number;
+    public historieLernmodus: number[];
     public importierteModule: any[];
     public googleAccount: boolean;
 
-    constructor(nutzername: string,
-                email: string,
-                passwort: string,
-                googleAccount: boolean) {
+    constructor(nutzername: string, email: string, passwort: string, googleAccount: boolean) {
         this.nutzername = nutzername;
         this.email = email;
         this.passwort = passwort;
@@ -24,7 +19,8 @@ export class User {
 
         this.emailBestaetigt = false;
         this.isOnboarded = false;
-        // this.statistik = new Statistik();
+        this.gesamtzeit = 0;
+        this.historieLernmodus = [];
         this.abzeichen = [];
         this.importierteModule = [];
     }

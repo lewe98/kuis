@@ -14,6 +14,7 @@ import {environment} from '../environments/environment';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {KuisButtonComponent} from './components/button/kuis-button/kuis-button.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
     declarations: [AppComponent],
@@ -24,7 +25,8 @@ import {KuisButtonComponent} from './components/button/kuis-button/kuis-button.c
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
+        ChartsModule
     ],
     providers: [
         LogoutComponent,
