@@ -26,15 +26,20 @@ export class QuizPage implements OnDestroy {
                 private authService: AuthService,
                 private toastService: ToastService) {
         this.initialize();
-
-        // TODO: - subscribe auf user (siehe Abzeichen-Page)
         this.user = this.authService.getUser();
     }
 
+    /**
+     * sets on Destroy the boolean to false
+     */
     ngOnDestroy() {
         this.modulService.isLernmodus = false;
     }
 
+    /**
+     * Method to load all imported Modules and their questions to push them to one Array.
+     * This Array is used to choose ten random questions
+     */
     async initialize() {
         await this.toastService.presentLoading('Spiel wird geladen...')
             .then(() => {
@@ -60,14 +65,11 @@ export class QuizPage implements OnDestroy {
         await this.toastService.dismissLoading();
     }
 
-    // console.log(zufallsZahlModule);
-    // -> Zugriff auf Stelle des Fragenarrays, die math.random erzeugt hat
-    // -> von diesem ermittelten modul länge ausgeben
-    // console.log(anzahlFragen);
-    // -> wieder math.random mit länge des moduls -1
-    // console.log(zufallsZahlFragen);
-    // -> prüfen, ob id bereits drin ist
-    // -> pushen der ermittelten Frage bis 10 stk. drin sind
+
+    /**
+     * Preparations for Quiz
+     * Method to choose ten questions from before created array and checks if the user have a legit number of imported questions.
+     */
     pushFrage() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.alleFragen.length; i++) {

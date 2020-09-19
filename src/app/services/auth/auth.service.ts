@@ -30,7 +30,10 @@ export class AuthService {
         this.userCollection = afs.collection<User>('users');
     }
 
-    // COPY AND PREPARE
+    /**
+     * Copy an Prepair
+     * @param user - the current logged in user
+     */
     private static copyAndPrepare(user: User): User {
         const copy = {...user};
         delete copy.id;
@@ -50,7 +53,6 @@ export class AuthService {
         return copy;
     }
 
-    // CRUD
     /**
      * Method to persist the user's data in the database
      */
@@ -133,7 +135,6 @@ export class AuthService {
         await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest ausgeloggt.');
     }
 
-    // LOGIN / LOGOUT
     /**
      * Method to sign in a user
      * @param email user's email

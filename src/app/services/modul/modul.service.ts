@@ -14,6 +14,7 @@ export class ModulService {
     isLernmodus = false;
     started = false;
 
+
     constructor(private afs: AngularFirestore,
                 private storageService: StorageService) {
         this.modulCollection = afs.collection<Modul>('module');
@@ -22,10 +23,17 @@ export class ModulService {
         });
     }
 
+    /**
+     * Method to mark the quiz as Lernmodus
+     */
     toggleLernmodus() {
         this.isLernmodus = true;
     }
 
+    // TODO wird eventuell nicht mehr gebraucht.
+    /**
+     * Method to get all Modules from the current logged in user
+     */
     findAllModule(): Observable<Modul[]> {
         const changeActions: Observable<DocumentChangeAction<Modul>[]> =
             this.modulCollection.snapshotChanges();
@@ -42,6 +50,9 @@ export class ModulService {
             })));
     }
 
+    /**
+     * Method to get all imported Modules from the current loggin in user
+     */
     findAllModuleLernmodus(): Promise<any> {
         return new Promise<any>((resolve) => {
             this.afs.collection('module')
@@ -53,10 +64,17 @@ export class ModulService {
         });
     }
 
+    /**
+     * Method to get the ids of the documents
+     * @param doc - the document in the firestore
+     */
     getID(doc) {
         return {id: doc.id, ...doc.data()};
     }
 
+    /**
+     * Method to get the importedModules from the current logged in user.
+     */
     findImportedModule(): Observable<Modul[]> {
         const changeActions: Observable<DocumentChangeAction<Modul>[]> =
             this.modulCollection.snapshotChanges();
