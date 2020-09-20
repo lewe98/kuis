@@ -151,9 +151,10 @@ export class FrageComponent {
     swapQuestionsToForbidden(){
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.wrongIds.length; i++) {
+            // tslint:disable-next-line:prefer-for-of
             for (let j = 0; j < this.user.availableQuestions.length; j++) {
                 if (this.wrongIds[i] === this.user.availableQuestions[j].id){
-                    this.user.availableQuestions[j] = 0;
+                    this.user.availableQuestions[j].counter = 0;
                 }
             }
         }
