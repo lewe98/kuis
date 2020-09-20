@@ -3,8 +3,10 @@ import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
 import {ModulService} from '../../services/modul/modul.service';
 import {Modul} from '../../models/modul';
-import {IonInput, ViewDidEnter} from '@ionic/angular';
+import {IonInput, IonRouterOutlet, ModalController, ViewDidEnter} from '@ionic/angular';
 import {ToastService} from '../../services/toast/toast.service';
+import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add/moduluebersicht-add.page';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-moduluebersicht',
@@ -17,19 +19,25 @@ export class ModuluebersichtPage implements ViewDidEnter {
     url = '';
     @ViewChild(IonInput) search: IonInput;
 
-    constructor(private modulService: ModulService,
+    constructor(private authService: AuthService,
+                private modulService: ModulService,
                 public storageService: StorageService,
                 private toastService: ToastService,
-                private router: Router) {
+                private router: Router,
+                private modalController: ModalController,
+                private routerOutlet: IonRouterOutlet) {
         this.toastService.presentLoading('Fragenmodule werden geladen...')
             .then(async () => {
                 await modulService.findAllModule()
                     .subscribe(async data => {
-                        this.module = data;
-                        // this.myModule = this.module.filter(a => {
-                        //  return this.authService.getUser().importierteModule.includes(a.id);
-                        // });
-                        this.filteredModules = data;
+                        await data.map(modul => {
+                            this.authService.getUser().importierteModule.forEach(imported => {
+                                if (modul.id === imported.id) {
+                                    this.module.push(modul);
+                                }
+                            });
+                        });
+                        this.filteredModules = this.module;
                     });
                 await this.toastService.dismissLoading();
             });
@@ -77,6 +85,18 @@ export class ModuluebersichtPage implements ViewDidEnter {
      */
     deleteModule() {
         console.log('Yet to be implemented!');
+    }
+
+    /**
+     * Method opens Modal to import module.
+     */
+    async presentModalAddModule() {
+        const modal = await this.modalController.create({
+            component: ModuluebersichtAddPage,
+            swipeToClose: true,
+            presentingElement: this.routerOutlet.nativeEl
+        });
+        return await modal.present();
     }
 
     ionViewDidEnter() {

@@ -19,7 +19,9 @@ import {KuisButtonComponent} from '../../components/button/kuis-button/kuis-butt
         ModuluebersichtPageRoutingModule,
         LandingPageModule,
     ],
-    exports: [],
+    exports: [
+        QuizWrapperComponent
+    ],
     declarations: [ModuluebersichtPage, QuizWrapperComponent]
 })
 export class ModuluebersichtPageModule {

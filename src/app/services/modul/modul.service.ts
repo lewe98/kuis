@@ -4,6 +4,8 @@ import {Modul} from '../../models/modul';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {StorageService} from '../storage/storage.service';
+import {AuthService} from '../auth/auth.service';
+import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +16,9 @@ export class ModulService {
     isLernmodus = false;
     started = false;
 
-
     constructor(private afs: AngularFirestore,
-                private storageService: StorageService) {
+                private storageService: StorageService,
+                private authService: AuthService) {
         this.modulCollection = afs.collection<Modul>('module');
         this.findAllModule().subscribe(data => {
             this.module = data;
@@ -30,9 +32,9 @@ export class ModulService {
         this.isLernmodus = true;
     }
 
-    // TODO wird eventuell nicht mehr gebraucht.
-    /**
-     * Method to get all Modules from the current logged in user
+    /***
+     * This Method gets all Modules from Firebase.
+     * @return is a Observable Stream of the Module in the Firebase Database.
      */
     findAllModule(): Observable<Modul[]> {
         const changeActions: Observable<DocumentChangeAction<Modul>[]> =
@@ -72,32 +74,24 @@ export class ModulService {
         return {id: doc.id, ...doc.data()};
     }
 
+    importModule(modul: Modul) {
+        const newUser = this.authService.getUser();
+        console.log(modul);
+        newUser.importierteModule.push(modul);
+        this.authService.updateProfile(newUser);
+    }
+
     /**
-     * Method to get the importedModules from the current logged in user.
+     * Converts a hilfsObjektFragen Object to Firestore Format
+     * @param object - the hilfsObjektFragen
      */
-    findImportedModule(): Observable<Modul[]> {
-        const changeActions: Observable<DocumentChangeAction<Modul>[]> =
-            this.modulCollection.snapshotChanges();
-        return changeActions.pipe(
-            map(actions => actions.map(a => {
-                const data = a.payload.doc.data();
-                data.id = a.payload.doc.id;
-                this.storageService.getPicture(data.bild).then((url) => {
-                    data.bild = url;
-                });
-                return data;
-            })));
-        /* this.afs.collection('module')
-            .get()
-            .toPromise()
-            .then(snapshot => {
-              this.module = snapshot.docs.map(this.getID);
-              this.module.forEach((elem) => {
-                this.getPicture(elem.bild).then((url) => {
-                  elem.bild = url;
-                });
-              });
-            });
-         */
+    toFirestore(object: HilfsObjektFrage): firebase.firestore.DocumentData {
+        return {id: object.id, counter: object.counter};
+    }
+
+
+    addQuestion(hilfsobject: any){
+        const newUser = this.authService.getUser();
+        newUser.availableQuestions.push(this.toFirestore(hilfsobject));
     }
 }

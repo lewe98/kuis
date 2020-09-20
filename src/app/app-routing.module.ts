@@ -68,6 +68,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/moduluebersicht-edit/moduluebersicht-edit/moduluebersicht-edit.module')
         .then(m => m.ModuluebersichtEditPageModule)
   },
+  {
+    path: 'moduluebersicht-add',
+    loadChildren: () => import('./pages/moduluebersicht-add/moduluebersicht-add/moduluebersicht-add.module').then(m => m.ModuluebersichtAddPageModule)
+  },
 
 
 ];

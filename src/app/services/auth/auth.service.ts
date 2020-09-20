@@ -49,7 +49,7 @@ export class AuthService {
         copy.historieLernmodus = copy.historieLernmodus || null;
         copy.abzeichen = copy.abzeichen || null;
         copy.importierteModule = copy.importierteModule || null;
-        // copy.availableQuestions = copy.availableQuestions || null;
+        copy.availableQuestions = copy.availableQuestions || null;
 
         return copy;
     }
@@ -93,7 +93,7 @@ export class AuthService {
      * @param user user to be updated
      */
     async updateProfile(user: User) {
-         await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
+        await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
             .then(async () => {
                 if (window.location.pathname === '/profil') {
                     await firebase.auth().currentUser.updateEmail(user.email)
@@ -117,7 +117,7 @@ export class AuthService {
                 await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
                 await this.toastService.dismissLoading();
             });
-         if (window.location.pathname === '/profil') {
+        if (window.location.pathname === '/profil') {
             await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
         }
     }
