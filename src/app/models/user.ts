@@ -1,3 +1,4 @@
+
 export class User {
     public id: string;
     public nutzername: string;
@@ -10,9 +11,8 @@ export class User {
     public historieLernmodus: number[];
     public importierteModule: any[];
     public googleAccount: boolean;
-
-    // TODO: - Fortschritt Lernmodus
-    // public lernModus: [Map<string, string>];
+    public forbiddenQuestions: string[];
+    public availableQuestions: any[];
 
     constructor(nutzername: string, email: string, passwort: string, googleAccount: boolean) {
         this.nutzername = nutzername;
@@ -26,5 +26,7 @@ export class User {
         this.historieLernmodus = [];
         this.abzeichen = [];
         this.importierteModule = [];
+        this.availableQuestions = [];
+        this.forbiddenQuestions = [];
     }
 }

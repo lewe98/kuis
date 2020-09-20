@@ -18,6 +18,7 @@ export class QuizPage implements OnDestroy {
     globalCounter = 0;
     sum = 0;
     genugFragen = false;
+    correctQuestion = false;
 
     user: User;
 
@@ -71,35 +72,62 @@ export class QuizPage implements OnDestroy {
      * Method to choose ten questions from before created array and checks if the user have a legit number of imported questions.
      */
     pushFrage() {
-        // tslint:disable-next-line:prefer-for-of
+
+
+        // console.log(this.user.availableQuestions);
+        // alert(this.user.availableQuestions.length);
+        // if (this.user.availableQuestions.length === 0) {
+        //     let counter = 0;
+        //     for (let i = 0; i < this.alleFragen.length; i++) {
+        //         for (let j = 0; j < this.alleFragen[i].length; j++) {
+        //            this.user.availableQuestions[counter] = new Map([['id', this.alleFragen[i][j].id ], ['counter', 0 ]]);
+        //            counter++;
+        //         }
+        //     }
+        //     this.authService.updateProfile(this.user);
+        // }
+
+            // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.alleFragen.length; i++) {
             this.sum = this.sum + this.alleFragen[i].length;
-        }
+            }
+
+        this.sum = this.sum - this.user.forbiddenQuestions.length;
 
         if (this.sum < 10) {
             this.genugFragen = true;
-        }
+            }
 
         if (this.sum >= 10) {
-            if (this.modulService.isLernmodus) {
                 this.lernmodusFragen = [];
                 const alleFragenIndizes = this.alleFragen.length; // mit math.random zahl zwischen 0 und 3
 
                 while (this.lernmodusFragen.length < 10) {
+                    this.correctQuestion = true;
                     let counter = 0;
                     const zufallsZahlModule = Math.floor(Math.random() * alleFragenIndizes);
                     const anzahlFragen = this.alleFragen[zufallsZahlModule].length;
                     const zufallsZahlFragen = Math.floor(Math.random() * anzahlFragen);
 
-                    if (this.lernmodusFragen.length === 0) {
-                        this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
-                    } else {
-                        // tslint:disable-next-line:prefer-for-of
-                        for (let i = 0; i < this.lernmodusFragen.length; i++) {
-                            if (this.lernmodusFragen[i].id !== this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
-                                counter++;
-                                if (counter === this.lernmodusFragen.length) {
-                                    this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
+                    // tslint:disable-next-line:prefer-for-of
+                    for (let i = 0; i < this.user.forbiddenQuestions.length; i++) {
+                        if (this.user.forbiddenQuestions[i] === this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
+                            this.correctQuestion = false;
+                            break;
+                        }
+                    }
+
+                    if (this.correctQuestion) {
+                        if (this.lernmodusFragen.length === 0) {
+                            this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
+                        } else {
+                            // tslint:disable-next-line:prefer-for-of
+                            for (let i = 0; i < this.lernmodusFragen.length; i++) {
+                                if (this.lernmodusFragen[i].id !== this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
+                                    counter++;
+                                    if (counter === this.lernmodusFragen.length) {
+                                        this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
+                                    }
                                 }
                             }
                         }
@@ -108,7 +136,6 @@ export class QuizPage implements OnDestroy {
                 this.storageService.fragen = [];
                 this.storageService.fragen = this.lernmodusFragen;
                 this.modulService.started = true;
-            }
         }
     }
 

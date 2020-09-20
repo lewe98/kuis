@@ -23,6 +23,8 @@ export class FrageComponent {
     user: User;
     timer = 0;
     interval;
+    correctIds = [];
+    wrongIds = [];
 
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
@@ -64,6 +66,8 @@ export class FrageComponent {
                 this.user.historieLernmodus.push(this.richtigBeantwortetLernmodusCounter);
                 this.user.gesamtzeit = this.user.gesamtzeit + this.timer;
                 this.modulService.isLernmodus = false;
+                this.swapQuestionsToForbidden();
+                this.inkrementQuestionsCounterFromUser();
                 this.authService.updateProfile(this.user);
                 this.router.navigate(['/statistik']);
             } else {
@@ -119,6 +123,7 @@ export class FrageComponent {
             // TODO: - Style (grün, Konfetti)
             alert('richtig :)');
             if (this.modulService.isLernmodus) {
+                this.correctIds.push(this.f.id);
                 this.richtigBeantwortetLernmodusCounter++;
             } else {
                 // TODO: - Fortschritt Freier Modus (Modulübersicht)
@@ -130,11 +135,43 @@ export class FrageComponent {
         } else {
             // TODO: - Style (rot, Wackeln)
             alert('falsch :(');
+            if (this.modulService.isLernmodus){
+             this.wrongIds.push(this.f.id);
+            }
             setTimeout(() => {
                 this.showNextQuestion();
             }, 2500);
         }
-
     }
 
+
+    /**
+     * Checks the Array one Time at the End of the Game
+     */
+    swapQuestionsToForbidden(){
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.wrongIds.length; i++) {
+            for (let j = 0; j < this.user.availableQuestions.length; j++) {
+                if (this.wrongIds[i] === this.user.availableQuestions[j].id){
+                    this.user.availableQuestions.splice(j, 1);
+                }
+            }
+        }
+    }
+
+    inkrementQuestionsCounterFromUser(){
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.correctIds.length; i++) {
+            for (let j = 0; j < this.user.availableQuestions.length; j++) {
+                if (this.correctIds[i] === this.user.availableQuestions[j].id){
+                    this.user.availableQuestions[j].counter +=  1;
+                    if (this.user.availableQuestions[j].counter === 6){
+                            this.user.forbiddenQuestions.push(this.user.availableQuestions[j].id);
+                            this.user.availableQuestions.splice(j, 1);
+                        }
+                }
+            }
+        }
+
+    }
 }
