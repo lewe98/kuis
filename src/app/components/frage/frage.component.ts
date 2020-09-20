@@ -131,7 +131,7 @@ export class FrageComponent {
             }
             setTimeout(() => {
                 this.showNextQuestion();
-            }, 2500);
+            }, 1000);
         } else {
             // TODO: - Style (rot, Wackeln)
             alert('falsch :(');
@@ -140,7 +140,7 @@ export class FrageComponent {
             }
             setTimeout(() => {
                 this.showNextQuestion();
-            }, 2500);
+            }, 1000);
         }
     }
 
