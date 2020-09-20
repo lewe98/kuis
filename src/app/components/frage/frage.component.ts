@@ -153,7 +153,7 @@ export class FrageComponent {
         for (let i = 0; i < this.wrongIds.length; i++) {
             for (let j = 0; j < this.user.availableQuestions.length; j++) {
                 if (this.wrongIds[i] === this.user.availableQuestions[j].id){
-                    this.user.availableQuestions.splice(j, 1);
+                    this.user.availableQuestions[j] = 0;
                 }
             }
         }
