@@ -46,6 +46,7 @@ export class AuthService {
         copy.historieLernmodus = copy.historieLernmodus || null;
         copy.abzeichen = copy.abzeichen || null;
         copy.importierteModule = copy.importierteModule || null;
+        copy.availableQuestions = copy.availableQuestions || null;
 
         return copy;
     }

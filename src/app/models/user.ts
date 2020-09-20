@@ -10,6 +10,7 @@ export class User {
     public historieLernmodus: number[];
     public importierteModule: any[];
     public googleAccount: boolean;
+    public availableQuestions: any [];
 
     // TODO: - Fortschritt Lernmodus
     // public lernModus: [Map<string, string>];
@@ -26,5 +27,6 @@ export class User {
         this.historieLernmodus = [];
         this.abzeichen = [];
         this.importierteModule = [];
+        this.availableQuestions = [];
     }
 }

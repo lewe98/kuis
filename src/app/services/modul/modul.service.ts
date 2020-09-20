@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {StorageService} from '../storage/storage.service';
 import {AuthService} from '../auth/auth.service';
+import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +66,22 @@ export class ModulService {
 
     importModule(modul: Modul) {
         const newUser = this.authService.getUser();
+        console.log(modul);
         newUser.importierteModule.push(modul);
         this.authService.updateProfile(newUser);
+    }
+
+    /**
+     * Converts a hilfsObjektFragen Object to Firestore Format
+     * @param object - the hilfsObjektFragen
+     */
+    toFirestore(object: HilfsObjektFrage): firebase.firestore.DocumentData {
+        return {id: object.id, counter: object.counter};
+    }
+
+
+    addQuestion(hilfsobject: any){
+        const newUser = this.authService.getUser();
+        newUser.availableQuestions.push(this.toFirestore(hilfsobject));
     }
 }
