@@ -28,13 +28,19 @@ export class ModuluebersichtAddPage implements OnInit {
         .then(async () => {
           await modulService.findAllModule()
               .subscribe(async data => {
+                  this.module = [];
+                  this.filteredModules = [];
                   this.module = data;
-                  await this.authService.getUser().importierteModule.forEach(imported => {
-                      if (this.module.includes(imported)) {
-                          this.module.splice(this.module.indexOf(imported), 1);
-                      }
-                  });
-                  this.filteredModules = this.module;
+                  const tmpModule = this.module;
+                  for (let i = 0; i < this.module.length; i++) {
+                      this.authService.getUser().importierteModule.forEach(imported => {
+                          if (imported.id === tmpModule[i].id) {
+                              tmpModule.splice(i, 1);
+                          }
+                      });
+                  }
+                  this.module = tmpModule;
+                  this.filteredModules = tmpModule;
               });
           await this.toastService.dismissLoading();
         });

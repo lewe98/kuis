@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnDestroy} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
 import {ModulService} from '../../services/modul/modul.service';
@@ -7,6 +7,7 @@ import {IonInput, IonRouterOutlet, ModalController, ViewDidEnter} from '@ionic/a
 import {ToastService} from '../../services/toast/toast.service';
 import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add/moduluebersicht-add.page';
 import {AuthService} from '../../services/auth/auth.service';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -14,9 +15,11 @@ import {AuthService} from '../../services/auth/auth.service';
     templateUrl: './moduluebersicht.page.html',
     styleUrls: ['./moduluebersicht.page.scss'],
 })
-export class ModuluebersichtPage implements ViewDidEnter {
+export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     module: Modul[] = [];
     filteredModules: Modul[] = [];
+    subUser: Subscription;
+    subModule: Subscription;
     url = '';
     @ViewChild(IonInput) search: IonInput;
 
@@ -27,9 +30,32 @@ export class ModuluebersichtPage implements ViewDidEnter {
                 private router: Router,
                 private modalController: ModalController,
                 private routerOutlet: IonRouterOutlet) {
+        this.loadPage();
+        }
+
+    async loadPage() {
+        await this.toastService.presentLoading('Bitte warten...')
+            .then( async () => {
+                this.subUser = await this.authService.findById(localStorage.getItem('userID'))
+                    .subscribe(async u => {
+                        this.authService.user = await u;
+                        // this.authService.subUser = await this.subUser;
+                        await this.toastService.dismissLoading();
+                        this.loadModule();
+                    });
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
+                this.toastService.dismissLoading();
+            });
+    }
+
+    loadModule() {
         this.toastService.presentLoading('Fragenmodule werden geladen...')
             .then(async () => {
-                await modulService.findAllModule()
+                this.module = [];
+                this.filteredModules = [];
+                this.subModule = await this.modulService.findAllModule()
                     .subscribe(async data => {
                         await data.map(modul => {
                             this.authService.getUser().importierteModule.forEach(imported => {
@@ -44,12 +70,12 @@ export class ModuluebersichtPage implements ViewDidEnter {
             });
     }
 
-    /**
-     * Method to receive all questions from a quiz module.
-     * @param name name of the chosen quiz.
-     * @param id id of the chosen quiz.
-     * @param bild name of the picture of the chosen quiz.
-     */
+/**
+ * Method to receive all questions from a quiz module.
+ * @param name name of the chosen quiz.
+ * @param id id of the chosen quiz.
+ * @param bild name of the picture of the chosen quiz.
+ */
     chooseQuiz(name: string, id: string, bild: string) {
         this.modulService.started = true;
         this.storageService.findAllFragen(id, name)
@@ -102,5 +128,9 @@ export class ModuluebersichtPage implements ViewDidEnter {
 
     ionViewDidEnter() {
         setTimeout(() => this.search.setFocus(), 10);
+    }
+    ngOnDestroy() {
+        this.subUser.unsubscribe();
+        this.subModule.unsubscribe();
     }
 }
