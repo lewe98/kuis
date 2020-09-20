@@ -8,6 +8,7 @@ import {ToastService} from '../../services/toast/toast.service';
 import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add/moduluebersicht-add.page';
 import {AuthService} from '../../services/auth/auth.service';
 
+
 @Component({
     selector: 'app-moduluebersicht',
     templateUrl: './moduluebersicht.page.html',

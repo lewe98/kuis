@@ -6,6 +6,7 @@ import {Modul} from '../../../models/modul';
 import {AuthService} from '../../../services/auth/auth.service';
 import {HilfsObjektFrage} from '../../../models/hilfsObjektFrage';
 
+
 @Component({
   selector: 'app-moduluebersicht-add',
   templateUrl: './moduluebersicht-add.page.html',
@@ -40,11 +41,13 @@ export class ModuluebersichtAddPage implements OnInit {
   }
 
   addQuestions() {
+      this.array = [];
       this.storageService.findAllFragen(this.lastImportedModuleID, this.lastImportedModuleTitel).then(() => {
           this.array.push(this.storageService.fragen);
+          console.log(this.array);
           // tslint:disable-next-line:prefer-for-of
           for (let i = 0; i < this.array[0].length; i++){
-              const object = new HilfsObjektFrage(this.array[0][i].id);
+              const object = new HilfsObjektFrage(this.array[0][i].id, this.lastImportedModuleID);
               this.modulService.addQuestion(object);
           }
       });

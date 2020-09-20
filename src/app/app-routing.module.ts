@@ -70,7 +70,8 @@ const routes: Routes = [
   },
   {
     path: 'moduluebersicht-add',
-    loadChildren: () => import('./pages/moduluebersicht-add/moduluebersicht-add/moduluebersicht-add.module').then(m => m.ModuluebersichtAddPageModule)
+    loadChildren: () => import('./pages/moduluebersicht-add/moduluebersicht-add/moduluebersicht-add.module')
+        .then(m => m.ModuluebersichtAddPageModule)
   },
 
 

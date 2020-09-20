@@ -86,7 +86,7 @@ export class ModulService {
      * @param object - the hilfsObjektFragen
      */
     toFirestore(object: HilfsObjektFrage): firebase.firestore.DocumentData {
-        return {id: object.id, counter: object.counter};
+        return {id: object.id, counter: object.counter, idModul: object.idModul};
     }
 
 
