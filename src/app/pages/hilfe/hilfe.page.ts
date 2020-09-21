@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {IonInput, ViewDidEnter} from '@ionic/angular';
+import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
 @Component({
     selector: 'app-hilfe',
@@ -29,8 +30,11 @@ export class HilfePage implements ViewDidEnter {
             show: false
         }];
 
-    constructor(public authService: AuthService) {
+    constructor(public authService: AuthService,
+                private abzeichenService: AbzeichenService) {
         this.filteredFragenArray = this.fragenArray;
+
+        this.abzeichenService.checkPage();
     }
 
     async showAntwort(frage: string) {

@@ -22,6 +22,7 @@ export class AbzeichenService {
         this.abzeichenCollection = afs.collection<Abzeichen>('abzeichen');
         this.findAllAbzeichen().subscribe(data => {
             this.abzeichen = data;
+            this.abzeichen = this.sortAbzeichen(this.abzeichen);
         });
     }
 
@@ -38,6 +39,12 @@ export class AbzeichenService {
                 data.id = a.payload.doc.id;
                 return data;
             })));
+    }
+
+    sortAbzeichen(arr: Abzeichen[]): Abzeichen[] {
+        return arr.sort(((a, b) => {
+            return a.index - b.index;
+        }));
     }
 
     getAbzeichen(): Abzeichen[] {
@@ -135,6 +142,42 @@ export class AbzeichenService {
             }
         }
 
+        // Gesamtdauer 10 Minuten
+        if (this.authService.user.gesamtzeit >= 600 &&
+            !this.authService.user.abzeichen.find(a => a === abzeichenArray[14].id)) {
+            this.authService.user.abzeichen.push(abzeichenArray[14].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + abzeichenArray[14].titel);
+        }
+
+        // Gesamtdauer 1 Stunde
+        if (this.authService.user.gesamtzeit >= 3600 &&
+            !this.authService.user.abzeichen.find(a => a === abzeichenArray[15].id)) {
+            this.authService.user.abzeichen.push(abzeichenArray[15].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + abzeichenArray[15].titel);
+        }
+
+        // Gesamtdauer 24 Stunden
+        if (this.authService.user.gesamtzeit >= 86400 &&
+            !this.authService.user.abzeichen.find(a => a === abzeichenArray[16].id)) {
+            this.authService.user.abzeichen.push(abzeichenArray[16].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + abzeichenArray[16].titel);
+        }
+
+        this.authService.updateProfile(this.authService.user);
+    }
+
+    checkPage() {
+        if (window.location.pathname === '/abzeichen' &&
+            !this.authService.user.abzeichen.find(a => a === this.abzeichen[10].id)) {
+            this.authService.user.abzeichen.push(this.abzeichen[10].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[10].titel);
+        }
+
+        if (window.location.pathname === '/hilfe' &&
+            !this.authService.user.abzeichen.find(a => a === this.abzeichen[13].id)) {
+            this.authService.user.abzeichen.push(this.abzeichen[13].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[13].titel);
+        }
 
         this.authService.updateProfile(this.authService.user);
     }
