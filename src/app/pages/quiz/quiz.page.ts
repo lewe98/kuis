@@ -1,7 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ModulService} from '../../services/modul/modul.service';
 import {StorageService} from '../../services/storage/storage.service';
-import {ToastService} from '../../services/toast/toast.service';
 import {AuthService} from '../../services/auth/auth.service';
 import {User} from '../../models/user';
 
@@ -24,8 +23,7 @@ export class QuizPage implements OnDestroy {
 
     constructor(public modulService: ModulService,
                 private storageService: StorageService,
-                private authService: AuthService,
-                private toastService: ToastService) {
+                private authService: AuthService) {
         this.initialize();
         this.user = this.authService.getUser();
     }
@@ -68,21 +66,6 @@ export class QuizPage implements OnDestroy {
      * Method to choose ten questions from before created array and checks if the user have a legit number of imported questions.
      */
     pushFrage() {
-
-
-        // console.log(this.user.availableQuestions);
-        // alert(this.user.availableQuestions.length);
-        // if (this.user.availableQuestions.length === 0) {
-        //     let counter = 0;
-        //     for (let i = 0; i < this.alleFragen.length; i++) {
-        //         for (let j = 0; j < this.alleFragen[i].length; j++) {
-        //            this.user.availableQuestions[counter] = new Map([['id', this.alleFragen[i][j].id ], ['counter', 0 ]]);
-        //            counter++;
-        //         }
-        //     }
-        //     this.authService.updateProfile(this.user);
-        // }
-
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.alleFragen.length; i++) {
             this.sum = this.sum + this.alleFragen[i].length;
