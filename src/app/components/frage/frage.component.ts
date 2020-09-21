@@ -25,6 +25,7 @@ export class FrageComponent {
     interval;
     correctIds = [];
     wrongIds = [];
+    disabled = false;
 
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
@@ -135,8 +136,8 @@ export class FrageComponent {
         } else {
             // TODO: - Style (rot, Wackeln)
             alert('falsch :(');
-            if (this.modulService.isLernmodus){
-             this.wrongIds.push(this.f.id);
+            if (this.modulService.isLernmodus) {
+                this.wrongIds.push(this.f.id);
             }
             setTimeout(() => {
                 this.showNextQuestion();
@@ -148,31 +149,35 @@ export class FrageComponent {
     /**
      * Checks the Array one Time at the End of the Game
      */
-    swapQuestionsToForbidden(){
+    swapQuestionsToForbidden() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.wrongIds.length; i++) {
             // tslint:disable-next-line:prefer-for-of
             for (let j = 0; j < this.user.availableQuestions.length; j++) {
-                if (this.wrongIds[i] === this.user.availableQuestions[j].id){
+                if (this.wrongIds[i] === this.user.availableQuestions[j].id) {
                     this.user.availableQuestions[j].counter = 0;
                 }
             }
         }
     }
 
-    inkrementQuestionsCounterFromUser(){
+    inkrementQuestionsCounterFromUser() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.correctIds.length; i++) {
             for (let j = 0; j < this.user.availableQuestions.length; j++) {
-                if (this.correctIds[i] === this.user.availableQuestions[j].id){
-                    this.user.availableQuestions[j].counter +=  1;
-                    if (this.user.availableQuestions[j].counter === 6){
-                            this.user.forbiddenQuestions.push(this.user.availableQuestions[j].id);
-                            this.user.availableQuestions.splice(j, 1);
-                        }
+                if (this.correctIds[i] === this.user.availableQuestions[j].id) {
+                    this.user.availableQuestions[j].counter += 1;
+                    if (this.user.availableQuestions[j].counter === 6) {
+                        this.user.forbiddenQuestions.push(this.user.availableQuestions[j].id);
+                        this.user.availableQuestions.splice(j, 1);
+                    }
                 }
             }
         }
+    }
 
+    toggleDisable() {
+        this.disabled = true;
+        setTimeout(() => this.disabled = false, 1000);
     }
 }

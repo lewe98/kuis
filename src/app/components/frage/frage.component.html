@@ -1,5 +1,5 @@
 <ion-content>
-        <h1 *ngIf="modulService.isLernmodus">Deine benötigte Zeit: {{timer}} Sekunden</h1>
+    <h1 *ngIf="modulService.isLernmodus">Deine benötigte Zeit: {{timer}} Sekunden</h1>
     <ion-grid class="kuis-content">
         <ion-row>
             <ion-col>
@@ -14,7 +14,8 @@
 
         <ion-row>
             <ion-col>
-                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[0])">
+                <ion-card [disabled]="disabled" class="card-color-white"
+                          (click)="submitAnswer(f.antworten[0]); toggleDisable()">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[0]}}</ion-card-title>
                     </ion-card-header>
@@ -22,7 +23,8 @@
             </ion-col>
 
             <ion-col>
-                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[1])">
+                <ion-card [disabled]="disabled" class="card-color-white"
+                          (click)="submitAnswer(f.antworten[1]); toggleDisable()">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[1]}}</ion-card-title>
                     </ion-card-header>
@@ -32,7 +34,8 @@
 
         <ion-row>
             <ion-col>
-                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[2])">
+                <ion-card [disabled]="disabled" class="card-color-white"
+                          (click)="submitAnswer(f.antworten[2]); toggleDisable()">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[2]}}</ion-card-title>
                     </ion-card-header>
@@ -40,7 +43,8 @@
             </ion-col>
 
             <ion-col>
-                <ion-card class="card-color-white" (click)="submitAnswer(f.antworten[3])">
+                <ion-card [disabled]="disabled" class="card-color-white"
+                          (click)="submitAnswer(f.antworten[3]); toggleDisable()">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[3]}}</ion-card-title>
                     </ion-card-header>
