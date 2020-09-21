@@ -120,6 +120,17 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         this.isEdit = false;
     }
 
+    onButtonClick(module) {
+        if (this.isEdit === false) {
+            this.chooseQuiz(module.titel, module.id, module.bild);
+        } else {
+            const removeIndex = this.authService.getUser().importierteModule.map(item => item.id).indexOf(module.id);
+            if (removeIndex >= 0) {
+                this.authService.getUser().importierteModule.splice(removeIndex, 1);
+            }
+        }
+    }
+
     ionViewDidEnter() {
         setTimeout(() => this.search.setFocus(), 10);
     }
