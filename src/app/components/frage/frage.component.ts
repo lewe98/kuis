@@ -130,8 +130,10 @@ export class FrageComponent {
                 // TODO: - Fortschritt Freier Modus (Modulübersicht)
                 this.richtigBeantwortetFreiermodusCounter++;
             }
+            this.disabled = true;
             setTimeout(() => {
                 this.showNextQuestion();
+                this.disabled = false;
             }, 1000);
         } else {
             // TODO: - Style (rot, Wackeln)
@@ -139,8 +141,10 @@ export class FrageComponent {
             if (this.modulService.isLernmodus) {
                 this.wrongIds.push(this.f.id);
             }
+            this.disabled = true;
             setTimeout(() => {
                 this.showNextQuestion();
+                this.disabled = false;
             }, 1000);
         }
     }
@@ -174,10 +178,5 @@ export class FrageComponent {
                 }
             }
         }
-    }
-
-    toggleDisable() {
-        this.disabled = true;
-        setTimeout(() => this.disabled = false, 1000);
     }
 }
