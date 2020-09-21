@@ -36,16 +36,14 @@ export class ModuluebersichtAddPage {
                         this.module = [];
                         this.filteredModules = [];
                         this.module = data;
-                        const tmpModule = this.module;
-                        for (let i = 0; i < this.module.length; i++) {
+                        this.module.forEach(modul => {
                             this.authService.getUser().importierteModule.forEach(imported => {
-                                if (imported.id === tmpModule[i].id) {
-                                    tmpModule.splice(i, 1);
+                                if (imported.id === modul.id) {
+                                    this.module.splice(this.module.indexOf(modul), 1);
                                 }
                             });
-                        }
-                        this.module = tmpModule;
-                        this.filteredModules = tmpModule;
+                        });
+                        this.filteredModules = this.module;
                     });
                 await this.toastService.dismissLoading();
             });

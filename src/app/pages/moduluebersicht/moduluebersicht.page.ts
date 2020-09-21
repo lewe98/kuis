@@ -30,25 +30,10 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 private router: Router,
                 private modalController: ModalController,
                 private routerOutlet: IonRouterOutlet) {
-        this.loadPage();
+        this.authService.loadPageSubscription(() => {
+            this.loadModule();
+        });
         }
-
-    async loadPage() {
-        await this.toastService.presentLoading('Bitte warten...')
-            .then( async () => {
-                this.subUser = await this.authService.findById(localStorage.getItem('userID'))
-                    .subscribe(async u => {
-                        this.authService.user = await u;
-                        // this.authService.subUser = await this.subUser;
-                        await this.toastService.dismissLoading();
-                        this.loadModule();
-                    });
-            })
-            .catch((error) => {
-                this.toastService.presentWarningToast('Error!', error);
-                this.toastService.dismissLoading();
-            });
-    }
 
     loadModule() {
         this.toastService.presentLoading('Fragenmodule werden geladen...')
