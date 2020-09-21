@@ -2,9 +2,11 @@
 
 <ion-content>
     <div class="kuis-content">
-    <app-frage *ngIf="this.modulService.started && !genugFragen else noQuestions">
+    <div *ngIf="this.modulService.started && !genugFragen else noQuestions">
+    <app-frage>
     </app-frage>
     <app-quiz-fortschritt></app-quiz-fortschritt>
+    </div>
 
     <ng-template #noQuestions>
         <ion-item lines="none">
