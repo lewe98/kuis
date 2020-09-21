@@ -8,6 +8,9 @@ import {ToastService} from '../../services/toast/toast.service';
 import {Abzeichen} from '../../models/abzeichen';
 import {Subscription} from 'rxjs';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
+import {Statistik} from '../../models/statistik';
+import {StatistikService} from '../../services/statistik/statistik.service';
+
 
 @Component({
     selector: 'app-frage',
@@ -24,6 +27,7 @@ export class FrageComponent {
     richtigBeantwortetFreiermodusCounter = 0;
     timer = 0;
     interval;
+    statistikArray: Statistik[] = [];
     correctIds = [];
     wrongIds = [];
     disabled = false;
@@ -36,11 +40,13 @@ export class FrageComponent {
     subUser: Subscription;
 
 
+
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
                 private abzeichenService: AbzeichenService,
                 private authService: AuthService,
                 private toastService: ToastService,
+                private statistikService: StatistikService,
                 private router: Router) {
         this.toastService.presentLoading('Abzeichen werden geladen...')
             .then(async () => {
@@ -109,6 +115,7 @@ export class FrageComponent {
                 this.inkrementQuestionsCounterFromUser();
                 this.abzeichenService.checkAbzeichen(this.timer, this.abzeichenArray);
                 this.authService.updateProfile(this.authService.user);
+                this.statistikService.printLastRound(this.statistikArray);
                 this.router.navigate(['/statistik']);
             } else {
                 this.toastService.presentToast('Das Modul wurde abgeschlossen.');
@@ -158,8 +165,15 @@ export class FrageComponent {
      * Method to submit the answer and receive feedback.
      * @param gewaehlteAntwort answer that the user has chosen.
      */
+
     submitAnswer(gewaehlteAntwort: string) {
-        if (this.f.richtigeAntwort === gewaehlteAntwort) {
+       const statisticoOject = new Statistik();
+       statisticoOject.richtigeAntwort = this.f.richtigeAntwort;
+       statisticoOject.gewaehlteAntwort = gewaehlteAntwort;
+       statisticoOject.frage = this.f.frage;
+       statisticoOject.showBeschreibung = false;
+       this.statistikArray.push(statisticoOject);
+       if (this.f.richtigeAntwort === gewaehlteAntwort) {
             if (this.f.antworten[0] === gewaehlteAntwort) {
                 this.richtig1 = true;
             }
