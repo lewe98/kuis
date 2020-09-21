@@ -52,7 +52,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                         });
                         this.filteredModules = this.module;
                     });
-                await this.toastService.dismissLoading();
+                this.toastService.dismissLoading();
             });
     }
 
@@ -124,13 +124,15 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         if (this.isEdit === false) {
             this.chooseQuiz(module.titel, module.id, module.bild);
         } else {
-            const user = this.authService.getUser();
-            const removeIndex = user.importierteModule.map(item => item.id).indexOf(module.id);
-            console.log(removeIndex);
-            if (removeIndex >= 0) {
-                user.importierteModule.splice(removeIndex, 1);
-                this.authService.updateProfile(user);
-            }
+            this.toastService.presentLoading('Modul wird gelöscht...').then(async () => {
+                const user = await this.authService.getUser();
+                const removeIndex = await user.importierteModule.map(item => item.id).indexOf(module.id);
+                if (removeIndex >= 0) {
+                    await user.importierteModule.splice(removeIndex, 1);
+                    await this.authService.updateProfile(user);
+                }
+                this.toastService.dismissLoading();
+            });
         }
     }
 
