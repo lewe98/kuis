@@ -181,4 +181,24 @@ export class AbzeichenService {
 
         this.authService.updateProfile(this.authService.user);
     }
+
+    checkUsernameChanged(alt: string) {
+        if (alt !== this.authService.user.nutzername &&
+            !this.authService.user.abzeichen.find(a => a === this.abzeichen[9].id)) {
+            this.authService.user.abzeichen.push(this.abzeichen[9].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[9].titel);
+        }
+    }
+
+    checkAbzeichenModulImportiert() {
+        if (this.authService.user.importierteModule.length >= 1 &&
+            !this.authService.user.abzeichen.find(a => a === this.abzeichen[11].id)) {
+            this.authService.user.abzeichen.push(this.abzeichen[11].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[11].titel);
+        }
+    }
+
+    checkAbzeichenModulGeloescht() {
+        // TODO
+    }
 }
