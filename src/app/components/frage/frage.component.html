@@ -14,8 +14,9 @@
 
         <ion-row>
             <ion-col>
-                <ion-card [disabled]="disabled" class="card-color-white"
-                          (click)="submitAnswer(f.antworten[0])">
+                <ion-card [disabled]="disabled"
+                          (click)="submitAnswer(f.antworten[0])"
+                          [ngClass]="richtig1 ? 'richtig1' : 'nochNichtGewaehlt'">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[0]}}</ion-card-title>
                     </ion-card-header>
@@ -23,8 +24,9 @@
             </ion-col>
 
             <ion-col>
-                <ion-card [disabled]="disabled" class="card-color-white"
-                          (click)="submitAnswer(f.antworten[1])">
+                <ion-card [disabled]="disabled"
+                          (click)="submitAnswer(f.antworten[1])"
+                          [ngClass]="richtig2 ? 'richtig2' : 'nochNichtGewaehlt'">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[1]}}</ion-card-title>
                     </ion-card-header>
@@ -34,8 +36,9 @@
 
         <ion-row>
             <ion-col>
-                <ion-card [disabled]="disabled" class="card-color-white"
-                          (click)="submitAnswer(f.antworten[2])">
+                <ion-card [disabled]="disabled"
+                          (click)="submitAnswer(f.antworten[2])"
+                          [ngClass]="richtig3 ? 'richtig3' : 'nochNichtGewaehlt'">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[2]}}</ion-card-title>
                     </ion-card-header>
@@ -43,8 +46,9 @@
             </ion-col>
 
             <ion-col>
-                <ion-card [disabled]="disabled" class="card-color-white"
-                          (click)="submitAnswer(f.antworten[3])">
+                <ion-card [disabled]="disabled"
+                          (click)="submitAnswer(f.antworten[3])"
+                          [ngClass]="richtig4 ? 'richtig4' : 'nochNichtGewaehlt'">
                     <ion-card-header>
                         <ion-card-title>{{f.antworten[3]}}</ion-card-title>
                     </ion-card-header>

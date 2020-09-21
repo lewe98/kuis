@@ -39,8 +39,10 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                     .subscribe(async data => {
                         // await this.authService.checkIfLoggedIn();
                         this.abzeichenArray = data;
-                        this.filteredAbzeichenArray = data;
+                        this.sortAbzeichen();
+                        this.filteredAbzeichenArray = this.abzeichenArray;
                         await this.checkAbzeichenBestanden();
+                        await this.checkAbzeichen();
                     });
                 await this.toastService.dismissLoading();
             });
@@ -115,6 +117,38 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                 alert('Error: ' + reason);
             });
         }
+    }
+
+    sortAbzeichen() {
+        this.abzeichenArray.sort(((a, b) => {
+            return a.index - b.index;
+        }));
+    }
+
+    checkAbzeichen() {
+
+        // Eine Lernrunde abgeschlossen.
+        if (this.authService.user.historieLernmodus.length === 1 &&
+            !this.authService.user.abzeichen.find(a => a === this.abzeichenArray[3].id)) {
+            this.authService.user.abzeichen.push(this.abzeichenArray[3].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichenArray[3].titel);
+        }
+
+        // 10 Lernrunden abgeschlossen.
+        if (this.authService.user.historieLernmodus.length === 10 &&
+            !this.authService.user.abzeichen.find(a => a === this.abzeichenArray[4].id)) {
+            this.authService.user.abzeichen.push(this.abzeichenArray[4].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichenArray[4].titel);
+        }
+
+        // 50 Lernrunden abgeschlossen.
+        if (this.authService.user.historieLernmodus.length === 50 &&
+            !this.authService.user.abzeichen.find(a => a === this.abzeichenArray[5].id)) {
+            this.authService.user.abzeichen.push(this.abzeichenArray[5].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichenArray[5].titel);
+        }
+
+        this.authService.updateProfile(this.authService.user);
     }
 
     ionViewDidEnter() {

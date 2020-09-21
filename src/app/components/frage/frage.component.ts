@@ -26,6 +26,11 @@ export class FrageComponent {
     correctIds = [];
     wrongIds = [];
     disabled = false;
+    richtig1 = false;
+    richtig2 = false;
+    richtig3 = false;
+    richtig4 = false;
+
 
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
@@ -121,8 +126,19 @@ export class FrageComponent {
      */
     submitAnswer(gewaehlteAntwort: string) {
         if (this.f.richtigeAntwort === gewaehlteAntwort) {
-            // TODO: - Style (grün, Konfetti)
-            alert('richtig :)');
+            if (this.f.antworten[0] === gewaehlteAntwort) {
+                this.richtig1 = true;
+            }
+            if (this.f.antworten[1] === gewaehlteAntwort) {
+                this.richtig2 = true;
+            }
+            if (this.f.antworten[2] === gewaehlteAntwort) {
+                this.richtig3 = true;
+            }
+            if (this.f.antworten[3] === gewaehlteAntwort) {
+                this.richtig4 = true;
+            }
+
             if (this.modulService.isLernmodus) {
                 this.correctIds.push(this.f.id);
                 this.richtigBeantwortetLernmodusCounter++;
@@ -134,10 +150,13 @@ export class FrageComponent {
             setTimeout(() => {
                 this.showNextQuestion();
                 this.disabled = false;
+                this.disabled = false;
+                this.richtig1 = false;
+                this.richtig2 = false;
+                this.richtig3 = false;
+                this.richtig4 = false;
             }, 1000);
         } else {
-            // TODO: - Style (rot, Wackeln)
-            alert('falsch :(');
             if (this.modulService.isLernmodus) {
                 this.wrongIds.push(this.f.id);
             }
@@ -145,8 +164,13 @@ export class FrageComponent {
             setTimeout(() => {
                 this.showNextQuestion();
                 this.disabled = false;
+                this.richtig1 = false;
+                this.richtig2 = false;
+                this.richtig3 = false;
+                this.richtig4 = false;
             }, 1000);
         }
+
     }
 
 
