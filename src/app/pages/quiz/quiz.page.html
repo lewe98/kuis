@@ -1,8 +1,12 @@
 <app-navbar [showBack]="false" [name]="'Quiz'" [showLogout]="false"></app-navbar>
 
 <ion-content>
-    <app-frage *ngIf="this.modulService.started && !genugFragen else noQuestions">
+    <div class="kuis-content">
+    <div *ngIf="this.modulService.started && !genugFragen else noQuestions">
+    <app-frage>
     </app-frage>
+    <app-quiz-fortschritt></app-quiz-fortschritt>
+    </div>
 
     <ng-template #noQuestions>
         <ion-item lines="none">
@@ -11,6 +15,7 @@
             </ion-label>
         </ion-item>
     </ng-template>
+    </div>
 </ion-content>
 
 
