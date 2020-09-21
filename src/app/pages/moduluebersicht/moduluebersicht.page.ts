@@ -18,6 +18,7 @@ import {Subscription} from 'rxjs';
 export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     module: Modul[] = [];
     filteredModules: Modul[] = [];
+    isEdit = false;
     subUser: Subscription;
     subModule: Subscription;
     url = '';
@@ -109,6 +110,14 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
             presentingElement: this.routerOutlet.nativeEl
         });
         return await modal.present();
+    }
+
+    edit() {
+        this.isEdit = true;
+    }
+
+    undoEdit() {
+        this.isEdit = false;
     }
 
     ionViewDidEnter() {

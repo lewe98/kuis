@@ -1,4 +1,4 @@
-<app-navbar [name]="'Modulübersicht'" [showBack]="true" [showLogout]="true"></app-navbar>
+<app-navbar [name]="isEdit ? 'Modulübersicht': 'Module löschen'" [showBack]="true" [showLogout]="true"></app-navbar>
 
 <ion-content>
     <div class="kuis-content">
@@ -31,10 +31,13 @@
 
         <ion-icon name="options-outline">
         </ion-icon>
+        <ion-icon name="build-outline" (click)="edit()">
+        </ion-icon>
+        <app-kuis-button [title]="'Fertig'" (click)="undoEdit()"></app-kuis-button>
     </ion-row>
     <div *ngIf="filteredModules.length > 0; else empty">
         <app-quiz-wrapper (click)="chooseQuiz(modul.titel, modul.id, modul.bild)" [titel]="modul.titel"
-                          [bild]="modul.bild" *ngFor="let modul of filteredModules">
+                          [bild]="modul.bild" *ngFor="let modul of filteredModules" [edit]="isEdit" [button]="isEdit ? 'Löschen':'Starten'">
         </app-quiz-wrapper>
 
     </div>
