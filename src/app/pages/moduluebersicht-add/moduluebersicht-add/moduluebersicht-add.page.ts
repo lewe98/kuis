@@ -6,6 +6,7 @@ import {Modul} from '../../../models/modul';
 import {AuthService} from '../../../services/auth/auth.service';
 import {HilfsObjektFrage} from '../../../models/hilfsObjektFrage';
 import {IonInput, ModalController} from '@ionic/angular';
+import {AbzeichenService} from '../../../services/abzeichen/abzeichen.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class ModuluebersichtAddPage {
                 private authService: AuthService,
                 private toastService: ToastService,
                 private storageService: StorageService,
+                public abzeichenService: AbzeichenService,
                 public modalController: ModalController) {
         this.toastService.presentLoading('Fragenmodule werden geladen...')
             .then(async () => {
@@ -69,6 +71,7 @@ export class ModuluebersichtAddPage {
         this.module.splice(this.module.indexOf(module), 1);
         this.filteredModules = this.module;
         this.addQuestions();
+        this.abzeichenService.checkAbzeichenModulImportiert();
     }
 
     async doSearch() {

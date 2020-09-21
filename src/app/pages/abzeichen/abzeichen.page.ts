@@ -49,8 +49,9 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                     .subscribe(async data => {
                         // await this.authService.checkIfLoggedIn();
                         this.abzeichenArray = data;
-                        this.sortAbzeichen();
+                        this.abzeichenService.sortAbzeichen(this.abzeichenArray);
                         this.filteredAbzeichenArray = this.abzeichenArray;
+                        this.abzeichenService.checkPage();
                         await this.checkAbzeichenBestanden();
                     });
                 await this.toastService.dismissLoading();
@@ -126,12 +127,6 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                 alert('Error: ' + reason);
             });
         }
-    }
-
-    sortAbzeichen() {
-        this.abzeichenArray.sort(((a, b) => {
-            return a.index - b.index;
-        }));
     }
 
     ionViewDidEnter() {
