@@ -1,0 +1,20 @@
+@import 'src/global.scss';
+h1 {
+  text-align: center;
+}
+
+.kuis-fortschritt-balken-background {
+  width: 100%;
+  height: 20px;
+  background-color: white;
+  border-radius: 100px;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.kuis-fortschritt-balken {
+  width: 100%;
+  height: 100%;
+  background-color: $color-kuis;
+  border-radius: 100px;
+}
