@@ -9,6 +9,7 @@ import { QuizPageRoutingModule } from './quiz-routing.module';
 import { QuizPage } from './quiz.page';
 import {FrageComponent} from '../../components/frage/frage.component';
 import {LandingPageModule} from '../landing/landing.module';
+import {QuizFortschrittComponent} from '../../components/quiz-fortschritt/quiz-fortschritt.component';
 
 @NgModule({
     imports: [
@@ -18,6 +19,6 @@ import {LandingPageModule} from '../landing/landing.module';
         QuizPageRoutingModule,
         LandingPageModule
     ],
-    declarations: [QuizPage, FrageComponent]
+    declarations: [QuizPage, FrageComponent, QuizFortschrittComponent]
 })
 export class QuizPageModule {}
