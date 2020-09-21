@@ -94,13 +94,6 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     }
 
     /**
-     * Method to delete an imported module.
-     */
-    deleteModule() {
-        console.log('Yet to be implemented!');
-    }
-
-    /**
      * Method opens Modal to import module.
      */
     async presentModalAddModule() {
@@ -120,13 +113,23 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         this.isEdit = false;
     }
 
+    /**
+     * Handles the different events to the changing Button at the bottom of the modules.
+     * If the user is not in Edit-Mode, clicking on the button will start the selected Quiz.
+     * Otherwise it will be removed from the imported Modules.
+     *
+     * @param module is the quiz which is either started or deleted.
+     */
     onButtonClick(module) {
         if (this.isEdit === false) {
             this.chooseQuiz(module.titel, module.id, module.bild);
         } else {
-            const removeIndex = this.authService.getUser().importierteModule.map(item => item.id).indexOf(module.id);
+            const user = this.authService.getUser();
+            const removeIndex = user.importierteModule.map(item => item.id).indexOf(module.id);
+            console.log(removeIndex);
             if (removeIndex >= 0) {
-                this.authService.getUser().importierteModule.splice(removeIndex, 1);
+                user.importierteModule.splice(removeIndex, 1);
+                this.authService.updateProfile(user);
             }
         }
     }
