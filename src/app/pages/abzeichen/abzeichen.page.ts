@@ -6,6 +6,7 @@ import {AuthService} from '../../services/auth/auth.service';
 import {Subscription} from 'rxjs';
 import {IonInput, Platform, ViewDidEnter} from '@ionic/angular';
 import {Plugins} from '@capacitor/core';
+import {User} from '../../models/user';
 
 @Component({
     selector: 'app-abzeichen',
@@ -17,7 +18,7 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
     abzeichenArray: Abzeichen[] = [];
     filteredAbzeichenArray: Abzeichen[] = [];
     subAbzeichen: Subscription;
-    subUser: Subscription;
+    user: User;
 
     @ViewChild(IonInput) search: IonInput;
 
@@ -27,33 +28,17 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                 private platform: Platform) {
         this.toastService.presentLoading('Abzeichen werden geladen...')
             .then(async () => {
-                if (this.authService.user === undefined) {
-                    if (localStorage.getItem('userID')) {
-                        this.subUser = await this.authService.findById(localStorage.getItem('userID'))
-                            .subscribe(async u => {
-                                this.authService.user = await u;
-                                this.authService.subUser = await this.subUser;
-                                await this.subUser.unsubscribe();
-                            });
-                    }
-                    if (sessionStorage.getItem('userID')) {
-                        this.subUser = await this.authService.findById(sessionStorage.getItem('userID'))
-                            .subscribe(async u => {
-                                this.authService.user = await u;
-                                this.authService.subUser = await this.subUser;
-                                await this.subUser.unsubscribe();
-                            });
-                    }
-                }
-                this.subAbzeichen = await this.abzeichenService.findAllAbzeichen()
-                    .subscribe(async data => {
-                        // await this.authService.checkIfLoggedIn();
-                        this.abzeichenArray = data;
-                        this.abzeichenService.sortAbzeichen(this.abzeichenArray);
-                        this.filteredAbzeichenArray = this.abzeichenArray;
-                        this.abzeichenService.checkPage();
-                        await this.checkAbzeichenBestanden();
-                    });
+                await this.authService.loadPageSubscription(() => {
+                    this.user = this.authService.getUser();
+                    this.subAbzeichen = this.abzeichenService.findAllAbzeichen()
+                        .subscribe(async data => {
+                            this.abzeichenArray = data;
+                            this.abzeichenService.sortAbzeichen(this.abzeichenArray);
+                            this.filteredAbzeichenArray = this.abzeichenArray;
+                            this.abzeichenService.checkPage();
+                            await this.checkAbzeichenBestanden();
+                        });
+                });
                 await this.toastService.dismissLoading();
             });
 
