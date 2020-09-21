@@ -1,74 +1,87 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ModulService} from '../../../services/modul/modul.service';
 import {StorageService} from '../../../services/storage/storage.service';
 import {ToastService} from '../../../services/toast/toast.service';
 import {Modul} from '../../../models/modul';
 import {AuthService} from '../../../services/auth/auth.service';
 import {HilfsObjektFrage} from '../../../models/hilfsObjektFrage';
+import {IonInput, ModalController} from '@ionic/angular';
 
 
 @Component({
-  selector: 'app-moduluebersicht-add',
-  templateUrl: './moduluebersicht-add.page.html',
-  styleUrls: ['./moduluebersicht-add.page.scss'],
+    selector: 'app-moduluebersicht-add',
+    templateUrl: './moduluebersicht-add.page.html',
+    styleUrls: ['./moduluebersicht-add.page.scss'],
 })
-export class ModuluebersichtAddPage implements OnInit {
+export class ModuluebersichtAddPage {
 
-  module: Modul[] = [];
-  filteredModules: Modul[] = [];
-  lastImportedModuleID: string;
-  lastImportedModuleTitel: string;
-  array = [];
+    module: Modul[] = [];
+    filteredModules: Modul[] = [];
+    lastImportedModuleID: string;
+    lastImportedModuleTitel: string;
+    array = [];
+    @ViewChild(IonInput) search: IonInput;
 
-  constructor(public modulService: ModulService,
-              private authService: AuthService,
-              private toastService: ToastService,
-              private storageService: StorageService) {
-    this.toastService.presentLoading('Fragenmodule werden geladen...')
-        .then(async () => {
-          await modulService.findAllModule()
-              .subscribe(async data => {
-                  this.module = [];
-                  this.filteredModules = [];
-                  this.module = data;
-                  const tmpModule = this.module;
-                  for (let i = 0; i < this.module.length; i++) {
-                      this.authService.getUser().importierteModule.forEach(imported => {
-                          if (imported.id === tmpModule[i].id) {
-                              tmpModule.splice(i, 1);
-                          }
-                      });
-                  }
-                  this.module = tmpModule;
-                  this.filteredModules = tmpModule;
-              });
-          await this.toastService.dismissLoading();
+    constructor(public modulService: ModulService,
+                private authService: AuthService,
+                private toastService: ToastService,
+                private storageService: StorageService,
+                public modalController: ModalController) {
+        this.toastService.presentLoading('Fragenmodule werden geladen...')
+            .then(async () => {
+                await modulService.findAllModule()
+                    .subscribe(async data => {
+                        this.module = [];
+                        this.filteredModules = [];
+                        this.module = data;
+                        const tmpModule = this.module;
+                        for (let i = 0; i < this.module.length; i++) {
+                            this.authService.getUser().importierteModule.forEach(imported => {
+                                if (imported.id === tmpModule[i].id) {
+                                    tmpModule.splice(i, 1);
+                                }
+                            });
+                        }
+                        this.module = tmpModule;
+                        this.filteredModules = tmpModule;
+                    });
+                await this.toastService.dismissLoading();
+            });
+    }
+
+    addQuestions() {
+        this.array = [];
+        this.storageService.findAllFragen(this.lastImportedModuleID, this.lastImportedModuleTitel).then(() => {
+            this.array.push(this.storageService.fragen);
+            console.log(this.array);
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < this.array[0].length; i++) {
+                const object = new HilfsObjektFrage(this.array[0][i].id, this.lastImportedModuleID);
+                this.modulService.addQuestion(object);
+            }
         });
-  }
+    }
 
-  addQuestions() {
-      this.array = [];
-      this.storageService.findAllFragen(this.lastImportedModuleID, this.lastImportedModuleTitel).then(() => {
-          this.array.push(this.storageService.fragen);
-          console.log(this.array);
-          // tslint:disable-next-line:prefer-for-of
-          for (let i = 0; i < this.array[0].length; i++){
-              const object = new HilfsObjektFrage(this.array[0][i].id, this.lastImportedModuleID);
-              this.modulService.addQuestion(object);
-          }
-      });
-  }
+    addModule(module: Modul) {
+        this.lastImportedModuleID = module.id;
+        this.lastImportedModuleTitel = module.titel;
+        this.modulService.importModule(module);
+        this.module.splice(this.module.indexOf(module), 1);
+        this.filteredModules = this.module;
+        this.addQuestions();
+    }
 
-  addModule(module: Modul) {
-      this.lastImportedModuleID = module.id;
-      this.lastImportedModuleTitel = module.titel;
-      this.modulService.importModule(module);
-      this.module.splice(this.module.indexOf(module), 1);
-      this.filteredModules = this.module;
-      this.addQuestions();
-  }
+    async doSearch() {
+        const input = await this.search.getInputElement();
+        const searchValue = input.value;
+        this.filteredModules = this.module.filter(m => {
+            return m.titel.toLowerCase().includes(searchValue.toLowerCase());
+        });
+    }
 
-  ngOnInit() {
-  }
+    clear() {
+        this.search.value = '';
+        this.filteredModules = this.module;
+    }
 
 }

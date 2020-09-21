@@ -1,24 +1,47 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Module Importieren</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Module Importieren</ion-title>
+        <ion-button color="black" slot="end" (click)="modalController.dismiss()">Okay</ion-button>
+    </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-  <div *ngIf="filteredModules.length > 0; else empty">
-    <app-quiz-wrapper (click)="addModule(modul)" [titel]="modul.titel" [add]="true"
-                      [bild]="modul.bild" *ngFor="let modul of filteredModules">
-    </app-quiz-wrapper>
-  </div>
+    <ion-item>
+        <ion-input (ionInput)="doSearch()"
+                   clearOnEdit="false"
+                   color="primary"
+                   inputmode="text"
+                   placeholder="Module suchen..."
+                   required="true">
+        </ion-input>
+
+        <ion-icon *ngIf="filteredModules.length < module.length"
+                  name="close-outline"
+                  (click)="clear()"
+                  color="primary"
+                  slot="end">
+        </ion-icon>
+
+        <ion-icon name="search-outline"
+                  color="primary"
+                  slot="end">
+        </ion-icon>
+    </ion-item>
+
+    <div *ngIf="filteredModules.length > 0; else empty">
+        <app-quiz-wrapper (click)="addModule(modul)" [titel]="modul.titel" [add]="true"
+                          [bild]="modul.bild" *ngFor="let modul of filteredModules">
+        </app-quiz-wrapper>
+    </div>
 </ion-content>
 
 <ng-template #empty>
-  <ion-col>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title><h4>Die Suche ergab keinen Treffer.</h4></ion-card-title>
-      </ion-card-header>
-    </ion-card>
-  </ion-col>
+    <ion-col>
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title><h4>Die Suche ergab keinen Treffer.</h4></ion-card-title>
+            </ion-card-header>
+        </ion-card>
+    </ion-col>
 </ng-template>
