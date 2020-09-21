@@ -115,7 +115,6 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         setTimeout(() => this.search.setFocus(), 10);
     }
     ngOnDestroy() {
-        this.subUser.unsubscribe();
         this.subModule.unsubscribe();
     }
 }
