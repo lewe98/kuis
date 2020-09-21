@@ -42,28 +42,24 @@ export class QuizPage implements OnDestroy {
      * This Array is used to choose ten random questions
      */
     async initialize() {
-        await this.toastService.presentLoading('Spiel wird geladen...')
-            .then(() => {
-                if (this.modulService.isLernmodus) {
-                    this.modulService.findAllModuleLernmodus()
-                        .then(res => {
-                            this.alleModule = res;
+        if (this.modulService.isLernmodus) {
+            this.modulService.findAllModuleLernmodus()
+                .then(res => {
+                    this.alleModule = res;
 
-                            // TODO: - forEach umgehen
-                            this.user.importierteModule.forEach(elem => {
-                                this.storageService.findAllFragenLernmodus(elem.id, elem.titel)
-                                    .then(() => {
-                                        this.alleFragen.push(this.storageService.fragen);
-                                        this.globalCounter++;
-                                        if (this.globalCounter === this.user.importierteModule.length) {
-                                            this.pushFrage();
-                                        }
-                                    });
+                    // TODO: - forEach umgehen
+                    this.user.importierteModule.forEach(elem => {
+                        this.storageService.findAllFragenLernmodus(elem.id, elem.titel)
+                            .then(() => {
+                                this.alleFragen.push(this.storageService.fragen);
+                                this.globalCounter++;
+                                if (this.globalCounter === this.user.importierteModule.length) {
+                                    this.pushFrage();
+                                }
                             });
-                        });
-                }
-            });
-        await this.toastService.dismissLoading();
+                    });
+                });
+        }
     }
 
 
@@ -87,55 +83,55 @@ export class QuizPage implements OnDestroy {
         //     this.authService.updateProfile(this.user);
         // }
 
-            // tslint:disable-next-line:prefer-for-of
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.alleFragen.length; i++) {
             this.sum = this.sum + this.alleFragen[i].length;
-            }
+        }
 
         this.sum = this.sum - this.user.forbiddenQuestions.length;
 
         if (this.sum < 10) {
             this.genugFragen = true;
-            }
+        }
 
         if (this.sum >= 10) {
-                this.lernmodusFragen = [];
-                const alleFragenIndizes = this.alleFragen.length; // mit math.random zahl zwischen 0 und 3
+            this.lernmodusFragen = [];
+            const alleFragenIndizes = this.alleFragen.length; // mit math.random zahl zwischen 0 und 3
 
-                while (this.lernmodusFragen.length < 10) {
-                    this.correctQuestion = true;
-                    let counter = 0;
-                    const zufallsZahlModule = Math.floor(Math.random() * alleFragenIndizes);
-                    const anzahlFragen = this.alleFragen[zufallsZahlModule].length;
-                    const zufallsZahlFragen = Math.floor(Math.random() * anzahlFragen);
+            while (this.lernmodusFragen.length < 10) {
+                this.correctQuestion = true;
+                let counter = 0;
+                const zufallsZahlModule = Math.floor(Math.random() * alleFragenIndizes);
+                const anzahlFragen = this.alleFragen[zufallsZahlModule].length;
+                const zufallsZahlFragen = Math.floor(Math.random() * anzahlFragen);
 
-                    // tslint:disable-next-line:prefer-for-of
-                    for (let i = 0; i < this.user.forbiddenQuestions.length; i++) {
-                        if (this.user.forbiddenQuestions[i] === this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
-                            this.correctQuestion = false;
-                            break;
-                        }
+                // tslint:disable-next-line:prefer-for-of
+                for (let i = 0; i < this.user.forbiddenQuestions.length; i++) {
+                    if (this.user.forbiddenQuestions[i] === this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
+                        this.correctQuestion = false;
+                        break;
                     }
+                }
 
-                    if (this.correctQuestion) {
-                        if (this.lernmodusFragen.length === 0) {
-                            this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
-                        } else {
-                            // tslint:disable-next-line:prefer-for-of
-                            for (let i = 0; i < this.lernmodusFragen.length; i++) {
-                                if (this.lernmodusFragen[i].id !== this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
-                                    counter++;
-                                    if (counter === this.lernmodusFragen.length) {
-                                        this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
-                                    }
+                if (this.correctQuestion) {
+                    if (this.lernmodusFragen.length === 0) {
+                        this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
+                    } else {
+                        // tslint:disable-next-line:prefer-for-of
+                        for (let i = 0; i < this.lernmodusFragen.length; i++) {
+                            if (this.lernmodusFragen[i].id !== this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
+                                counter++;
+                                if (counter === this.lernmodusFragen.length) {
+                                    this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
                                 }
                             }
                         }
                     }
                 }
-                this.storageService.fragen = [];
-                this.storageService.fragen = this.lernmodusFragen;
-                this.modulService.started = true;
+            }
+            this.storageService.fragen = [];
+            this.storageService.fragen = this.lernmodusFragen;
+            this.modulService.started = true;
         }
     }
 

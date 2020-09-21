@@ -28,12 +28,22 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
         this.toastService.presentLoading('Abzeichen werden geladen...')
             .then(async () => {
                 if (this.authService.user === undefined) {
-                    this.subUser = await this.authService.findById(localStorage.getItem('userID'))
-                        .subscribe(async u => {
-                            this.authService.user = await u;
-                            this.authService.subUser = await this.subUser;
-                            await this.subUser.unsubscribe();
-                        });
+                    if (localStorage.getItem('userID')) {
+                        this.subUser = await this.authService.findById(localStorage.getItem('userID'))
+                            .subscribe(async u => {
+                                this.authService.user = await u;
+                                this.authService.subUser = await this.subUser;
+                                await this.subUser.unsubscribe();
+                            });
+                    }
+                    if (sessionStorage.getItem('userID')) {
+                        this.subUser = await this.authService.findById(sessionStorage.getItem('userID'))
+                            .subscribe(async u => {
+                                this.authService.user = await u;
+                                this.authService.subUser = await this.subUser;
+                                await this.subUser.unsubscribe();
+                            });
+                    }
                 }
                 this.subAbzeichen = await this.abzeichenService.findAllAbzeichen()
                     .subscribe(async data => {
@@ -42,7 +52,6 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                         this.sortAbzeichen();
                         this.filteredAbzeichenArray = this.abzeichenArray;
                         await this.checkAbzeichenBestanden();
-                        await this.checkAbzeichen();
                     });
                 await this.toastService.dismissLoading();
             });
@@ -123,32 +132,6 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
         this.abzeichenArray.sort(((a, b) => {
             return a.index - b.index;
         }));
-    }
-
-    checkAbzeichen() {
-
-        // Eine Lernrunde abgeschlossen.
-        if (this.authService.user.historieLernmodus.length === 1 &&
-            !this.authService.user.abzeichen.find(a => a === this.abzeichenArray[3].id)) {
-            this.authService.user.abzeichen.push(this.abzeichenArray[3].id);
-            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichenArray[3].titel);
-        }
-
-        // 10 Lernrunden abgeschlossen.
-        if (this.authService.user.historieLernmodus.length === 10 &&
-            !this.authService.user.abzeichen.find(a => a === this.abzeichenArray[4].id)) {
-            this.authService.user.abzeichen.push(this.abzeichenArray[4].id);
-            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichenArray[4].titel);
-        }
-
-        // 50 Lernrunden abgeschlossen.
-        if (this.authService.user.historieLernmodus.length === 50 &&
-            !this.authService.user.abzeichen.find(a => a === this.abzeichenArray[5].id)) {
-            this.authService.user.abzeichen.push(this.abzeichenArray[5].id);
-            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichenArray[5].titel);
-        }
-
-        this.authService.updateProfile(this.authService.user);
     }
 
     ionViewDidEnter() {

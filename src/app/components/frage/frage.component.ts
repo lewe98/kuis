@@ -2,10 +2,12 @@ import {Component} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Frage} from '../../models/frage';
 import {Router} from '@angular/router';
-import {User} from '../../models/user';
 import {AuthService} from '../../services/auth/auth.service';
 import {ModulService} from '../../services/modul/modul.service';
 import {ToastService} from '../../services/toast/toast.service';
+import {Abzeichen} from '../../models/abzeichen';
+import {Subscription} from 'rxjs';
+import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
 @Component({
     selector: 'app-frage',
@@ -20,7 +22,6 @@ export class FrageComponent {
     richtigBeantwortetLernmodusCounter = 0;
     // TODO: - Fortschritt Freier Modus (Modulübersicht)
     richtigBeantwortetFreiermodusCounter = 0;
-    user: User;
     timer = 0;
     interval;
     correctIds = [];
@@ -30,16 +31,48 @@ export class FrageComponent {
     richtig2 = false;
     richtig3 = false;
     richtig4 = false;
+    abzeichenArray: Abzeichen[] = [];
+    subAbzeichen: Subscription;
+    subUser: Subscription;
 
 
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
+                private abzeichenService: AbzeichenService,
                 private authService: AuthService,
                 private toastService: ToastService,
                 private router: Router) {
+        this.toastService.presentLoading('Abzeichen werden geladen...')
+            .then(async () => {
+                if (this.authService.user === undefined) {
+                    if (localStorage.getItem('userID')) {
+                        this.subUser = await this.authService.findById(localStorage.getItem('userID'))
+                            .subscribe(async u => {
+                                this.authService.user = await u;
+                                this.authService.subUser = await this.subUser;
+                                await this.subUser.unsubscribe();
+                            });
+                    }
+                    if (sessionStorage.getItem('userID')) {
+                        this.subUser = await this.authService.findById(sessionStorage.getItem('userID'))
+                            .subscribe(async u => {
+                                this.authService.user = await u;
+                                this.authService.subUser = await this.subUser;
+                                await this.subUser.unsubscribe();
+                            });
+                    }
+                }
+                this.subAbzeichen = await this.abzeichenService.findAllAbzeichen()
+                    .subscribe(async data => {
+                        // await this.authService.checkIfLoggedIn();
+                        this.abzeichenArray = data;
+                        this.sortAbzeichen();
+                    });
+                await this.toastService.dismissLoading();
+            });
+
+
         this.initialize();
-        this.user = this.authService.getUser();
-        // TODO nur wenn im Lernmodus
         if (this.modulService.isLernmodus) {
             this.startTimer();
         }
@@ -69,12 +102,13 @@ export class FrageComponent {
         if (this.counter === this.storageService.fragen.length) {
             if (this.modulService.isLernmodus) {
                 this.pauseTimer();
-                this.user.historieLernmodus.push(this.richtigBeantwortetLernmodusCounter);
-                this.user.gesamtzeit = this.user.gesamtzeit + this.timer;
+                this.authService.user.historieLernmodus.push(this.richtigBeantwortetLernmodusCounter);
+                this.authService.user.gesamtzeit = this.authService.user.gesamtzeit + this.timer;
                 this.modulService.isLernmodus = false;
                 this.swapQuestionsToForbidden();
                 this.inkrementQuestionsCounterFromUser();
-                this.authService.updateProfile(this.user);
+                this.abzeichenService.checkAbzeichen(this.timer, this.abzeichenArray);
+                this.authService.updateProfile(this.authService.user);
                 this.router.navigate(['/statistik']);
             } else {
                 this.toastService.presentToast('Das Modul wurde abgeschlossen.');
@@ -181,9 +215,9 @@ export class FrageComponent {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.wrongIds.length; i++) {
             // tslint:disable-next-line:prefer-for-of
-            for (let j = 0; j < this.user.availableQuestions.length; j++) {
-                if (this.wrongIds[i] === this.user.availableQuestions[j].id) {
-                    this.user.availableQuestions[j].counter = 0;
+            for (let j = 0; j < this.authService.user.availableQuestions.length; j++) {
+                if (this.wrongIds[i] === this.authService.user.availableQuestions[j].id) {
+                    this.authService.user.availableQuestions[j].counter = 0;
                 }
             }
         }
@@ -192,15 +226,21 @@ export class FrageComponent {
     inkrementQuestionsCounterFromUser() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.correctIds.length; i++) {
-            for (let j = 0; j < this.user.availableQuestions.length; j++) {
-                if (this.correctIds[i] === this.user.availableQuestions[j].id) {
-                    this.user.availableQuestions[j].counter += 1;
-                    if (this.user.availableQuestions[j].counter === 6) {
-                        this.user.forbiddenQuestions.push(this.user.availableQuestions[j].id);
-                        this.user.availableQuestions.splice(j, 1);
+            for (let j = 0; j < this.authService.user.availableQuestions.length; j++) {
+                if (this.correctIds[i] === this.authService.user.availableQuestions[j].id) {
+                    this.authService.user.availableQuestions[j].counter += 1;
+                    if (this.authService.user.availableQuestions[j].counter === 6) {
+                        this.authService.user.forbiddenQuestions.push(this.authService.user.availableQuestions[j].id);
+                        this.authService.user.availableQuestions.splice(j, 1);
                     }
                 }
             }
         }
+    }
+
+    sortAbzeichen() {
+        this.abzeichenArray.sort(((a, b) => {
+            return a.index - b.index;
+        }));
     }
 }
