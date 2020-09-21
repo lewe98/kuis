@@ -28,18 +28,30 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
         this.toastService.presentLoading('Abzeichen werden geladen...')
             .then(async () => {
                 if (this.authService.user === undefined) {
-                    this.subUser = await this.authService.findById(localStorage.getItem('userID'))
-                        .subscribe(async u => {
-                            this.authService.user = await u;
-                            this.authService.subUser = await this.subUser;
-                            await this.subUser.unsubscribe();
-                        });
+                    if (localStorage.getItem('userID')) {
+                        this.subUser = await this.authService.findById(localStorage.getItem('userID'))
+                            .subscribe(async u => {
+                                this.authService.user = await u;
+                                this.authService.subUser = await this.subUser;
+                                await this.subUser.unsubscribe();
+                            });
+                    }
+                    if (sessionStorage.getItem('userID')) {
+                        this.subUser = await this.authService.findById(sessionStorage.getItem('userID'))
+                            .subscribe(async u => {
+                                this.authService.user = await u;
+                                this.authService.subUser = await this.subUser;
+                                await this.subUser.unsubscribe();
+                            });
+                    }
                 }
                 this.subAbzeichen = await this.abzeichenService.findAllAbzeichen()
                     .subscribe(async data => {
                         // await this.authService.checkIfLoggedIn();
                         this.abzeichenArray = data;
-                        this.filteredAbzeichenArray = data;
+                        this.abzeichenService.sortAbzeichen(this.abzeichenArray);
+                        this.filteredAbzeichenArray = this.abzeichenArray;
+                        this.abzeichenService.checkPage();
                         await this.checkAbzeichenBestanden();
                     });
                 await this.toastService.dismissLoading();

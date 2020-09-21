@@ -93,30 +93,34 @@ export class AuthService {
      * @param user user to be updated
      */
     async updateProfile(user: User) {
-        await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
-            .then(async () => {
-                if (window.location.pathname === '/profil') {
-                    await firebase.auth().currentUser.updateEmail(user.email)
-                        .catch((error) => {
-                            this.toastService.presentWarningToast('Error!', error);
-                            this.toastService.dismissLoading();
-                        });
-                    if (user.passwort) {
-                        await firebase.auth().currentUser.updatePassword(user.passwort)
+        if (window.location.pathname === '/quiz') {
+            await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+        } else {
+            await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
+                .then(async () => {
+                    if (window.location.pathname === '/profil') {
+                        await firebase.auth().currentUser.updateEmail(user.email)
+                            .catch((error) => {
+                                this.toastService.presentWarningToast('Error!', error);
+                                this.toastService.dismissLoading();
+                            });
+                        if (user.passwort) {
+                            await firebase.auth().currentUser.updatePassword(user.passwort)
+                                .catch((error) => {
+                                    this.toastService.presentWarningToast('Error!', error);
+                                    this.toastService.dismissLoading();
+                                });
+                        }
+                        await firebase.auth().currentUser.updateProfile({displayName: user.nutzername})
                             .catch((error) => {
                                 this.toastService.presentWarningToast('Error!', error);
                                 this.toastService.dismissLoading();
                             });
                     }
-                    await firebase.auth().currentUser.updateProfile({displayName: user.nutzername})
-                        .catch((error) => {
-                            this.toastService.presentWarningToast('Error!', error);
-                            this.toastService.dismissLoading();
-                        });
-                }
-                await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-                await this.toastService.dismissLoading();
-            });
+                    await this.toastService.dismissLoading();
+                    await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                });
+        }
         if (window.location.pathname === '/profil') {
             await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
         }
