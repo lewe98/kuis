@@ -276,4 +276,44 @@ export class AuthService {
             await this.toastService.dismissLoading();
         });
     }
+
+    /***
+     * This Method gets the User from From Firebase and saves it in the Service.
+     */
+    async loadPage() {
+        await this.toastService.presentLoading('Bitte warten...')
+            .then( async () => {
+                this.subUser = await this.findById(localStorage.getItem('userID'))
+                    .subscribe(async u => {
+                        this.user = await u;
+                        // this.authService.subUser = await this.subUser;
+                        await this.toastService.dismissLoading();
+                    });
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
+                this.toastService.dismissLoading();
+            });
+    }
+
+    /***
+     * This Method subscribes the User from From Firebase and saves it in the Service.
+     * @param callback() is everytime called if the User in Firebase is changed.
+     */
+    async loadPageSubscription(callback: () => void) {
+        await this.toastService.presentLoading('Bitte warten...')
+            .then( async () => {
+                this.subUser = await this.findById(localStorage.getItem('userID'))
+                    .subscribe(async u => {
+                        this.user = await u;
+                        callback();
+                        // this.authService.subUser = await this.subUser;
+                        await this.toastService.dismissLoading();
+                    });
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
+                this.toastService.dismissLoading();
+            });
+    }
 }
