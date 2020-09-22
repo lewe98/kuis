@@ -1,27 +1,31 @@
 <app-navbar [showLogout]="authService.checkIfLoggedIn()" [name]="'Statistik'" [showBack]="true"></app-navbar>
 
 
-<ion-content >
-<ion-list *ngIf="tmpArray.length === 10;">
-    <h1> Deine letzte Spielrunde </h1>
-    <small> Diese Information verschwindet beim verlassen</small>
-    <ion-item-group *ngFor="let statistik of tmpArray" (click)="showAbzeichen(statistik)">
-        <ion-item lines="none" class="klickbar">
-            <ion-label>
-                <h4>{{statistik._frage}}</h4>
-            </ion-label>
-            <ion-icon *ngIf="statistik._showBeschreibung" color="#000" slot="end"
-                      name="chevron-up-outline"></ion-icon>
-            <ion-icon *ngIf="!statistik._showBeschreibung" color="#000" slot="end"
-                      name="chevron-down-outline"></ion-icon>
-        </ion-item>
-        <ion-item *ngIf="statistik._showBeschreibung" lines="none" class="item item-text-wrap">
-            <ion-item> <h6>Richtige Antwort: {{statistik._richtigeAntwort}}</h6> </ion-item>
-            <ion-item> <h6>Gewaehlte Antwort: {{statistik._gewaehlteAntwort}}</h6></ion-item>
-        </ion-item>
-    </ion-item-group>
-</ion-list>
-    <app-pie-chart></app-pie-chart>
+<ion-content>
+    <ion-list *ngIf="tmpArray.length === 10;">
+        <h1> Deine letzte Spielrunde </h1>
+        <!--        <small> Diese Information verschwindet beim verlassen</small>-->
+        <ion-item-group *ngFor="let statistik of tmpArray" (click)="showAbzeichen(statistik)">
+            <ion-item lines="none" class="klickbar">
+                <ion-label>
+                    <h4>{{statistik._frage}}</h4>
+                </ion-label>
+                <ion-icon *ngIf="statistik._showBeschreibung" color="#000" slot="end"
+                          name="chevron-up-outline"></ion-icon>
+                <ion-icon *ngIf="!statistik._showBeschreibung" color="#000" slot="end"
+                          name="chevron-down-outline"></ion-icon>
+            </ion-item>
+            <ion-item *ngIf="statistik._showBeschreibung" lines="none" class="item item-text-wrap">
+                <ion-item><h6>Richtige Antwort: {{statistik._richtigeAntwort}}</h6></ion-item>
+                <ion-item><h6>Gewählte Antwort: {{statistik._gewaehlteAntwort}}</h6></ion-item>
+            </ion-item>
+        </ion-item-group>
+
+        <ion-button (click)="clear()">Zu deiner Gesamt-Statistik</ion-button>
+    </ion-list>
+
+    <app-pie-chart *ngIf="tmpArray.length < 10;"></app-pie-chart>
+
 </ion-content>
 
 
