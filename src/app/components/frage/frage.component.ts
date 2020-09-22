@@ -23,7 +23,6 @@ export class FrageComponent {
     bild = '';
     counter = 0;
     richtigBeantwortetLernmodusCounter = 0;
-    // TODO: - Fortschritt Freier Modus (Modulübersicht)
     richtigBeantwortetFreiermodusCounter = 0;
     timer = 0;
     interval;
@@ -38,8 +37,6 @@ export class FrageComponent {
     abzeichenArray: Abzeichen[] = [];
     subAbzeichen: Subscription;
     subUser: Subscription;
-
-
 
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
@@ -79,7 +76,7 @@ export class FrageComponent {
 
 
         this.initialize();
-        if (this.modulService.isLernmodus) {
+        if (this.modulService.isLernmodus){
             this.startTimer();
         }
     }
@@ -118,10 +115,12 @@ export class FrageComponent {
                 this.statistikService.printLastRound(this.statistikArray);
                 this.router.navigate(['/statistik']);
             } else {
+                this.authService.user.historieFreiermodusName.push(this.storageService.nameDesModuls);
+                this.authService.user.historieFreiermodusAnzahl.push(this.richtigBeantwortetFreiermodusCounter + '/' +
+                    this.storageService.fragen.length);
+                this.authService.updateProfile(this.authService.user);
                 this.toastService.presentToast('Das Modul wurde abgeschlossen.');
                 this.router.navigate(['/moduluebersicht']);
-                // TODO: - Fortschritt Freier Modus (Modulübersicht)
-                // this.authService.updateProfile(this.user);
             }
         } else {
             this.initialize();
@@ -167,13 +166,13 @@ export class FrageComponent {
      */
 
     submitAnswer(gewaehlteAntwort: string) {
-       const statisticoOject = new Statistik();
-       statisticoOject.richtigeAntwort = this.f.richtigeAntwort;
-       statisticoOject.gewaehlteAntwort = gewaehlteAntwort;
-       statisticoOject.frage = this.f.frage;
-       statisticoOject.showBeschreibung = false;
-       this.statistikArray.push(statisticoOject);
-       if (this.f.richtigeAntwort === gewaehlteAntwort) {
+        const statisticObject = new Statistik();
+        statisticObject.richtigeAntwort = this.f.richtigeAntwort;
+        statisticObject.gewaehlteAntwort = gewaehlteAntwort;
+        statisticObject.frage = this.f.frage;
+        statisticObject.showBeschreibung = false;
+        this.statistikArray.push(statisticObject);
+        if (this.f.richtigeAntwort === gewaehlteAntwort) {
             if (this.f.antworten[0] === gewaehlteAntwort) {
                 this.richtig1 = true;
             }
@@ -191,7 +190,6 @@ export class FrageComponent {
                 this.correctIds.push(this.f.id);
                 this.richtigBeantwortetLernmodusCounter++;
             } else {
-                // TODO: - Fortschritt Freier Modus (Modulübersicht)
                 this.richtigBeantwortetFreiermodusCounter++;
             }
             this.disabled = true;

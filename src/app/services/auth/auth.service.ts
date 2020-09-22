@@ -47,6 +47,8 @@ export class AuthService {
         copy.isOnboarded = copy.isOnboarded || false;
         copy.gesamtzeit = copy.gesamtzeit || null;
         copy.historieLernmodus = copy.historieLernmodus || null;
+        copy.historieFreiermodusName = copy.historieFreiermodusName || null;
+        copy.historieFreiermodusAnzahl = copy.historieFreiermodusAnzahl || null;
         copy.abzeichen = copy.abzeichen || null;
         copy.importierteModule = copy.importierteModule || null;
         copy.availableQuestions = copy.availableQuestions || null;
