@@ -1,12 +1,12 @@
 import {Component, ViewChild} from '@angular/core';
-import {ModulService} from '../../../services/modul/modul.service';
-import {StorageService} from '../../../services/storage/storage.service';
-import {ToastService} from '../../../services/toast/toast.service';
-import {Modul} from '../../../models/modul';
-import {AuthService} from '../../../services/auth/auth.service';
-import {HilfsObjektFrage} from '../../../models/hilfsObjektFrage';
+import {ModulService} from '../../services/modul/modul.service';
+import {StorageService} from '../../services/storage/storage.service';
+import {ToastService} from '../../services/toast/toast.service';
+import {Modul} from '../../models/modul';
+import {AuthService} from '../../services/auth/auth.service';
+import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
 import {IonInput, ModalController} from '@ionic/angular';
-import {AbzeichenService} from '../../../services/abzeichen/abzeichen.service';
+import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
 
 @Component({

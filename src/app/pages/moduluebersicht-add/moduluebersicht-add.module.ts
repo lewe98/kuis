@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ModuluebersichtAddPageRoutingModule } from './moduluebersicht-add-routing.module';
 
 import { ModuluebersichtAddPage } from './moduluebersicht-add.page';
-import {ModuluebersichtPageModule} from '../../moduluebersicht/moduluebersicht.module';
+import {ModuluebersichtPageModule} from '../moduluebersicht/moduluebersicht.module';
 
 @NgModule({
   imports: [

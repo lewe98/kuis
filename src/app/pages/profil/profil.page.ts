@@ -22,23 +22,8 @@ export class ProfilPage {
                 private modalController: ModalController,
                 private alertController: AlertController,
                 private iab: InAppBrowser) {
-
-        if (this.authService.user !== undefined) {
-            this.user = this.authService.getUser();
-        } else {
-            this.toastService.presentLoading('Bitte warten...')
-                .then(async () => {
-                    await this.authService.findById(localStorage.getItem('userID'))
-                        .subscribe(async u => {
-                            this.user = u;
-                        });
-                    await this.toastService.dismissLoading();
-                })
-                .catch((error) => {
-                    this.toastService.presentWarningToast('Error!', error);
-                    this.toastService.dismissLoading();
-                });
-        }
+        this.user = this.authService.getUser();
+        this.authService.loadPageSubscription(u => this.user = u);
     }
 
     openGoogleEdit() {

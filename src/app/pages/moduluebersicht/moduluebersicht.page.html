@@ -3,36 +3,40 @@
 <ion-content>
     <div class="kuis-content">
     <ion-row>
-        <ion-item>
-            <ion-input (ionInput)="doSearch()"
-                       clearOnEdit="false"
-                       color="primary"
-                       inputmode="text"
-                       placeholder="Fragenmodule suchen..." required="true">
-            </ion-input>
+        <ion-col size="6">
+            <ion-item class="kuis-searchbar" lines="none">
+                <ion-input (ionInput)="doSearch()"
+                           clearOnEdit="false"
+                           color="primary"
+                           inputmode="text"
+                           placeholder="Fragenmodule suchen..." required="true">
+                </ion-input>
 
-            <ion-icon *ngIf="filteredModules.length < module.length"
-                      name="close-outline"
-                      (click)="clear()"
-                      color="primary"
-                      slot="end">
+                <ion-icon *ngIf="filteredModules.length < module.length"
+                          name="close-outline"
+                          (click)="clear()"
+                          color="primary"
+                          slot="end">
+                </ion-icon>
+
+                <ion-icon name="search-outline"
+                          color="primary"
+                          slot="end">
+                </ion-icon>
+
+            </ion-item>
+        </ion-col>
+        <ion-col class="kuis-icon-col" size="3" *ngIf="!isEdit">
+            <ion-icon class="kuis-icon" name="options-outline">
             </ion-icon>
-
-            <ion-icon name="search-outline"
-                      color="primary"
-                      slot="end">
+        </ion-col>
+        <ion-col class="kuis-icon-col" size="3" *ngIf="!isEdit" (click)="edit()">
+            <ion-icon class="kuis-icon" name="build-outline">
             </ion-icon>
-
-        </ion-item>
-
-        <ion-icon name="settings-outline">
-        </ion-icon>
-
-        <ion-icon name="options-outline">
-        </ion-icon>
-        <ion-icon name="build-outline" (click)="edit()">
-        </ion-icon>
-        <app-kuis-button [title]="'Fertig'" (click)="undoEdit()"></app-kuis-button>
+        </ion-col>
+        <ion-col class="kuis-icon-col" size="6" *ngIf="isEdit"  (click)="undoEdit()">
+            <h5>Fertig</h5>
+        </ion-col>
     </ion-row>
     <div *ngIf="filteredModules.length > 0; else empty">
         <app-quiz-wrapper (click)="onButtonClick(modul)" [titel]="modul.titel"
