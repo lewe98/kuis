@@ -5,6 +5,9 @@ export class Modul {
     public titel: string;
     public anzahlFragen: number;
     public bild: string;
+    public richtigeFragenLetztesSpiel: number;
+    public hinzugefuegt: Date;
+    public zuletztGespielt;
 
     constructor(id: string, titel: string, bild: string) {
         this.id = id;

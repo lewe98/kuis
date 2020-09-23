@@ -1,0 +1,11 @@
+@import 'src/global.scss';
+
+ion-list {
+  --ion-item-background: white;
+  --ion-text-color: gray;
+  padding-bottom: 14px;
+}
+
+ion-label {
+  color: $color-kuisBlack;
+}
