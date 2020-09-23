@@ -8,6 +8,9 @@ import {ToastService} from '../../services/toast/toast.service';
 import {Abzeichen} from '../../models/abzeichen';
 import {Subscription} from 'rxjs';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
+import {Statistik} from '../../models/statistik';
+import {StatistikService} from '../../services/statistik/statistik.service';
+
 
 @Component({
     selector: 'app-frage',
@@ -20,10 +23,10 @@ export class FrageComponent {
     bild = '';
     counter = 0;
     richtigBeantwortetLernmodusCounter = 0;
-    // TODO: - Fortschritt Freier Modus (Modulübersicht)
     richtigBeantwortetFreiermodusCounter = 0;
     timer = 0;
     interval;
+    statistikArray: Statistik[] = [];
     correctIds = [];
     wrongIds = [];
     disabled = false;
@@ -35,12 +38,12 @@ export class FrageComponent {
     subAbzeichen: Subscription;
     subUser: Subscription;
 
-
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
                 private abzeichenService: AbzeichenService,
                 private authService: AuthService,
                 private toastService: ToastService,
+                private statistikService: StatistikService,
                 private router: Router) {
         this.toastService.presentLoading('Abzeichen werden geladen...')
             .then(async () => {
@@ -73,7 +76,7 @@ export class FrageComponent {
 
 
         this.initialize();
-        if (this.modulService.isLernmodus) {
+        if (this.modulService.isLernmodus){
             this.startTimer();
         }
     }
@@ -109,12 +112,15 @@ export class FrageComponent {
                 this.inkrementQuestionsCounterFromUser();
                 this.abzeichenService.checkAbzeichen(this.timer, this.abzeichenArray);
                 this.authService.updateProfile(this.authService.user);
+                this.statistikService.printLastRound(this.statistikArray);
                 this.router.navigate(['/statistik']);
             } else {
+                this.authService.user.historieFreiermodusName.push(this.storageService.nameDesModuls);
+                this.authService.user.historieFreiermodusAnzahl.push(this.richtigBeantwortetFreiermodusCounter + '/' +
+                    this.storageService.fragen.length);
+                this.authService.updateProfile(this.authService.user);
                 this.toastService.presentToast('Das Modul wurde abgeschlossen.');
                 this.router.navigate(['/moduluebersicht']);
-                // TODO: - Fortschritt Freier Modus (Modulübersicht)
-                // this.authService.updateProfile(this.user);
             }
         } else {
             this.initialize();
@@ -158,7 +164,14 @@ export class FrageComponent {
      * Method to submit the answer and receive feedback.
      * @param gewaehlteAntwort answer that the user has chosen.
      */
+
     submitAnswer(gewaehlteAntwort: string) {
+        const statisticObject = new Statistik();
+        statisticObject.richtigeAntwort = this.f.richtigeAntwort;
+        statisticObject.gewaehlteAntwort = gewaehlteAntwort;
+        statisticObject.frage = this.f.frage;
+        statisticObject.showBeschreibung = false;
+        this.statistikArray.push(statisticObject);
         if (this.f.richtigeAntwort === gewaehlteAntwort) {
             if (this.f.antworten[0] === gewaehlteAntwort) {
                 this.richtig1 = true;
@@ -177,7 +190,6 @@ export class FrageComponent {
                 this.correctIds.push(this.f.id);
                 this.richtigBeantwortetLernmodusCounter++;
             } else {
-                // TODO: - Fortschritt Freier Modus (Modulübersicht)
                 this.richtigBeantwortetFreiermodusCounter++;
             }
             this.disabled = true;

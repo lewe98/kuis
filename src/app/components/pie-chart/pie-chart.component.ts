@@ -13,7 +13,6 @@ import {AuthService} from '../../services/auth/auth.service';
 export class PieChartComponent {
     // Quelle: https://valor-software.com/ng2-charts/
 
-    // Pie
     public pieChartOptions: ChartOptions = {
         responsive: true,
         legend: {

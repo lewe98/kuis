@@ -12,6 +12,7 @@ export class StorageService {
     storage = firebase.storage();
     gsReference = this.storage.refFromURL('gs://pictures-app-68662.appspot.com/');
     modulCollection: AngularFirestoreCollection<Modul>;
+    nameDesModuls = '';
     fragen = [];
 
     constructor(private afs: AngularFirestore) {
@@ -30,6 +31,7 @@ export class StorageService {
                 .get()
                 .toPromise()
                 .then(snapshot => {
+                    this.nameDesModuls = name;
                     this.fragen = snapshot.docs.map(this.getID);
                     resolve();
                 });
