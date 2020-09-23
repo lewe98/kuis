@@ -22,9 +22,7 @@
         </ion-card>
 
         <div *ngIf="!user.googleAccount; else google">
-            <ion-button [disabled]="user.googleAccount" expand="block" shape="round" (click)="showEditModal()">
-                Profil bearbeiten
-            </ion-button>
+            <app-kuis-button [title]="'Profil bearbeiten'" (click)="showEditModal()"></app-kuis-button>
         </div>
 
         <app-kuis-button [title]="'Logout'" (click)="authService.logOut()"></app-kuis-button>

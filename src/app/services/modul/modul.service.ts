@@ -74,6 +74,10 @@ export class ModulService {
         return {id: doc.id, ...doc.data()};
     }
 
+    /**
+     * Method adds a imported Module to a user and Updates the User in the Firebase Database.
+     * @param modul is the Module that will be added to the Imported Moduls in the User.
+     */
     importModule(modul: Modul) {
         const newUser = this.authService.getUser();
         console.log(modul);

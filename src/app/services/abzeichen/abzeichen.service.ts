@@ -171,15 +171,17 @@ export class AbzeichenService {
             !this.authService.user.abzeichen.find(a => a === this.abzeichen[10].id)) {
             this.authService.user.abzeichen.push(this.abzeichen[10].id);
             this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[10].titel);
+            this.authService.updateProfile(this.authService.user);
         }
 
         if (window.location.pathname === '/hilfe' &&
             !this.authService.user.abzeichen.find(a => a === this.abzeichen[13].id)) {
+            console.log(this.authService.user.abzeichen);
             this.authService.user.abzeichen.push(this.abzeichen[13].id);
             this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[13].titel);
+            this.authService.updateProfile(this.authService.user);
         }
 
-        this.authService.updateProfile(this.authService.user);
     }
 
     checkUsernameChanged(alt: string) {

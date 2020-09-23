@@ -35,7 +35,9 @@ export class HilfePage implements ViewDidEnter {
         this.filteredFragenArray = this.fragenArray;
         authService.checkIfLoggedIn().then(res => {
             if (res) {
-                this.abzeichenService.checkPage();
+                setTimeout(() => {
+                    this.abzeichenService.checkPage();
+                }, 10);
             }
         });
     }

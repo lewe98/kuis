@@ -5,7 +5,7 @@ import {ModulService} from '../../services/modul/modul.service';
 import {Modul} from '../../models/modul';
 import {IonInput, IonRouterOutlet, ModalController, ViewDidEnter} from '@ionic/angular';
 import {ToastService} from '../../services/toast/toast.service';
-import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add/moduluebersicht-add.page';
+import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add.page';
 import {AuthService} from '../../services/auth/auth.service';
 import {Subscription} from 'rxjs';
 
