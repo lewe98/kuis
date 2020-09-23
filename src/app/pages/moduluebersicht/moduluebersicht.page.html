@@ -54,7 +54,11 @@
     <ion-col>
         <ion-card>
             <ion-card-header>
-                <ion-card-title><h4>Die Suche ergab keinen Treffer.</h4></ion-card-title>
+                <ion-card-title>
+                    <h4 *ngIf="!noImportedModules">Die Suche ergab keinen Treffer.</h4>
+                    <h4 *ngIf="noImportedModules">Es wurden noch keine Module importiert.<br>
+                        Mit dem Plus rechts unten in der Ecke lassen sich neue Module importieren.</h4>
+                </ion-card-title>
             </ion-card-header>
         </ion-card>
     </ion-col>

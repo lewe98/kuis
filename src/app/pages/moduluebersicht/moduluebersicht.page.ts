@@ -18,6 +18,7 @@ import {Subscription} from 'rxjs';
 export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     module: Modul[] = [];
     filteredModules: Modul[] = [];
+    noImportedModules = true;
     isEdit = false;
     subUser: Subscription;
     subModule: Subscription;
@@ -44,11 +45,17 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 this.subModule = await this.modulService.findAllModule()
                     .subscribe(async data => {
                         await data.map(modul => {
-                            this.authService.getUser().importierteModule.forEach(imported => {
-                                if (modul.id === imported.id) {
-                                    this.module.push(modul);
-                                }
-                            });
+                            if (this.authService.getUser().importierteModule.length) {
+                                this.authService.getUser().importierteModule.forEach(imported => {
+                                    if (modul.id === imported.id) {
+                                        this.module.push(modul);
+                                    }
+                                });
+                                this.noImportedModules = false;
+                            } else {
+                                this.noImportedModules = true;
+                            }
+                            console.log(this.noImportedModules);
                         });
                         this.filteredModules = this.module;
                     });

@@ -36,14 +36,15 @@ export class ModuluebersichtAddPage {
                         this.module = [];
                         this.filteredModules = [];
                         this.module = data;
+                        this.module.forEach(e => this.filteredModules.push(e));
                         this.module.forEach(modul => {
                             this.authService.getUser().importierteModule.forEach(imported => {
-                                if (imported.id === modul.id) {
-                                    this.module.splice(this.module.indexOf(modul), 1);
+                                if (imported.id === modul.id && this.filteredModules.includes(modul)) {
+                                    this.filteredModules.splice(this.filteredModules.indexOf(modul), 1);
                                 }
                             });
                         });
-                        this.filteredModules = this.module;
+                        this.module = this.filteredModules;
                     });
                 await this.toastService.dismissLoading();
             });
