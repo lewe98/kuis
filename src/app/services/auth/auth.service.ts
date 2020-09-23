@@ -176,7 +176,7 @@ export class AuthService {
      * Method to check whether a user is logged in or not
      * @return boolean true, if logged in (ID stored in local storage / session storage)
      */
-    async checkIfLoggedIn(): Promise<boolean> {
+    checkIfLoggedIn(): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.loadPageSubscription((u) => {
             if (u.id !== undefined){

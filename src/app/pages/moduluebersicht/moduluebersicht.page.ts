@@ -37,30 +37,26 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         });
         }
 
-    loadModule() {
-        this.toastService.presentLoading('Fragenmodule werden geladen...')
-            .then(async () => {
-                this.module = [];
-                this.filteredModules = [];
-                this.subModule = await this.modulService.findAllModule()
-                    .subscribe(async data => {
-                        await data.map(modul => {
-                            if (this.authService.getUser().importierteModule.length) {
-                                this.authService.getUser().importierteModule.forEach(imported => {
-                                    if (modul.id === imported.id) {
-                                        this.module.push(modul);
-                                    }
-                                });
-                                this.noImportedModules = false;
-                            } else {
-                                this.noImportedModules = true;
-                            }
-                            console.log(this.noImportedModules);
-                        });
-                        this.filteredModules = this.module;
+    async loadModule() {
+            this.module = [];
+            this.filteredModules = [];
+            this.subModule = await this.modulService.findAllModule()
+                .subscribe(async data => {
+                    await data.map(modul => {
+                        if (this.authService.getUser().importierteModule.length) {
+                            this.authService.getUser().importierteModule.forEach(imported => {
+                                if (modul.id === imported.id) {
+                                    this.module.push(modul);
+                                }
+                            });
+                            this.noImportedModules = false;
+                        } else {
+                            this.noImportedModules = true;
+                        }
+                        console.log(this.noImportedModules);
                     });
-                this.toastService.dismissLoading();
-            });
+                    this.filteredModules = this.module;
+                });
     }
 
 /**
@@ -127,19 +123,16 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      *
      * @param module is the quiz which is either started or deleted.
      */
-    onButtonClick(module) {
+    async onButtonClick(module) {
         if (this.isEdit === false) {
             this.chooseQuiz(module.titel, module.id, module.bild);
         } else {
-            this.toastService.presentLoading('Modul wird gelöscht...').then(async () => {
-                const user = await this.authService.getUser();
-                const removeIndex = await user.importierteModule.map(item => item.id).indexOf(module.id);
-                if (removeIndex >= 0) {
-                    await user.importierteModule.splice(removeIndex, 1);
-                    await this.authService.updateProfile(user);
-                }
-                this.toastService.dismissLoading();
-            });
+            const user = await this.authService.getUser();
+            const removeIndex = await user.importierteModule.map(item => item.id).indexOf(module.id);
+            if (removeIndex >= 0) {
+                await user.importierteModule.splice(removeIndex, 1);
+                await this.authService.updateProfile(user);
+            }
         }
     }
 
