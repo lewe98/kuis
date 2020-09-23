@@ -1,4 +1,4 @@
-<app-navbar [name]="'Modulübersicht'" [showBack]="true" [showLogout]="true"></app-navbar>
+<app-navbar [name]="!isEdit ? 'Modulübersicht': 'Module löschen'" [showBack]="true" [showLogout]="true"></app-navbar>
 
 <ion-content>
     <div class="kuis-content">
@@ -25,16 +25,18 @@
 
         </ion-item>
 
-        <ion-icon name="settings-outline"
-                  (click)="deleteModule()">
+        <ion-icon name="settings-outline">
         </ion-icon>
 
         <ion-icon name="options-outline">
         </ion-icon>
+        <ion-icon name="build-outline" (click)="edit()">
+        </ion-icon>
+        <app-kuis-button [title]="'Fertig'" (click)="undoEdit()"></app-kuis-button>
     </ion-row>
     <div *ngIf="filteredModules.length > 0; else empty">
-        <app-quiz-wrapper (click)="chooseQuiz(modul.titel, modul.id, modul.bild)" [titel]="modul.titel"
-                          [bild]="modul.bild" *ngFor="let modul of filteredModules">
+        <app-quiz-wrapper (click)="onButtonClick(modul)" [titel]="modul.titel"
+                          [bild]="modul.bild" *ngFor="let modul of filteredModules" [edit]="isEdit" [button]="isEdit ? 'Löschen':'Starten'">
         </app-quiz-wrapper>
 
     </div>
@@ -51,7 +53,11 @@
     <ion-col>
         <ion-card>
             <ion-card-header>
-                <ion-card-title><h4>Die Suche ergab keinen Treffer.</h4></ion-card-title>
+                <ion-card-title>
+                    <h4 *ngIf="!noImportedModules">Die Suche ergab keinen Treffer.</h4>
+                    <h4 *ngIf="noImportedModules">Es wurden noch keine Module importiert.<br>
+                        Mit dem Plus rechts unten in der Ecke lassen sich neue Module importieren.</h4>
+                </ion-card-title>
             </ion-card-header>
         </ion-card>
     </ion-col>

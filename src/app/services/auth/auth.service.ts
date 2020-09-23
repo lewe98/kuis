@@ -176,8 +176,16 @@ export class AuthService {
      * Method to check whether a user is logged in or not
      * @return boolean true, if logged in (ID stored in local storage / session storage)
      */
-    checkIfLoggedIn(): boolean {
-        return !!localStorage.getItem('userID') || !!sessionStorage.getItem('userID');
+    checkIfLoggedIn(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            this.loadPageSubscription((u) => {
+            if (u.id !== undefined){
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        });
+        });
     }
 
     /**
@@ -280,42 +288,28 @@ export class AuthService {
     }
 
     /***
-     * This Method gets the User from From Firebase and saves it in the Service.
-     */
-    async loadPage() {
-        await this.toastService.presentLoading('Bitte warten...')
-            .then( async () => {
-                this.subUser = await this.findById(localStorage.getItem('userID'))
-                    .subscribe(async u => {
-                        this.user = await u;
-                        // this.authService.subUser = await this.subUser;
-                        await this.toastService.dismissLoading();
-                    });
-            })
-            .catch((error) => {
-                this.toastService.presentWarningToast('Error!', error);
-                this.toastService.dismissLoading();
-            });
-    }
-
-    /***
      * This Method subscribes the User from From Firebase and saves it in the Service.
      * @param callback() is everytime called if the User in Firebase is changed.
      */
-    async loadPageSubscription(callback: () => void) {
-        await this.toastService.presentLoading('Bitte warten...')
-            .then( async () => {
-                this.subUser = await this.findById(localStorage.getItem('userID'))
-                    .subscribe(async u => {
-                        this.user = await u;
-                        callback();
-                        // this.authService.subUser = await this.subUser;
-                        await this.toastService.dismissLoading();
-                    });
-            })
-            .catch((error) => {
-                this.toastService.presentWarningToast('Error!', error);
-                this.toastService.dismissLoading();
-            });
+    async loadPageSubscription(callback: (u: User) => void) {
+        if (this.getUserID()) {
+            this.subUser = this.findById(this.getUserID())
+                .subscribe(async u => {
+                    this.user = await u;
+                    callback(u);
+                });
+        } else {
+            callback(undefined);
+        }
+    }
+
+    getUserID(): string {
+        if (localStorage.getItem('userID')) {
+            return localStorage.getItem('userID');
+        } else if (sessionStorage.getItem('userID')) {
+            return sessionStorage.getItem('userID');
+        } else {
+            return undefined;
+        }
     }
 }

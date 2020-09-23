@@ -12,7 +12,7 @@ export class QuizWrapperComponent implements OnInit {
     @Input() bild: string;
     @Input() add = false;
     @Input() edit = false;
-    button = 'Starten';
+    @Input() button = 'Starten';
 
     constructor(private storageService: StorageService) {
         /* alert(this.bild);

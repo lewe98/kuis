@@ -33,8 +33,11 @@ export class HilfePage implements ViewDidEnter {
     constructor(public authService: AuthService,
                 private abzeichenService: AbzeichenService) {
         this.filteredFragenArray = this.fragenArray;
-
-        this.abzeichenService.checkPage();
+        authService.checkIfLoggedIn().then(res => {
+            if (res) {
+                this.abzeichenService.checkPage();
+            }
+        });
     }
 
     async showAntwort(frage: string) {

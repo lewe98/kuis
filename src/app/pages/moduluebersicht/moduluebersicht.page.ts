@@ -18,6 +18,8 @@ import {Subscription} from 'rxjs';
 export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     module: Modul[] = [];
     filteredModules: Modul[] = [];
+    noImportedModules = true;
+    isEdit = false;
     subUser: Subscription;
     subModule: Subscription;
     url = '';
@@ -35,24 +37,26 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         });
         }
 
-    loadModule() {
-        this.toastService.presentLoading('Fragenmodule werden geladen...')
-            .then(async () => {
-                this.module = [];
-                this.filteredModules = [];
-                this.subModule = await this.modulService.findAllModule()
-                    .subscribe(async data => {
-                        await data.map(modul => {
+    async loadModule() {
+            this.module = [];
+            this.filteredModules = [];
+            this.subModule = await this.modulService.findAllModule()
+                .subscribe(async data => {
+                    await data.map(modul => {
+                        if (this.authService.getUser().importierteModule.length) {
                             this.authService.getUser().importierteModule.forEach(imported => {
                                 if (modul.id === imported.id) {
                                     this.module.push(modul);
                                 }
                             });
-                        });
-                        this.filteredModules = this.module;
+                            this.noImportedModules = false;
+                        } else {
+                            this.noImportedModules = true;
+                        }
+                        console.log(this.noImportedModules);
                     });
-                await this.toastService.dismissLoading();
-            });
+                    this.filteredModules = this.module;
+                });
     }
 
 /**
@@ -93,13 +97,6 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     }
 
     /**
-     * Method to delete an imported module.
-     */
-    deleteModule() {
-        console.log('Yet to be implemented!');
-    }
-
-    /**
      * Method opens Modal to import module.
      */
     async presentModalAddModule() {
@@ -109,6 +106,34 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
             presentingElement: this.routerOutlet.nativeEl
         });
         return await modal.present();
+    }
+
+    edit() {
+        this.isEdit = true;
+    }
+
+    undoEdit() {
+        this.isEdit = false;
+    }
+
+    /**
+     * Handles the different events to the changing Button at the bottom of the modules.
+     * If the user is not in Edit-Mode, clicking on the button will start the selected Quiz.
+     * Otherwise it will be removed from the imported Modules.
+     *
+     * @param module is the quiz which is either started or deleted.
+     */
+    async onButtonClick(module) {
+        if (this.isEdit === false) {
+            this.chooseQuiz(module.titel, module.id, module.bild);
+        } else {
+            const user = await this.authService.getUser();
+            const removeIndex = await user.importierteModule.map(item => item.id).indexOf(module.id);
+            if (removeIndex >= 0) {
+                await user.importierteModule.splice(removeIndex, 1);
+                await this.authService.updateProfile(user);
+            }
+        }
     }
 
     ionViewDidEnter() {
