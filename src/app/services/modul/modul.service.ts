@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, DocumentChangeAction} from '@angular/fire/firestore';
 import {Modul} from '../../models/modul';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {StorageService} from '../storage/storage.service';
 import {AuthService} from '../auth/auth.service';
@@ -13,6 +13,11 @@ import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
 export class ModulService {
     modulCollection: AngularFirestoreCollection<Modul>;
     module = [];
+    importedModule = [];
+    filteredModules = [];
+    sortiert: string;
+    subModule: Subscription;
+    noImportedModules = true;
     isLernmodus = false;
     started = false;
 
@@ -20,9 +25,6 @@ export class ModulService {
                 private storageService: StorageService,
                 private authService: AuthService) {
         this.modulCollection = afs.collection<Modul>('module');
-        this.findAllModule().subscribe(data => {
-            this.module = data;
-        });
     }
 
     /**
@@ -50,6 +52,29 @@ export class ModulService {
                 }
                 return data;
             })));
+    }
+
+    loadImportedModule() {
+        this.module = [];
+        this.importedModule = [];
+        this.filteredModules = [];
+        this.subModule = this.findAllModule()
+            .subscribe(async data => {
+                await data.map(modul => {
+                    if (this.authService.getUser().importierteModule.length) {
+                        this.authService.getUser().importierteModule.forEach(imported => {
+                            if (modul.id === imported.id) {
+                                this.module.push(modul);
+                            }
+                        });
+                        this.noImportedModules = false;
+                    } else {
+                        this.noImportedModules = true;
+                    }
+                });
+                this.setModuleEqual();
+                this.sortModule({target: {value: this.sortiert}});
+            });
     }
 
     /**
@@ -80,7 +105,6 @@ export class ModulService {
      */
     importModule(modul: Modul) {
         const newUser = this.authService.getUser();
-        console.log(modul);
         newUser.importierteModule.push(modul);
         this.authService.updateProfile(newUser);
     }
@@ -97,5 +121,63 @@ export class ModulService {
     addQuestion(hilfsobject: any){
         const newUser = this.authService.getUser();
         newUser.availableQuestions.push(this.toFirestore(hilfsobject));
+    }
+
+    filterModule($event) {
+        const filter = $event.target.value;
+        switch (filter) {
+            case 'nichtBearbeitet':
+                this.importedModule = this.module.filter(modul => modul.richtigeFragenLetztesSpiel === 0);
+                break;
+            case 'alleRichtig':
+                this.importedModule = this.module.filter(modul => modul.richtigeFragenLetztesSpiel === modul.anzahlFragen);
+                break;
+            default:
+                this.setModuleEqual();
+        }
+    }
+
+    sortModule($event) {
+        console.log($event.target.value);
+        this.sortiert = $event.target.value;
+        switch (this.sortiert) {
+            case 'zuletztGespielt':
+                this.module = this.importedModule.sort((a, b) => b.zuletztGespielt.getDate() - a.zuletztGespielt.getDate());
+                this.setModuleEqual();
+                break;
+            case 'absteigend':
+                this.module = this.module.sort((a, b) => {
+                    if (a.titel > b.titel) { return -1; }
+                    if (a.titel < b.titel) { return 1; }
+                    return 0;
+                });
+                this.setModuleEqual();
+                break;
+            case 'aufsteigend':
+                this.module = this.module.sort((a, b) => {
+                    if (a.titel < b.titel) { return -1; }
+                    if (a.titel > b.titel) { return 1; }
+                    return 0;
+                });
+                this.setModuleEqual();
+                break;
+            case 'hinzugefügt':
+                this.module = this.module.sort((a, b) => b.hinzugefuegt.getDate() - a.hinzugefuegt.getDate());
+                this.setModuleEqual();
+                break;
+            default:
+                this.sortiert = 'zuletztGespielt';
+                this.importedModule = this.module.sort((a, b) => b.zuletztGespielt.getDate() - a.zuletztGespielt.getDate());
+                this.setModuleEqual();
+        }
+    }
+
+    setModuleEqual() {
+        this.importedModule = [];
+        this.filteredModules = [];
+        this.module.forEach(modul => {
+            this.importedModule.push(modul);
+            this.filteredModules.push(modul);
+        });
     }
 }

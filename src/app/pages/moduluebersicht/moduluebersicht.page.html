@@ -12,7 +12,7 @@
                            placeholder="Fragenmodule suchen..." required="true">
                 </ion-input>
 
-                <ion-icon *ngIf="filteredModules.length < module.length"
+                <ion-icon *ngIf="modulService.filteredModules.length < modulService.importedModule.length"
                           name="close-outline"
                           (click)="clear()"
                           color="primary"
@@ -26,7 +26,7 @@
 
             </ion-item>
         </ion-col>
-        <ion-col class="kuis-icon-col" size="3" *ngIf="!isEdit">
+        <ion-col class="kuis-icon-col" size="3" *ngIf="!isEdit" (click)="presentPopover($event)">
             <ion-icon class="kuis-icon" name="options-outline">
             </ion-icon>
         </ion-col>
@@ -38,9 +38,9 @@
             <h5>Fertig</h5>
         </ion-col>
     </ion-row>
-    <div *ngIf="filteredModules.length > 0; else empty">
+    <div *ngIf="modulService.filteredModules.length > 0; else empty">
         <app-quiz-wrapper (click)="onButtonClick(modul)" [titel]="modul.titel"
-                          [bild]="modul.bild" *ngFor="let modul of filteredModules" [edit]="isEdit" [button]="isEdit ? 'Löschen':'Starten'">
+                          [bild]="modul.bild" *ngFor="let modul of modulService.filteredModules" [edit]="isEdit" [button]="isEdit ? 'Löschen':'Starten'">
         </app-quiz-wrapper>
 
     </div>
@@ -58,8 +58,8 @@
         <ion-card>
             <ion-card-header>
                 <ion-card-title>
-                    <h4 *ngIf="!noImportedModules">Die Suche ergab keinen Treffer.</h4>
-                    <h4 *ngIf="noImportedModules">Es wurden noch keine Module importiert.<br>
+                    <h4 *ngIf="!modulService.noImportedModules">Die Suche ergab keinen Treffer.</h4>
+                    <h4 *ngIf="modulService.noImportedModules">Es wurden noch keine Module importiert.<br>
                         Mit dem Plus rechts unten in der Ecke lassen sich neue Module importieren.</h4>
                 </ion-card-title>
             </ion-card-header>

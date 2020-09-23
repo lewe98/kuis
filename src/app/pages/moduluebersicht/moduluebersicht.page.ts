@@ -3,11 +3,12 @@ import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
 import {ModulService} from '../../services/modul/modul.service';
 import {Modul} from '../../models/modul';
-import {IonInput, IonRouterOutlet, ModalController, ViewDidEnter} from '@ionic/angular';
+import {IonInput, IonRouterOutlet, ModalController, PopoverController, ViewDidEnter} from '@ionic/angular';
 import {ToastService} from '../../services/toast/toast.service';
 import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add.page';
 import {AuthService} from '../../services/auth/auth.service';
 import {Subscription} from 'rxjs';
+import {PopoverFilterComponent} from '../../components/popover-filter/popover-filter.component';
 
 
 @Component({
@@ -16,48 +17,23 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./moduluebersicht.page.scss'],
 })
 export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
-    module: Modul[] = [];
-    filteredModules: Modul[] = [];
-    noImportedModules = true;
     isEdit = false;
     subUser: Subscription;
-    subModule: Subscription;
     url = '';
     @ViewChild(IonInput) search: IonInput;
 
     constructor(private authService: AuthService,
-                private modulService: ModulService,
+                public modulService: ModulService,
                 public storageService: StorageService,
                 private toastService: ToastService,
                 private router: Router,
                 private modalController: ModalController,
-                private routerOutlet: IonRouterOutlet) {
+                private routerOutlet: IonRouterOutlet,
+                public popoverController: PopoverController) {
         this.authService.loadPageSubscription(() => {
-            this.loadModule();
+            this.modulService.loadImportedModule();
         });
         }
-
-    async loadModule() {
-            this.module = [];
-            this.filteredModules = [];
-            this.subModule = await this.modulService.findAllModule()
-                .subscribe(async data => {
-                    await data.map(modul => {
-                        if (this.authService.getUser().importierteModule.length) {
-                            this.authService.getUser().importierteModule.forEach(imported => {
-                                if (modul.id === imported.id) {
-                                    this.module.push(modul);
-                                }
-                            });
-                            this.noImportedModules = false;
-                        } else {
-                            this.noImportedModules = true;
-                        }
-                        console.log(this.noImportedModules);
-                    });
-                    this.filteredModules = this.module;
-                });
-    }
 
 /**
  * Method to receive all questions from a quiz module.
@@ -83,7 +59,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     async doSearch() {
         const input = await this.search.getInputElement();
         const searchValue = input.value;
-        this.filteredModules = this.module.filter(a => {
+        this.modulService.filteredModules = this.modulService.importedModule.filter(a => {
             return a.titel.toLowerCase().includes(searchValue.toLowerCase());
         });
     }
@@ -93,7 +69,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      */
     clear() {
         this.search.value = '';
-        this.filteredModules = this.module;
+        this.modulService.setModuleEqual();
     }
 
     /**
@@ -136,10 +112,21 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         }
     }
 
+    async presentPopover(ev: any) {
+        const popover = await this.popoverController.create({
+            component: PopoverFilterComponent,
+            event: ev,
+            translucent: true,
+            backdropDismiss: true,
+            mode: 'ios',
+        });
+        return await popover.present();
+    }
+
     ionViewDidEnter() {
         setTimeout(() => this.search.setFocus(), 10);
     }
     ngOnDestroy() {
-        this.subModule.unsubscribe();
+        this.modulService.subModule.unsubscribe();
     }
 }
