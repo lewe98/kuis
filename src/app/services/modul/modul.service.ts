@@ -54,6 +54,9 @@ export class ModulService {
             })));
     }
 
+    /**
+     * Method loads all imported Modules of a user and subscribes to the FirebaseCollection of the Modules.
+     */
     loadImportedModule() {
         this.module = [];
         this.importedModule = [];
@@ -123,6 +126,11 @@ export class ModulService {
         newUser.availableQuestions.push(this.toFirestore(hilfsobject));
     }
 
+    /**
+     * The Method filters the Modules between 'nichtBearbeitet' and 'alleRichtig'.
+     * @param $event is an Object that needs a value of nichtBearbeitet, alleRichtig or a default if no filter is needed.
+     * a event Object has to look like: {target: {value: 'value'}}.
+     */
     filterModule($event) {
         const filter = $event.target.value;
         switch (filter) {
