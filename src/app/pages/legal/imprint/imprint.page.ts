@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 
 @Component({
-    selector: 'app-impress',
-    templateUrl: './impress.page.html',
-    styleUrls: ['./impress.page.scss'],
+    selector: 'app-imprint',
+    templateUrl: './imprint.page.html',
+    styleUrls: ['./imprint.page.scss'],
 })
-export class ImpressPage {
+export class ImprintPage {
 
     constructor(private modalController: ModalController) {
     }

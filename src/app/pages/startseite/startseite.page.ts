@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
+import {Subscription} from 'rxjs';
+import {ToastService} from '../../services/toast/toast.service';
+import {ModulService} from '../../services/modul/modul.service';
 
 @Component({
     selector: 'app-startseite',
@@ -9,7 +12,29 @@ import {AuthService} from '../../services/auth/auth.service';
 })
 export class StartseitePage {
 
-    constructor(private router: Router) {
+    subUser: Subscription;
+
+    constructor(private router: Router,
+                private authService: AuthService,
+                public modulService: ModulService,
+                private toastService: ToastService) {
+        this.toastService.presentLoading('Bitte warten...')
+            .then(() => {
+                if (this.authService.user === undefined) {
+                    this.subUser = this.authService.findById(localStorage.getItem('userID'))
+                        .subscribe(async u => {
+                            this.authService.user = await u;
+                            this.authService.subUser = await this.subUser;
+                            await this.subUser.unsubscribe();
+                            await this.toastService.dismissLoading();
+                        });
+                }
+                this.toastService.dismissLoading();
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
+                this.toastService.dismissLoading();
+            });
     }
 
     /**
@@ -19,5 +44,4 @@ export class StartseitePage {
     routerNavigate(route: string) {
         this.router.navigate([route]);
     }
-
 }

@@ -6,7 +6,7 @@ import {IonSlides} from '@ionic/angular';
 @Component({
     selector: 'app-landing',
     templateUrl: './landing.page.html',
-    styleUrls: ['./landing.page.scss', './responsive.scss'],
+    styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit{
     @ViewChild('slideWithNav', {static: false}) slideWithNav: IonSlides;

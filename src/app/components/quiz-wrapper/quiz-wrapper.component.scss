@@ -1,0 +1,54 @@
+@import 'src/global.scss';
+
+ion-card {
+  margin-bottom: 0;
+}
+ion-card-title {
+  color: $color-kuisBlack;
+  --ion-font-weight: 900;
+}
+
+ion-note {
+  color: $color-kuisBlack;
+}
+
+img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: solid 10px $color-kuis;
+  border-radius: 20px;
+
+}
+
+ion-card-content {
+  width: 100%;
+  height: 60vh;
+  padding: 0;
+  border: 0;
+
+}
+
+.kuis-block {
+  display: inline-block;
+}
+
+.overlay {
+  border: solid 10px $color-kuis;
+  border-radius: 20px;
+  box-sizing: border-box;
+  position: relative;
+  padding: 20%;
+  width: 100%;
+  height: 100%;
+  background: $color-kuisBlack;
+  opacity: 0.5;
+}
+
+.icon-overlay {
+  width: 100%;
+  height: 100%;
+  color: white;
+  opacity: 1;
+}

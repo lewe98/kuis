@@ -7,7 +7,10 @@
 
                 <ion-item class="roundetInput">
                     <ion-label>Nutzername*</ion-label>
-                    <ion-input #focus class="ion-text-end formControl" placeholder="Nutzername..."
+                    <ion-input #focus
+                               class="ion-text-end formControl"
+                               placeholder="Nutzername..."
+                               clearOnEdit="false"
                                [(ngModel)]="nutzername"
                                type="text"
                                required></ion-input>
@@ -20,7 +23,11 @@
 
                 <ion-item class="roundetInput">
                     <ion-label>E-Mail*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="email" type="email"
+                    <ion-input class="ion-text-end formControl"
+                               placeholder="Email..."
+                               clearOnEdit="false"
+                               [(ngModel)]="email"
+                               type="email"
                                required></ion-input>
                 </ion-item>
 
@@ -31,7 +38,10 @@
 
                 <ion-item class="roundetInput">
                     <ion-label>Passwort*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Passwort..." [(ngModel)]="passwort"
+                    <ion-input class="ion-text-end formControl"
+                               placeholder="Passwort..."
+                               clearOnEdit="false"
+                               [(ngModel)]="passwort"
                                type="password"
                                required></ion-input>
                 </ion-item>
@@ -43,8 +53,11 @@
 
                 <ion-item class="roundetInput">
                     <ion-label>Passwort bestätigen*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Passwort bestätigen..."
-                               [(ngModel)]="passwortConfirm" type="password"
+                    <ion-input class="ion-text-end formControl"
+                               placeholder="Passwort bestätigen..."
+                               clearOnEdit="false"
+                               [(ngModel)]="passwortConfirm"
+                               type="password"
                                required></ion-input>
                 </ion-item>
 

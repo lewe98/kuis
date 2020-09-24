@@ -1,26 +1,31 @@
 @import 'src/global.scss';
 
 ion-content {
-background-color: $color-kuis;
+background-color: $color-kuisGray;
 }
 
-ion-button {
+.headerText {
+  padding: 10px;
   color: white;
-  border-color: white;
+  background: $color-kuis;
+  text-align: center;
 }
 
-.landing-page {
-  --color: #fff;
+.headerText h1 {
+  font-weight: 900;
 }
 
-.bg-gradient {
-  --background: linear-gradient(to top right, var(--color-jindr-stop1) 0%, var(--color-jindr-stop3) 100%);
+.headerText h2 {
+  font-weight: 900;
+  font-size: 20px;
 }
 
 .slider {
   max-width: 400px;
-  margin: 30px auto;
+  margin: 5px auto;
+  padding-bottom: 0;
   width: 70%;
+  height: 50%;
 }
 
 .section-buttons {
@@ -28,26 +33,40 @@ ion-button {
   width: 70%;
   flex: 0 0 auto;
   text-align: center;
-  margin: 20px auto;
+  margin: 0 auto;
+
+  ion-button {
+    margin: 10px;
+  }
 }
 
 .slide-text {
-  position: absolute;
+  text-align: center;
+  position: relative;
   color: white;
-  bottom: 0;
+  bottom: 100%;
 }
 
 .image {
   width: 100%;
+  height: 80%;
+  object-fit: scale-down;
 }
 
-:host::ng-deep .content-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 45px;
+.googleIMG {
+  margin: 0;
+  padding: 0;
+  background: white;
+  object-fit: scale-down;
+  width: 100%;
+  height: 100%;
 }
 
-.bottom-row {
-  justify-content: center;
+@media  (max-width: 370px) {
+  .slide-text {
+    bottom: 35%;
+  }
+  .section-buttons {
+    width: 90%;
+  }
 }

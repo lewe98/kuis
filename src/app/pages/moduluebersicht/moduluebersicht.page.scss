@@ -1,0 +1,28 @@
+@import 'src/global.scss';
+
+.kuis-icon {
+  color: white;
+  width: 32px;
+  height: 32px;
+}
+
+.kuis-icon-col {
+  display: block;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: 9px solid $color-kuisGray;
+  border-radius: 20px;
+  background-color: $color-kuis;
+  text-align: center;
+}
+
+.kuis-icon-col h5 {
+  margin: 8.5px 0 ;
+  font-weight: 900;
+  color: white;
+}
+
+.kuis-searchbar {
+  border: 4px solid $color-kuisGray;
+  border-radius: 20px;
+}

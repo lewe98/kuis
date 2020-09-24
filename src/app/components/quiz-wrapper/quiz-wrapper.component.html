@@ -1,0 +1,19 @@
+<ion-col>
+    <ion-card class="card-border-rounded">
+
+        <ion-card-header>
+            <ion-card-title class="kuis-block">{{titel}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <img [alt]="'Bild'" [src]="bild">
+            <div *ngIf="add||edit" class="overlay">
+                <ion-icon *ngIf="edit" class="icon-overlay" slot="icon-only" name="trash-outline"></ion-icon>
+                <ion-icon *ngIf="add" class="icon-overlay" slot="icon-only" name="add-outline"></ion-icon>
+            </div>
+        </ion-card-content>
+
+    </ion-card>
+</ion-col>
+
+<app-kuis-button [title]="button"></app-kuis-button>

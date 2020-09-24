@@ -1,0 +1,33 @@
+@import "src/global.scss";
+
+button {
+  display: block;
+  cursor: pointer;
+  color: white;
+  background: $color-kuis;
+  border-radius: 20px;
+  border: 9px solid $color-kuisGray;
+  padding: 13px;
+  width: 100%;
+  font-family: $font-body;
+  // size: 50px;
+  font-size: clamp(17px, 7vw, 25px);
+  font-weight: 900;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background: lighten( $color-kuis, 3% );
+}
+
+button:active {
+  zoom: 120%;
+}
+
+button:focus {
+  outline: none;
+}
+
+.outline {
+
+}

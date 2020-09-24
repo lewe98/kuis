@@ -34,13 +34,13 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'lernmodus',
-        loadChildren: () => import('./pages/lernmodus/lernmodus.module').then(m => m.LernmodusPageModule),
+        path: 'moduluebersicht',
+        loadChildren: () => import('./pages/moduluebersicht/moduluebersicht.module').then(m => m.ModuluebersichtPageModule),
         canActivate: [AuthGuard]
     },
     {
-        path: 'moduluebersicht',
-        loadChildren: () => import('./pages/moduluebersicht/moduluebersicht.module').then(m => m.ModuluebersichtPageModule),
+        path: 'quiz',
+        loadChildren: () => import('./pages/quiz/quiz.module').then(m => m.QuizPageModule),
         canActivate: [AuthGuard]
     },
     {
@@ -63,10 +63,13 @@ const routes: Routes = [
         redirectTo: 'not-found',
         pathMatch: 'full'
     },
-  {
-    path: 'impress',
-    loadChildren: () => import('./pages/legal/impress/impress.module').then(m => m.ImpressPageModule)
-  }
+    {
+        path: 'moduluebersicht-add',
+        loadChildren: () => import('./pages/moduluebersicht-add/moduluebersicht-add.module')
+            .then(m => m.ModuluebersichtAddPageModule)
+    },
+
+
 ];
 
 @NgModule({

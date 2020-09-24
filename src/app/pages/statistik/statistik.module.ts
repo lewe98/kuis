@@ -7,15 +7,20 @@ import {IonicModule} from '@ionic/angular';
 import {StatistikPageRoutingModule} from './statistik-routing.module';
 
 import {StatistikPage} from './statistik.page';
+import {LandingPageModule} from '../landing/landing.module';
+import {PieChartComponent} from '../../components/pie-chart/pie-chart.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        StatistikPageRoutingModule
+        StatistikPageRoutingModule,
+        LandingPageModule,
+        ChartsModule
     ],
-    declarations: [StatistikPage]
+    declarations: [StatistikPage, PieChartComponent]
 })
 export class StatistikPageModule {
 }

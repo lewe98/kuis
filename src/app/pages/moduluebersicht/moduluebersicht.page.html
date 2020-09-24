@@ -1,9 +1,70 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>moduluebersicht</ion-title>
-    </ion-toolbar>
-</ion-header>
+<app-navbar [name]="!isEdit ? 'Modulübersicht': 'Module löschen'" [showBack]="true" [showLogout]="true"></app-navbar>
 
 <ion-content>
+    <div class="kuis-content">
+    <ion-row>
+        <ion-col size="6">
+            <ion-item class="kuis-searchbar" lines="none">
+                <ion-input (ionInput)="doSearch()"
+                           clearOnEdit="false"
+                           color="primary"
+                           inputmode="text"
+                           placeholder="Fragenmodule suchen..." required="true">
+                </ion-input>
 
+                <ion-icon *ngIf="modulService.filteredModules.length < modulService.importedModule.length"
+                          name="close-outline"
+                          (click)="clear()"
+                          color="primary"
+                          slot="end">
+                </ion-icon>
+
+                <ion-icon name="search-outline"
+                          color="primary"
+                          slot="end">
+                </ion-icon>
+
+            </ion-item>
+        </ion-col>
+        <ion-col class="kuis-icon-col" size="3" *ngIf="!isEdit" (click)="presentPopover($event)">
+            <ion-icon class="kuis-icon" name="options-outline">
+            </ion-icon>
+        </ion-col>
+        <ion-col class="kuis-icon-col" size="3" *ngIf="!isEdit" (click)="edit()">
+            <ion-icon class="kuis-icon" name="build-outline">
+            </ion-icon>
+        </ion-col>
+        <ion-col class="kuis-icon-col" size="6" *ngIf="isEdit"  (click)="undoEdit()">
+            <h5>Fertig</h5>
+        </ion-col>
+    </ion-row>
+    <div *ngIf="modulService.filteredModules.length > 0; else empty">
+        <app-quiz-wrapper (click)="onButtonClick(modul)" [titel]="modul.titel"
+                          [bild]="modul.bild" *ngFor="let modul of modulService.filteredModules" [edit]="isEdit" [button]="isEdit ? 'Löschen':'Starten'">
+        </app-quiz-wrapper>
+
+    </div>
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button (click)="presentModalAddModule()">
+            <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    </div>
 </ion-content>
+
+<ng-template #empty>
+    <ion-col>
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>
+                    <h4 *ngIf="!modulService.noImportedModules">Die Suche ergab keinen Treffer.</h4>
+                    <h4 *ngIf="modulService.noImportedModules">Es wurden noch keine Module importiert.<br>
+                        Mit dem Plus rechts unten in der Ecke lassen sich neue Module importieren.</h4>
+                </ion-card-title>
+            </ion-card-header>
+        </ion-card>
+    </ion-col>
+</ng-template>
+
+<app-footer></app-footer>

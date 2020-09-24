@@ -9,6 +9,8 @@ import * as firebase from 'firebase';
 import {auth} from 'firebase';
 import {ToastService} from '../toast/toast.service';
 
+// import * as crypto from 'crypto-js';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -21,8 +23,6 @@ export class AuthService {
     isLoggedIn = false;
     isSession = false;
 
-    googleLogin;
-
     constructor(private router: Router,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth,
@@ -30,7 +30,10 @@ export class AuthService {
         this.userCollection = afs.collection<User>('users');
     }
 
-    // COPY AND PREPARE
+    /**
+     * Copy an Prepair
+     * @param user - the current logged in user
+     */
     private static copyAndPrepare(user: User): User {
         const copy = {...user};
         delete copy.id;
@@ -38,20 +41,21 @@ export class AuthService {
         copy.nutzername = copy.nutzername || null;
         copy.email = copy.email || null;
         copy.passwort = copy.passwort || null;
+        copy.googleAccount = copy.googleAccount || null;
 
         copy.emailBestaetigt = copy.emailBestaetigt || false;
         copy.isOnboarded = copy.isOnboarded || false;
-
-        // TODO: - Statistik in Firebase
-        copy.statistik = copy.statistik || null;
-
+        copy.gesamtzeit = copy.gesamtzeit || null;
+        copy.historieLernmodus = copy.historieLernmodus || null;
+        copy.historieFreiermodusName = copy.historieFreiermodusName || null;
+        copy.historieFreiermodusAnzahl = copy.historieFreiermodusAnzahl || null;
         copy.abzeichen = copy.abzeichen || null;
         copy.importierteModule = copy.importierteModule || null;
+        copy.availableQuestions = copy.availableQuestions || null;
 
         return copy;
     }
 
-    // CRUD
     /**
      * Method to persist the user's data in the database
      */
@@ -91,13 +95,37 @@ export class AuthService {
      * @param user user to be updated
      */
     async updateProfile(user: User) {
-        await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...');
-        await firebase.auth().currentUser.updateEmail(user.email);
-        await firebase.auth().currentUser.updatePassword(user.passwort);
-        await firebase.auth().currentUser.updateProfile({displayName: user.nutzername});
-        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-        await this.toastService.dismissLoading();
-        await this.toastService.presentToast('Profil erfolgreich aktualisiert');
+        if (window.location.pathname === '/quiz') {
+            await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+        } else {
+            await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
+                .then(async () => {
+                    if (window.location.pathname === '/profil') {
+                        await firebase.auth().currentUser.updateEmail(user.email)
+                            .catch((error) => {
+                                this.toastService.presentWarningToast('Error!', error);
+                                this.toastService.dismissLoading();
+                            });
+                        if (user.passwort) {
+                            await firebase.auth().currentUser.updatePassword(user.passwort)
+                                .catch((error) => {
+                                    this.toastService.presentWarningToast('Error!', error);
+                                    this.toastService.dismissLoading();
+                                });
+                        }
+                        await firebase.auth().currentUser.updateProfile({displayName: user.nutzername})
+                            .catch((error) => {
+                                this.toastService.presentWarningToast('Error!', error);
+                                this.toastService.dismissLoading();
+                            });
+                    }
+                    await this.toastService.dismissLoading();
+                    await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                });
+        }
+        if (window.location.pathname === '/profil') {
+            await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
+        }
     }
 
     /**
@@ -105,8 +133,8 @@ export class AuthService {
      * @param user user to be deleted
      */
     async deleteProfile(user: User) {
-        this.userCollection.doc(user.id).delete();
-        firebase.auth().currentUser.delete();
+        await this.userCollection.doc(user.id).delete();
+        await firebase.auth().currentUser.delete();
 
         await this.toastService.presentLoading('Bitte warten. \n Dies kann einige Sekunden dauern.');
         await this.logOut();
@@ -114,7 +142,6 @@ export class AuthService {
         await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest ausgeloggt.');
     }
 
-    // LOGIN / LOGOUT
     /**
      * Method to sign in a user
      * @param email user's email
@@ -123,22 +150,24 @@ export class AuthService {
     async signIn(email: string, password: string) {
 
         await this.toastService.presentLoading('Bitte warten...');
+        // const pw = crypto.AES.encrypt(password, '').toString();
 
-        // TODO: - Passwort hashen
-        // await this.afAuth.signInWithEmailAndPassword(email, bcrypt.hashSync(password, bcrypt.genSaltSync(10))).then(res => {
         await this.afAuth.signInWithEmailAndPassword(email, password)
             .then(res => {
                 this.isLoggedIn = true;
-                this.googleLogin = false;
                 if (!this.isSession) {
-                    sessionStorage.setItem('userID', JSON.stringify(res.user.uid));
+                    sessionStorage.setItem('userID', res.user.uid);
                 } else {
-                    localStorage.setItem('userID', JSON.stringify(res.user.uid));
+                    localStorage.setItem('userID', res.user.uid);
                 }
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(u => {
                         this.user = u;
                     });
+                this.toastService.dismissLoading();
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
                 this.toastService.dismissLoading();
             });
     }
@@ -147,8 +176,16 @@ export class AuthService {
      * Method to check whether a user is logged in or not
      * @return boolean true, if logged in (ID stored in local storage / session storage)
      */
-    checkIfLoggedIn(): boolean {
-        return !!localStorage.getItem('userID') || !!sessionStorage.getItem('userID');
+    checkIfLoggedIn(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            this.loadPageSubscription((u) => {
+            if (u.id !== undefined){
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        });
+        });
     }
 
     /**
@@ -175,21 +212,25 @@ export class AuthService {
 
         await this.toastService.presentLoading('Bitte warten...');
 
-        // TODO: - Passwort hashen
-        // await this.afAuth.createUserWithEmailAndPassword(email, bcrypt.hashSync(passwort, bcrypt.genSaltSync(10))).then(res => {
-        await this.afAuth.createUserWithEmailAndPassword(email, passwort).then(res => {
-            this.isLoggedIn = true;
-            this.googleLogin = false;
-            this.persist(new User(nutzername, email, passwort), res.user.uid);
+        // const pw = crypto.AES.encrypt(passwort, '').toString();
 
-            this.subUser = this.findById(res.user.uid)
-                .subscribe(u => {
-                    this.user = u;
-                });
-            localStorage.setItem('userID', JSON.stringify(res.user.uid));
-        });
+        await this.afAuth.createUserWithEmailAndPassword(email, passwort)
+            .then(res => {
+                this.isLoggedIn = true;
+                this.persist(new User(nutzername, email, passwort, false), res.user.uid);
 
-        await this.toastService.dismissLoading();
+                this.subUser = this.findById(res.user.uid)
+                    .subscribe(u => {
+                        this.user = u;
+                    });
+                localStorage.setItem('userID', res.user.uid);
+                this.router.navigate(['/startseite']);
+                this.toastService.dismissLoading();
+            })
+            .catch((error) => {
+                this.toastService.presentWarningToast('Error!', error);
+                this.toastService.dismissLoading();
+            });
     }
 
     // GOOGLE LOGIN
@@ -218,8 +259,7 @@ export class AuthService {
                             if (res.id !== undefined) {
 
                                 this.isLoggedIn = true;
-                                this.googleLogin = true;
-                                sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
+                                localStorage.setItem('userID', result.user.uid);
 
                                 this.subUser = this.findById(res.id)
                                     .subscribe((u) => {
@@ -228,11 +268,10 @@ export class AuthService {
                                     });
                             } else {
 
-                                this.user = new User(result.user.displayName, result.user.email, '');
+                                this.user = new User(result.user.displayName, result.user.email, '', true);
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
                                 this.isLoggedIn = true;
-                                this.googleLogin = true;
-                                sessionStorage.setItem('userID', JSON.stringify(result.user.uid));
+                                localStorage.setItem('userID', result.user.uid);
 
                                 this.subUser = this.findById(result.user.uid)
                                     .subscribe((u) => {
@@ -246,5 +285,31 @@ export class AuthService {
                 });
             await this.toastService.dismissLoading();
         });
+    }
+
+    /***
+     * This Method subscribes the User from From Firebase and saves it in the Service.
+     * @param callback() is everytime called if the User in Firebase is changed.
+     */
+    async loadPageSubscription(callback: (u: User) => void) {
+        if (this.getUserID()) {
+            this.subUser = this.findById(this.getUserID())
+                .subscribe(async u => {
+                    this.user = await u;
+                    callback(u);
+                });
+        } else {
+            callback(undefined);
+        }
+    }
+
+    getUserID(): string {
+        if (localStorage.getItem('userID')) {
+            return localStorage.getItem('userID');
+        } else if (sessionStorage.getItem('userID')) {
+            return sessionStorage.getItem('userID');
+        } else {
+            return undefined;
+        }
     }
 }

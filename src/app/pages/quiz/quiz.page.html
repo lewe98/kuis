@@ -1,0 +1,20 @@
+<app-navbar [showBack]="false" [name]="'Quiz'" [showLogout]="false"></app-navbar>
+
+<ion-content>
+    <div class="kuis-content">
+    <div *ngIf="this.modulService.started && !genugFragen else noQuestions">
+    <app-frage>
+    </app-frage>
+    </div>
+
+    <ng-template #noQuestions>
+        <ion-item lines="none">
+            <ion-label>
+                <h1>Nicht genug Fragen importiert.</h1>
+            </ion-label>
+        </ion-item>
+    </ng-template>
+    </div>
+</ion-content>
+
+

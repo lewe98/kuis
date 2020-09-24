@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar mode="ios">
         <ion-buttons *ngIf="showBack" slot="start">
-            <ion-back-button text="" slot="icon-only" defaultHref="{{defaultHref}}"></ion-back-button>
+            <ion-back-button text="" slot="icon-only" defaultHref="{{defaultHref}}" (click)="stat()"></ion-back-button>
         </ion-buttons>
 
         <ion-buttons *ngIf="showLogout" (click)="authService.logOut()" slot="end">

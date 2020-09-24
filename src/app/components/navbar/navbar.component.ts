@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
@@ -22,10 +23,17 @@ export class NavbarComponent {
     defaultHref = 'startseite';
 
 
-    constructor(public authService: AuthService) {
+    constructor(public authService: AuthService,
+                private router: Router) {
         this.showBack = true;
         if (window.location.pathname === '/login' || window.location.pathname === '/registrierung') {
             this.defaultHref = 'landing';
+        }
+    }
+
+    stat() {
+        if (window.location.pathname === '/statistik') {
+            this.router.navigate(['startseite']);
         }
     }
 }

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ImpressPage } from './impress.page';
+import { PopoverFilterComponent } from './popover-filter.component';
 
-describe('ImpressPage', () => {
-  let component: ImpressPage;
-  let fixture: ComponentFixture<ImpressPage>;
+describe('PopoverFilterComponent', () => {
+  let component: PopoverFilterComponent;
+  let fixture: ComponentFixture<PopoverFilterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImpressPage ],
+      declarations: [ PopoverFilterComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ImpressPage);
+    fixture = TestBed.createComponent(PopoverFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

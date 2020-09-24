@@ -3,20 +3,31 @@ import {AuthService} from '../../services/auth/auth.service';
 import {User} from '../../models/user';
 import {AlertController, ModalController} from '@ionic/angular';
 import {ProfilEditPage} from './profil-edit/profil-edit.page';
+import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
+import {Subscription} from 'rxjs';
+import {ToastService} from '../../services/toast/toast.service';
 
 @Component({
     selector: 'app-profil',
     templateUrl: './profil.page.html',
-    styleUrls: ['./profil.page.scss'],
+    styleUrls: ['./profil.page.scss']
 })
 export class ProfilPage {
 
     user: User;
+    subUser: Subscription;
 
     constructor(public authService: AuthService,
+                private toastService: ToastService,
                 private modalController: ModalController,
-                private alertController: AlertController) {
+                private alertController: AlertController,
+                private iab: InAppBrowser) {
         this.user = this.authService.getUser();
+        this.authService.loadPageSubscription(u => this.user = u);
+    }
+
+    openGoogleEdit() {
+        this.iab.create('https://myaccount.google.com/');
     }
 
     async showEditModal() {

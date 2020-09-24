@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
 import {User} from '../../../models/user';
 import {AuthService} from '../../../services/auth/auth.service';
+import {AbzeichenService} from '../../../services/abzeichen/abzeichen.service';
 
 @Component({
     selector: 'app-profil-edit',
@@ -11,18 +12,23 @@ import {AuthService} from '../../../services/auth/auth.service';
 export class ProfilEditPage implements ViewDidEnter {
 
     user: User;
+    alterNutzername: string;
     passwortConfirm: string;
+
 
     errors: Map<string, string> = new Map<string, string>();
 
     @ViewChild('focus') private nutzernameRef: IonInput;
 
     constructor(private authService: AuthService,
+                private abzeichenService: AbzeichenService,
                 private modalController: ModalController) {
         this.user = this.authService.getUser();
+        this.alterNutzername = this.user.nutzername;
     }
 
     save(nutzername, email: string, passwort: string) {
+
         this.errors.clear();
 
         if (!nutzername) {
@@ -45,6 +51,7 @@ export class ProfilEditPage implements ViewDidEnter {
         }
 
         if (this.errors.size === 0) {
+            this.abzeichenService.checkUsernameChanged(this.alterNutzername);
             this.authService.updateProfile(this.user);
             this.dismiss();
         }

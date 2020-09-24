@@ -12,6 +12,9 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {environment} from '../environments/environment';
 import {NavbarComponent} from './components/navbar/navbar.component';
+import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
+import {KuisButtonComponent} from './components/button/kuis-button/kuis-button.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
     declarations: [AppComponent],
@@ -22,11 +25,14 @@ import {NavbarComponent} from './components/navbar/navbar.component';
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
+        ChartsModule
     ],
     providers: [
         LogoutComponent,
         NavbarComponent,
+        InAppBrowser,
+        KuisButtonComponent,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]
