@@ -15,7 +15,7 @@
         <ion-col>
             <ion-card [disabled]="disabled"
                       (click)="submitAnswer(f.antworten[0])"
-                      [ngClass]="richtig1 ? 'richtig1' : 'nochNichtGewaehlt'">
+                      [ngClass]="richtig1 ? 'richtig' : 'nochNichtGewaehlt' && falsch1 ? 'falsch' : 'nochNichtGewaehlt'">
                 <ion-card-header>
                     <ion-card-title>{{f.antworten[0]}}</ion-card-title>
                 </ion-card-header>
@@ -25,7 +25,7 @@
         <ion-col>
             <ion-card [disabled]="disabled"
                       (click)="submitAnswer(f.antworten[1])"
-                      [ngClass]="richtig2 ? 'richtig2' : 'nochNichtGewaehlt'">
+                      [ngClass]="richtig2 ? 'richtig' : 'nochNichtGewaehlt' && falsch2 ? 'falsch' : 'nochNichtGewaehlt'">
                 <ion-card-header>
                     <ion-card-title>{{f.antworten[1]}}</ion-card-title>
                 </ion-card-header>
@@ -37,7 +37,7 @@
         <ion-col>
             <ion-card [disabled]="disabled"
                       (click)="submitAnswer(f.antworten[2])"
-                      [ngClass]="richtig3 ? 'richtig3' : 'nochNichtGewaehlt'">
+                      [ngClass]="richtig3 ? 'richtig' : 'nochNichtGewaehlt' && falsch3 ? 'falsch' : 'nochNichtGewaehlt'">
                 <ion-card-header>
                     <ion-card-title>{{f.antworten[2]}}</ion-card-title>
                 </ion-card-header>
@@ -47,7 +47,7 @@
         <ion-col>
             <ion-card [disabled]="disabled"
                       (click)="submitAnswer(f.antworten[3])"
-                      [ngClass]="richtig4 ? 'richtig4' : 'nochNichtGewaehlt'">
+                      [ngClass]="richtig4 ? 'richtig' : 'nochNichtGewaehlt' && falsch4 ? 'falsch' : 'nochNichtGewaehlt'">
                 <ion-card-header>
                     <ion-card-title>{{f.antworten[3]}}</ion-card-title>
                 </ion-card-header>

@@ -34,6 +34,10 @@ export class FrageComponent {
     richtig2 = false;
     richtig3 = false;
     richtig4 = false;
+    falsch1 = false;
+    falsch2 = false;
+    falsch3 = false;
+    falsch4 = false;
     abzeichenArray: Abzeichen[] = [];
     subAbzeichen: Subscription;
     subUser: Subscription;
@@ -45,7 +49,7 @@ export class FrageComponent {
                 private toastService: ToastService,
                 private statistikService: StatistikService,
                 private router: Router) {
-        this.toastService.presentLoading('Abzeichen werden geladen...')
+        this.toastService.presentLoading('Quiz wird geladen...')
             .then(async () => {
                 if (this.authService.user === undefined) {
                     if (localStorage.getItem('userID')) {
@@ -76,7 +80,7 @@ export class FrageComponent {
 
 
         this.initialize();
-        if (this.modulService.isLernmodus){
+        if (this.modulService.isLernmodus) {
             this.startTimer();
         }
     }
@@ -173,6 +177,7 @@ export class FrageComponent {
         statisticObject.showBeschreibung = false;
         this.statistikArray.push(statisticObject);
         if (this.f.richtigeAntwort === gewaehlteAntwort) {
+            // richtige Antwort markieren
             if (this.f.antworten[0] === gewaehlteAntwort) {
                 this.richtig1 = true;
             }
@@ -206,6 +211,34 @@ export class FrageComponent {
             if (this.modulService.isLernmodus) {
                 this.wrongIds.push(this.f.id);
             }
+
+            // falsche Antwort markieren
+            if (gewaehlteAntwort === this.f.antworten[0]) {
+                this.falsch1 = true;
+            }
+            if (gewaehlteAntwort === this.f.antworten[1]) {
+                this.falsch2 = true;
+            }
+            if (gewaehlteAntwort === this.f.antworten[2]) {
+                this.falsch3 = true;
+            }
+            if (gewaehlteAntwort === this.f.antworten[3]) {
+                this.falsch4 = true;
+            }
+
+            // richtige Antwort markieren, wenn falsch beantwortet
+            if (this.f.antworten[0] === this.f.richtigeAntwort) {
+                this.richtig1 = true;
+            }
+            if (this.f.antworten[1] === this.f.richtigeAntwort) {
+                this.richtig2 = true;
+            }
+            if (this.f.antworten[2] === this.f.richtigeAntwort) {
+                this.richtig3 = true;
+            }
+            if (this.f.antworten[3] === this.f.richtigeAntwort) {
+                this.richtig4 = true;
+            }
             this.disabled = true;
             setTimeout(() => {
                 this.showNextQuestion();
@@ -214,6 +247,10 @@ export class FrageComponent {
                 this.richtig2 = false;
                 this.richtig3 = false;
                 this.richtig4 = false;
+                this.falsch1 = false;
+                this.falsch2 = false;
+                this.falsch3 = false;
+                this.falsch4 = false;
             }, 1000);
         }
 
