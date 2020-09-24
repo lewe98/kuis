@@ -1,8 +1,4 @@
 export class Statistik {
-    set showBeschreibung(value: boolean) {
-        this._showBeschreibung = value;
-    }
-
     set frage(value: string) {
         this._frage = value;
     }
@@ -18,6 +14,6 @@ export class Statistik {
     public _frage: string;
     public _gewaehlteAntwort: string;
     public _richtigeAntwort: string;
-    public _showBeschreibung: boolean;
+    public _showBeschreibung = false;
 
 }

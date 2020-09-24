@@ -13,7 +13,8 @@
 
     <ion-row>
         <ion-col>
-            <ion-card [disabled]="disabled"
+            <ion-card class="pointer"
+                      [disabled]="disabled"
                       (click)="submitAnswer(f.antworten[0])"
                       [ngClass]="richtig1 ? 'richtig' : 'nochNichtGewaehlt' && falsch1 ? 'falsch' : 'nochNichtGewaehlt'">
                 <ion-card-header>
@@ -23,7 +24,8 @@
         </ion-col>
 
         <ion-col>
-            <ion-card [disabled]="disabled"
+            <ion-card class="pointer"
+                      [disabled]="disabled"
                       (click)="submitAnswer(f.antworten[1])"
                       [ngClass]="richtig2 ? 'richtig' : 'nochNichtGewaehlt' && falsch2 ? 'falsch' : 'nochNichtGewaehlt'">
                 <ion-card-header>
@@ -35,7 +37,8 @@
 
     <ion-row>
         <ion-col>
-            <ion-card [disabled]="disabled"
+            <ion-card class="pointer"
+                      [disabled]="disabled"
                       (click)="submitAnswer(f.antworten[2])"
                       [ngClass]="richtig3 ? 'richtig' : 'nochNichtGewaehlt' && falsch3 ? 'falsch' : 'nochNichtGewaehlt'">
                 <ion-card-header>
@@ -45,7 +48,8 @@
         </ion-col>
 
         <ion-col>
-            <ion-card [disabled]="disabled"
+            <ion-card class="pointer"
+                      [disabled]="disabled"
                       (click)="submitAnswer(f.antworten[3])"
                       [ngClass]="richtig4 ? 'richtig' : 'nochNichtGewaehlt' && falsch4 ? 'falsch' : 'nochNichtGewaehlt'">
                 <ion-card-header>

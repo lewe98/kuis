@@ -116,7 +116,7 @@ export class FrageComponent {
                 this.inkrementQuestionsCounterFromUser();
                 this.abzeichenService.checkAbzeichen(this.timer, this.abzeichenArray);
                 this.authService.updateProfile(this.authService.user);
-                this.statistikService.printLastRound(this.statistikArray);
+                this.statistikService.printLastRound(this.statistikArray, this.richtigBeantwortetLernmodusCounter);
                 this.router.navigate(['/statistik']);
             } else {
                 this.authService.user.historieFreiermodusName.push(this.storageService.nameDesModuls);

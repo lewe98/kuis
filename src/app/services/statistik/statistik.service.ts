@@ -6,11 +6,13 @@ import {Statistik} from '../../models/statistik';
 })
 export class StatistikService {
 
+  richtigBeantwortet = 0;
   tmpArray: Statistik[] = [];
 
   constructor() { }
 
-  printLastRound(array: Statistik[]){
+  printLastRound(array: Statistik[], richtig: number){
     this.tmpArray = array;
+    this.richtigBeantwortet = richtig;
   }
 }

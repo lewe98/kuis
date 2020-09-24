@@ -22,9 +22,9 @@ export class StatistikPage implements OnDestroy {
     async showAbzeichen(stastik: Statistik) {
         await this.tmpArray.forEach(e => {
             if (e === stastik) {
-                e.showBeschreibung = !e.showBeschreibung;
+                e._showBeschreibung = !e._showBeschreibung;
             } else {
-                e.showBeschreibung = false;
+                e._showBeschreibung = false;
             }
         });
     }
@@ -40,6 +40,7 @@ export class StatistikPage implements OnDestroy {
     ngOnDestroy() {
         this.tmpArray = [];
         this.statistikService.tmpArray = [];
+        this.statistikService.richtigBeantwortet = 0;
     }
 
 
