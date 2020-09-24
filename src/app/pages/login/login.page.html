@@ -38,10 +38,7 @@
         </p>
 
         <div class="section-buttons ion-padding">
-            <ion-button class="kuis-button ion-padding-horizontal" expand="block" shape="round" fill="solid"
-                        size="large" (click)="googleLogin()">
-                <ion-img src="assets/icon/google.png" alt="Sign in with Google"></ion-img>
-            </ion-button>
+            <app-kuis-button [title]="'Anmelden mit Google'" (click)="googleLogin()"></app-kuis-button>
         </div>
 
         <p class="margin"> Noch keinen Account? Dann registriere dich <a [routerLink]="['/registrierung']">

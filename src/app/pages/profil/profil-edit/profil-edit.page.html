@@ -30,7 +30,8 @@
 
                 <ion-item>
                     <ion-label>E-Mail*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="user.email" type="email"
+                    <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="user.email"
+                               type="email"
                                required></ion-input>
                 </ion-item>
 
@@ -38,30 +39,31 @@
                    *ngIf="errors.get('email')">
                     {{errors.get('email')}} </p>
 
+                <div *ngIf="!user.googleAccount">
+                    <ion-item>
+                        <ion-label>Passwort*</ion-label>
+                        <ion-input class="ion-text-end formControl" placeholder="Passwort..."
+                                   [(ngModel)]="user.passwort"
+                                   type="password"
+                                   required></ion-input>
+                    </ion-item>
 
-                <ion-item>
-                    <ion-label>Passwort*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Passwort..." [(ngModel)]="user.passwort"
-                               type="password"
-                               required></ion-input>
-                </ion-item>
-
-                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-                   *ngIf="errors.get('passwort')">
-                    {{errors.get('passwort')}} </p>
+                    <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                       *ngIf="errors.get('passwort')">
+                        {{errors.get('passwort')}} </p>
 
 
-                <ion-item>
-                    <ion-label>Passwort bestätigen*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Passwort bestätigen..."
-                               [(ngModel)]="passwortConfirm" type="password"
-                               required></ion-input>
-                </ion-item>
+                    <ion-item>
+                        <ion-label>Passwort bestätigen*</ion-label>
+                        <ion-input class="ion-text-end formControl" placeholder="Passwort bestätigen..."
+                                   [(ngModel)]="passwortConfirm" type="password"
+                                   required></ion-input>
+                    </ion-item>
 
-                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-                   *ngIf="errors.get('passwortConfirm')">
-                    {{errors.get('passwortConfirm')}} </p>
-
+                    <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                       *ngIf="errors.get('passwortConfirm')">
+                        {{errors.get('passwortConfirm')}} </p>
+                </div>
             </ion-list>
 
             <ion-note class="margin">*Pflichtfeld</ion-note>

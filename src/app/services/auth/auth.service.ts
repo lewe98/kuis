@@ -114,17 +114,22 @@ export class AuthService {
                                 });
                         }
                         await firebase.auth().currentUser.updateProfile({displayName: user.nutzername})
-                            .catch((error) => {
+                            .catch(error => {
                                 this.toastService.presentWarningToast('Error!', error);
                                 this.toastService.dismissLoading();
                             });
                     }
                     await this.toastService.dismissLoading();
                     await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                })
+                .catch(error => {
+                    this.toastService.presentWarningToast('Error!', error);
+                    this.toastService.dismissLoading();
                 });
         }
         if (window.location.pathname === '/profil') {
-            await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
+            await this.logOut();
+            await this.toastService.presentToast('Profil erfolgreich aktualisiert. Bitte erneut anmelden.');
         }
     }
 
@@ -174,17 +179,17 @@ export class AuthService {
 
     /**
      * Method to check whether a user is logged in or not
-     * @return boolean true, if logged in (ID stored in local storage / session storage)
+     * @return Promise<boolean> true, if logged in (ID stored in local storage / session storage)
      */
     checkIfLoggedIn(): Promise<boolean> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.loadPageSubscription((u) => {
-            if (u.id !== undefined){
-                resolve(true);
-            } else {
-                resolve(false);
-            }
-        });
+                if (u.id !== undefined) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
         });
     }
 

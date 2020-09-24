@@ -21,16 +21,11 @@
             </ion-card-content>
         </ion-card>
 
-        <div *ngIf="!user.googleAccount; else google">
-            <app-kuis-button [title]="'Profil bearbeiten'" (click)="showEditModal()"></app-kuis-button>
-        </div>
-
+        <app-kuis-button [title]="'Profil bearbeiten'" (click)="showEditModal()"></app-kuis-button>
         <app-kuis-button [title]="'Logout'" (click)="authService.logOut()"></app-kuis-button>
-        <ng-template #google>
-            <app-kuis-button [title]="'Google Profil öffnen'" (click)="openGoogleEdit()"></app-kuis-button>
-        </ng-template>
         <app-kuis-button [title]="'Account löschen'" (click)="deleteWarning(user)"></app-kuis-button>
-        <app-footer>
-        </app-footer>
+
+        <app-footer></app-footer>
+
     </div>
 </ion-content>
