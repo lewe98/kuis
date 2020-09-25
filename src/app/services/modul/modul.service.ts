@@ -121,17 +121,29 @@ export class ModulService {
         return {id: object.id, counter: object.counter, idModul: object.idModul};
     }
 
-
+    /**
+     * Preparation to update user with all available Questions
+     * @param hilfsobject formated object
+     */
     addQuestion(hilfsobject: any){
         const newUser = this.authService.getUser();
         newUser.availableQuestions.push(this.toFirestore(hilfsobject));
     }
 
+
+    /**
+     * Converts a AlreadyLearned Object to Firestore Format
+     * @param object - the AlreadyLearned-Object
+     */
     alreadyLearnedToFirestore(object: AlreadyLearned): firebase.firestore.DocumentData {
         return {idModul: object.idModul, idQuestion: object.idQuestion};
     }
 
 
+    /**
+     * Preparation to update user with an alreadyLearned object
+     * @param object formated object
+     */
     addAlreadyLearned(object: any){
         const newUser = this.authService.getUser();
         newUser.alreadyLearned.push(this.alreadyLearnedToFirestore(object));

@@ -261,7 +261,7 @@ export class FrageComponent {
 
 
     /**
-     * Checks the Array one Time at the End of the Game
+     *  * Checks the Array one Time at the End of the Game and resets the counter of any wrong answered question to 0
      */
     swapQuestionsToalreadyLearned() {
         // tslint:disable-next-line:prefer-for-of
