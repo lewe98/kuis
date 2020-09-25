@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {StorageService} from '../storage/storage.service';
 import {AuthService} from '../auth/auth.service';
 import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
+import {AlreadyLearned} from '../../models/alreadyLearned';
 
 @Injectable({
   providedIn: 'root'
@@ -124,6 +125,16 @@ export class ModulService {
     addQuestion(hilfsobject: any){
         const newUser = this.authService.getUser();
         newUser.availableQuestions.push(this.toFirestore(hilfsobject));
+    }
+
+    alreadyLearnedToFirestore(object: AlreadyLearned): firebase.firestore.DocumentData {
+        return {idModul: object.idModul, idQuestion: object.idQuestion};
+    }
+
+
+    addAlreadyLearned(object: any){
+        const newUser = this.authService.getUser();
+        newUser.alreadyLearned.push(this.alreadyLearnedToFirestore(object));
     }
 
     /**

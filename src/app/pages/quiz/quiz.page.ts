@@ -66,12 +66,13 @@ export class QuizPage implements OnDestroy {
      * Method to choose ten questions from before created array and checks if the user have a legit number of imported questions.
      */
     pushFrage() {
+        console.log(this.alleFragen);
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.alleFragen.length; i++) {
             this.sum = this.sum + this.alleFragen[i].length;
         }
 
-        this.sum = this.sum - this.user.forbiddenQuestions.length;
+        this.sum = this.sum - this.user.alreadyLearned.length;
 
         if (this.sum < 10) {
             this.genugFragen = true;
@@ -89,8 +90,8 @@ export class QuizPage implements OnDestroy {
                 const zufallsZahlFragen = Math.floor(Math.random() * anzahlFragen);
 
                 // tslint:disable-next-line:prefer-for-of
-                for (let i = 0; i < this.user.forbiddenQuestions.length; i++) {
-                    if (this.user.forbiddenQuestions[i] === this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
+                for (let i = 0; i < this.user.alreadyLearned.length; i++) {
+                    if (this.user.alreadyLearned[i] === this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
                         this.correctQuestion = false;
                         break;
                     }
@@ -112,8 +113,10 @@ export class QuizPage implements OnDestroy {
                     }
                 }
             }
+
             this.storageService.fragen = [];
             this.storageService.fragen = this.lernmodusFragen;
+            console.log(this.storageService.fragen);
             this.modulService.started = true;
         }
     }
