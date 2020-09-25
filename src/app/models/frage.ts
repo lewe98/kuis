@@ -4,4 +4,5 @@ export class Frage {
     public antworten: string[];
     public richtigeAntwort: string;
     public bild: string;
+    public quelle: string;
 }

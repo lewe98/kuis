@@ -41,6 +41,7 @@ export class FrageComponent {
     abzeichenArray: Abzeichen[] = [];
     subAbzeichen: Subscription;
     subUser: Subscription;
+    showQuelle = false;
 
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
@@ -141,6 +142,7 @@ export class FrageComponent {
         this.shuffleAntworten(this.f.antworten);
         this.f.richtigeAntwort = this.storageService.fragen[this.counter].richtigeAntwort;
         this.f.bild = this.storageService.fragen[this.counter].bild;
+        this.f.quelle = this.storageService.fragen[this.counter].quelle;
 
         await this.storageService.getPicture(this.f.bild)
             .then((url) => {
@@ -174,7 +176,7 @@ export class FrageComponent {
         statisticObject.richtigeAntwort = this.f.richtigeAntwort;
         statisticObject.gewaehlteAntwort = gewaehlteAntwort;
         statisticObject.frage = this.f.frage;
-        statisticObject.showBeschreibung = false;
+        statisticObject._showBeschreibung = false;
         this.statistikArray.push(statisticObject);
         if (this.f.richtigeAntwort === gewaehlteAntwort) {
             // richtige Antwort markieren
@@ -291,5 +293,9 @@ export class FrageComponent {
         this.abzeichenArray.sort(((a, b) => {
             return a.index - b.index;
         }));
+    }
+
+    async setShowQuelle() {
+        this.showQuelle = !this.showQuelle;
     }
 }
