@@ -72,12 +72,7 @@
         </ng-container>
 
 
-        <div class="section-buttons ion-padding">
-            <ion-button class="kuis-button ion-padding-horizontal" expand="block" color="" shape="round" fill="solid"
-                        size="large" (click)="signUp(nutzername, email, passwort)">
-                Registrieren
-            </ion-button>
-        </div>
+        <app-kuis-button [title]="'Registrieren'" (click)="signUp(nutzername, email, passwort)"></app-kuis-button>
 
         <p class="margin">
             Mit der Erstellung eines Accounts stimmst du unserer <a class="legal-action" (click)="showPrivacyModal()">

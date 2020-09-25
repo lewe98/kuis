@@ -6,7 +6,6 @@ button {
   color: white;
   background: $color-kuis;
   border-radius: 20px;
-  border: 9px solid $color-kuisGray;
   padding: 13px;
   width: 100%;
   font-family: $font-body;
@@ -14,10 +13,6 @@ button {
   font-size: clamp(17px, 7vw, 25px);
   font-weight: 900;
   box-sizing: border-box;
-}
-
-button:hover {
-  background: lighten( $color-kuis, 3% );
 }
 
 button:active {
@@ -28,6 +23,20 @@ button:focus {
   outline: none;
 }
 
-.outline {
+.margin {
+  margin-top: 10px;
+}
 
+.outline {
+  padding: 10px;
+  border-radius: 20px;
+  border: solid 6px $color-kuis;
+  color: $color-kuisBlack;
+  background-color: white;
+  margin-top: 30px;
+}
+
+.outline:hover {
+  color: transparentize($color-kuisBlack, 0.5);
+  background-color: white;
 }

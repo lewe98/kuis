@@ -30,6 +30,8 @@ $color-kuis: #12B39A;
 $color-kuisBlack: #303030;
 $color-kuisGray: #D9D9D9;
 $color-kuisOrange: #FF9500;
+$color-kuisRed: #c13c3c;
+$color-kuisGreen: #2d992d;
 
 /* Fonts */
 $font-header: 'Poppins', sans-serif;
@@ -54,6 +56,8 @@ ion-content {
 .kuis-content {
   max-width: 812px;
   margin: auto;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 ion-back-button {
@@ -62,4 +66,5 @@ ion-back-button {
 
 .card-border-rounded {
   border-radius: 20px;
+  margin: 0;
 }

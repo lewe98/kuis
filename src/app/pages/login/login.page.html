@@ -26,20 +26,13 @@
         <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
            *ngIf="errors.get('wrongData')"> {{errors.get('wrongData')}}</p>
 
-        <div class="section-buttons ion-padding">
-            <ion-button class="kuis-button ion-padding-horizontal" expand="block" shape="round" fill="solid"
-                        size="large" (click)="login(emailForLogIn,passwordForLogIn)">
-                login
-            </ion-button>
-        </div>
+        <app-kuis-button [title]="'Login'" (click)="login(emailForLogIn,passwordForLogIn)"></app-kuis-button>
 
         <p class="margin"> Eingeloggt bleiben?
             <ion-checkbox slot="end" (click)="toggleSession()"></ion-checkbox>
         </p>
 
-        <div class="section-buttons ion-padding">
-            <app-kuis-button [title]="'Anmelden mit Google'" (click)="googleLogin()"></app-kuis-button>
-        </div>
+        <app-kuis-button [title]="'Anmelden mit Google'" [margin]="true" (click)="googleLogin()"></app-kuis-button>
 
         <p class="margin"> Noch keinen Account? Dann registriere dich <a [routerLink]="['/registrierung']">
             hier!</a></p>
