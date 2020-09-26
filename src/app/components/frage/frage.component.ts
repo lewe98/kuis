@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 import {Statistik} from '../../models/statistik';
 import {StatistikService} from '../../services/statistik/statistik.service';
+import {AlreadyLearned} from '../../models/alreadyLearned';
 
 @Component({
     selector: 'app-frage',
@@ -112,7 +113,7 @@ export class FrageComponent {
                 this.authService.user.historieLernmodus.push(this.richtigBeantwortetLernmodusCounter);
                 this.authService.user.gesamtzeit = this.authService.user.gesamtzeit + this.timer;
                 this.modulService.isLernmodus = false;
-                this.swapQuestionsToForbidden();
+                this.swapQuestionsToalreadyLearned();
                 this.inkrementQuestionsCounterFromUser();
                 this.abzeichenService.checkAbzeichen(this.timer, this.abzeichenArray);
                 this.authService.updateProfile(this.authService.user);
@@ -260,9 +261,9 @@ export class FrageComponent {
 
 
     /**
-     * Checks the Array one Time at the End of the Game
+     *  * Checks the Array one Time at the End of the Game and resets the counter of any wrong answered question to 0
      */
-    swapQuestionsToForbidden() {
+    swapQuestionsToalreadyLearned() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.wrongIds.length; i++) {
             // tslint:disable-next-line:prefer-for-of
@@ -277,11 +278,16 @@ export class FrageComponent {
     inkrementQuestionsCounterFromUser() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.correctIds.length; i++) {
+
             for (let j = 0; j < this.authService.user.availableQuestions.length; j++) {
                 if (this.correctIds[i] === this.authService.user.availableQuestions[j].id) {
                     this.authService.user.availableQuestions[j].counter += 1;
+                    console.log(this.authService.user.availableQuestions[j].counter);
                     if (this.authService.user.availableQuestions[j].counter === 6) {
-                        this.authService.user.forbiddenQuestions.push(this.authService.user.availableQuestions[j].id);
+                        // tslint:disable-next-line:max-line-length
+                        const object = new AlreadyLearned(this.authService.user.availableQuestions[j].id, this.authService.user.availableQuestions[j].idModul);
+                        this.modulService.addAlreadyLearned(object);
+                        console.log(object);
                         this.authService.user.availableQuestions.splice(j, 1);
                     }
                 }

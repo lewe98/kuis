@@ -12,7 +12,7 @@ export class User {
     public historieFreiermodusAnzahl: string[];
     public importierteModule: any[];
     public googleAccount: boolean;
-    public forbiddenQuestions: string[];
+    public alreadyLearned: any[];
     public availableQuestions: any[];
 
     constructor(nutzername: string, email: string, passwort: string, googleAccount: boolean) {
@@ -30,6 +30,6 @@ export class User {
         this.abzeichen = [];
         this.importierteModule = [];
         this.availableQuestions = [];
-        this.forbiddenQuestions = [];
+        this.alreadyLearned = [];
     }
 }
