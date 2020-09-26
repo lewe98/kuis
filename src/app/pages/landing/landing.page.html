@@ -4,6 +4,7 @@
         <h1>Willkommen bei Kuis!</h1>
         <h2>Dem Bilder Quiz</h2>
     </div>
+
     <div class="kuis-content">
         <div class="ion-padding slider">
             <ion-slides pager="true" [options]="slidesOptions" #slideWithNav>
@@ -25,14 +26,9 @@
 
         </div>
 
-        <div class="section-buttons ion-padding">
+        <app-kuis-button [title]="'Registrieren'" [margin]="true" [routerLink]="['/registrierung']"></app-kuis-button>
+        <app-kuis-button [title]="'Einloggen'" [margin]="true" [routerLink]="['/login']"></app-kuis-button>
+        <app-kuis-button [title]="'Du brauchst Hilfe?'" [margin]="true" [outline]="true" [routerLink]="['/hilfe']"></app-kuis-button>
 
-            <app-kuis-button [title]="'Registrieren'" [routerLink]="['/registrierung']"></app-kuis-button>
-            <app-kuis-button [title]="'Einloggen'" [routerLink]="['/login']"></app-kuis-button>
-            <app-kuis-button [title]="'Anmelden mit Google'" (click)="googleLogin()"></app-kuis-button>
-            <app-kuis-button [title]="'Du brauchst Hilfe?'" [outline]="true"
-                             [routerLink]="['/hilfe']"></app-kuis-button>
-
-        </div>
     </div>
 </ion-content>

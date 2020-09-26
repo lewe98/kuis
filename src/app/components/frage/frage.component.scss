@@ -2,10 +2,15 @@
 
 ion-card-content {
   width: 100%;
-  height: 20vh;
+  min-height: 20vh;
+  height: auto;
   padding: 0;
   border: 0;
   margin: 0;
+}
+
+ion-grid, ion-col {
+  padding: 0;
 }
 
 ion-card-header {
@@ -19,8 +24,11 @@ ion-card-title {
   text-align: center;
 }
 
-ion-card-subtitle {
-  color: $color-kuisGray;
+ion-row {
+  margin-left: auto;
+}
+
+.quelle {
   text-align: center;
 }
 
@@ -37,21 +45,50 @@ ion-img {
 }
 
 .antwort {
-  width: 22vh;
+  background-color: white;
+  width: 95%;
   min-height: 10vh;
   height: auto;
   cursor: pointer;
   border-radius: 20px;
   text-align: center;
   padding: 25px 0;
+  box-sizing: border-box;
+  border: 0 solid $color-kuisGray;
 }
 
 .richtig {
-  background-color: green;
+  background-color: $color-kuis;
+  opacity: 1;
 }
 
 .falsch {
-  background-color: red;
+  background-color: $color-kuisRed;
+  opacity: 1;
+}
+
+.antwort1 {
+  margin: 5% 5% 5% 0;
+}
+
+.antwort2 {
+  margin: 5% 0 5% 5%;
+}
+
+.antwort3 {
+  margin: 5% 5% 5% 0;
+}
+
+.antwort4 {
+  margin: 5% 0 5% 5%;
+}
+
+.disabled {
+  background: darken($color-kuisGray, 10%);
+
+  ion-card-title {
+    color: grey !important;
+  }
 }
 
 .nochNichtGewaehlt {

@@ -1,7 +1,7 @@
 @import 'src/global.scss';
 
 ion-content {
-background-color: $color-kuisGray;
+  background-color: $color-kuisGray;
 }
 
 .headerText {
@@ -53,16 +53,7 @@ background-color: $color-kuisGray;
   object-fit: scale-down;
 }
 
-.googleIMG {
-  margin: 0;
-  padding: 0;
-  background: white;
-  object-fit: scale-down;
-  width: 100%;
-  height: 100%;
-}
-
-@media  (max-width: 370px) {
+@media (max-width: 370px) {
   .slide-text {
     bottom: 35%;
   }

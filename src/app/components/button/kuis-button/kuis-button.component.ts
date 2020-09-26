@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class KuisButtonComponent implements OnInit {
   @Input() title: string;
   @Input() outline = false;
+  @Input() margin = false;
 
   constructor() { }
 

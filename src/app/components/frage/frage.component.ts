@@ -12,7 +12,6 @@ import {Statistik} from '../../models/statistik';
 import {StatistikService} from '../../services/statistik/statistik.service';
 import {AlreadyLearned} from '../../models/alreadyLearned';
 
-
 @Component({
     selector: 'app-frage',
     templateUrl: './frage.component.html',
@@ -93,7 +92,7 @@ export class FrageComponent {
     startTimer() {
         this.interval = setInterval(() => {
             this.timer++;
-        }, 1000);
+        }, 2000);
     }
 
     /**
@@ -144,6 +143,7 @@ export class FrageComponent {
         this.f.richtigeAntwort = this.storageService.fragen[this.counter].richtigeAntwort;
         this.f.bild = this.storageService.fragen[this.counter].bild;
         this.f.quelle = this.storageService.fragen[this.counter].quelle;
+        this.showQuelle = false;
 
         await this.storageService.getPicture(this.f.bild)
             .then((url) => {
@@ -209,7 +209,7 @@ export class FrageComponent {
                 this.richtig2 = false;
                 this.richtig3 = false;
                 this.richtig4 = false;
-            }, 1000);
+            }, 2000);
         } else {
             if (this.modulService.isLernmodus) {
                 this.wrongIds.push(this.f.id);
@@ -254,7 +254,7 @@ export class FrageComponent {
                 this.falsch2 = false;
                 this.falsch3 = false;
                 this.falsch4 = false;
-            }, 1000);
+            }, 2000);
         }
 
     }

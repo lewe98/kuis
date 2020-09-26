@@ -1,4 +1,5 @@
 <h1 *ngIf="modulService.isLernmodus">Deine benötigte Zeit: {{timer}} Sekunden</h1>
+
 <ion-grid>
     <ion-row>
         <ion-col>
@@ -7,11 +8,12 @@
                     <ion-img [alt]="'Bild'" [src]="bild"></ion-img>
                 </ion-card-header>
                 <ion-card-content>
+                    <ion-card-title>{{f.frage}}</ion-card-title>
 
                     <ion-item-group (click)="setShowQuelle()">
-                        <ion-item lines="none">
+                        <ion-item class="quelle" lines="none">
                             <ion-label>
-                                <h4>Quelle:</h4>
+                                <h4>Bild-Quelle:</h4>
                             </ion-label>
                             <ion-icon *ngIf="showQuelle" color="#000" slot="end"
                                       name="chevron-up-outline"></ion-icon>
@@ -23,61 +25,60 @@
                             <h6>{{f.quelle}}</h6>
                         </ion-item>
                     </ion-item-group>
-
-                    <ion-card-title>{{f.frage}}</ion-card-title>
                 </ion-card-content>
             </ion-card>
         </ion-col>
     </ion-row>
 
     <ion-row>
-        <ion-col>
-            <ion-card class="antwort"
-                      [disabled]="disabled"
-                      (click)="submitAnswer(f.antworten[0])"
-                      [ngClass]="richtig1 ? 'richtig' : 'nochNichtGewaehlt' && falsch1 ? 'falsch' : 'nochNichtGewaehlt'">
+        <ion-col size="6">
+            <button class="antwort antwort1"
+                    [disabled]="disabled"
+                    (click)="submitAnswer(f.antworten[0])"
+                    [ngClass]="richtig1 ? 'richtig' : 'nochNichtGewaehlt' && falsch1 ? 'falsch' : 'nochNichtGewaehlt' && disabled ? 'disabled' : 'nochNichtGewaehlt'">
                 <ion-card-header>
                     <ion-card-title>{{f.antworten[0]}}</ion-card-title>
                 </ion-card-header>
-            </ion-card>
+            </button>
         </ion-col>
 
-        <ion-col>
-            <ion-card class="antwort"
-                      [disabled]="disabled"
-                      (click)="submitAnswer(f.antworten[1])"
-                      [ngClass]="richtig2 ? 'richtig' : 'nochNichtGewaehlt' && falsch2 ? 'falsch' : 'nochNichtGewaehlt'">
+        <ion-col size="6">
+            <button class="antwort antwort2"
+                    [disabled]="disabled"
+                    (click)="submitAnswer(f.antworten[1])"
+                    [ngClass]="richtig2 ? 'richtig' : 'nochNichtGewaehlt' && falsch2 ? 'falsch' : 'nochNichtGewaehlt' && disabled ? 'disabled' : 'nochNichtGewaehlt'">
                 <ion-card-header>
                     <ion-card-title>{{f.antworten[1]}}</ion-card-title>
                 </ion-card-header>
-            </ion-card>
+            </button>
         </ion-col>
     </ion-row>
 
     <ion-row>
-        <ion-col>
-            <ion-card class="antwort"
-                      [disabled]="disabled"
-                      (click)="submitAnswer(f.antworten[2])"
-                      [ngClass]="richtig3 ? 'richtig' : 'nochNichtGewaehlt' && falsch3 ? 'falsch' : 'nochNichtGewaehlt'">
+        <ion-col size="6">
+            <button class="antwort antwort3"
+                    [disabled]="disabled"
+                    (click)="submitAnswer(f.antworten[2])"
+                    [ngClass]="richtig3 ? 'richtig' : 'nochNichtGewaehlt' && falsch3 ? 'falsch' : 'nochNichtGewaehlt' && disabled ? 'disabled' : 'nochNichtGewaehlt'">
                 <ion-card-header>
                     <ion-card-title>{{f.antworten[2]}}</ion-card-title>
                 </ion-card-header>
-            </ion-card>
+            </button>
         </ion-col>
 
-        <ion-col>
-            <ion-card class="antwort"
-                      [disabled]="disabled"
-                      (click)="submitAnswer(f.antworten[3])"
-                      [ngClass]="richtig4 ? 'richtig' : 'nochNichtGewaehlt' && falsch4 ? 'falsch' : 'nochNichtGewaehlt'">
+        <ion-col size="6">
+            <button class="antwort antwort4"
+                    [disabled]="disabled"
+                    (click)="submitAnswer(f.antworten[3])"
+                    [ngClass]="richtig4 ? 'richtig' : 'nochNichtGewaehlt' && falsch4 ? 'falsch' : 'nochNichtGewaehlt' && disabled ? 'disabled' : 'nochNichtGewaehlt'">
                 <ion-card-header>
                     <ion-card-title>{{f.antworten[3]}}</ion-card-title>
                 </ion-card-header>
-            </ion-card>
+            </button>
         </ion-col>
     </ion-row>
 
 </ion-grid>
 
-<app-quiz-fortschritt [anzahl]="counter + 1" [gesamtAnzahl]="this.storageService.fragen.length"></app-quiz-fortschritt>
+<app-quiz-fortschritt [anzahl]="counter + 1" [gesamtAnzahl]="this.storageService.fragen.length"
+                      [fortschritt]="(((counter + 1) / this.storageService.fragen.length) * 100).toString() + '%'"></app-quiz-fortschritt>
