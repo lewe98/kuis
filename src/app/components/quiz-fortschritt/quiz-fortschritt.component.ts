@@ -8,14 +8,8 @@ import {Component, Input} from '@angular/core';
 export class QuizFortschrittComponent {
     @Input() anzahl: number;
     @Input() gesamtAnzahl: number;
-    @Input() fortschritt = '10%';
-
-    // fortschritt: string = (Number(this.anzahl) / Number(this.gesamtAnzahl)).toString() + '%';
+    @Input() fortschritt: string;
 
     constructor() {
-    }
-
-    alert() {
-        alert(this.fortschritt);
     }
 }

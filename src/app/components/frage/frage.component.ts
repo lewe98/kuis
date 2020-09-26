@@ -92,7 +92,7 @@ export class FrageComponent {
     startTimer() {
         this.interval = setInterval(() => {
             this.timer++;
-        }, 2000);
+        }, 1000);
     }
 
     /**
@@ -209,7 +209,7 @@ export class FrageComponent {
                 this.richtig2 = false;
                 this.richtig3 = false;
                 this.richtig4 = false;
-            }, 2000);
+            }, 1800);
         } else {
             if (this.modulService.isLernmodus) {
                 this.wrongIds.push(this.f.id);
@@ -254,7 +254,7 @@ export class FrageComponent {
                 this.falsch2 = false;
                 this.falsch3 = false;
                 this.falsch4 = false;
-            }, 2000);
+            }, 1800);
         }
 
     }

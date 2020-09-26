@@ -2,9 +2,8 @@
 
 ion-card-content {
   width: 100%;
-  min-height: 20vh;
   height: auto;
-  padding: 0;
+  padding: 15px 0;
   border: 0;
   margin: 0;
 }
@@ -26,10 +25,6 @@ ion-card-title {
 
 ion-row {
   margin-left: auto;
-}
-
-.quelle {
-  text-align: center;
 }
 
 .bild {
