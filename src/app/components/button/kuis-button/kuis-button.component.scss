@@ -6,6 +6,7 @@ button {
   color: white;
   background: $color-kuis;
   border-radius: 20px;
+  margin: 10px 0 10px 0;
   padding: 13px;
   width: 100%;
   font-family: $font-body;
@@ -21,10 +22,6 @@ button:active {
 
 button:focus {
   outline: none;
-}
-
-.margin {
-  margin-top: 10px;
 }
 
 .outline {

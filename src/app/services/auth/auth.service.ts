@@ -31,8 +31,8 @@ export class AuthService {
     }
 
     /**
-     * Copy an Prepair
-     * @param user - the current logged in user
+     * copy and prepare
+     * @param user user to be edited
      */
     private static copyAndPrepare(user: User): User {
         const copy = {...user};
@@ -120,7 +120,10 @@ export class AuthService {
                             });
                     }
                     await this.toastService.dismissLoading();
-                    await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                    await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user))
+                        .catch(error => {
+                            this.toastService.presentWarningToast('Error!', error);
+                        });
                 })
                 .catch(error => {
                     this.toastService.presentWarningToast('Error!', error);
@@ -128,7 +131,6 @@ export class AuthService {
                 });
         }
         if (window.location.pathname === '/profil') {
-            await this.logOut();
             await this.toastService.presentToast('Profil erfolgreich aktualisiert. Bitte erneut anmelden.');
         }
     }
