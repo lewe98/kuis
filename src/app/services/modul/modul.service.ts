@@ -9,7 +9,7 @@ import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
 import {AlreadyLearned} from '../../models/alreadyLearned';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ModulService {
     modulCollection: AngularFirestoreCollection<Modul>;
@@ -47,9 +47,10 @@ export class ModulService {
                 const data = a.payload.doc.data();
                 data.id = a.payload.doc.id;
                 if (!this.isLernmodus) {
-                    this.storageService.getPicture(data.bild).then((url) => {
-                        data.bild = url;
-                    });
+                    this.storageService.getPicture(data.bild)
+                        .then((url) => {
+                            data.bild = url;
+                        });
                 }
                 return data;
             })));
@@ -125,7 +126,7 @@ export class ModulService {
      * Preparation to update user with all available Questions
      * @param hilfsobject formated object
      */
-    addQuestion(hilfsobject: any){
+    addQuestion(hilfsobject: any) {
         const newUser = this.authService.getUser();
         newUser.availableQuestions.push(this.toFirestore(hilfsobject));
     }
@@ -144,7 +145,7 @@ export class ModulService {
      * Preparation to update user with an alreadyLearned object
      * @param object formated object
      */
-    addAlreadyLearned(object: any){
+    addAlreadyLearned(object: any) {
         const newUser = this.authService.getUser();
         newUser.alreadyLearned.push(this.alreadyLearnedToFirestore(object));
     }
@@ -178,16 +179,24 @@ export class ModulService {
                 break;
             case 'absteigend':
                 this.module = this.module.sort((a, b) => {
-                    if (a.titel > b.titel) { return -1; }
-                    if (a.titel < b.titel) { return 1; }
+                    if (a.titel > b.titel) {
+                        return -1;
+                    }
+                    if (a.titel < b.titel) {
+                        return 1;
+                    }
                     return 0;
                 });
                 this.setModuleEqual();
                 break;
             case 'aufsteigend':
                 this.module = this.module.sort((a, b) => {
-                    if (a.titel < b.titel) { return -1; }
-                    if (a.titel > b.titel) { return 1; }
+                    if (a.titel < b.titel) {
+                        return -1;
+                    }
+                    if (a.titel > b.titel) {
+                        return 1;
+                    }
                     return 0;
                 });
                 this.setModuleEqual();
