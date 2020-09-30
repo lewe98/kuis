@@ -8,8 +8,7 @@ import {map, take} from 'rxjs/operators';
 import * as firebase from 'firebase';
 import {auth} from 'firebase';
 import {ToastService} from '../toast/toast.service';
-
-// import * as crypto from 'crypto-js';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
     providedIn: 'root'
@@ -95,44 +94,45 @@ export class AuthService {
      * @param user user to be updated
      */
     async updateProfile(user: User) {
-        if (window.location.pathname === '/quiz') {
-            await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-        } else {
-            await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
-                .then(async () => {
-                    if (window.location.pathname === '/profil') {
-                        await firebase.auth().currentUser.updateEmail(user.email)
-                            .catch((error) => {
-                                this.toastService.presentWarningToast('Error!', error);
-                                this.toastService.dismissLoading();
-                            });
-                        if (user.passwort) {
-                            await firebase.auth().currentUser.updatePassword(user.passwort)
-                                .catch((error) => {
+        const u = firebase.auth().currentUser;
+        await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
+            .then(async () => {
+                user.passwort = CryptoJS.SHA3(user.passwort).toString();
+                if (window.location.pathname === '/profil') {
+                    if (user.googleAccount) {
+                        await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
+                    }
+                    await u.updateEmail(user.email)
+                        .then(async () => {
+                            if (user.passwort) {
+                                await u.updatePassword(user.passwort)
+                                    .catch((error) => {
+                                        this.toastService.presentWarningToast('Error!', error);
+                                        this.toastService.dismissLoading();
+                                    });
+                            }
+                            await u.updateProfile({displayName: user.nutzername})
+                                .catch(error => {
                                     this.toastService.presentWarningToast('Error!', error);
                                     this.toastService.dismissLoading();
                                 });
-                        }
-                        await firebase.auth().currentUser.updateProfile({displayName: user.nutzername})
-                            .catch(error => {
-                                this.toastService.presentWarningToast('Error!', error);
-                                this.toastService.dismissLoading();
-                            });
-                    }
-                    await this.toastService.dismissLoading();
-                    await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user))
-                        .catch(error => {
+                            await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                            await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
+                        })
+                        .catch((error) => {
                             this.toastService.presentWarningToast('Error!', error);
+                            this.toastService.dismissLoading();
                         });
-                })
-                .catch(error => {
-                    this.toastService.presentWarningToast('Error!', error);
-                    this.toastService.dismissLoading();
-                });
-        }
-        if (window.location.pathname === '/profil') {
-            await this.toastService.presentToast('Profil erfolgreich aktualisiert. Bitte erneut anmelden.');
-        }
+
+                } else {
+                    await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                }
+            })
+            .catch(error => {
+                this.toastService.presentWarningToast('Error!', error);
+                this.toastService.dismissLoading();
+            });
+        await this.toastService.dismissLoading();
     }
 
     /**
@@ -140,11 +140,16 @@ export class AuthService {
      * @param user user to be deleted
      */
     async deleteProfile(user: User) {
-        await this.userCollection.doc(user.id).delete();
-        await firebase.auth().currentUser.delete();
-
-        await this.toastService.presentLoading('Bitte warten. \n Dies kann einige Sekunden dauern.');
-        await this.logOut();
+        await this.toastService.presentLoading('Bitte warten. \n Dies kann einige Sekunden dauern.')
+            .then(async () => {
+                const u = firebase.auth().currentUser;
+                if (user.googleAccount) {
+                    await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
+                }
+                await this.logOut();
+                await u.delete();
+                await this.userCollection.doc(user.id).delete();
+            });
         await this.toastService.dismissLoading();
         await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest ausgeloggt.');
     }
@@ -157,9 +162,8 @@ export class AuthService {
     async signIn(email: string, password: string) {
 
         await this.toastService.presentLoading('Bitte warten...');
-        // const pw = crypto.AES.encrypt(password, '').toString();
-
-        await this.afAuth.signInWithEmailAndPassword(email, password)
+        const pw = CryptoJS.SHA3(password).toString();
+        await this.afAuth.signInWithEmailAndPassword(email, pw)
             .then(res => {
                 this.isLoggedIn = true;
                 if (!this.isSession) {
@@ -218,13 +222,11 @@ export class AuthService {
     async signUp(nutzername: string, email: string, passwort: string) {
 
         await this.toastService.presentLoading('Bitte warten...');
-
-        // const pw = crypto.AES.encrypt(passwort, '').toString();
-
-        await this.afAuth.createUserWithEmailAndPassword(email, passwort)
+        const pw = CryptoJS.SHA3(passwort).toString();
+        await this.afAuth.createUserWithEmailAndPassword(email, pw)
             .then(res => {
                 this.isLoggedIn = true;
-                this.persist(new User(nutzername, email, passwort, false), res.user.uid);
+                this.persist(new User(nutzername, email, pw, false), res.user.uid);
 
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(u => {

@@ -40,8 +40,7 @@ export class ModulService {
      * @return is a Observable Stream of the Module in the Firebase Database.
      */
     findAllModule(): Observable<Modul[]> {
-        const changeActions: Observable<DocumentChangeAction<Modul>[]> =
-            this.modulCollection.snapshotChanges();
+        const changeActions: Observable<DocumentChangeAction<Modul>[]> = this.modulCollection.snapshotChanges();
         return changeActions.pipe(
             map(actions => actions.map(a => {
                 const data = a.payload.doc.data();
