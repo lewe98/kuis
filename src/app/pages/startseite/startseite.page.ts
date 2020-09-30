@@ -20,6 +20,11 @@ export class StartseitePage {
                 private toastService: ToastService) {
         this.toastService.presentLoading('Bitte warten...')
             .then(() => {
+
+                this.authService.loadPageSubscription(() => {
+                    this.modulService.loadImportedModule();
+                });
+
                 if (this.authService.user === undefined) {
                     this.subUser = this.authService.findById(localStorage.getItem('userID'))
                         .subscribe(async u => {

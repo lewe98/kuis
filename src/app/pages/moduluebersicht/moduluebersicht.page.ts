@@ -29,9 +29,6 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 private modalController: ModalController,
                 private routerOutlet: IonRouterOutlet,
                 public popoverController: PopoverController) {
-        this.authService.loadPageSubscription(() => {
-            this.modulService.loadImportedModule();
-        });
     }
 
     /**
