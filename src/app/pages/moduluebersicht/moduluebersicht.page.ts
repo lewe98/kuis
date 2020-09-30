@@ -44,10 +44,6 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         this.modulService.started = true;
         this.storageService.findAllFragen(id, name)
             .then(() => {
-                this.storageService.getPicture(bild)
-                    .then((res) => {
-                        this.url = res;
-                    });
                 this.router.navigate(['/quiz']);
             });
     }

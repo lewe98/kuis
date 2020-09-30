@@ -13,11 +13,9 @@ export class ProfilEditPage implements ViewDidEnter {
 
     user: User;
     alterNutzername: string;
+    passwort: string;
     passwortConfirm: string;
-
-
     errors: Map<string, string> = new Map<string, string>();
-
     @ViewChild('focus') private nutzernameRef: IonInput;
 
     constructor(private authService: AuthService,
@@ -28,7 +26,6 @@ export class ProfilEditPage implements ViewDidEnter {
     }
 
     save(nutzername, email: string, passwort: string) {
-
         this.errors.clear();
 
         if (this.user.googleAccount) {
@@ -53,17 +50,18 @@ export class ProfilEditPage implements ViewDidEnter {
             if (passwort.length < 6) {
                 this.errors.set('passwort', 'Passwort muss mindestens 6 Zeichen besitzen!');
             }
-            if (!passwort) {
+            if (!this.passwort) {
                 this.errors.set('passwort', 'Passwort darf nicht leer sein!');
             }
-            if (passwort !== this.passwortConfirm) {
+            if (this.passwort !== this.passwortConfirm) {
                 this.errors.set('passwortConfirm', 'Passwörter stimmen nicht überein!');
             }
-
             if (this.errors.size === 0) {
                 this.abzeichenService.checkUsernameChanged(this.alterNutzername);
-                this.authService.updateProfile(this.user);
-                this.dismiss();
+                this.user.passwort = this.passwort
+                this.authService.updateProfile(this.user).then(() => {
+                    this.dismiss();
+                });
             }
         }
     }
