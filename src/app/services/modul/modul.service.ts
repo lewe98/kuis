@@ -45,12 +45,6 @@ export class ModulService {
             map(actions => actions.map(a => {
                 const data = a.payload.doc.data();
                 data.id = a.payload.doc.id;
-                if (!this.isLernmodus) {
-                    this.storageService.getPicture(data.bild)
-                        .then((url) => {
-                            data.bild = url;
-                        });
-                }
                 return data;
             })));
     }
