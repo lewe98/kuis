@@ -7,7 +7,7 @@
 
 
 <ion-content>
-    <ion-item>
+    <ion-item lines="none">
         <ion-input (ionInput)="doSearch()"
                    clearOnEdit="false"
                    color="primary"
@@ -29,7 +29,7 @@
         </ion-icon>
     </ion-item>
 
-    <div *ngIf="filteredModules.length > 0; else empty">
+    <div *ngIf="filteredModules.length > 0; else empty" class="kuis-modul">
         <app-quiz-wrapper (click)="addModule(modul)" [titel]="modul.titel" [add]="true"
                           [bild]="modul.bild" *ngFor="let modul of filteredModules">
         </app-quiz-wrapper>
