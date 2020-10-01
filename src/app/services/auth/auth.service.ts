@@ -95,10 +95,10 @@ export class AuthService {
      */
     async updateProfile(user: User) {
         const u = firebase.auth().currentUser;
-        await this.toastService.presentLoading('Bitte warten. \n Dieser Vorgang kann einige Sekunden dauern...')
-            .then(async () => {
-                user.passwort = CryptoJS.SHA3(user.passwort).toString();
-                if (window.location.pathname === '/profil') {
+        if (window.location.pathname === '/profil') {
+            this.toastService.presentLoading('Profil wird aktualisiert...')
+                .then(async () => {
+                    user.passwort = CryptoJS.SHA3(user.passwort).toString();
                     if (user.googleAccount) {
                         await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                     }
@@ -108,31 +108,23 @@ export class AuthService {
                                 await u.updatePassword(user.passwort)
                                     .catch((error) => {
                                         this.toastService.presentWarningToast('Error!', error);
-                                        this.toastService.dismissLoading();
                                     });
                             }
                             await u.updateProfile({displayName: user.nutzername})
                                 .catch(error => {
                                     this.toastService.presentWarningToast('Error!', error);
-                                    this.toastService.dismissLoading();
                                 });
                             await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
                             await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
                         })
                         .catch((error) => {
                             this.toastService.presentWarningToast('Error!', error);
-                            this.toastService.dismissLoading();
                         });
-
-                } else {
-                    await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-                }
-            })
-            .catch(error => {
-                this.toastService.presentWarningToast('Error!', error);
-                this.toastService.dismissLoading();
-            });
-        await this.toastService.dismissLoading();
+                    await this.toastService.dismissLoading();
+                });
+        } else {
+            await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+        }
     }
 
     /**
@@ -190,7 +182,7 @@ export class AuthService {
     checkIfLoggedIn(): Promise<boolean> {
         return new Promise((resolve) => {
             this.loadPageSubscription((u) => {
-                if (u.id !== undefined) {
+                if (u !== undefined) {
                     resolve(true);
                 } else {
                     resolve(false);
@@ -305,7 +297,7 @@ export class AuthService {
             this.subUser = this.findById(this.getUserID())
                 .subscribe(async u => {
                     this.user = await u;
-                    callback(u);
+                    callback(this.user);
                 });
         } else {
             callback(undefined);

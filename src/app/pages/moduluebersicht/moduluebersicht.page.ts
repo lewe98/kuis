@@ -18,7 +18,6 @@ import {PopoverFilterComponent} from '../../components/popover-filter/popover-fi
 export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     isEdit = false;
     subUser: Subscription;
-    url = '';
     @ViewChild(IonInput) search: IonInput;
 
     constructor(private authService: AuthService,
@@ -29,6 +28,13 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 private modalController: ModalController,
                 private routerOutlet: IonRouterOutlet,
                 public popoverController: PopoverController) {
+        this.toastService.presentLoading('Module werden geladen...')
+            .then(async () => {
+                await this.authService.loadPageSubscription(() => {
+                    this.modulService.loadImportedModule();
+                });
+                await this.toastService.dismissLoading();
+            });
     }
 
     /**
