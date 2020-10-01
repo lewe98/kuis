@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {ModulService} from '../../services/modul/modul.service';
 
 @Component({
     selector: 'app-startseite',
@@ -8,6 +7,6 @@ import {ModulService} from '../../services/modul/modul.service';
 })
 export class StartseitePage {
 
-    constructor(public modulService: ModulService) {
+    constructor() {
     }
 }

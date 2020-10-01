@@ -51,26 +51,29 @@ export class ModuluebersichtAddPage {
     }
 
     addQuestions() {
+        const newUser = this.authService.getUser();
         this.array = [];
         this.storageService.findAllFragen(this.lastImportedModuleID, this.lastImportedModuleTitel).then(() => {
             this.array.push(this.storageService.fragen);
-            console.log(this.array);
+            console.log(this.storageService.fragen);
             // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < this.array[0].length; i++) {
                 const object = new HilfsObjektFrage(this.array[0][i].id, this.lastImportedModuleID);
-                this.modulService.addQuestion(object);
+                // this.modulService.addQuestion(object);
+                newUser.availableQuestions.push(this.modulService.toFirestore(object));
             }
+            this.authService.updateProfile(newUser);
         });
     }
 
     addModule(module: Modul) {
         this.lastImportedModuleID = module.id;
         this.lastImportedModuleTitel = module.titel;
+        this.addQuestions();
+        this.abzeichenService.checkAbzeichenModulImportiert();
         this.modulService.importModule(module);
         this.module.splice(this.module.indexOf(module), 1);
         this.filteredModules = this.module;
-        this.addQuestions();
-        this.abzeichenService.checkAbzeichenModulImportiert();
     }
 
     async doSearch() {

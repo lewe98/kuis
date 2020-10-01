@@ -101,12 +101,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         if (this.isEdit === false) {
             this.chooseQuiz(module.titel, module.id, module.bild);
         } else {
-            const user = await this.authService.getUser();
-            const removeIndex = await user.importierteModule.map(item => item.id).indexOf(module.id);
-            if (removeIndex >= 0) {
-                await user.importierteModule.splice(removeIndex, 1);
-                await this.authService.updateProfile(user);
-            }
+            this.modulService.deleteModule(module.id);
         }
     }
 
