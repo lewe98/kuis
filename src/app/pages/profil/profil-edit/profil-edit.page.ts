@@ -58,10 +58,11 @@ export class ProfilEditPage implements ViewDidEnter {
             }
             if (this.errors.size === 0) {
                 this.abzeichenService.checkUsernameChanged(this.alterNutzername);
-                this.user.passwort = this.passwort
-                this.authService.updateProfile(this.user).then(() => {
-                    this.dismiss();
-                });
+                this.user.passwort = this.passwort;
+                this.authService.updateProfile(this.user)
+                    .then(() => {
+                        this.dismiss();
+                    });
             }
         }
     }
