@@ -5,6 +5,7 @@ import {Abzeichen} from '../../models/abzeichen';
 import {map} from 'rxjs/operators';
 import {AuthService} from '../auth/auth.service';
 import {ToastService} from '../toast/toast.service';
+import {User} from '../../models/user';
 
 
 @Injectable({
@@ -39,6 +40,24 @@ export class AbzeichenService {
                 data.id = a.payload.doc.id;
                 return data;
             })));
+    }
+
+    /**
+     * Method to find an "Abzeichen" by id
+     * @param id id of an "Abzeichen"
+     * @return Observable<Abzeichen> "Abzeichen" that was found
+     */
+    findById(id): Observable<Abzeichen> {
+        const changeAction = this.abzeichenCollection.doc<Abzeichen>(id);
+        return changeAction.snapshotChanges()
+            .pipe(
+                map(changes => {
+                    const data = changes.payload.data();
+                    if (data) {
+                        data.id = id;
+                    }
+                    return {...data};
+                }));
     }
 
     sortAbzeichen(arr: Abzeichen[]): Abzeichen[] {

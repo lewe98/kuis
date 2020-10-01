@@ -5,6 +5,8 @@
   "homepage": "https://git.thm.de/ema-ss20/pictures-app",
   "scripts": {
     "ionic serve": "ionic serve",
+    "android": "npx cap add android",
+    "ema": "ionic capacitor run android",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

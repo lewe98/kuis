@@ -101,7 +101,11 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
             this.authService
                 .getUser().abzeichen
                 .forEach(abzeichen => {
-                    list += abzeichen + '%\n';
+                    // TODO
+                    this.abzeichenService.findById(abzeichen)
+                        .subscribe(a => {
+                            list += a + '\n';
+                        });
                 });
 
             Plugins.Share.share({
