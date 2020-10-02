@@ -1,5 +1,9 @@
 <app-navbar name="Profil" [showLogout]="true"></app-navbar>
 
+<ion-header *ngIf="hasVerified == false" padding style="color: red">
+    <p><b>Dein Konto ist noch nicht bestätigt.</b><br>Bitte schau in deinem E-Mail Postfach nach der Bestätigung.</p>
+</ion-header>
+
 <ion-content>
     <div class="kuis-content">
         <ion-card class="margin">

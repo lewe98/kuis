@@ -216,7 +216,7 @@ export class AuthService {
         await this.toastService.presentLoading('Bitte warten...');
         const pw = CryptoJS.SHA3(passwort).toString();
         await this.afAuth.createUserWithEmailAndPassword(email, pw)
-            .then(res => {
+            .then(async res => {
                 this.isLoggedIn = true;
                 this.persist(new User(nutzername, email, pw, false), res.user.uid);
 
@@ -225,7 +225,8 @@ export class AuthService {
                         this.user = u;
                     });
                 localStorage.setItem('userID', res.user.uid);
-                this.router.navigate(['/startseite']);
+                await firebase.auth().currentUser.sendEmailVerification();
+                await this.router.navigate(['/startseite']);
                 this.toastService.dismissLoading();
             })
             .catch((error) => {
