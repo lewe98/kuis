@@ -59,6 +59,10 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'resetpassword',
+        loadChildren: () => import('./pages/resetpassword/resetpassword.module').then(m => m.ResetpasswordPageModule)
+    },
+    {
         path: '**',
         redirectTo: 'not-found',
         pathMatch: 'full'
@@ -68,8 +72,6 @@ const routes: Routes = [
         loadChildren: () => import('./pages/moduluebersicht-add/moduluebersicht-add.module')
             .then(m => m.ModuluebersichtAddPageModule)
     },
-
-
 ];
 
 @NgModule({
