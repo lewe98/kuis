@@ -22,6 +22,13 @@ export class HilfePage implements ViewDidEnter {
             show: false
         },
         {
+            f: 'Hilfe, ich weiß mein Passwort nicht mehr!',
+            a: 'Keine Panik! Im Login Bereich solltest du ein "Passwort vergessen" Button vorfinden. Einfach anklicken und dann eure ' +
+                'Mail eingeben. Solltet ihr euch auch an eure Mail nicht erinnern, so schreibt am besten ' + this.contactForm + ' an' +
+                'mit eurem Problem!',
+            show: false
+        },
+        {
             f: 'Wie starte ich ein Quiz?',
             a: 'Geh einfach ins Hauptmenü und klick die Fläche "Modulübersicht" an! Dort kann es dann schon losgehen ' +
                 'und du kannst module einfach über den kleinen, grünen Plus-Button hinzufügen!',
