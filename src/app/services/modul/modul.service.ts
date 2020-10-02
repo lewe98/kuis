@@ -71,7 +71,7 @@ export class ModulService {
                     }
                 });
                 this.setModuleEqual();
-                this.sortModule({target: {value: this.sortiert}});
+                // this.sortModule({target: {value: this.sortiert}});
             });
     }
 
@@ -202,6 +202,25 @@ export class ModulService {
                 this.sortiert = 'zuletztGespielt';
                 this.importedModule = this.module.sort((a, b) => b.zuletztGespielt.getDate() - a.zuletztGespielt.getDate());
                 this.setModuleEqual();
+        }
+    }
+
+    deleteModule(moduleID) {
+        const user = this.authService.getUser();
+        const removeIndex = user.importierteModule.map(item => item.id).indexOf(moduleID);
+        if (removeIndex >= 0) {
+            for (let i = user.availableQuestions.length; i > 0; i--) {
+                if (user.availableQuestions[i - 1].idModul === moduleID) {
+                    user.availableQuestions.splice(i - 1, 1);
+                }
+            }
+            for (let j = user.alreadyLearned.length; j > 0; j--) {
+                if (user.alreadyLearned[j - 1].idModul === moduleID) {
+                    user.alreadyLearned.splice(j - 1, 1);
+                }
+            }
+            user.importierteModule.splice(removeIndex, 1);
+            this.authService.updateProfile(user);
         }
     }
 
