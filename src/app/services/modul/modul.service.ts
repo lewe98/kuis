@@ -7,6 +7,7 @@ import {StorageService} from '../storage/storage.service';
 import {AuthService} from '../auth/auth.service';
 import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
 import {AlreadyLearned} from '../../models/alreadyLearned';
+import {AbzeichenService} from '../abzeichen/abzeichen.service';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +25,8 @@ export class ModulService {
 
     constructor(private afs: AngularFirestore,
                 private storageService: StorageService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private abzeichenService: AbzeichenService) {
         this.modulCollection = afs.collection<Modul>('module');
     }
 
@@ -220,6 +222,7 @@ export class ModulService {
                 }
             }
             user.importierteModule.splice(removeIndex, 1);
+            this.abzeichenService.checkAbzeichenModulGeloescht();
             this.authService.updateProfile(user);
         }
     }
