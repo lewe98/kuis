@@ -39,7 +39,7 @@
     </ion-row>
     <div *ngIf="modulService.filteredModules.length > 0; else empty">
         <app-quiz-wrapper (click)="onButtonClick(modul)" [titel]="modul.titel"
-                          [bild]="modul.bild" *ngFor="let modul of modulService.filteredModules" [edit]="isEdit" [button]="isEdit ? 'Löschen':'Starten'">
+                          [bild]="modul.bild" [bestResult]="modul.bestResult" [length]="modul.anzahlFragen" *ngFor="let modul of modulService.filteredModules" [edit]="isEdit" [button]="isEdit ? 'Löschen':'Starten'">
         </app-quiz-wrapper>
 
     </div>
