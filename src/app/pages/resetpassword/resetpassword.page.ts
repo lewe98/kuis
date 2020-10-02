@@ -3,6 +3,7 @@ import {IonInput, ViewDidEnter} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
 import {ToastService} from '../../services/toast/toast.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-resetpassword',
@@ -11,6 +12,7 @@ import {ToastService} from '../../services/toast/toast.service';
 })
 export class ResetpasswordPage implements OnInit, ViewDidEnter {
   emailForPassReset: string;
+  errors: Map<string, string> = new Map<string, string>();
 
   @ViewChild('email')
   private email: IonInput;
@@ -27,6 +29,15 @@ export class ResetpasswordPage implements OnInit, ViewDidEnter {
   }
 
   async reset(emailForPassReset: string) {
-    // To be implemented now!
+    this.errors.clear();
+    const auth = firebase.auth();
+    await auth.sendPasswordResetEmail(emailForPassReset)
+        .catch((error) => {
+      this.toastService.dismissLoading();
+      console.log(error);
+    })
+        .then(() => {
+      console.log('email sent');
+    });
   }
 }
