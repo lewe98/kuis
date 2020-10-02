@@ -64,7 +64,7 @@ export class ModulService {
                     if (this.authService.getUser().importierteModule.length) {
                         this.authService.getUser().importierteModule.forEach(imported => {
                             if (modul.id === imported.id) {
-                                this.module.push(modul);
+                                this.module.push(imported);
                             }
                         });
                         this.noImportedModules = false;
@@ -105,6 +105,7 @@ export class ModulService {
      */
     importModule(modul: Modul) {
         const newUser = this.authService.getUser();
+        modul.bestResult = 0;
         newUser.importierteModule.push(modul);
         this.authService.updateProfile(newUser);
     }
@@ -116,16 +117,6 @@ export class ModulService {
     toFirestore(object: HilfsObjektFrage): firebase.firestore.DocumentData {
         return {id: object.id, counter: object.counter, idModul: object.idModul};
     }
-
-    /**
-     * Preparation to update user with all available Questions
-     * @param hilfsobject formated object
-     */
-    addQuestion(hilfsobject: any) {
-        const newUser = this.authService.getUser();
-        newUser.availableQuestions.push(this.toFirestore(hilfsobject));
-    }
-
 
     /**
      * Converts a AlreadyLearned Object to Firestore Format
@@ -235,4 +226,5 @@ export class ModulService {
             this.filteredModules.push(modul);
         });
     }
+
 }

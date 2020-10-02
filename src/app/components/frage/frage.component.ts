@@ -120,6 +120,15 @@ export class FrageComponent {
                 this.statistikService.printLastRound(this.statistikArray, this.richtigBeantwortetLernmodusCounter);
                 this.router.navigate(['/statistik']);
             } else {
+                // tslint:disable-next-line:prefer-for-of
+                for (let i = 0; i < this.authService.user.importierteModule.length; i++) {
+                    if (this.authService.user.importierteModule[i].titel === this.storageService.nameDesModuls) {
+                        if (this.authService.user.importierteModule[i].bestResult < this.richtigBeantwortetFreiermodusCounter){
+                            this.authService.user.importierteModule[i].bestResult = this.richtigBeantwortetFreiermodusCounter;
+                            break;
+                        }
+                    }
+                }
                 this.authService.user.historieFreiermodusName.push(this.storageService.nameDesModuls);
                 this.authService.user.historieFreiermodusAnzahl.push(this.richtigBeantwortetFreiermodusCounter + '/' +
                     this.storageService.fragen.length);

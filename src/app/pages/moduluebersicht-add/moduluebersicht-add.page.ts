@@ -21,6 +21,7 @@ export class ModuluebersichtAddPage {
     lastImportedModuleID: string;
     lastImportedModuleTitel: string;
     array = [];
+    length: number;
     @ViewChild(IonInput) search: IonInput;
 
     constructor(public modulService: ModulService,
@@ -50,16 +51,16 @@ export class ModuluebersichtAddPage {
             });
     }
 
-    addQuestions() {
+    addQuestions(modul: Modul) {
         const newUser = this.authService.getUser();
         this.array = [];
         this.storageService.findAllFragen(this.lastImportedModuleID, this.lastImportedModuleTitel).then(() => {
             this.array.push(this.storageService.fragen);
-            console.log(this.storageService.fragen);
+            this.length = this.array[0].length;
+            modul.anzahlFragen = this.length;
             // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < this.array[0].length; i++) {
                 const object = new HilfsObjektFrage(this.array[0][i].id, this.lastImportedModuleID);
-                // this.modulService.addQuestion(object);
                 newUser.availableQuestions.push(this.modulService.toFirestore(object));
             }
             this.authService.updateProfile(newUser);
@@ -69,7 +70,7 @@ export class ModuluebersichtAddPage {
     addModule(module: Modul) {
         this.lastImportedModuleID = module.id;
         this.lastImportedModuleTitel = module.titel;
-        this.addQuestions();
+        this.addQuestions(module);
         this.abzeichenService.checkAbzeichenModulImportiert();
         this.modulService.importModule(module);
         this.module.splice(this.module.indexOf(module), 1);

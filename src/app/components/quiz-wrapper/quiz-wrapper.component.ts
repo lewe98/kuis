@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {StorageService} from '../../services/storage/storage.service';
 
 @Component({
     selector: 'app-quiz-wrapper',
@@ -8,20 +7,15 @@ import {StorageService} from '../../services/storage/storage.service';
 })
 export class QuizWrapperComponent implements OnInit {
 
+    @Input() length: number;
     @Input() titel: string;
     @Input() bild: string;
     @Input() add = false;
     @Input() edit = false;
     @Input() button = 'Starten';
+    @Input() bestResult: number;
 
-    constructor(private storageService: StorageService) {
-        /* alert(this.bild);
-         this.storageService.getPicture(this.bild).then((res) => {
-             alert(res);
-             this.url = res;
-         });
-
-         */
+    constructor() {
     }
 
     ngOnInit() {
