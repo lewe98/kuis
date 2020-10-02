@@ -27,17 +27,19 @@ export class ResetpasswordPage implements OnInit, ViewDidEnter {
     this.errors.clear();
     const auth = firebase.auth();
     await auth.sendPasswordResetEmail(emailForPassReset)
+        .then(async () => {
+          const alert = await this.alertController.create({
+            header: 'Passwort zurückgesetzt',
+            message: 'Wir haben eine E-Mail an deine Adresse verschickt! Folge den Instruktionen der Mail.',
+            buttons: ['Aye']
+          });
+          await alert.present();
+        })
         .catch(async (error) => {
       if (error.code === 'auth/user-not-found') {
         this.errors.set('wrongData', 'Nutzer nicht gefunden');
-      } else if (this.errors.size === 0) {
-        const alert = await this.alertController.create({
-          header: 'Passwort zurückgesetzt',
-          message: 'Wir haben eine E-Mail an deine Adresse verschickt! Folge den Instruktionen der Mail.',
-          buttons: ['Aye']
-        });
-        console.log('y u wont work');
-        return alert.present();
+      } else {
+        this.errors.set('wrongData', 'Wende dich an den Admin mit dem hier: ' + error);
       }
     });
   }
