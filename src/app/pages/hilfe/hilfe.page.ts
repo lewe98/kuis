@@ -74,7 +74,7 @@ export class HilfePage implements ViewDidEnter {
                 'noch eine Antwort benötigen melde dich einfach bei ' + this.contactForm + ' und schildere dein Problem! Der ' +
                 'Kuis-Service kümmert sich so schnell es geht um dein Problem!',
             show: false
-        }
+        },
     ];
 
     constructor(public authService: AuthService,
