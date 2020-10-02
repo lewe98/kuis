@@ -27,6 +27,7 @@
            *ngIf="errors.get('wrongData')"> {{errors.get('wrongData')}}</p>
 
         <app-kuis-button [title]="'Login'" (click)="login(emailForLogIn,passwordForLogIn)"></app-kuis-button>
+        <app-kuis-button [title]="'Passwort vergessen'" [margin]="true" [routerLink]="['/resetpassword']"></app-kuis-button>
 
         <p class="margin"> Eingeloggt bleiben?
             <ion-checkbox slot="end" (click)="toggleSession()"></ion-checkbox>

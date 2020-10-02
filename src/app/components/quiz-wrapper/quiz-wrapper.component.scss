@@ -19,15 +19,18 @@ img {
   object-fit: cover;
   border: solid 10px $color-kuis;
   border-radius: 20px;
-
 }
 
 ion-card-content {
+  cursor: pointer;
   width: 100%;
   height: 60vh;
   padding: 0;
   border: 0;
+}
 
+ion-card-content:hover {
+  opacity: 90%;
 }
 
 .kuis-block {
@@ -39,11 +42,15 @@ ion-card-content {
   border-radius: 20px;
   box-sizing: border-box;
   position: relative;
-  padding: 20%;
+  padding: 10%;
   width: 100%;
   height: 100%;
   background: $color-kuisBlack;
   opacity: 0.5;
+}
+
+.overlay:hover {
+  opacity: 0.3;
 }
 
 .icon-overlay {
@@ -51,4 +58,10 @@ ion-card-content {
   height: 100%;
   color: white;
   opacity: 1;
+}
+
+@media (max-width: 700px) {
+  ion-card-content {
+    height: 40vh;
+  }
 }

@@ -6,6 +6,7 @@ import {ProfilEditPage} from './profil-edit/profil-edit.page';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {Subscription} from 'rxjs';
 import {ToastService} from '../../services/toast/toast.service';
+import * as firebase from 'firebase';
 
 @Component({
     selector: 'app-profil',
@@ -16,6 +17,7 @@ export class ProfilPage {
 
     user: User;
     subUser: Subscription;
+    hasVerified = true;
 
     constructor(public authService: AuthService,
                 private toastService: ToastService,
@@ -24,6 +26,7 @@ export class ProfilPage {
                 private iab: InAppBrowser) {
         this.user = this.authService.getUser();
         this.authService.loadPageSubscription(u => this.user = u);
+        this.hasVerified = firebase.auth().currentUser.emailVerified;
     }
 
     openGoogleEdit() {

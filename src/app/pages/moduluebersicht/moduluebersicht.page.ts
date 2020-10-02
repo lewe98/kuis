@@ -77,7 +77,8 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         const modal = await this.modalController.create({
             component: ModuluebersichtAddPage,
             swipeToClose: true,
-            presentingElement: this.routerOutlet.nativeEl
+            presentingElement: this.routerOutlet.nativeEl,
+            mode: 'ios'
         });
         return await modal.present();
     }

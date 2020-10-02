@@ -182,10 +182,10 @@ export class AuthService {
     checkIfLoggedIn(): Promise<boolean> {
         return new Promise((resolve) => {
             this.loadPageSubscription((u) => {
-                if (u !== undefined) {
-                    resolve(true);
-                } else {
+                if (u === undefined || u.id === undefined) {
                     resolve(false);
+                } else {
+                    resolve(true);
                 }
             });
         });
@@ -216,7 +216,7 @@ export class AuthService {
         await this.toastService.presentLoading('Bitte warten...');
         const pw = CryptoJS.SHA3(passwort).toString();
         await this.afAuth.createUserWithEmailAndPassword(email, pw)
-            .then(res => {
+            .then(async res => {
                 this.isLoggedIn = true;
                 this.persist(new User(nutzername, email, pw, false), res.user.uid);
 
@@ -225,7 +225,8 @@ export class AuthService {
                         this.user = u;
                     });
                 localStorage.setItem('userID', res.user.uid);
-                this.router.navigate(['/startseite']);
+                await firebase.auth().currentUser.sendEmailVerification();
+                await this.router.navigate(['/startseite']);
                 this.toastService.dismissLoading();
             })
             .catch((error) => {
@@ -296,6 +297,7 @@ export class AuthService {
         if (this.getUserID()) {
             this.subUser = this.findById(this.getUserID())
                 .subscribe(async u => {
+                    console.log('This user: ' + u);
                     this.user = await u;
                     callback(this.user);
                 });
