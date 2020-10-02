@@ -5,7 +5,6 @@ import {Abzeichen} from '../../models/abzeichen';
 import {map} from 'rxjs/operators';
 import {AuthService} from '../auth/auth.service';
 import {ToastService} from '../toast/toast.service';
-import {User} from '../../models/user';
 
 
 @Injectable({
@@ -220,6 +219,9 @@ export class AbzeichenService {
     }
 
     checkAbzeichenModulGeloescht() {
-        // TODO
+        if (!this.authService.user.abzeichen.find(a => a === this.abzeichen[12].id)) {
+            this.authService.user.abzeichen.push(this.abzeichen[12].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[12].titel);
+        }
     }
 }
