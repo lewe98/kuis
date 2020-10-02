@@ -2,12 +2,13 @@ import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
 import {ModulService} from '../../services/modul/modul.service';
-import {IonInput, IonRouterOutlet, ModalController, PopoverController, ViewDidEnter} from '@ionic/angular';
+import {AlertController, IonInput, IonRouterOutlet, ModalController, PopoverController, ViewDidEnter} from '@ionic/angular';
 import {ToastService} from '../../services/toast/toast.service';
 import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add.page';
 import {AuthService} from '../../services/auth/auth.service';
 import {Subscription} from 'rxjs';
 import {PopoverFilterComponent} from '../../components/popover-filter/popover-filter.component';
+import {Modul} from '../../models/modul';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 private router: Router,
                 private modalController: ModalController,
                 private routerOutlet: IonRouterOutlet,
-                public popoverController: PopoverController) {
+                public popoverController: PopoverController,
+                private alertController: AlertController) {
         this.toastService.presentLoading('Module werden geladen...')
             .then(async () => {
                 await this.authService.loadPageSubscription(() => {
@@ -102,10 +104,14 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         if (this.isEdit === false) {
             this.chooseQuiz(module.titel, module.id, module.bild);
         } else {
-            this.modulService.deleteModule(module.id);
+            this.presentAlertDelete(module);
         }
     }
 
+    /**
+     * This Method shows a popover to filter and sort the ModuleAnsicht.
+     * @param ev is the event within the event is target.
+     */
     async presentPopover(ev: any) {
         const popover = await this.popoverController.create({
             component: PopoverFilterComponent,
@@ -115,6 +121,30 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
             mode: 'ios',
         });
         return await popover.present();
+    }
+
+    async presentAlertDelete(module: Modul) {
+        const alert = await this.alertController.create({
+            mode: 'ios',
+            header: module.titel + ' löschen?',
+            message: 'Wenn Sie das Modul löschen gehen alle Spielstände verloren.',
+            buttons: [
+                {
+                    text: 'Abbrechen',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                    }
+                }, {
+                    text: 'Löschen',
+                    handler: () => {
+                        this.modulService.deleteModule(module.id);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
     ionViewDidEnter() {

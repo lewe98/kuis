@@ -28,8 +28,9 @@ ion-row {
 }
 
 .bild {
-  border: solid 10px $color-kuis;
-  border-radius: 20px;
+  z-index: 5;
+  // border: solid 10px $color-kuis;
+  // border-radius: 20px;
   object-fit: cover;
   box-sizing: border-box;
 }
@@ -37,6 +38,25 @@ ion-row {
 ion-img {
   width: 100%;
   height: 30vh;
+}
+
+.background-image {
+  height: 29vh;
+  --border-radius: 20px!important;
+  box-sizing: border-box;
+  z-index: -1;
+  position: absolute;
+  filter: blur(8px);
+  object-fit: cover;
+}
+
+.kuis-border {
+  z-index: 6;
+  width: 100%;
+  height: 30vh;
+  position: absolute;
+  border-radius: 20px;
+  border: solid 10px $color-kuis;
 }
 
 .antwort {
@@ -87,4 +107,18 @@ ion-img {
 }
 
 .nochNichtGewaehlt {
+}
+
+.info-icon {
+  z-index: 7;
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+button:focus {
+  outline: none;
 }

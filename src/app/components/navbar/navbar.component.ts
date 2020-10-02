@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
+import {Modul} from '../../models/modul';
+import {AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'app-navbar',
@@ -20,20 +22,45 @@ export class NavbarComponent {
     @Input() showLogout: boolean;
     @Input() showBack: boolean;
 
-    defaultHref = 'startseite';
-
-
     constructor(public authService: AuthService,
-                private router: Router) {
+                private router: Router,
+                private alertController: AlertController) {
         this.showBack = true;
-        if (window.location.pathname === '/login' || window.location.pathname === '/registrierung') {
-            this.defaultHref = 'landing';
-        }
     }
 
     stat() {
-        if (window.location.pathname === '/statistik') {
+        const pathname = window.location.pathname;
+        if (pathname === '/login' || pathname === '/registrierung') {
+            this.router.navigate(['landing']);
+        } else if (window.location.pathname === '/quiz') {
+            console.log('noch nicht!');
+            this.presentAlertBack();
+        } else {
             this.router.navigate(['startseite']);
         }
+    }
+
+    async presentAlertBack() {
+        const alert = await this.alertController.create({
+            mode: 'ios',
+            header: 'Runde wirklich Abbrechen?',
+            message: 'Wenn Sie die Runde abbrechen gehen alle Erfolge verloren.',
+            buttons: [
+                {
+                    text: 'Spiel abbrechen',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        this.router.navigate(['startseite']);
+                    }
+                }, {
+                    text: 'Weiterspielen',
+                    handler: () => {
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }

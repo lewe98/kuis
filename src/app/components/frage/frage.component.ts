@@ -11,6 +11,9 @@ import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 import {Statistik} from '../../models/statistik';
 import {StatistikService} from '../../services/statistik/statistik.service';
 import {AlreadyLearned} from '../../models/alreadyLearned';
+import {PopoverFilterComponent} from '../popover-filter/popover-filter.component';
+import {PopoverController} from '@ionic/angular';
+import {PopoverQuelleComponent} from '../popover-quelle/popover-quelle.component';
 
 @Component({
     selector: 'app-frage',
@@ -49,7 +52,8 @@ export class FrageComponent {
                 private authService: AuthService,
                 private toastService: ToastService,
                 private statistikService: StatistikService,
-                private router: Router) {
+                private router: Router,
+                private popoverController: PopoverController) {
         this.toastService.presentLoading('Quiz wird geladen...')
             .then(async () => {
                 if (this.authService.user === undefined) {
@@ -310,7 +314,19 @@ export class FrageComponent {
         }));
     }
 
-    async setShowQuelle() {
-        this.showQuelle = !this.showQuelle;
+    /**
+     * This Method shows a popover with the source of the Image.
+     * @param ev is the event within the event is target.
+     */
+    async setShowQuelle(ev: any, quelle: string) {
+        const popover = await this.popoverController.create({
+            component: PopoverQuelleComponent,
+            componentProps: {quelle},
+            event: ev,
+            translucent: true,
+            backdropDismiss: true,
+            mode: 'ios'
+        });
+        return await popover.present();
     }
 }

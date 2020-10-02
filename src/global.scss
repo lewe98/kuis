@@ -54,6 +54,9 @@ ion-content {
   --ion-item-background: white;
   --ion-card-background: white;
   --ion-card-color: black;
+  --background-hover: lightness($color-kuis, 10%);
+  --ion-color-primary-shade: lightness($color-kuis, 10%);
+  --ion-color-primary-tint: lightness($color-kuis, 10%);
 }
 
 .kuis-content {

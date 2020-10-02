@@ -1,0 +1,20 @@
+@import 'src/global.scss';
+
+ion-list {
+  text-align: center;
+  h5 {
+    font-family: $font-body;
+  }
+  p {
+    font-size: 10px;
+    font-style: italic;
+  }
+  padding: 10px;
+  color: $color-kuisBlack;
+  --ion-item-background: white;
+  --ion-text-color: gray;
+}
+
+.button-native:hover {
+  background-color: lighten($color-kuis, 10%);
+}
