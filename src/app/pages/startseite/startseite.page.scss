@@ -22,6 +22,10 @@ ion-card{
   border-radius: 20px;
 }
 
+ion-card:focus {
+  outline: none;
+}
+
 ion-card-title {
   text-align: center;
   color: $color-kuisBlack;
