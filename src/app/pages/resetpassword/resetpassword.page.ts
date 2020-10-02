@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {AlertController, IonInput, ViewDidEnter} from '@ionic/angular';
 import * as firebase from 'firebase';
 
@@ -7,7 +7,11 @@ import * as firebase from 'firebase';
   templateUrl: './resetpassword.page.html',
   styleUrls: ['./resetpassword.page.scss'],
 })
-export class ResetpasswordPage implements OnInit, ViewDidEnter {
+
+/**
+ * Container necessary for the logic of resetting the password.
+ */
+export class ResetpasswordPage implements ViewDidEnter {
   emailForPassReset: string;
   errors: Map<string, string> = new Map<string, string>();
 
@@ -16,13 +20,16 @@ export class ResetpasswordPage implements OnInit, ViewDidEnter {
 
   constructor(private alertController: AlertController) { }
 
-  ngOnInit() {
-  }
-
   ionViewDidEnter(): void {
     setTimeout(() => this.email.setFocus(), 10);
   }
 
+  /**
+   * Takes the given String (E-Mail) and checks the Firestore if a User with that E-Mail is found.
+   * Returns either a successful Message with an E-Mail to reset the password or throws an inline-error.
+   *
+   * @param emailForPassReset is the String that is compared with the Firestore.
+   */
   async reset(emailForPassReset: string) {
     this.errors.clear();
     const auth = firebase.auth();
