@@ -1,8 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IonInput, ViewDidEnter} from '@ionic/angular';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth/auth.service';
-import {ToastService} from '../../services/toast/toast.service';
+import {AlertController, IonInput, ViewDidEnter} from '@ionic/angular';
 import * as firebase from 'firebase';
 
 @Component({
@@ -17,9 +14,7 @@ export class ResetpasswordPage implements OnInit, ViewDidEnter {
   @ViewChild('email')
   private email: IonInput;
 
-  constructor(private router: Router,
-              private authService: AuthService,
-              private toastService: ToastService) { }
+  constructor(private alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -32,12 +27,18 @@ export class ResetpasswordPage implements OnInit, ViewDidEnter {
     this.errors.clear();
     const auth = firebase.auth();
     await auth.sendPasswordResetEmail(emailForPassReset)
-        .catch((error) => {
-      this.toastService.dismissLoading();
-      console.log(error);
-    })
-        .then(() => {
-      console.log('email sent');
+        .catch(async (error) => {
+      if (error.code === 'auth/user-not-found') {
+        this.errors.set('wrongData', 'Nutzer nicht gefunden');
+      } else if (this.errors.size === 0) {
+        const alert = await this.alertController.create({
+          header: 'Passwort zurückgesetzt',
+          message: 'Wir haben eine E-Mail an deine Adresse verschickt! Folge den Instruktionen der Mail.',
+          buttons: ['Aye']
+        });
+        console.log('y u wont work');
+        return alert.present();
+      }
     });
   }
 }
