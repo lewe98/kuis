@@ -76,6 +76,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      * Method opens Modal to import module.
      */
     async presentModalAddModule() {
+        this.isEdit = false;
         const modal = await this.modalController.create({
             component: ModuluebersichtAddPage,
             swipeToClose: true,
@@ -142,6 +143,9 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 }, {
                     text: 'Löschen',
                     handler: () => {
+                        if (this.modulService.module.length === 1) {
+                            this.isEdit = false;
+                        }
                         this.modulService.deleteModule(module.id);
                     }
                 }

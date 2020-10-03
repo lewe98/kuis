@@ -32,7 +32,6 @@
         <app-kuis-button [title]="'Logout'" (click)="authService.logOut()"></app-kuis-button>
         <app-kuis-button [title]="'Account löschen'" (click)="deleteWarning(user)"></app-kuis-button>
 
-        <app-footer></app-footer>
-
     </div>
 </ion-content>
+<app-footer slot="fixed"></app-footer>
