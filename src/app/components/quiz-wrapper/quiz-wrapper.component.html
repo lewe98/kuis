@@ -1,15 +1,18 @@
 <ion-col>
     <ion-card class="card-border-rounded">
 
-        <ion-card-header >
-            <ion-card-title *ngIf="!add;else addpage" class="kuis-block">{{titel}} {{bestResult}} / {{length}}</ion-card-title>
+        <ion-card-header>
+            <ion-card-title *ngIf="!add;else addpage" class="kuis-block"><h3>{{titel}}</h3></ion-card-title>
+            <ion-label>
+                <p>{{bestResult}} / {{length}}</p>
+                <ion-progress-bar value="{{progress()}}"></ion-progress-bar>
+            </ion-label>
             <ng-template #addpage>
                 <ion-card-title>{{titel}}</ion-card-title>
             </ng-template>
         </ion-card-header>
 
         <ion-card-content>
-
             <img [alt]="'Bild'" [src]="bild">
             <div *ngIf="add||edit" class="overlay">
                 <ion-icon *ngIf="edit" class="icon-overlay" slot="icon-only" name="trash-outline"></ion-icon>
