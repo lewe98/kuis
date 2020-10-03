@@ -70,6 +70,8 @@ export class ModuluebersichtAddPage {
     addModule(module: Modul) {
         this.lastImportedModuleID = module.id;
         this.lastImportedModuleTitel = module.titel;
+        module.hinzugefuegt = new Date().toLocaleString();
+        module.zuletztGespielt = '1995-12-17T03:24:00';
         this.addQuestions(module);
         this.abzeichenService.checkAbzeichenModulImportiert();
         this.modulService.importModule(module);

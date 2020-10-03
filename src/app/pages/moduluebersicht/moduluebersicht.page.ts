@@ -123,6 +123,10 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         return await popover.present();
     }
 
+    /**
+     * This Method opens a Modal with the choice to delete a Modul or cancel it.
+     * @param module is the Modul that will be deleted.
+     */
     async presentAlertDelete(module: Modul) {
         const alert = await this.alertController.create({
             mode: 'ios',
@@ -152,6 +156,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.authService.subUser.unsubscribe();
         this.modulService.subModule.unsubscribe();
     }
 }

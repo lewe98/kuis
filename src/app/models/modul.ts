@@ -5,8 +5,8 @@ export class Modul {
     public anzahlFragen: number;
     public bild: string;
     public bestResult: number;
-    public hinzugefuegt: Date;
-    public zuletztGespielt;
+    public hinzugefuegt: string;
+    public zuletztGespielt: string;
     public richtigeFragenLetztesSpiel: number;
 
     constructor(id: string, titel: string, bild: string) {
