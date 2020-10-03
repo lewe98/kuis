@@ -27,7 +27,6 @@ export class QuizWrapperComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.progress());
         if (this.add) {
             this.button = 'Hinzufügen';
         } else if (this.edit) {
