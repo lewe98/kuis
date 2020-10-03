@@ -5,8 +5,8 @@
             <ion-card-title *ngIf="!add;else addpage" class="kuis-block">
                 <h3>{{titel}}</h3>
                 <div id="div1"><h6>{{bestResult}} / {{length}}</h6></div>
-                <div><ion-progress-bar value="{{progress()}}"></ion-progress-bar></div>
             </ion-card-title>
+            <ion-progress-bar value="{{progress()}}"></ion-progress-bar>
             <ng-template #addpage>
                 <ion-card-title>{{titel}}</ion-card-title>
             </ng-template>
