@@ -76,6 +76,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      * Method opens Modal to import module.
      */
     async presentModalAddModule() {
+        this.isEdit = false;
         const modal = await this.modalController.create({
             component: ModuluebersichtAddPage,
             swipeToClose: true,
@@ -123,6 +124,10 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         return await popover.present();
     }
 
+    /**
+     * This Method opens a Modal with the choice to delete a Modul or cancel it.
+     * @param module is the Modul that will be deleted.
+     */
     async presentAlertDelete(module: Modul) {
         const alert = await this.alertController.create({
             mode: 'ios',
@@ -138,6 +143,9 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 }, {
                     text: 'Löschen',
                     handler: () => {
+                        if (this.modulService.module.length === 1) {
+                            this.isEdit = false;
+                        }
                         this.modulService.deleteModule(module.id);
                     }
                 }
@@ -152,6 +160,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.authService.subUser.unsubscribe();
         this.modulService.subModule.unsubscribe();
     }
 }

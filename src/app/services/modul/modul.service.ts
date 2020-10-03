@@ -14,9 +14,9 @@ import {AbzeichenService} from '../abzeichen/abzeichen.service';
 })
 export class ModulService {
     modulCollection: AngularFirestoreCollection<Modul>;
-    module = [];
-    importedModule = [];
-    filteredModules = [];
+    module: Modul[] = [];
+    importedModule: Modul[] = [];
+    filteredModules: Modul[] = [];
     sortiert: string;
     subModule: Subscription;
     noImportedModules = true;
@@ -145,10 +145,13 @@ export class ModulService {
         const filter = $event.target.value;
         switch (filter) {
             case 'nichtBearbeitet':
-                this.importedModule = this.module.filter(modul => modul.richtigeFragenLetztesSpiel === 0);
+                this.importedModule = this.module.filter(modul => modul.zuletztGespielt === '1995-12-17T03:24:00');
+                this.filteredModules = this.importedModule;
                 break;
             case 'alleRichtig':
                 this.importedModule = this.module.filter(modul => modul.richtigeFragenLetztesSpiel === modul.anzahlFragen);
+                this.filteredModules = this.importedModule;
+
                 break;
             default:
                 this.setModuleEqual();
@@ -156,11 +159,11 @@ export class ModulService {
     }
 
     sortModule($event) {
-        console.log($event.target.value);
         this.sortiert = $event.target.value;
         switch (this.sortiert) {
             case 'zuletztGespielt':
-                this.module = this.importedModule.sort((a, b) => b.zuletztGespielt.getDate() - a.zuletztGespielt.getDate());
+                this.module = this.module.sort((a, b) =>
+                    new Date(b.zuletztGespielt).getMilliseconds() - new Date(a.zuletztGespielt).getMilliseconds());
                 this.setModuleEqual();
                 break;
             case 'absteigend':
@@ -188,12 +191,15 @@ export class ModulService {
                 this.setModuleEqual();
                 break;
             case 'hinzugefügt':
-                this.module = this.module.sort((a, b) => b.hinzugefuegt.getDate() - a.hinzugefuegt.getDate());
+                this.module = this.module.sort((a, b) => {
+                    return new Date(b.hinzugefuegt).getTime() - new Date(a.hinzugefuegt).getTime();
+                });
                 this.setModuleEqual();
                 break;
             default:
                 this.sortiert = 'zuletztGespielt';
-                this.importedModule = this.module.sort((a, b) => b.zuletztGespielt.getDate() - a.zuletztGespielt.getDate());
+                this.module = this.module.sort((a, b) =>
+                    new Date(b.zuletztGespielt).getTime() - new Date(a.zuletztGespielt).getTime());
                 this.setModuleEqual();
         }
     }

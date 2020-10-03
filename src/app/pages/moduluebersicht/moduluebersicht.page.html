@@ -2,7 +2,7 @@
 
 <ion-content>
     <div class="kuis-content">
-    <ion-row>
+    <ion-row *ngIf="modulService.module.length > 0">
         <ion-col size="6">
             <ion-item class="kuis-searchbar" lines="none">
                 <ion-input (ionInput)="doSearch()"
@@ -30,7 +30,7 @@
             <ion-icon class="kuis-icon" name="options-outline">
             </ion-icon>
         </ion-col>
-        <ion-col class="kuis-icon-col" size="3" *ngIf="!isEdit && modulService.filteredModules.length > 0" (click)="edit()">
+        <ion-col class="kuis-icon-col" size="3" *ngIf="!isEdit" (click)="edit()">
             <ion-icon class="kuis-icon" name="trash-outline"></ion-icon>
         </ion-col>
         <ion-col class="kuis-icon-col" size="6" *ngIf="isEdit"  (click)="undoEdit()">
