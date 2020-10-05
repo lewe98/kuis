@@ -46,6 +46,10 @@ export class PieChartComponent {
     stunden = 0;
     tage = 0;
 
+    /**
+     * Prepair User for Statistik/Pie-Chart
+     * @param authService to get current logged in user
+     */
     constructor(public authService: AuthService) {
         this.user = this.authService.getUser();
 

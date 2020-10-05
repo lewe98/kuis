@@ -19,7 +19,7 @@ export class QuizWrapperComponent implements OnInit {
     }
 
     /**
-     * Returns a value which is >=1. Takes the highest personal score and compares it to the length of the module itself.
+     * @return Returns a value which is >=1. Takes the highest personal score and compares it to the length of the module itself.
      * Used to measure the progress that the player has made on that specific module.
      */
     progress() {
