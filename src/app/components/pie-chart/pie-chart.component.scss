@@ -1,0 +1,14 @@
+@import 'src/global.scss';
+
+.kuis-margin {
+  margin: 10px 0 10px 0;
+}
+ion-item-group {
+  border-bottom: solid 1px $color-kuisGray;
+  margin: 10px;
+}
+
+.kuis-overflow {
+  max-height: 300px;
+  overflow-y: scroll;
+}
