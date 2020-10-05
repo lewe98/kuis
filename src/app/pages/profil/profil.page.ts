@@ -42,6 +42,7 @@ export class ProfilPage {
 
     async deleteWarning(user: User) {
         const alert = await this.alertController.create({
+            mode: 'ios',
             header: 'Warnung!',
             subHeader: 'Diese Aktion kann nicht rückgängig gemacht werden.',
             message: `<p>Möchten Sie ihren Account <em><b>` + user.nutzername + `</b></em> wirklich löschen?</p>`,
