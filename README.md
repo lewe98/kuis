@@ -1,96 +1,72 @@
-## Client Documentation
-To review the client documentation run:
-> npm run compodoc
+## Kuis - das Bilder-Quiz
+###### *CS2018 Entwicklung mobiler Applikationen - Sommersemester 2020*
+
+> Die Kuis-App bietet dem Nutzer die Möglichkeit, sein Allgemeinwissen mithilfe von Rätseln diverser Kategorien zu verbessern.
+> Abzeichen und Statistiken steigern die Motivation und bieten einen langfristigen Spielspaß.
 
 
-#Vorlage
+# Anforderung Doku!!!!!!!!
+Für alle Punkte gilt natürlich, dass Sie nur beschreiben und mit Grafiken illustrieren, was wirklich relevant ist.
+Gerne können Sie noch weitere Punkte ergänzen, wenn diese zum Verständnis Ihrer Software nützlich sind.
+
+Des Weiteren sollten sie berücksichtigen, dass die Zielgruppe in erster Linie „Softwareentwickler“ sind.
+
+Der Idealfall wäre, wenn ich nach dem Lesen Ihrer Dokumentation, sofort mit der Entwicklung in diesem Projekt loslegen kann.
+
+Die Dokumentation können sie direkt in ihr GitLab-Projekt-Wiki schreiben, oder als PDF-Datei im Repository ablegen.
 
 
-## DoDay - Do it. Today.
-###### *CS2365 Swift-Programmierung unter iOS - Sommersemester 2020*
 
-> Die DoDay-App bietet Nutzern täglich neue Aufgaben, die über den Tag bewältigt werden sollen.
-  Ein Social-Feature und diverse Statistiken steigern die Motivation, die gewählten Aufgaben zu bewältigen.
-
-
-
-![Aufgabe](https://info.frag-was-neues.de/dodaydoku/aufgabePic.png)
+![Kuis](https://www.brand-fit.de/wp-content/uploads/2016/05/Platzhalter.jpg)
 
 
 
 ## Gruppenmitglieder
-* Julian Hermanspahn (Freundescode: Gj1DYJw3)
-* Lewe Lorenzen (Freundescode: QLu11B8R)
-* Thomas Raab (Freundescode: 9hPjgSEC)
+* Julian Hermanspahn
+* Tim Hoffmann
+* Lewe Lorenzen
+* Mario Mollame
 
 
 
 ## Inhalt
-* [Überblick](#überblick-über-die-app)
+* [Einleitung](#einleitung)
 * [Featureliste](#featureliste)
 * [Softwareentwicklungsprozess](#softwareentwicklungsprozess)
+* [Systemarchitektur](#systemarchitektur)
+* [Softwarearchitektur](#softwarearchitektur)
+* [Dokumentation](#client-dokumentation)
 * [Technologie-Stack](#technologie-stack)
 * [Installationsanleitung](#installationsanleitung)
-* [Hinweise zum Testen](#hinweise-zum-testen)
 * [Ordnerstruktur](#ordnerstruktur)
 * [Fazit](#fazit)
 
 
 
-## Überblick über die App
-- Launch
-    - Nach der Darstellung des Launch Screens hat der Nutzer die Möglichkeit sich zu registrieren.
-- Aufgaben
-    - Der Nutzer wählt täglich eine von zwei Aufgaben aus, die er an diesem Tag abarbeiten möchte.
-      Die ausgewählte Aufgabe kann dann als erledigt, nicht erledigt und zum verschieben markiert werden.
-- Statistiken
-    - Über verschiedene Statistiken verschafft sich der Nutzer einen Überblick über seine erledigten Aufgaben und bleibt motiviert.
-- Freunde
-    - Das Social-Feature bietet das Hinzufügen von Freunden und das Teilen der aktuellen Aufgabe.
-      Über diese Funktionalität sollen sich Nutzer gegenseitig motivieren, die täglichen Aufgaben zu erledigen.
-- Einstellungen
-    - Tägliche Erinnerungen zur gewünschten Zeit, eigene Aufgaben einreichen, das Zurücksetzen der Statistiken oder
-      das Nachlesen der Datenschutzbestimmungen runden die App ab.
+## Einleitung
+Eine Einleitung, in der auf fachlicher Ebene beschrieben wird, um was es in ihrem Projekt geht 
+und was mit der Software schönes gemacht werden kann. 
+Hierzu gehören z.B. alle Anforderungen und die daraus resultierenden Anwendungsfälle + Datenmodell.
 
 
 
 ## Featureliste
-- über 40 Aufgaben, die erledigt werden können
-- Light Mode & Dark Mode
-- Launch Screen
-- Registrieren
-  - Eingabe des Nutzernamens
-  - Akzeptieren der Datenschutzhinweise
-  - Persistentes Speichern des Users
-  - Einloggen mit Vendor-ID
-- Aufgaben
-  - Anzeigen zweier Aufgaben
-  - Auswählen der Tagesaufgabe
-  - Anzeigen von Details und Statistiken einer Aufgabe
-  - Aufgabe als fertig, aufgeschoben oder nicht geschafft markieren (Sounds)
-- Statistiken
-  - Darstellung der aktuellen Streak
-  - Anzahl der insgesamt erledigten Aufgaben
-  - Statistik der erledigten, nicht erledigten und aufgeschobenen Aufgaben (Animationen)
-  - Liste der zuletzt erledigten Aufgabe
-- Freunde
-  - Erzeugen eines Freundescodes
-  - Ausgabe des eigenen Freundescodes
-  - Freundescode in Zwischenablage speichern
-  - Freunde hinzuzufügen
-  - Liste aller Freunde
-    - Name des Freundes
-    - Aktuelle Aufgabe des Freundes
-    - Anzahl der erledigten Aufgaben des Freundes
-  - Freunde herausfordern (Teilen-Funktion mit dynamischem Text, der die aktuelle Aufgabe beinhaltet)
-- Einstellungen
-  - Local Notification
-    - an- und ausschaltbar
-    - Wahl der Uhrzeit
-  - Einsenden eigener Aufgaben
-  - Zurücksetzen der Statistiken
-  - Impressum als Web-View
-  - Datenschutz als Web-View
+- Landing
+    - bla
+- Startseite
+    - bla
+- Lernmodus
+    - bla
+- Modulübersicht
+    - bla
+- Statistik
+    - bla
+- Abzeichen
+    - bla
+- Profil
+    - bla
+- Hilfe
+    - bla
 
 
 
@@ -109,18 +85,33 @@ Kritische Issues wurden nach Absprache ebenfalls in Git als Issues angelegt.
 
 
 
+## Systemarchitektur
+Welche Systeme sind beteiligt und wie kommunizieren diese miteinander.
+
+
+
+## Softwarearchitektur
+„Wichtige" statische und dynamische Aspekte der Softwarearchitektur mit 
+standardisierten Notationen, wie z.B. UML oder FMC beschreiben.
+
+
+
+## Client Dokumentation
+Um die API Dokumentation aufzurufen, muss folgender Befehl ausgeführt werden:
+> npm run compodoc
+
+
+
 ## Technologie-Stack
 Technologie | Verwendungszweck
 ---------------------|----------
-[Xcode 11.5](https://developer.apple.com/xcode/) | Entwicklungsumgebung
-[Swift 4](https://www.apple.com/de/swift/) | Programmiersprache
-[SwiftUIX](https://github.com/SwiftUIX/SwiftUIX) | Frontend Development
-[Firebase](https://firebase.google.com/docs/firestore) | Datenbank mit Cloud Firestore
-[Local Notifications](https://developer.apple.com/documentation/usernotifications) | Benachrichtigungen
-[Working with Sound](https://developer.apple.com/documentation/avfoundation/avaudioplayer) | Sound-Feedback
-[SwiftUI Animations](https://developer.apple.com/tutorials/swiftui/animating-views-and-transitionss) | Frontend Development
-[UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults) | Persistierung der Einstellungen des Nutzers
-[Core Data](https://developer.apple.com/documentation/coredata) | Datensicherung für offline Nutzung
+[WebStorm 2020.2.1](https://www.jetbrains.com/webstorm/) | Entwicklungsumgebung
+[Ionic 5](https://ionicframework.com/) | Cross-Platform Mobile App Development
+[Angular](https://angular.io/) | Frontend Development
+[Kuchen-Diagramm](https://valor-software.com/ng2-charts/) | Frontend Development
+[Firebase Firestore](https://firebase.google.com/docs/firestore) | Datenbank (Cloud Firestore)
+[Firebase Storage](https://firebase.google.com/docs/storage) | Datenbank (Storage)
+[Push Notifications](https://firebase.google.com/docs/cloud-messaging) | Benachrichtigungen
 
 
 
@@ -209,24 +200,15 @@ Natürlich ist es nicht möglich, eine komplette Programmiersprache innerhalb we
 Außerdem konnte man sich innerhalb des Teams durch eine gute Zusammenarbeit in vielen Bereichen ergänzen und weiterhelfen.
 
 
+
+#### Tim Hoffmann
+
+
+
 #### Lewe Lorenzen
-Das Team war sehr motiviert ein gutes Ergebnis zu erarbeiten. Die Arbeit mit XCode und der Anbindung an Firebase stellte sich jedoch als Herausforderung raus. Dies kostete anfangs viel Zeit, sodass das Projekt öfter zum stehen kam. Als es jedoch in den letzten Wochen gelöst werden konnte, wurden anschließend noch viele Features hinzugefügt.
-
-Die fehlende Möglichkeit sich für das Projekt zu treffen war eine Herausforderung.
-Durch die Flexibilität des Teams konnten jedoch oft schnell Meetings auf Zoom vereinbart werden. Dies den Vorteil hatte jederzeit kurz Rücksprache zu halten.
-
-Abschließend bin ich mit dem Ergebnis des Projektes sehr zufrieden. Wir konnten unsere Erwartungen erfüllen sowie viele neue Kenntnisse durch das eigene Problem lösen erlangt habe.
-
-Ein Technologie Verständnis wäre bei Folgenden Punkten noch interessant gewesen:
-- Callback bzw. asynchrone Funktionen
-- Die unterschiede der Anwendungsfälle von  @Enviromentalobject/@State/@Binding
-- Debug mit CoreData-Werten
 
 
 
-#### Thomas Raab
-Das Arbeiten im Team hat trotz Corona-Pandemie gut funktioniert. Die digitale Abstimmung war mit der Verwendung der entsprechenden Tools (git, Trello – aber auch z. B. Zoom) konsequent möglich.
+#### Mario Mollame
 
-Schwierigkeiten traten bei der Problembehandlung innerhalb XCodes auf. Ungenaue Fehlermeldung und eine schlechte Dokumentation bzw. wenig Foreneinträge zu SwiftUI führten zur frustrierenden Fehlersuche. Nach unserem Umstieg auf Pair-Programming per Zoom ließen sich auch hier Lösungen finden.
 
-Insgesamt bin ich mit dem Ergebnis des Projekts mehr als zu frieden und freue mich sehr auf weitere Arbeiten mit diesem motivierten Team.

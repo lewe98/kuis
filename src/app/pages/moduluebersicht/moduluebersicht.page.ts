@@ -156,7 +156,9 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     }
 
     ionViewDidEnter() {
-        setTimeout(() => this.search.setFocus(), 10);
+        if (this.modulService.module.length > 0) {
+            setTimeout(() => this.search.setFocus(), 10);
+        }
     }
 
     ngOnDestroy() {
