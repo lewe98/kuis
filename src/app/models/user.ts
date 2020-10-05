@@ -14,6 +14,7 @@ export class User {
     public googleAccount: boolean;
     public alreadyLearned: any[];
     public availableQuestions: any[];
+    public isVerified: boolean;
 
     constructor(nutzername: string, email: string, passwort: string, googleAccount: boolean) {
         this.nutzername = nutzername;
@@ -31,5 +32,6 @@ export class User {
         this.importierteModule = [];
         this.availableQuestions = [];
         this.alreadyLearned = [];
+        this.isVerified = true;
     }
 }
