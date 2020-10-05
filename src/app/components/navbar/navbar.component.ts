@@ -21,6 +21,7 @@ export class NavbarComponent {
     @Input() name: string;
     @Input() showLogout: boolean;
     @Input() showBack: boolean;
+    @Input() questionsAvailable = false;
 
     constructor(public authService: AuthService,
                 private router: Router,
@@ -32,8 +33,7 @@ export class NavbarComponent {
         const pathname = window.location.pathname;
         if (pathname === '/login' || pathname === '/registrierung') {
             this.router.navigate(['landing']);
-        } else if (window.location.pathname === '/quiz') {
-            console.log('noch nicht!');
+        } else if (window.location.pathname === '/quiz' && this.questionsAvailable === true) {
             this.presentAlertBack();
         } else {
             this.router.navigate(['startseite']);

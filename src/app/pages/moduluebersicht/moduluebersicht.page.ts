@@ -131,7 +131,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     async presentAlertDelete(module: Modul) {
         const alert = await this.alertController.create({
             mode: 'ios',
-            header: module.titel + ' löschen?',
+            header: module.name + ' Quiz löschen?',
             message: 'Wenn Sie das Modul löschen gehen alle Spielstände verloren.',
             buttons: [
                 {

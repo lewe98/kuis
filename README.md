@@ -52,11 +52,12 @@ Hierzu gehören z.B. alle Anforderungen und die daraus resultierenden Anwendungs
 
 ## Featureliste
 - Landing
-    - bla
+    - Die App begrüßt den Nutzer auf der Landingpage. Dort finden sich ein Onboarding-Screen, mit einer
+    Übersicht der Features, sowie Weiterleitungen zur Authentifizierung.
 - Startseite
-    - bla
+    - Auf der Startseite erhält der Nutzer eine übersichtliche Darstellung aller zur Verfügung stehenden Seiten.
 - Lernmodus
-    - bla
+    - Im Lernmodus bekommt der Benutzer ein Rätsel präsentiert, das aus einem Bild mit optionalem Text und vier möglichen Antworten besteht, von denen aber nur eine Antwort richtig ist.
 - Modulübersicht
     - bla
 - Statistik

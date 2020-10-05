@@ -38,8 +38,14 @@
         </ion-col>
     </ion-row>
     <div *ngIf="modulService.filteredModules.length > 0; else empty">
-        <app-quiz-wrapper (click)="onButtonClick(modul)" [titel]="modul.titel"
-                          [bild]="modul.bild" [bestResult]="modul.bestResult" [length]="modul.anzahlFragen" *ngFor="let modul of modulService.filteredModules" [edit]="isEdit" [button]="isEdit ? 'Löschen':'Starten'">
+        <app-quiz-wrapper (click)="onButtonClick(modul)"
+                          [titel]="modul.name"
+                          [bild]="modul.bild"
+                          [bestResult]="modul.bestResult"
+                          [length]="modul.anzahlFragen"
+                          *ngFor="let modul of modulService.filteredModules"
+                          [edit]="isEdit"
+                          [button]="isEdit ? 'Löschen':'Starten'">
         </app-quiz-wrapper>
 
     </div>
@@ -54,7 +60,7 @@
                 <ion-card-title>
                     <h4 *ngIf="!modulService.noImportedModules">Die Suche ergab keinen Treffer.</h4>
                     <h4 *ngIf="modulService.noImportedModules">Es wurden noch keine Module importiert.<br>
-                        Mit dem + Button unten rechts lassen sich neue Module importieren.</h4>
+                        Mit dem <b>+</b> Button unten rechts lassen sich neue Module importieren.</h4>
                 </ion-card-title>
             </ion-card-header>
         </ion-card>

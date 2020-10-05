@@ -10,17 +10,17 @@
 <ion-content>
     <div class="kuis-content">
         <ion-card class="margin">
-            <ion-card-header>
-                <ion-card-title color="black">{{user.nutzername}}</ion-card-title>
-            </ion-card-header>
-
             <ion-card-content>
-                <ion-item>
+                <ion-item lines="none">
+                    <h1><b>{{user.nutzername}}</b></h1>
+                </ion-item>
+
+                <ion-item lines="none">
                     <ion-icon color="black" name="mail-outline"></ion-icon>
                     {{user.email}}
                 </ion-item>
 
-                <ion-button expand="block" shape="round" [routerLink]="['/abzeichen']">
+                <ion-button class="email" expand="block" shape="round" [routerLink]="['/abzeichen']">
                     <ion-icon name="trophy-outline"></ion-icon>
                     {{user.abzeichen.length}}
                 </ion-button>

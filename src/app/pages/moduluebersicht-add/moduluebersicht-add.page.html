@@ -30,7 +30,7 @@
     </ion-item>
 
     <div *ngIf="filteredModules.length > 0; else empty" class="kuis-modul">
-        <app-quiz-wrapper (click)="addModule(modul)" [titel]="modul.titel" [add]="true"
+        <app-quiz-wrapper (click)="addModule(modul)" [titel]="modul.name" [add]="true"
                           [bild]="modul.bild" *ngFor="let modul of filteredModules">
         </app-quiz-wrapper>
     </div>
