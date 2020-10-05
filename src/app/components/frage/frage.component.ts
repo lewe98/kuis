@@ -140,7 +140,6 @@ export class FrageComponent {
                 this.router.navigate(['/moduluebersicht']);
             }
         } else {
-            console.log(this.counter);
             this.counter++;
             this.initialize();
         }
