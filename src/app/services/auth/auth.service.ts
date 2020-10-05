@@ -297,7 +297,6 @@ export class AuthService {
         if (this.getUserID()) {
             this.subUser = this.findById(this.getUserID())
                 .subscribe(async u => {
-                    console.log('This user: ' + u);
                     this.user = await u;
                     callback(this.user);
                 });

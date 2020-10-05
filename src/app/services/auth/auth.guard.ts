@@ -19,7 +19,6 @@ export class AuthGuard implements CanActivate {
                             this.router.navigate(['/login']);
                         }
                     }
-                    console.log('Ich bin eingeloggt: ' + res);
                     resolve(res);
                 });
         });
