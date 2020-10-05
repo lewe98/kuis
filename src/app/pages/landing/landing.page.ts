@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
-import {IonSlides} from '@ionic/angular';
+import {IonSlides, Platform} from '@ionic/angular';
 
 @Component({
     selector: 'app-landing',
@@ -43,8 +43,9 @@ export class LandingPage implements OnInit{
         grabCursor: true
     };
 
-    constructor(private authService: AuthService,
-                private router: Router) {
+    constructor(public authService: AuthService,
+                private router: Router,
+                public platform: Platform) {
     }
 
    ngOnInit() {

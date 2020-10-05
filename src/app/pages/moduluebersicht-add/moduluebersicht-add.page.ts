@@ -5,7 +5,7 @@ import {ToastService} from '../../services/toast/toast.service';
 import {Modul} from '../../models/modul';
 import {AuthService} from '../../services/auth/auth.service';
 import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
-import {IonInput, ModalController} from '@ionic/angular';
+import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
 
@@ -14,7 +14,7 @@ import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
     templateUrl: './moduluebersicht-add.page.html',
     styleUrls: ['./moduluebersicht-add.page.scss'],
 })
-export class ModuluebersichtAddPage {
+export class ModuluebersichtAddPage implements ViewDidEnter {
 
     module: Modul[] = [];
     filteredModules: Modul[] = [];
@@ -83,7 +83,7 @@ export class ModuluebersichtAddPage {
         const input = await this.search.getInputElement();
         const searchValue = input.value;
         this.filteredModules = this.module.filter(m => {
-            return m.titel.toLowerCase().includes(searchValue.toLowerCase());
+            return m.titel.toLowerCase().includes(searchValue.toLowerCase()) || m.name.toLowerCase().includes(searchValue.toLowerCase());
         });
     }
 
@@ -92,4 +92,7 @@ export class ModuluebersichtAddPage {
         this.filteredModules = this.module;
     }
 
+    ionViewDidEnter() {
+        setTimeout(() => this.search.setFocus(), 10);
+    }
 }

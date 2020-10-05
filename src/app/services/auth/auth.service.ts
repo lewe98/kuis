@@ -9,6 +9,8 @@ import * as firebase from 'firebase';
 import {auth} from 'firebase';
 import {ToastService} from '../toast/toast.service';
 import * as CryptoJS from 'crypto-js';
+import {Platform} from '@ionic/angular';
+import {Plugins} from '@capacitor/core';
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +27,8 @@ export class AuthService {
     constructor(private router: Router,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth,
-                private toastService: ToastService) {
+                private toastService: ToastService,
+                private platform: Platform) {
         this.userCollection = afs.collection<User>('users');
     }
 
@@ -99,8 +102,11 @@ export class AuthService {
             this.toastService.presentLoading('Profil wird aktualisiert...')
                 .then(async () => {
                     user.passwort = CryptoJS.SHA3(user.passwort).toString();
-                    if (user.googleAccount) {
+                    if (user.googleAccount && !this.platform.is('android')) {
                         await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
+                    }
+                    if (this.platform.is('android')) {
+                        await u.reload();
                     }
                     await u.updateEmail(user.email)
                         .then(async () => {
@@ -135,8 +141,11 @@ export class AuthService {
         await this.toastService.presentLoading('Bitte warten. \n Dies kann einige Sekunden dauern.')
             .then(async () => {
                 const u = firebase.auth().currentUser;
-                if (user.googleAccount) {
+                if (user.googleAccount && !this.platform.is('android')) {
                     await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
+                }
+                if (this.platform.is('android')) {
+                    await u.reload();
                 }
                 await this.logOut();
                 await u.delete();
@@ -244,6 +253,15 @@ export class AuthService {
     }
 
     /**
+     * Method to provide google authentication credentials
+     */
+    async GoogleAuthCredential() {
+        const googleUser = await Plugins.GoogleAuth.signIn();
+        const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+        return this.androidGoogleSignIn(credential);
+    }
+
+    /**
      * Method to authenticate with google login credentials
      * @param provider google authentication provider
      * @return Promise resolves, if user could be logged in
@@ -286,6 +304,42 @@ export class AuthService {
                     reject(error);
                 });
             await this.toastService.dismissLoading();
+        });
+    }
+
+    async androidGoogleSignIn(credential): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            return this.afAuth.signInWithCredential(credential)
+                .then((result) => {
+                    this.findById(result.user.uid)
+                        .pipe(take(1))
+                        .subscribe((res) => {
+                            if (res.id !== undefined) {
+                                localStorage.setItem('userID', result.user.uid);
+                                this.isLoggedIn = true;
+                                this.router.navigate(['/startseite']);
+                                this.subUser = this.findById(res.id)
+                                    .subscribe((u) => {
+                                        this.user = u;
+                                        resolve();
+                                    });
+                            } else {
+                                this.user = new User(result.user.displayName, result.user.email, '', true);
+                                this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
+                                localStorage.setItem('userID', result.user.uid);
+                                this.isLoggedIn = true;
+                                this.router.navigate(['/startseite']);
+                                this.subUser = this.findById(result.user.uid)
+                                    .subscribe((u) => {
+                                        this.user = u;
+                                        resolve();
+                                    });
+                            }
+                        });
+                }).catch((error) => {
+                    this.toastService.presentWarningToast('Error', error);
+                    reject();
+                });
         });
     }
 

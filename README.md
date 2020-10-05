@@ -5,6 +5,7 @@
 > Abzeichen und Statistiken steigern die Motivation und bieten einen langfristigen Spielspaß.
 
 
+
 # Anforderung Doku!!!!!!!!
 Für alle Punkte gilt natürlich, dass Sie nur beschreiben und mit Grafiken illustrieren, was wirklich relevant ist.
 Gerne können Sie noch weitere Punkte ergänzen, wenn diese zum Verständnis Ihrer Software nützlich sind.
