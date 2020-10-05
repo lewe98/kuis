@@ -4,9 +4,7 @@
 <ion-content>
     <div class="kuis-content">
         <ion-card class="card-border-rounded" *ngIf="tmpArray.length === 10;">
-            <ion-card-title>
-                <h3>Deine letzte Spielrunde: {{statistikService.richtigBeantwortet}}/10 Fragen richtig beantwortet.</h3>
-            </ion-card-title>
+            <h3>Deine letzte Spielrunde: {{statistikService.richtigBeantwortet}}/10 Fragen richtig beantwortet.</h3>
             <ion-card-content>
                 <ion-list>
                     <ion-item-group *ngFor="let statistik of tmpArray" (click)="showStatistik(statistik)">
@@ -26,7 +24,6 @@
                         </ion-item>
                     </ion-item-group>
                     <app-kuis-button [title]="'Zu deiner Gesamt-Statistik'" (click)="clear()"></app-kuis-button>
-                    <ion-button ></ion-button>
                 </ion-list>
             </ion-card-content>
         </ion-card>

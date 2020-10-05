@@ -17,7 +17,7 @@ export class ModulService {
     module: Modul[] = [];
     importedModule: Modul[] = [];
     filteredModules: Modul[] = [];
-    sortiert: string;
+    sortiert = 'zuletztGespielt';
     subModule: Subscription;
     noImportedModules = true;
     isLernmodus = false;

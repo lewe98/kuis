@@ -27,27 +27,32 @@ ion-row {
   margin-left: auto;
 }
 
-.bild {
-  z-index: 5;
+.bild-container {
   // border: solid 10px $color-kuis;
   // border-radius: 20px;
-  object-fit: cover;
   box-sizing: border-box;
 }
 
-ion-img {
+.inneres-bild {
+  position: relative;
+  z-index: 2;
+  object-fit: contain;
+}
+
+img {
+  border-radius: 20px;
   width: 100%;
-  height: 30vh;
+  height: 29vh;
 }
 
 .background-image {
-  height: 29vh;
-  --border-radius: 20px!important;
-  box-sizing: border-box;
-  z-index: -1;
+  left: 0;
+  top: 0;
+  z-index: 1;
   position: absolute;
   filter: blur(8px);
-  object-fit: cover;
+  object-fit: fill;
+  display: inline-block;
 }
 
 .kuis-border {
@@ -60,14 +65,16 @@ ion-img {
 }
 
 .antwort {
+  ion-card-title {
+    font-size: 20px;
+  }
+  height: 74px;
   background-color: white;
   width: 95%;
   min-height: 10vh;
-  height: auto;
   cursor: pointer;
   border-radius: 20px;
   text-align: center;
-  padding: 25px 0;
   box-sizing: border-box;
   border: 0 solid $color-kuisGray;
 }
@@ -121,4 +128,13 @@ ion-img {
 
 button:focus {
   outline: none;
+}
+
+@media (max-width: 700px) {
+  .antwort {
+    ion-card-title {
+      font-size: 15px;
+    }
+  }
+
 }

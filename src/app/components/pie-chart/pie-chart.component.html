@@ -1,12 +1,10 @@
-<div *ngIf="user.historieLernmodus.length != 0; else noHistory">
+<div>
     <ion-card class="card-border-rounded kuis-margin">
-        <ion-card-header>
-        <ion-card-title>
-            <h3>Gesamt-Statistik</h3>
-        </ion-card-title>
-        <h5>{{sumFragen}} Fragen beantwortet</h5>
-        </ion-card-header>
-        <ion-card-content>
+        <ion-item lines="none">
+            <h3 slot="start">Gesamt-Statistik</h3>
+            <h5 style="margin-left: 0" slot="end">{{sumFragen}} Fragen</h5>
+        </ion-item>
+        <ion-card-content *ngIf="user.historieLernmodus.length != 0; else noHistory">
             <div>
                 <div>
                     <div class="chart">
@@ -29,8 +27,10 @@
         </ion-card-content>
     </ion-card>
     <ion-card class="card-border-rounded kuis-margin">
-        <ion-list>
-            <ion-list-header><h5>Historie des Lernmodus</h5></ion-list-header>
+        <ion-item>
+            <h3>Historie des Lernmodus</h3>
+        </ion-item>
+        <ion-list class="kuis-overflow" *ngIf="user.historieLernmodus.length != 0; else noHistory">
             <ion-item-group *ngFor="let spiel of user.historieLernmodus; let i = index">
                 <ion-item lines="none">
                     <ion-label>
@@ -42,8 +42,10 @@
         </ion-list>
     </ion-card>
     <ion-card class="card-border-rounded kuis-margin">
-        <ion-list>
-            <ion-list-header><h5>Historie der frei gewählte Module</h5></ion-list-header>
+        <ion-item>
+            <h3>Historie der frei gewählte Module</h3>
+        </ion-item>
+        <ion-list class="kuis-overflow" *ngIf="user.historieFreiermodusAnzahl.length != 0; else noHistory">
             <ion-item-group *ngFor="let anzahl of user.historieFreiermodusAnzahl; let i = index">
                 <ion-item lines="none">
                     <ion-label>
