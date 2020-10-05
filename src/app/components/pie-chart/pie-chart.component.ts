@@ -31,7 +31,7 @@ export class PieChartComponent {
     public pieChartPlugins = [pluginDataLabels];
     public pieChartColors = [
         {
-            backgroundColor: ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)'],
+            backgroundColor: ['rgba(193, 60, 60, 1)', 'rgba(18, 179, 154, 1)'],
         },
     ];
 
