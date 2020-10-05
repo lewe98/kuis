@@ -6,22 +6,23 @@ To review the client documentation run:
 #Vorlage
 
 
-## DoDay - Do it. Today.
-###### *CS2365 Swift-Programmierung unter iOS - Sommersemester 2020*
+## Kuis - das Bilder-Quiz
+###### *CS2018 Entwicklung mobiler Applikationen - Sommersemester 2020*
 
-> Die DoDay-App bietet Nutzern täglich neue Aufgaben, die über den Tag bewältigt werden sollen.
-  Ein Social-Feature und diverse Statistiken steigern die Motivation, die gewählten Aufgaben zu bewältigen.
+> Die Kuis-App bietet dem Nutzer die Möglichkeit, sein Allgemeinwissen mithilfe von Rätseln diverser Kategorien zu verbessern.
+> Abzeichen und eine Statistik steigern die Motivation und bieten einen langfristigen Spielspaß.
 
 
 
-![Aufgabe](https://info.frag-was-neues.de/dodaydoku/aufgabePic.png)
+![Bild](https://www.brand-fit.de/wp-content/uploads/2016/05/Platzhalter.jpg)
 
 
 
 ## Gruppenmitglieder
-* Julian Hermanspahn (Freundescode: Gj1DYJw3)
-* Lewe Lorenzen (Freundescode: QLu11B8R)
-* Thomas Raab (Freundescode: 9hPjgSEC)
+* Julian Hermanspahn
+* Tim Hoffmann
+* Lewe Lorenzen
+* Mario Mollame
 
 
 
@@ -112,16 +113,13 @@ Kritische Issues wurden nach Absprache ebenfalls in Git als Issues angelegt.
 ## Technologie-Stack
 Technologie | Verwendungszweck
 ---------------------|----------
-[Xcode 11.5](https://developer.apple.com/xcode/) | Entwicklungsumgebung
-[Swift 4](https://www.apple.com/de/swift/) | Programmiersprache
-[SwiftUIX](https://github.com/SwiftUIX/SwiftUIX) | Frontend Development
-[Firebase](https://firebase.google.com/docs/firestore) | Datenbank mit Cloud Firestore
-[Local Notifications](https://developer.apple.com/documentation/usernotifications) | Benachrichtigungen
-[Working with Sound](https://developer.apple.com/documentation/avfoundation/avaudioplayer) | Sound-Feedback
-[SwiftUI Animations](https://developer.apple.com/tutorials/swiftui/animating-views-and-transitionss) | Frontend Development
-[UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults) | Persistierung der Einstellungen des Nutzers
-[Core Data](https://developer.apple.com/documentation/coredata) | Datensicherung für offline Nutzung
-
+[WebStorm 2020.2.1](https://www.jetbrains.com/webstorm/) | Entwicklungsumgebung
+[Ionic 5](https://ionicframework.com/) | Cross-Platform Mobile App Development
+[Angular](https://angular.io/) | Frontend Development
+[Kuchen-Diagramm](https://valor-software.com/ng2-charts/) | Frontend Development
+[Firebase Firestore](https://firebase.google.com/docs/firestore) | Datenbank (Cloud Firestore)
+[Firebase Storage](https://firebase.google.com/docs/storage) | Datenbank (Storage)
+[Push Notifications](https://firebase.google.com/docs/cloud-messaging) | Benachrichtigungen
 
 
 ## Installationsanleitung
