@@ -60,8 +60,12 @@ const routes: Routes = [
     },
     {
         path: 'resetpassword',
-        loadChildren: () => import('./pages/resetpassword/resetpassword.module').then(m => m.ResetpasswordPageModule)
+        loadChildren: () => import('./pages/resetpassword/resetpassword.module').then(m => m.ResetpasswordPageModule),
     },
+    // {
+    //     path: 'resetpassword/:token',
+    //     canActivate: [AuthGuard]
+    // },
     {
         path: '**',
         redirectTo: 'not-found',

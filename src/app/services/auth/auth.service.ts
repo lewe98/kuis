@@ -98,7 +98,7 @@ export class AuthService {
         if (window.location.pathname === '/profil') {
             this.toastService.presentLoading('Profil wird aktualisiert...')
                 .then(async () => {
-                    user.passwort = CryptoJS.SHA3(user.passwort).toString();
+                    // user.passwort = CryptoJS.SHA3(user.passwort).toString();
                     if (user.googleAccount) {
                         await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                     }
@@ -154,8 +154,8 @@ export class AuthService {
     async signIn(email: string, password: string) {
 
         await this.toastService.presentLoading('Bitte warten...');
-        const pw = CryptoJS.SHA3(password).toString();
-        await this.afAuth.signInWithEmailAndPassword(email, pw)
+        // const pw = CryptoJS.SHA3(password).toString();
+        await this.afAuth.signInWithEmailAndPassword(email, password)
             .then(res => {
                 this.isLoggedIn = true;
                 if (!this.isSession) {
@@ -214,11 +214,11 @@ export class AuthService {
     async signUp(nutzername: string, email: string, passwort: string) {
 
         await this.toastService.presentLoading('Bitte warten...');
-        const pw = CryptoJS.SHA3(passwort).toString();
-        await this.afAuth.createUserWithEmailAndPassword(email, pw)
+        // const pw = CryptoJS.SHA3(passwort).toString();
+        await this.afAuth.createUserWithEmailAndPassword(email, passwort)
             .then(async res => {
                 this.isLoggedIn = true;
-                this.persist(new User(nutzername, email, pw, false), res.user.uid);
+                this.persist(new User(nutzername, email, passwort, false), res.user.uid);
 
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(u => {
