@@ -51,6 +51,10 @@ export class ModuluebersichtAddPage {
             });
     }
 
+    /**
+     * Method to add Questions from imported Module to the available Question for any User.
+     * @param modul - the modul the user have imported
+     */
     addQuestions(modul: Modul) {
         const newUser = this.authService.getUser();
         this.array = [];
@@ -67,6 +71,10 @@ export class ModuluebersichtAddPage {
         });
     }
 
+    /**
+     * Add the Module the User want to import
+     * @param module the modul the user have choose
+     */
     addModule(module: Modul) {
         this.lastImportedModuleID = module.id;
         this.lastImportedModuleTitel = module.titel;
@@ -79,6 +87,9 @@ export class ModuluebersichtAddPage {
         this.filteredModules = this.module;
     }
 
+    /**
+     * method to search modules by name or titel
+     */
     async doSearch() {
         const input = await this.search.getInputElement();
         const searchValue = input.value;
@@ -87,6 +98,9 @@ export class ModuluebersichtAddPage {
         });
     }
 
+    /**
+     * clear searchfield
+     */
     clear() {
         this.search.value = '';
         this.filteredModules = this.module;

@@ -5,7 +5,7 @@
     <ion-list *ngIf="tmpArray.length === 10;">
         <h1> Deine letzte Spielrunde: {{statistikService.richtigBeantwortet}}/10 Fragen richtig beantwortet.</h1>
 
-        <ion-item-group *ngFor="let statistik of tmpArray" (click)="showAbzeichen(statistik)">
+        <ion-item-group *ngFor="let statistik of tmpArray" (click)="showStatistik(statistik)">
 
 <!--            [ngClass]="statistik._richtigeAntwort === statistik._gewaehlteAntwort ? 'richtig' : 'falsch'"-->
 

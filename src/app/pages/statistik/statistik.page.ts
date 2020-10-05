@@ -19,7 +19,11 @@ export class StatistikPage implements OnDestroy {
         this.tmpArray = this.statistikService.tmpArray;
     }
 
-    async showAbzeichen(stastik: Statistik) {
+    /**
+     * method to show all questions from the last lernrunde
+     * @param stastik - an object with the question, the User Answer, and the correct Answer
+     */
+    async showStatistik(stastik: Statistik) {
         await this.tmpArray.forEach(e => {
             if (e === stastik) {
                 e._showBeschreibung = !e._showBeschreibung;
@@ -37,6 +41,9 @@ export class StatistikPage implements OnDestroy {
         await this.toastService.dismissLoading();
     }
 
+    /**
+     * resets all used Variables and Array
+     */
     ngOnDestroy() {
         this.tmpArray = [];
         this.statistikService.tmpArray = [];

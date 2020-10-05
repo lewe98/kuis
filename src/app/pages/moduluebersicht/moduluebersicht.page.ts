@@ -86,10 +86,16 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         return await modal.present();
     }
 
+    /**
+     * toggle edit mode
+     */
     edit() {
         this.isEdit = true;
     }
 
+    /**
+     * toggle edit mode
+     */
     undoEdit() {
         this.isEdit = false;
     }
@@ -155,12 +161,18 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         await alert.present();
     }
 
+    /**
+     * sets focus on ViewEnter
+     */
     ionViewDidEnter() {
         if (this.modulService.module.length > 0) {
             setTimeout(() => this.search.setFocus(), 10);
         }
     }
 
+    /**
+     * unsubschribe user/Modules on View leave
+     */
     ngOnDestroy() {
         this.authService.subUser.unsubscribe();
         this.modulService.subModule.unsubscribe();

@@ -73,7 +73,7 @@ export class ModulService {
                     }
                 });
                 this.setModuleEqual();
-                // this.sortModule({target: {value: this.sortiert}});
+                this.sortModule({target: {value: this.sortiert}});
             });
     }
 
@@ -204,6 +204,10 @@ export class ModulService {
         }
     }
 
+    /**
+     * delete imported modules from logged in user
+     * @param moduleID - the module the user want delete
+     */
     deleteModule(moduleID) {
         const user = this.authService.getUser();
         const removeIndex = user.importierteModule.map(item => item.id).indexOf(moduleID);

@@ -307,6 +307,9 @@ export class FrageComponent {
         }
     }
 
+    /**
+     * method to sort all abzeichen by index
+     */
     sortAbzeichen() {
         this.abzeichenArray.sort(((a, b) => {
             return a.index - b.index;

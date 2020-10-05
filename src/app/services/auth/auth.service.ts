@@ -306,6 +306,9 @@ export class AuthService {
         }
     }
 
+    /**
+     * method to get the userId from logged In User
+     */
     getUserID(): string {
         if (localStorage.getItem('userID')) {
             return localStorage.getItem('userID');
