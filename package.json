@@ -35,7 +35,7 @@
     "chartjs-plugin-datalabels": "^0.7.0",
     "cordova-plugin-inappbrowser": "^4.0.0",
     "crypto-js": "^4.0.0",
-    "firebase": "^7.19.0",
+    "firebase": "^7.22.1",
     "ng2-charts": "^2.4.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
