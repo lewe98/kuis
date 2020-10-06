@@ -13,7 +13,7 @@ export class HilfePage implements ViewDidEnter {
     @ViewChild(IonInput) search: IonInput;
     showText = false;
     filteredFragenArray = [];
-    private contactForm = 'tim.hoffmann@mni.thm.de';
+    private contactForm = 'support@kuis.de';
     fragenArray = [
         {
             f: 'Wie kann ich die App benutzen?',
