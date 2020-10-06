@@ -3,8 +3,10 @@
 
 <ion-content>
     <div class="kuis-content">
-        <ion-card class="card-border-rounded" *ngIf="tmpArray.length === 10;">
-            <h3>Deine letzte Spielrunde: {{statistikService.richtigBeantwortet}}/10 Fragen richtig beantwortet.</h3>
+        <ion-card class="card-border-rounded kuis-card-margin-topbottom" *ngIf="tmpArray.length === 10;">
+            <ion-item lines="none">
+                <h3>Deine letzte Spielrunde: {{statistikService.richtigBeantwortet}}/10 Fragen richtig beantwortet.</h3>
+            </ion-item>
             <ion-card-content>
                 <ion-list>
                     <ion-item-group *ngFor="let statistik of tmpArray" (click)="showStatistik(statistik)">
