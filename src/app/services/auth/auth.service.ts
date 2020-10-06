@@ -309,6 +309,7 @@ export class AuthService {
 
     async androidGoogleSignIn(credential): Promise<any> {
         return new Promise(async (resolve, reject) => {
+            await this.toastService.presentLoading('Bitte warten...');
             return this.afAuth.signInWithCredential(credential)
                 .then((result) => {
                     this.findById(result.user.uid)
@@ -321,6 +322,7 @@ export class AuthService {
                                 this.subUser = this.findById(res.id)
                                     .subscribe((u) => {
                                         this.user = u;
+                                        this.toastService.dismissLoading();
                                         resolve();
                                     });
                             } else {
@@ -332,11 +334,13 @@ export class AuthService {
                                 this.subUser = this.findById(result.user.uid)
                                     .subscribe((u) => {
                                         this.user = u;
+                                        this.toastService.dismissLoading();
                                         resolve();
                                     });
                             }
                         });
                 }).catch((error) => {
+                    this.toastService.dismissLoading();
                     this.toastService.presentWarningToast('Error', error);
                     reject();
                 });
