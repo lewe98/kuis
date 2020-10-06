@@ -26,6 +26,7 @@ export class QuizPage implements OnDestroy {
                 private storageService: StorageService,
                 private authService: AuthService,
                 private router: Router) {
+        this.storageService.fragen = [];
         this.initialize();
         this.user = this.authService.getUser();
         console.log(this.modulService.freiermodusnavigate);
