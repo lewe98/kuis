@@ -156,7 +156,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                         if (this.modulService.module.length === 1) {
                             this.isEdit = false;
                         }
-                        this.modulService.deleteModule(module.id);
+                        this.modulService.deleteModule(module);
                     }
                 }
             ]
