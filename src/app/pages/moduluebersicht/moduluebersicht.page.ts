@@ -172,10 +172,9 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     }
 
     /**
-     * unsubschribe user/Modules on View leave
+     * unsubschribe modules when component is destroyed
      */
     ngOnDestroy() {
-        this.authService.subUser.unsubscribe();
         this.modulService.subModule.unsubscribe();
     }
 }

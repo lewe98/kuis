@@ -2,7 +2,6 @@ export class User {
     public id: string;
     public nutzername: string;
     public email: string;
-    public passwort: string;
     public emailBestaetigt: boolean;
     public isOnboarded: boolean;
     public abzeichen: string[];
@@ -16,10 +15,9 @@ export class User {
     public availableQuestions: any[];
     public isVerified: boolean;
 
-    constructor(nutzername: string, email: string, passwort: string, googleAccount: boolean) {
+    constructor(nutzername: string, email: string, googleAccount: boolean) {
         this.nutzername = nutzername;
         this.email = email;
-        this.passwort = passwort;
         this.googleAccount = googleAccount;
 
         this.emailBestaetigt = false;
