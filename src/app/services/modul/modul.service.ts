@@ -62,23 +62,34 @@ export class ModulService {
         this.module = [];
         this.importedModule = [];
         this.filteredModules = [];
-        this.subModule = this.findAllModule()
-            .subscribe(async data => {
-                await data.map(modul => {
-                    if (this.authService.getUser().importierteModule.length) {
-                        this.authService.getUser().importierteModule.forEach(imported => {
-                            if (modul.id === imported.id) {
-                                this.module.push(imported);
-                            }
-                        });
-                        this.noImportedModules = false;
-                    } else {
-                        this.noImportedModules = true;
-                    }
-                });
-                this.sortModule({target: {value: this.sortiert}});
+        // this.subModule = this.findAllModule()
+        //     .subscribe(async data => {
+        //         await data.map(modul => {
+        //             if (this.authService.getUser().importierteModule.length) {
+        //                 this.authService.getUser().importierteModule.forEach(imported => {
+        //                     if (modul.id === imported.id) {
+        //                         this.module.push(imported);
+        //                         console.log(this.module);
+        //                     }
+        //                 });
+        //                 this.noImportedModules = false;
+        //             } else {
+        //                 this.noImportedModules = true;
+        //             }
+        //         });
+        //         this.sortModule({target: {value: this.sortiert}});
+        //     });
+        if (this.authService.getUser().importierteModule.length) {
+            this.authService.getUser().importierteModule.forEach(imported => {
+                this.module.push(imported);
+                this.noImportedModules = false;
             });
+        } else {
+            this.noImportedModules = true;
+        }
+        this.sortModule({target: {value: this.sortiert}});
     }
+
 
     /**
      * Method to get all imported Modules from the current loggin in user
