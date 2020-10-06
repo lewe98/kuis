@@ -27,7 +27,8 @@
 
         <app-kuis-button [title]="'Registrieren'" [margin]="true" [routerLink]="['/registrierung']"></app-kuis-button>
         <app-kuis-button [title]="'Einloggen'" [margin]="true" [routerLink]="['/login']"></app-kuis-button>
-        <app-kuis-button [title]="'Anmelden mit Google'" [margin]="true" (click)="googleLogin()"></app-kuis-button>
+        <app-kuis-button *ngIf="!platform.is('android')" [title]="'Anmelden mit Google'" [margin]="true" (click)="googleLogin()"></app-kuis-button>
+        <app-kuis-button *ngIf="platform.is('android')" [title]="'Anmelden mit Google'" [margin]="true" (click)="authService.GoogleAuthCredential()"></app-kuis-button>
         <app-kuis-button [title]="'Du brauchst Hilfe?'" [margin]="true" [outline]="true" [routerLink]="['/hilfe']"></app-kuis-button>
 
     </div>
