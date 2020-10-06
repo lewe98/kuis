@@ -39,6 +39,7 @@ Die Dokumentation können sie direkt in ihr GitLab-Projekt-Wiki schreiben, oder 
 * [Dokumentation](#client-dokumentation)
 * [Technologie-Stack](#technologie-stack)
 * [Installationsanleitung](#installationsanleitung)
+* [Android Emulation](#installationsanleitung)
 * [Ordnerstruktur](#ordnerstruktur)
 * [Fazit](#fazit)
 
@@ -133,6 +134,18 @@ Technologie | Verwendungszweck
       Diese wird in Zukunft verwendet, um das Projekt zu öffnen.
       ``New Scheme...`` > Target: iTask > Name: iTask
 
+
+
+## Android Emulation
+Um das Projekt in der IDE [Android Studio](https://developer.android.com/studio/) 
+aufzurufen, kann das zusammenfassende Scipt ``npm run ema`` ausgeführt werden.
+Dieses Script besteht aus folgenden Schritten:
+
+1. Um das Projekt zu bauen (und den `www` Ordner zu generieren), wird ``ionic build`` ausgeführt.
+2. Alle Änderungen im Source Code werden mit ``npx cap sync`` übernommen.
+3. Um das Android Projekt zu öffnen, muss ``npx cap open android`` im Terminal eingegeben werden.
+
+Falls noch kein Emulations Device konfiguriert wurde, kann eines mithilfe des ``AVD Manager`` aufgesetzt werden.
 
 
 ## Ordnerstruktur
