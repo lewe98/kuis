@@ -5,7 +5,7 @@ import {ToastService} from '../../services/toast/toast.service';
 import {Modul} from '../../models/modul';
 import {AuthService} from '../../services/auth/auth.service';
 import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
-import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
+import {IonInput, ModalController, ToastController, ViewDidEnter} from '@ionic/angular';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
 
@@ -86,8 +86,11 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
         this.addQuestions(module);
         this.abzeichenService.checkAbzeichenModulImportiert();
         this.modulService.importModule(module);
-        this.module.splice(this.module.indexOf(module), 1);
-        this.filteredModules = this.module;
+        this.toastService.presentLoadingDuration(module.name + '-Quiz wird heruntergeladen', 1000).then(() => {
+            this.module.splice(this.module.indexOf(module), 1);
+            this.filteredModules = this.module;
+            this.toastService.presentToastSuccess(module.name + '-Quiz wurde importiert!');
+        });
     }
 
     /**

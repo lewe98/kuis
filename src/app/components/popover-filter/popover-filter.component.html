@@ -29,7 +29,7 @@
 
   </ion-radio-group>
 
-  <ion-radio-group value="keinFilter" (ionChange)="modulService.filterModule($event)">
+  <ion-radio-group value="{{modulService.filter}}" (ionChange)="modulService.filterModule($event)">
 
     <ion-list-header>
       <ion-label>Filter</ion-label>
