@@ -8,6 +8,7 @@ import {AuthService} from '../auth/auth.service';
 import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
 import {AlreadyLearned} from '../../models/alreadyLearned';
 import {AbzeichenService} from '../abzeichen/abzeichen.service';
+import {ToastService} from '../toast/toast.service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +29,8 @@ export class ModulService {
     constructor(private afs: AngularFirestore,
                 private storageService: StorageService,
                 private authService: AuthService,
-                private abzeichenService: AbzeichenService) {
+                private abzeichenService: AbzeichenService,
+                private toastService: ToastService) {
         this.modulCollection = afs.collection<Modul>('module');
     }
 
@@ -209,25 +211,28 @@ export class ModulService {
 
     /**
      * delete imported modules from logged in user
-     * @param moduleID - the module the user want delete
+     * @param module - the module the user want delete
      */
-    deleteModule(moduleID) {
+    deleteModule(module: Modul) {
         const user = this.authService.getUser();
-        const removeIndex = user.importierteModule.map(item => item.id).indexOf(moduleID);
+        const removeIndex = user.importierteModule.map(item => item.id).indexOf(module.id);
         if (removeIndex >= 0) {
             for (let i = user.availableQuestions.length; i > 0; i--) {
-                if (user.availableQuestions[i - 1].idModul === moduleID) {
+                if (user.availableQuestions[i - 1].idModul === module.id) {
                     user.availableQuestions.splice(i - 1, 1);
                 }
             }
             for (let j = user.alreadyLearned.length; j > 0; j--) {
-                if (user.alreadyLearned[j - 1].idModul === moduleID) {
+                if (user.alreadyLearned[j - 1].idModul === module.id) {
                     user.alreadyLearned.splice(j - 1, 1);
                 }
             }
-            user.importierteModule.splice(removeIndex, 1);
-            this.abzeichenService.checkAbzeichenModulGeloescht();
-            this.authService.updateProfile(user);
+            this.toastService.presentLoadingDuration(module.name + '-Quiz zum löschen vorbereitet', 1000).then(() => {
+                user.importierteModule.splice(removeIndex, 1);
+                this.abzeichenService.checkAbzeichenModulGeloescht();
+                this.authService.updateProfile(user);
+                this.toastService.presentToastSuccess(module.name + '-Quiz wurde gelöscht!');
+            });
         }
     }
 
