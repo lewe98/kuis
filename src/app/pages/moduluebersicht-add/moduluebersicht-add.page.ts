@@ -5,7 +5,7 @@ import {ToastService} from '../../services/toast/toast.service';
 import {Modul} from '../../models/modul';
 import {AuthService} from '../../services/auth/auth.service';
 import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
-import {IonInput, ModalController, ToastController, ViewDidEnter} from '@ionic/angular';
+import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
 
@@ -69,6 +69,7 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
                     const object = new HilfsObjektFrage(this.array[0][i].id, this.lastImportedModuleID);
                     newUser.availableQuestions.push(this.modulService.toFirestore(object));
                 }
+                this.modulService.importModule(modul);
                 this.authService.updateProfile(newUser);
             });
     }
@@ -78,15 +79,14 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
      * @param module the modul the user have choose
      */
     addModule(module: Modul) {
-        this.lastImportedModuleID = module.id;
-        this.lastImportedModuleTitel = module.titel;
-        this.lastImportedModuleName = module.name;
-        module.hinzugefuegt = new Date().toLocaleString();
-        module.zuletztGespielt = '1995-12-17T03:24:00';
-        this.addQuestions(module);
-        this.abzeichenService.checkAbzeichenModulImportiert();
-        this.modulService.importModule(module);
         this.toastService.presentLoadingDuration(module.name + '-Quiz wird heruntergeladen', 1000).then(() => {
+            this.lastImportedModuleID = module.id;
+            this.lastImportedModuleTitel = module.titel;
+            this.lastImportedModuleName = module.name;
+            module.hinzugefuegt = new Date().toLocaleString();
+            module.zuletztGespielt = '1995-12-17T03:24:00';
+            this.addQuestions(module);
+            this.abzeichenService.checkAbzeichenModulImportiert();
             this.module.splice(this.module.indexOf(module), 1);
             this.filteredModules = this.module;
             this.toastService.presentToastSuccess(module.name + '-Quiz wurde importiert!');

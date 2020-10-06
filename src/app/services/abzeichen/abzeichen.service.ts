@@ -194,7 +194,6 @@ export class AbzeichenService {
 
         if (window.location.pathname === '/hilfe' &&
             !this.authService.user.abzeichen.find(a => a === this.abzeichen[13].id)) {
-            console.log(this.authService.user.abzeichen);
             this.authService.user.abzeichen.push(this.abzeichen[13].id);
             this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[13].titel);
             this.authService.updateProfile(this.authService.user);

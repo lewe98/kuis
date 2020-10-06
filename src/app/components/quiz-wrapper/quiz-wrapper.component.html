@@ -4,7 +4,7 @@
         <ion-card-header>
             <ion-card-title *ngIf="!add;else addpage" class="kuis-block">
                 <h3>{{titel}}</h3>
-                <div id="div1"><h6>{{bestResult}} / {{length}} Fragen richtig beantwortet</h6></div>
+                <div id="div1"><h6>{{bestResult}} / {{this.length}} Fragen richtig beantwortet</h6></div>
             </ion-card-title>
             <ion-progress-bar value="{{progress()}}"></ion-progress-bar>
             <ng-template #addpage>

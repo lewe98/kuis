@@ -239,7 +239,6 @@ export class ModulService {
     setModuleEqual() {
         this.importedModule = [];
         this.filteredModules = [];
-        console.log(this.module);
         this.module.forEach(modul => {
             this.importedModule.push(modul);
             this.filteredModules.push(modul);
