@@ -113,7 +113,7 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                 text: 'Hey,\n' + 'das sind meine Abzeichen:\n' + list,
                 dialogTitle: 'Leistungen teilen'
             }).catch(reason => {
-                alert('Error: ' + reason);
+                this.toastService.presentWarningToast('Error', reason);
             });
         }
     }
