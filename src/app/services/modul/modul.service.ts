@@ -22,6 +22,7 @@ export class ModulService {
     noImportedModules = true;
     isLernmodus = false;
     started = false;
+    isFreiermodus = false;
 
     constructor(private afs: AngularFirestore,
                 private storageService: StorageService,
@@ -151,7 +152,6 @@ export class ModulService {
             case 'alleRichtig':
                 this.importedModule = this.module.filter(modul => modul.richtigeFragenLetztesSpiel === modul.anzahlFragen);
                 this.filteredModules = this.importedModule;
-
                 break;
             default:
                 this.setModuleEqual();
@@ -201,6 +201,7 @@ export class ModulService {
                 this.module = this.module.sort((a, b) =>
                     new Date(b.zuletztGespielt).getTime() - new Date(a.zuletztGespielt).getTime());
                 this.setModuleEqual();
+                console.log('2');
         }
     }
 
@@ -231,10 +232,11 @@ export class ModulService {
     setModuleEqual() {
         this.importedModule = [];
         this.filteredModules = [];
+        console.log(this.module);
         this.module.forEach(modul => {
             this.importedModule.push(modul);
             this.filteredModules.push(modul);
         });
+        console.log(this.filteredModules);
     }
-
 }
