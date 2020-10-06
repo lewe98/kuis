@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ModulService} from '../../services/modul/modul.service';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-startseite',
@@ -8,6 +9,7 @@ import {ModulService} from '../../services/modul/modul.service';
 })
 export class StartseitePage {
 
-    constructor(public modulService: ModulService) {
+    constructor(public modulService: ModulService, private authService: AuthService) {
+        this.authService.getUser();
     }
 }

@@ -10,6 +10,7 @@ import {auth} from 'firebase';
 import {ToastService} from '../toast/toast.service';
 import {Platform} from '@ionic/angular';
 import {Plugins} from '@capacitor/core';
+import {StorageService} from '../storage/storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,8 @@ export class AuthService {
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth,
                 private toastService: ToastService,
-                private platform: Platform) {
+                private platform: Platform,
+                private storageService: StorageService) {
         this.userCollection = afs.collection<User>('users');
     }
 
@@ -210,6 +212,7 @@ export class AuthService {
         this.afAuth.signOut().then(() => {
             this.isLoggedIn = false;
             this.user = undefined;
+            this.storageService.fragen = [];
             sessionStorage.clear();
             localStorage.clear();
             this.subUser.unsubscribe();
@@ -240,6 +243,7 @@ export class AuthService {
                 await firebase.auth().currentUser.sendEmailVerification();
                 await this.router.navigate(['/startseite']);
                 this.toastService.dismissLoading();
+                window.location.reload();
             })
             .catch((error) => {
                 this.toastService.presentWarningToast('Error!', error);
