@@ -73,7 +73,6 @@ export class ModulService {
                         this.noImportedModules = true;
                     }
                 });
-                this.setModuleEqual();
                 this.sortModule({target: {value: this.sortiert}});
             });
     }
@@ -201,7 +200,6 @@ export class ModulService {
                 this.module = this.module.sort((a, b) =>
                     new Date(b.zuletztGespielt).getTime() - new Date(a.zuletztGespielt).getTime());
                 this.setModuleEqual();
-                console.log('2');
         }
     }
 
@@ -237,6 +235,5 @@ export class ModulService {
             this.importedModule.push(modul);
             this.filteredModules.push(modul);
         });
-        console.log(this.filteredModules);
     }
 }

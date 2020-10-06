@@ -353,11 +353,16 @@ export class AuthService {
      * @param callback() is everytime called if the User in Firebase is changed.
      */
     async loadPageSubscription(callback: (u: User) => void) {
+        let counter = true;
         if (this.getUserID()) {
             this.subUser = this.findById(this.getUserID())
                 .subscribe(async u => {
                     this.user = await u;
-                    callback(this.user);
+                    if (counter) {
+                        counter = false;
+                        callback(this.user);
+                        setTimeout(() => counter = true, 500);
+                    }
                 });
         } else {
             callback(undefined);
