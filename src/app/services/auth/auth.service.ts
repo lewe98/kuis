@@ -209,6 +209,7 @@ export class AuthService {
     logOut() {
         this.afAuth.signOut().then(() => {
             this.isLoggedIn = false;
+            this.user = undefined;
             sessionStorage.clear();
             localStorage.clear();
             this.subUser.unsubscribe();

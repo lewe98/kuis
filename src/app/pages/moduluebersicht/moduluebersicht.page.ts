@@ -179,5 +179,6 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      */
     ngOnDestroy() {
         this.modulService.subModule.unsubscribe();
+        this.modulService.module = [];
     }
 }

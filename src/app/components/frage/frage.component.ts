@@ -129,6 +129,7 @@ export class FrageComponent {
                     if (this.authService.user.importierteModule[i].name === this.storageService.nameDesModuls) {
                         if (this.authService.user.importierteModule[i].bestResult < this.richtigBeantwortetFreiermodusCounter){
                             this.authService.user.importierteModule[i].bestResult = this.richtigBeantwortetFreiermodusCounter;
+                            this.authService.user.importierteModule[i].zuletztGespielt = new Date().toLocaleString();
                             break;
                         }
                     }
@@ -136,6 +137,7 @@ export class FrageComponent {
                 this.authService.user.historieFreiermodusName.push(this.storageService.nameDesModuls);
                 this.authService.user.historieFreiermodusAnzahl.push(this.richtigBeantwortetFreiermodusCounter + '/' +
                     this.storageService.fragen.length);
+
                 this.authService.updateProfile(this.authService.user);
                 this.toastService.presentToast('Das Modul wurde abgeschlossen.');
                 this.router.navigate(['/moduluebersicht']);
