@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
-import {Modul} from '../../models/modul';
 import {AlertController} from '@ionic/angular';
 
 @Component({
@@ -28,6 +27,7 @@ export class NavbarComponent {
                 private alertController: AlertController) {
         this.showBack = true;
     }
+
 
     stat() {
         const pathname = window.location.pathname;

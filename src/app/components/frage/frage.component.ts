@@ -11,7 +11,6 @@ import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 import {Statistik} from '../../models/statistik';
 import {StatistikService} from '../../services/statistik/statistik.service';
 import {AlreadyLearned} from '../../models/alreadyLearned';
-import {PopoverFilterComponent} from '../popover-filter/popover-filter.component';
 import {PopoverController} from '@ionic/angular';
 import {PopoverQuelleComponent} from '../popover-quelle/popover-quelle.component';
 
@@ -108,10 +107,10 @@ export class FrageComponent {
 
     /**
      * Method to show the next question, if the quiz is not finished yet.
+     * if this was the last question update user with stats and navigate to statistik
      */
     showNextQuestion() {
-        this.counter++;
-        if (this.counter === this.storageService.fragen.length) {
+        if (this.counter + 1 === this.storageService.fragen.length) {
             if (this.modulService.isLernmodus) {
                 this.pauseTimer();
                 this.authService.user.historieLernmodus.push(this.richtigBeantwortetLernmodusCounter);
@@ -141,6 +140,7 @@ export class FrageComponent {
                 this.router.navigate(['/moduluebersicht']);
             }
         } else {
+            this.counter++;
             this.initialize();
         }
     }
@@ -295,12 +295,10 @@ export class FrageComponent {
             for (let j = 0; j < this.authService.user.availableQuestions.length; j++) {
                 if (this.correctIds[i] === this.authService.user.availableQuestions[j].id) {
                     this.authService.user.availableQuestions[j].counter += 1;
-                    console.log(this.authService.user.availableQuestions[j].counter);
                     if (this.authService.user.availableQuestions[j].counter === 6) {
                         // tslint:disable-next-line:max-line-length
                         const object = new AlreadyLearned(this.authService.user.availableQuestions[j].id, this.authService.user.availableQuestions[j].idModul);
                         this.modulService.addAlreadyLearned(object);
-                        console.log(object);
                         this.authService.user.availableQuestions.splice(j, 1);
                     }
                 }
@@ -308,6 +306,9 @@ export class FrageComponent {
         }
     }
 
+    /**
+     * method to sort all abzeichen by index
+     */
     sortAbzeichen() {
         this.abzeichenArray.sort(((a, b) => {
             return a.index - b.index;
@@ -316,7 +317,8 @@ export class FrageComponent {
 
     /**
      * This Method shows a popover with the source of the Image.
-     * @param ev is the event within the event is target.
+     * @param ev -  is the event within the event is target.
+     * @param quelle - from the picture
      */
     async setShowQuelle(ev: any, quelle: string) {
         const popover = await this.popoverController.create({

@@ -29,6 +29,8 @@ export class ProfilPage {
         this.hasVerified = firebase.auth().currentUser.emailVerified;
     }
 
+    // hasVerified2 = this.user.isVerified;
+
     openGoogleEdit() {
         this.iab.create('https://myaccount.google.com/');
     }

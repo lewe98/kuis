@@ -1,5 +1,5 @@
-<app-navbar *ngIf="!genugFragen" [questionsAvailable]="true" [showBack]="true" [name]="'Quiz'" [showLogout]="false"></app-navbar>
-<app-navbar *ngIf="genugFragen" [questionsAvailable]="false" [showBack]="true" [name]="'Quiz'" [showLogout]="false"></app-navbar>
+<app-navbar *ngIf="this.modulService.started && !genugFragen" [questionsAvailable]="true" [showBack]="true" [name]="'Quiz'" [showLogout]="false"></app-navbar>
+<app-navbar *ngIf="!(this.modulService.started && !genugFragen)" [questionsAvailable]="false" [showBack]="true" [name]="'Quiz (nicht genügend Fragen)'" [showLogout]="false"></app-navbar>
 
 <ion-content>
     <div class="kuis-content">

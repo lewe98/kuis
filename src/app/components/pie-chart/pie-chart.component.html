@@ -1,49 +1,62 @@
-<ion-card>
-    <ion-card-title>Gesamt-Statistik</ion-card-title>
-    <ion-card-title>{{sumFragen}} Fragen beantwortet</ion-card-title>
-    <div *ngIf="user.historieLernmodus.length != 0; else noHistory">
-        <div>
-            <div class="chart">
-                <canvas baseChart
-                        [data]="pieChartData"
-                        [labels]="pieChartLabels"
-                        [chartType]="pieChartType"
-                        [options]="pieChartOptions"
-                        [plugins]="pieChartPlugins"
-                        [colors]="pieChartColors"
-                        [legend]="pieChartLegend">
-                </canvas>
+<div>
+    <ion-card class="card-border-rounded kuis-margin">
+        <ion-item lines="none">
+            <h3 slot="start">Gesamt-Statistik</h3>
+            <h5 style="margin-left: 0" slot="end">{{sumFragen}} Fragen</h5>
+        </ion-item>
+        <ion-card-content *ngIf="user.historieLernmodus.length != 0; else noHistory">
+            <div>
+                <div>
+                    <div class="chart">
+                        <canvas baseChart
+                                [data]="pieChartData"
+                                [labels]="pieChartLabels"
+                                [chartType]="pieChartType"
+                                [options]="pieChartOptions"
+                                [plugins]="pieChartPlugins"
+                                [colors]="pieChartColors"
+                                [legend]="pieChartLegend">
+                        </canvas>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <ion-card-title>Spielzeit: {{tage}}d {{stunden}}h {{minuten}}m {{sekunden}}s</ion-card-title>
-</ion-card>
-
-<ion-list>
-    <ion-list-header>Historie des Lernmodus</ion-list-header>
-    <ion-item-group *ngFor="let spiel of user.historieLernmodus; let i = index">
-        <ion-item lines="none">
-            <ion-label>
-                <h4>Lernrunde {{counter[i]}}</h4>
-                <h4>{{spiel}}/10</h4>
-
-            </ion-label>
+            <ion-item lines="none">
+                <h3 slot="start">Spielzeit</h3>
+                <h3 slot="end">{{tage}}d {{stunden}}h {{minuten}}m {{sekunden}}s</h3>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-card class="card-border-rounded kuis-margin">
+        <ion-item>
+            <h3>Historie des Lernmodus</h3>
         </ion-item>
-    </ion-item-group>
-</ion-list>
-
-<ion-list>
-    <ion-list-header>Historie der frei gewählte Module</ion-list-header>
-    <ion-item-group *ngFor="let anzahl of user.historieFreiermodusAnzahl; let i = index">
-        <ion-item lines="none">
-            <ion-label>
-                <h4>{{user.historieFreiermodusName[i]}}</h4>
-                <h4>{{anzahl}}</h4>
-            </ion-label>
+        <ion-list class="kuis-overflow" *ngIf="user.historieLernmodus.length != 0; else noHistory">
+            <ion-item-group *ngFor="let spiel of user.historieLernmodus; let i = index">
+                <ion-item lines="none">
+                    <ion-label>
+                        <h4>Lernrunde {{counter[i]}}</h4>
+                    </ion-label>
+                    <h4 slot="end">{{spiel}}/10</h4>
+                </ion-item>
+            </ion-item-group>
+        </ion-list>
+    </ion-card>
+    <ion-card class="card-border-rounded kuis-margin">
+        <ion-item>
+            <h3>Historie der frei gewählte Module</h3>
         </ion-item>
-    </ion-item-group>
-</ion-list>
+        <ion-list class="kuis-overflow" *ngIf="user.historieFreiermodusAnzahl.length != 0; else noHistory">
+            <ion-item-group *ngFor="let anzahl of user.historieFreiermodusAnzahl; let i = index">
+                <ion-item lines="none">
+                    <ion-label>
+                        <h4>{{user.historieFreiermodusName[i]}}</h4>
+                    </ion-label>
+                    <h4 slot="end">{{anzahl}}</h4>
+                </ion-item>
+            </ion-item-group>
+        </ion-list>
+    </ion-card>
+</div>
 
 <ng-template #noHistory>
     <ion-item lines="none">
@@ -52,3 +65,4 @@
         </ion-label>
     </ion-item>
 </ng-template>
+
