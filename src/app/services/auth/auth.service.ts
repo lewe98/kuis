@@ -318,7 +318,6 @@ export class AuthService {
                             if (res.id !== undefined) {
                                 localStorage.setItem('userID', result.user.uid);
                                 this.isLoggedIn = true;
-                                this.router.navigate(['/startseite']);
                                 this.subUser = this.findById(res.id)
                                     .subscribe((u) => {
                                         this.user = u;
@@ -330,7 +329,6 @@ export class AuthService {
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
                                 localStorage.setItem('userID', result.user.uid);
                                 this.isLoggedIn = true;
-                                this.router.navigate(['/startseite']);
                                 this.subUser = this.findById(result.user.uid)
                                     .subscribe((u) => {
                                         this.user = u;
