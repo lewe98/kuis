@@ -1,9 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
-import {AlertController, IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
+import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
 import {User} from '../../../models/user';
 import {AuthService} from '../../../services/auth/auth.service';
 import {AbzeichenService} from '../../../services/abzeichen/abzeichen.service';
-import * as firebase from 'firebase';
 
 @Component({
     selector: 'app-profil-edit',
@@ -21,8 +20,7 @@ export class ProfilEditPage implements ViewDidEnter {
 
     constructor(private authService: AuthService,
                 private abzeichenService: AbzeichenService,
-                private modalController: ModalController,
-                private alertController: AlertController) {
+                private modalController: ModalController) {
         this.user = this.authService.getUser();
         this.alterNutzername = this.user.nutzername;
     }
@@ -36,7 +34,7 @@ export class ProfilEditPage implements ViewDidEnter {
             }
             if (this.errors.size === 0) {
                 this.abzeichenService.checkUsernameChanged(this.alterNutzername);
-                this.authService.updateProfile(this.user);
+                this.authService.update(this.user, passwort);
                 this.dismiss();
             }
         } else {
@@ -60,27 +58,7 @@ export class ProfilEditPage implements ViewDidEnter {
             }
             if (this.errors.size === 0) {
                 this.abzeichenService.checkUsernameChanged(this.alterNutzername);
-                this.user.passwort = this.passwort;
-                const userDB = firebase.auth().currentUser;
-                userDB.updateEmail(email).then(async () => {
-                    this.user.isVerified = false;
-                    await userDB.sendEmailVerification();
-                    const verify = await this.alertController.create({
-                        header: 'Erwarte Bestätigung',
-                        message: 'Leider konnte deine E-Mail nicht aktualisiert werden.',
-                        buttons: ['Aye']
-                    });
-                    await verify.present();
-                })
-                    .catch(async () => {
-                        const alert = await this.alertController.create({
-                            header: 'Email konnte nicht aktualisiert werden',
-                            message: 'Leider konnte deine E-Mail nicht aktualisiert werden.',
-                            buttons: ['Aye']
-                        });
-                        await alert.present();
-                    });
-                this.authService.updateProfile(this.user)
+                this.authService.update(this.user, passwort)
                     .then(() => {
                         this.dismiss();
                     });

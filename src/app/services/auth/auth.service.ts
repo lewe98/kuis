@@ -10,7 +10,6 @@ import {auth} from 'firebase';
 import {ToastService} from '../toast/toast.service';
 import {Platform} from '@ionic/angular';
 import {Plugins} from '@capacitor/core';
-// import * as CryptoJS from 'crypto-js';
 
 @Injectable({
     providedIn: 'root'
@@ -42,7 +41,6 @@ export class AuthService {
 
         copy.nutzername = copy.nutzername || null;
         copy.email = copy.email || null;
-        copy.passwort = copy.passwort || null;
         copy.googleAccount = copy.googleAccount || null;
 
         copy.emailBestaetigt = copy.emailBestaetigt || false;
@@ -93,44 +91,51 @@ export class AuthService {
     }
 
     /**
-     * Method to update the user's data in the database
-     * @param user user to be updated
+     * Method to update the user's credential in the database
+     * @param user user
+     * @param passwort user's new password
      */
-    async updateProfile(user: User) {
+    async update(user: User, passwort: string) {
         const u = firebase.auth().currentUser;
-        if (window.location.pathname === '/profil') {
-            this.toastService.presentLoading('Profil wird aktualisiert...')
-                .then(async () => {
-                    if (user.googleAccount && !this.platform.is('android')) {
-                    // user.passwort = CryptoJS.SHA3(user.passwort).toString();
-                        await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
-                    }
-                    if (this.platform.is('android')) {
-                        await u.reload();
-                    }
-                    await u.updateEmail(user.email)
-                        .then(async () => {
-                            if (user.passwort) {
-                                await u.updatePassword(user.passwort)
-                                    .catch((error) => {
-                                        this.toastService.presentWarningToast('Error!', error);
-                                    });
-                            }
-                            await u.updateProfile({displayName: user.nutzername})
-                                .catch(error => {
+        this.toastService.presentLoading('Profil wird aktualisiert...')
+            .then(async () => {
+                if (user.googleAccount && !this.platform.is('android')) {
+                    await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
+                }
+                if (this.platform.is('android')) {
+                    await u.reload();
+                }
+                await u.updateEmail(user.email)
+                    .then(async () => {
+                        await u.sendEmailVerification();
+                        if (passwort) {
+                            await u.updatePassword(passwort)
+                                .catch((error) => {
                                     this.toastService.presentWarningToast('Error!', error);
                                 });
-                            await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-                            await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
-                        })
-                        .catch((error) => {
-                            this.toastService.presentWarningToast('Error!', error);
-                        });
-                    await this.toastService.dismissLoading();
-                });
-        } else {
-            await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-        }
+                        }
+                        await u.updateProfile({displayName: user.nutzername})
+                            .catch(error => {
+                                this.toastService.presentWarningToast('Error!', error);
+                            });
+                        this.user.isVerified = false;
+                        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                        await this.logOut();
+                        await this.toastService.presentToast('Profil erfolgreich aktualisiert.\nBitte E-Mail bestätigen und erneut authentifizieren.');
+                    })
+                    .catch((error) => {
+                        this.toastService.presentWarningToast('Error!', error);
+                    });
+                await this.toastService.dismissLoading();
+            });
+    }
+
+    /**
+     * Method to update the user's data in the database
+     * @param user user
+     */
+    async updateProfile(user: User) {
+        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
     }
 
     /**
@@ -161,9 +166,7 @@ export class AuthService {
      * @param password user's password
      */
     async signIn(email: string, password: string) {
-
         await this.toastService.presentLoading('Bitte warten...');
-        // const pw = CryptoJS.SHA3(password).toString();
         await this.afAuth.signInWithEmailAndPassword(email, password)
             .then(res => {
                 this.isLoggedIn = true;
@@ -223,11 +226,10 @@ export class AuthService {
     async signUp(nutzername: string, email: string, passwort: string) {
 
         await this.toastService.presentLoading('Bitte warten...');
-        // const pw = CryptoJS.SHA3(passwort).toString();
         await this.afAuth.createUserWithEmailAndPassword(email, passwort)
             .then(async res => {
                 this.isLoggedIn = true;
-                this.persist(new User(nutzername, email, passwort, false), res.user.uid);
+                this.persist(new User(nutzername, email, false), res.user.uid);
 
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(u => {
@@ -288,7 +290,7 @@ export class AuthService {
                                     });
                             } else {
 
-                                this.user = new User(result.user.displayName, result.user.email, '', true);
+                                this.user = new User(result.user.displayName, result.user.email, true);
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
                                 this.isLoggedIn = true;
                                 localStorage.setItem('userID', result.user.uid);
@@ -325,7 +327,7 @@ export class AuthService {
                                         resolve();
                                     });
                             } else {
-                                this.user = new User(result.user.displayName, result.user.email, '', true);
+                                this.user = new User(result.user.displayName, result.user.email, true);
                                 this.persist(AuthService.copyAndPrepare(this.user), result.user.uid);
                                 localStorage.setItem('userID', result.user.uid);
                                 this.isLoggedIn = true;
