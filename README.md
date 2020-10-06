@@ -39,7 +39,7 @@ Die Dokumentation können sie direkt in ihr GitLab-Projekt-Wiki schreiben, oder 
 * [Dokumentation](#client-dokumentation)
 * [Technologie-Stack](#technologie-stack)
 * [Installationsanleitung](#installationsanleitung)
-* [Android Emulation](#installationsanleitung)
+* [Android Emulation](#android-emulation)
 * [Ordnerstruktur](#ordnerstruktur)
 * [Fazit](#fazit)
 
