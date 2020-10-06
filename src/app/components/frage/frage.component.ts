@@ -125,7 +125,8 @@ export class FrageComponent {
             } else {
                 // tslint:disable-next-line:prefer-for-of
                 for (let i = 0; i < this.authService.user.importierteModule.length; i++) {
-                    if (this.authService.user.importierteModule[i].titel === this.storageService.nameDesModuls) {
+                    alert(this.storageService.nameDesModuls);
+                    if (this.authService.user.importierteModule[i].name === this.storageService.nameDesModuls) {
                         if (this.authService.user.importierteModule[i].bestResult < this.richtigBeantwortetFreiermodusCounter){
                             this.authService.user.importierteModule[i].bestResult = this.richtigBeantwortetFreiermodusCounter;
                             break;

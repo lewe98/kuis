@@ -22,6 +22,8 @@ export class ModulService {
     noImportedModules = true;
     isLernmodus = false;
     started = false;
+    isFreiermodus = false;
+    freiermodusnavigate = false;
 
     constructor(private afs: AngularFirestore,
                 private storageService: StorageService,

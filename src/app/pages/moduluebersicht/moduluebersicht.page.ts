@@ -30,6 +30,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 private routerOutlet: IonRouterOutlet,
                 public popoverController: PopoverController,
                 private alertController: AlertController) {
+        localStorage.removeItem('modus');
         this.toastService.presentLoading('Module werden geladen...')
             .then(async () => {
                 await this.authService.loadPageSubscription(() => {
@@ -48,6 +49,8 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      */
     chooseQuiz(titel: string, id: string, bild: string, name: string) {
         this.modulService.started = true;
+        this.modulService.isFreiermodus = true;
+        localStorage.setItem('modus', 'frei');
         this.storageService.findAllFragen(id, titel, name)
             .then(() => {
                 this.router.navigate(['/quiz']);

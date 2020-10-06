@@ -3,6 +3,7 @@ import {ModulService} from '../../services/modul/modul.service';
 import {StorageService} from '../../services/storage/storage.service';
 import {AuthService} from '../../services/auth/auth.service';
 import {User} from '../../models/user';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-quiz',
@@ -23,16 +24,26 @@ export class QuizPage implements OnDestroy {
 
     constructor(public modulService: ModulService,
                 private storageService: StorageService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private router: Router) {
         this.initialize();
         this.user = this.authService.getUser();
+        console.log(this.modulService.freiermodusnavigate);
+        if (!modulService.isLernmodus && !modulService.isFreiermodus){
+            if (localStorage.getItem('modus') === 'frei'){
+                this.router.navigate(['moduluebersicht']);
+            }else {
+                this.router.navigate(['startseite']);
+            }
+        }
     }
 
     /**
      * sets on Destroy the boolean to false
      */
     ngOnDestroy() {
-        this.modulService.isLernmodus = false;
+            this.modulService.isLernmodus = false;
+            this.modulService.isFreiermodus = false;
     }
 
     /**
