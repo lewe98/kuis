@@ -41,13 +41,14 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
 
     /**
      * Method to receive all questions from a quiz module.
-     * @param name name of the chosen quiz.
+     * @param titel title of the chosen quiz.
+     * @param name name of the quiz-module.
      * @param id id of the chosen quiz.
      * @param bild name of the picture of the chosen quiz.
      */
-    chooseQuiz(name: string, id: string, bild: string) {
+    chooseQuiz(titel: string, id: string, bild: string, name: string) {
         this.modulService.started = true;
-        this.storageService.findAllFragen(id, name)
+        this.storageService.findAllFragen(id, titel, name)
             .then(() => {
                 this.router.navigate(['/quiz']);
             });
@@ -109,7 +110,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      */
     async onButtonClick(module) {
         if (this.isEdit === false) {
-            this.chooseQuiz(module.titel, module.id, module.bild);
+            this.chooseQuiz(module.titel, module.id, module.bild, module.name);
         } else {
             this.presentAlertDelete(module);
         }

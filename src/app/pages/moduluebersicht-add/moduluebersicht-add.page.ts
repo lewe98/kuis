@@ -20,6 +20,7 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
     filteredModules: Modul[] = [];
     lastImportedModuleID: string;
     lastImportedModuleTitel: string;
+    lastImportedModuleName: string;
     array = [];
     length: number;
     @ViewChild(IonInput) search: IonInput;
@@ -58,17 +59,18 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
     addQuestions(modul: Modul) {
         const newUser = this.authService.getUser();
         this.array = [];
-        this.storageService.findAllFragen(this.lastImportedModuleID, this.lastImportedModuleTitel).then(() => {
-            this.array.push(this.storageService.fragen);
-            this.length = this.array[0].length;
-            modul.anzahlFragen = this.length;
-            // tslint:disable-next-line:prefer-for-of
-            for (let i = 0; i < this.array[0].length; i++) {
-                const object = new HilfsObjektFrage(this.array[0][i].id, this.lastImportedModuleID);
-                newUser.availableQuestions.push(this.modulService.toFirestore(object));
-            }
-            this.authService.updateProfile(newUser);
-        });
+        this.storageService.findAllFragen(this.lastImportedModuleID, this.lastImportedModuleTitel, this.lastImportedModuleName)
+            .then(() => {
+                this.array.push(this.storageService.fragen);
+                this.length = this.array[0].length;
+                modul.anzahlFragen = this.length;
+                // tslint:disable-next-line:prefer-for-of
+                for (let i = 0; i < this.array[0].length; i++) {
+                    const object = new HilfsObjektFrage(this.array[0][i].id, this.lastImportedModuleID);
+                    newUser.availableQuestions.push(this.modulService.toFirestore(object));
+                }
+                this.authService.updateProfile(newUser);
+            });
     }
 
     /**
@@ -78,6 +80,7 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
     addModule(module: Modul) {
         this.lastImportedModuleID = module.id;
         this.lastImportedModuleTitel = module.titel;
+        this.lastImportedModuleName = module.name;
         module.hinzugefuegt = new Date().toLocaleString();
         module.zuletztGespielt = '1995-12-17T03:24:00';
         this.addQuestions(module);
