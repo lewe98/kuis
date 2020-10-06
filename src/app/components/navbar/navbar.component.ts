@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
+import {ModulService} from '../../services/modul/modul.service';
 
 @Component({
     selector: 'app-navbar',
@@ -24,7 +25,8 @@ export class NavbarComponent {
 
     constructor(public authService: AuthService,
                 private router: Router,
-                private alertController: AlertController) {
+                private alertController: AlertController,
+                private modulService: ModulService) {
         this.showBack = true;
     }
 
@@ -51,7 +53,11 @@ export class NavbarComponent {
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: () => {
-                        this.router.navigate(['startseite']);
+                        if (this.modulService.isLernmodus) {
+                            this.router.navigate(['startseite']);
+                        }else{
+                            this.router.navigate(['moduluebersicht']);
+                        }
                     }
                 }, {
                     text: 'Weiterspielen',
