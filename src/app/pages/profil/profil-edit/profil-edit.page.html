@@ -17,49 +17,71 @@
 
                 <ion-item>
                     <ion-label>Nutzername*</ion-label>
-                    <ion-input #focus class="ion-text-end formControl" placeholder="Nutzername..."
+                    <ion-input #focus
+                               class="ion-text-end formControl"
+                               placeholder="Nutzername..."
                                [(ngModel)]="user.nutzername"
                                type="text"
-                               required></ion-input>
+                               required>
+
+                    </ion-input>
                 </ion-item>
 
-                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                <p class="ion-text-end ion-padding-end"
+                   style="color:var(--ion-color-danger)"
                    *ngIf="errors.get('nutzername')">
-                    {{errors.get('nutzername')}} </p>
+                    {{errors.get('nutzername')}}
+                </p>
 
-                <div *ngIf="!user.googleAccount">
+                <!--<div *ngIf="!user.googleAccount">
                     <ion-item>
                         <ion-label>aktuelles oder neues Passwort*</ion-label>
-                        <ion-input class="ion-text-end formControl" placeholder="Passwort..."
+                        <ion-input class="ion-text-end formControl"
+                                   placeholder="Passwort..."
                                    [(ngModel)]="passwort"
                                    type="password"
-                                   required></ion-input>
+                                   required>
+                        </ion-input>
                     </ion-item>
 
-                    <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                    <p class="ion-text-end ion-padding-end"
+                       style="color:var(&#45;&#45;ion-color-danger)"
                        *ngIf="errors.get('passwort')">
-                        {{errors.get('passwort')}} </p>
+                        {{errors.get('passwort')}}
+                    </p>
 
                     <ion-item>
                         <ion-label>Passwort bestätigen*</ion-label>
-                        <ion-input class="ion-text-end formControl" placeholder="Passwort bestätigen..."
-                                   [(ngModel)]="passwortConfirm" type="password"
-                                   required></ion-input>
+                        <ion-input class="ion-text-end formControl"
+                                   placeholder="Passwort bestätigen..."
+                                   [(ngModel)]="passwortConfirm"
+                                   type="password"
+                                   required>
+                        </ion-input>
                     </ion-item>
 
-                    <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                    <p class="ion-text-end ion-padding-end"
+                       style="color:var(&#45;&#45;ion-color-danger)"
                        *ngIf="errors.get('passwortConfirm')">
-                        {{errors.get('passwortConfirm')}} </p>
-                </div>
+                        {{errors.get('passwortConfirm')}}
+                    </p>
+                </div>-->
             </ion-list>
+
+            <app-kuis-button (click)="dismiss()" [title]="'Passwort vergessen'" [margin]="true"
+                             [routerLink]="['/resetpassword']"></app-kuis-button>
 
             <ion-note class="margin">*Pflichtfeld</ion-note>
 
         </ng-container>
 
         <div class="section-buttons ion-padding">
-            <ion-button class="kuis-button ion-padding-horizontal" expand="block" color="" shape="round" fill="solid"
-                        size="large" (click)="save(user.nutzername, user.email, passwort)">
+            <ion-button class="kuis-button ion-padding-horizontal"
+                        expand="block"
+                        shape="round"
+                        fill="solid"
+                        size="large"
+                        (click)="save(user.nutzername)">
                 Speichern
             </ion-button>
         </div>

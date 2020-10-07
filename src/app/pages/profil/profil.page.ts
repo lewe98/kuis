@@ -36,12 +36,12 @@ export class ProfilPage {
     }
 
     async showEditModal() {
-        if (this.hasVerified){
-        const modal = await this.modalController.create({
-            component: ProfilEditPage
-        });
-        return await modal.present();
-        }else {
+        if (this.hasVerified) {
+            const modal = await this.modalController.create({
+                component: ProfilEditPage
+            });
+            return await modal.present();
+        } else {
             const alert = await this.alertController.create({
                 mode: 'ios',
                 header: 'Erinnerung!',
