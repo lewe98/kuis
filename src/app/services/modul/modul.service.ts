@@ -159,14 +159,14 @@ export class ModulService {
     filterModule($event) {
         const filter = $event.target.value;
         switch (filter) {
-            case 'nichtBearbeitet':
-                this.filter = 'nichtBearbeitet';
-                this.importedModule = this.module.filter(modul => modul.zuletztGespielt === '1995-12-17T03:24:00');
+            case 'nichtAbgeschlossen':
+                this.filter = 'nichtAbgeschlossen';
+                this.importedModule = this.module.filter(modul => modul.bestResult !== modul.anzahlFragen);
                 this.filteredModules = this.importedModule;
                 break;
             case 'alleRichtig':
                 this.filter = 'alleRichtig';
-                this.importedModule = this.module.filter(modul => modul.richtigeFragenLetztesSpiel === modul.anzahlFragen);
+                this.importedModule = this.module.filter(modul => modul.bestResult === modul.anzahlFragen);
                 this.filteredModules = this.importedModule;
                 break;
             default:

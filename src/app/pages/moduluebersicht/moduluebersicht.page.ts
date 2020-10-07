@@ -66,7 +66,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         const input = await this.search.getInputElement();
         const searchValue = input.value;
         this.modulService.filteredModules = this.modulService.importedModule.filter(a => {
-            return a.titel.toLowerCase().includes(searchValue.toLowerCase()) || a.name.toLowerCase().includes(searchValue.toLowerCase());
+            return a.name.toLowerCase().includes(searchValue.toLowerCase());
         });
     }
 

@@ -8,7 +8,6 @@ import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
 import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
-
 @Component({
     selector: 'app-moduluebersicht-add',
     templateUrl: './moduluebersicht-add.page.html',
@@ -102,7 +101,7 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
         const input = await this.search.getInputElement();
         const searchValue = input.value;
         this.filteredModules = this.module.filter(m => {
-            return m.titel.toLowerCase().includes(searchValue.toLowerCase()) || m.name.toLowerCase().includes(searchValue.toLowerCase());
+            return m.name.toLowerCase().includes(searchValue.toLowerCase());
         });
     }
 
