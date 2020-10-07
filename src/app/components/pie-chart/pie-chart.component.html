@@ -30,11 +30,11 @@
         <ion-item>
             <h3>Historie des Lernmodus</h3>
         </ion-item>
-        <ion-list class="kuis-overflow" *ngIf="user.historieLernmodus.length != 0; else noHistory">
-            <ion-item-group *ngFor="let spiel of user.historieLernmodus; let i = index">
+        <ion-list class="kuis-overflow" *ngIf="this.lernmodushistorie.length != 0; else noHistory">
+            <ion-item-group *ngFor="let spiel of lernmodushistorie; let i = index">
                 <ion-item lines="none">
                     <ion-label>
-                        <h4>Lernrunde {{counter[i]}}</h4>
+                        <h4>{{this.lernmodushistorie.length - i}}. Lernrunde </h4>
                     </ion-label>
                     <h4 slot="end">{{spiel}}/10</h4>
                 </ion-item>
@@ -45,11 +45,11 @@
         <ion-item>
             <h3>Historie der frei gewählte Module</h3>
         </ion-item>
-        <ion-list class="kuis-overflow" *ngIf="user.historieFreiermodusAnzahl.length != 0; else noHistory">
-            <ion-item-group *ngFor="let anzahl of user.historieFreiermodusAnzahl; let i = index">
+        <ion-list class="kuis-overflow" *ngIf="this.freiermodusanzahl.length != 0; else noHistory">
+            <ion-item-group *ngFor="let anzahl of this.freiermodusanzahl; let i = index">
                 <ion-item lines="none">
                     <ion-label>
-                        <h4>{{user.historieFreiermodusName[i]}}</h4>
+                        <h4>{{this.lernmodushistorie.length - i +1}}.  {{this.freiermodusname[i]}}</h4>
                     </ion-label>
                     <h4 slot="end">{{anzahl}}</h4>
                 </ion-item>

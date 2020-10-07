@@ -45,6 +45,9 @@ export class PieChartComponent {
     minuten = 0;
     stunden = 0;
     tage = 0;
+    freiermodusanzahl = [];
+    freiermodusname = [];
+    lernmodushistorie = [];
 
     /**
      * Prepair User for Statistik/Pie-Chart
@@ -52,7 +55,17 @@ export class PieChartComponent {
      */
     constructor(public authService: AuthService) {
         this.user = this.authService.getUser();
-
+        this.freiermodusanzahl = [];
+        this.freiermodusname = [];
+        this.lernmodushistorie = [];
+        for (let i = 0 ; i < this.user.historieFreiermodusAnzahl.length ; i++) {
+            this.freiermodusanzahl.unshift(this.user.historieFreiermodusAnzahl[i]);
+            this.freiermodusname.unshift(this.user.historieFreiermodusName[i]);
+        }
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0 ; i < this.user.historieLernmodus.length ; i++) {
+            this.lernmodushistorie.unshift(this.user.historieLernmodus[i]);
+        }
         this.tage = Math.floor(this.user.gesamtzeit / (3600 * 24));
         this.stunden = Math.floor(this.user.gesamtzeit % (3600 * 24) / 3600);
         this.user.gesamtzeit %= 3600;
