@@ -104,30 +104,35 @@ export class AuthService {
                 if (user.googleAccount && !this.platform.is('android')) {
                     await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                 }
-                if (this.platform.is('android')) {
-                    await u.reload();
+                if (user.googleAccount && this.platform.is('android')) {
+                    const googleUser = await Plugins.GoogleAuth.signIn();
+                    const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+                    await u.reauthenticateWithCredential(credential);
                 }
-                await u.updateEmail(user.email)
-                    .then(async () => {
-                        await u.sendEmailVerification();
-                        if (passwort) {
-                            await u.updatePassword(passwort)
-                                .catch((error) => {
-                                    this.toastService.presentWarningToast('Error!', error);
-                                });
-                        }
-                        await u.updateProfile({displayName: user.nutzername})
-                            .catch(error => {
-                                this.toastService.presentWarningToast('Error!', error);
-                            });
-                        this.user.isVerified = false;
-                        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-                        await this.logOut();
-                        await this.toastService.presentToast('Profil erfolgreich aktualisiert.\nBitte E-Mail bestätigen und erneut authentifizieren.');
-                    })
-                    .catch((error) => {
+                if (u.email !== user.email) {
+                    await u.updateEmail(user.email)
+                        .then(async () => {
+                            this.user.isVerified = false;
+                            await u.sendEmailVerification();
+                            await this.logOut();
+                            await this.toastService.presentToast('Bitte E-Mail bestätigen und erneut authentifizieren.');
+                        })
+                        .catch((error) => {
+                            this.toastService.presentWarningToast('Error!', error);
+                        });
+                }
+                if (passwort) {
+                    await u.updatePassword(passwort)
+                        .catch((error) => {
+                            this.toastService.presentWarningToast('Error!', error);
+                        });
+                }
+                await u.updateProfile({displayName: user.nutzername})
+                    .catch(error => {
                         this.toastService.presentWarningToast('Error!', error);
                     });
+                await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+                await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
                 await this.toastService.dismissLoading();
             });
     }
@@ -151,12 +156,17 @@ export class AuthService {
                 if (user.googleAccount && !this.platform.is('android')) {
                     await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                 }
-                if (this.platform.is('android')) {
-                    await u.reload();
+                if (user.googleAccount && this.platform.is('android')) {
+                    const googleUser = await Plugins.GoogleAuth.signIn();
+                    const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+                    await u.reauthenticateWithCredential(credential);
                 }
                 await this.logOut();
                 await u.delete();
                 await this.userCollection.doc(user.id).delete();
+            }).catch(err => {
+                this.toastService.dismissLoading();
+                this.toastService.presentWarningToast(Error, err);
             });
         await this.toastService.dismissLoading();
         await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest ausgeloggt.');

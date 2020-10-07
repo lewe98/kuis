@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "pictures-app",
+  "appName": "Kuis - Dein Bilderrätsel",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
