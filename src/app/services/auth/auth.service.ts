@@ -323,6 +323,11 @@ export class AuthService {
         });
     }
 
+    /**
+     * Logic behind the Google-Login. Submits the User's credentials to the Service and stores the User's ID to local storage.
+     *
+     * @param credential is the value which is submitted with the google-login. Used to create the user data.
+     */
     async androidGoogleSignIn(credential): Promise<any> {
         return new Promise(async (resolve, reject) => {
             await this.toastService.presentLoading('Bitte warten...');

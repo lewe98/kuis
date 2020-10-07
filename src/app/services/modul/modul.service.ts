@@ -186,7 +186,6 @@ export class ModulService {
         switch (this.sortiert) {
             case 'zuletztGespielt':
                 this.module = this.module.sort((a, b) => {
-                        console.log(b.zuletztGespielt + ' und ' + a.zuletztGespielt + (new Date(b.zuletztGespielt).getTime() - new Date(a.zuletztGespielt).getTime()));
                         return new Date(b.zuletztGespielt).getTime() - new Date(a.zuletztGespielt).getTime();
                 });
                 this.filterModule({target: {value: this.filter}});
@@ -261,6 +260,9 @@ export class ModulService {
         }, 1500);
     }
 
+    /**
+     * Empties the imported and filtered modules and sets them equal.
+     */
     setModuleEqual() {
         this.importedModule = [];
         this.filteredModules = [];
