@@ -95,9 +95,8 @@ export class AuthService {
     /**
      * Method to update the user's credential in the database
      * @param user user
-     * @param passwort user's new password
      */
-    async update(user: User, passwort: string) {
+    async update(user: User) {
         const u = firebase.auth().currentUser;
         this.toastService.presentLoading('Profil wird aktualisiert...')
             .then(async () => {
@@ -109,7 +108,7 @@ export class AuthService {
                     const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
                     await u.reauthenticateWithCredential(credential);
                 }
-                if (u.email !== user.email) {
+                /*if (u.email !== user.email) {
                     await u.updateEmail(user.email)
                         .then(async () => {
                             this.user.isVerified = false;
@@ -120,20 +119,21 @@ export class AuthService {
                         .catch((error) => {
                             this.toastService.presentWarningToast('Error!', error);
                         });
-                }
-                if (passwort) {
+                }*/
+                /*if (passwort !== undefined && !user.googleAccount) {
                     await u.updatePassword(passwort)
                         .catch((error) => {
                             this.toastService.presentWarningToast('Error!', error);
                         });
-                }
+                }*/
                 await u.updateProfile({displayName: user.nutzername})
                     .catch(error => {
+                        this.toastService.dismissLoading();
                         this.toastService.presentWarningToast('Error!', error);
                     });
                 await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-                await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
                 await this.toastService.dismissLoading();
+                await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
             });
     }
 
@@ -218,16 +218,15 @@ export class AuthService {
     /**
      * Method to sign out a user
      */
-    logOut() {
-        this.afAuth.signOut().then(() => {
-            this.isLoggedIn = false;
-            this.user = undefined;
-            this.storageService.fragen = [];
-            sessionStorage.clear();
-            localStorage.clear();
-            this.subUser.unsubscribe();
-            this.router.navigate(['/landing']);
-        });
+    async logOut() {
+        this.subUser.unsubscribe();
+        this.isLoggedIn = false;
+        this.user = undefined;
+        this.storageService.fragen = [];
+        sessionStorage.clear();
+        localStorage.clear();
+        await this.afAuth.signOut();
+        await this.router.navigate(['/landing']);
     }
 
     // REGISTER

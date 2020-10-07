@@ -13,8 +13,8 @@ export class ProfilEditPage implements ViewDidEnter {
 
     user: User;
     alterNutzername: string;
-    passwort: string;
-    passwortConfirm: string;
+   /* passwort: string;
+    passwortConfirm: string;*/
     errors: Map<string, string> = new Map<string, string>();
     @ViewChild('focus') private nutzernameRef: IonInput;
 
@@ -25,31 +25,30 @@ export class ProfilEditPage implements ViewDidEnter {
         this.alterNutzername = this.user.nutzername;
     }
 
-    save(nutzername: string, email: string, passwort: string) {
+    save(nutzername: string) {
         this.errors.clear();
-
         if (this.user.googleAccount) {
-            if (!nutzername || nutzername.trim() === '') {
+            if (nutzername.trim() === '') {
                 this.errors.set('nutzername', 'Nutzername darf nicht leer sein!');
             }
             if (this.errors.size === 0) {
                 this.abzeichenService.checkUsernameChanged(this.alterNutzername);
-                if (passwort.trim() !== '') {
-                    this.authService.update(this.user, passwort);
-                    this.dismiss();
-                }
+                this.authService.update(this.user)
+                    .then(() => {
+                        this.dismiss();
+                    });
             }
         } else {
-            if (!nutzername || nutzername.trim() === '') {
+            if (nutzername.trim() === '') {
                 this.errors.set('nutzername', 'Nutzername darf nicht leer sein!');
             }
-            if (!email) {
-                this.errors.set('email', 'Email darf nicht leer sein!');
-            }
-            if (!this.emailIsValid(email)) {
-                this.errors.set('email', 'Fehlerhaftes Email Format!');
-            }
-            if (passwort === undefined){
+            /* if (!email) {
+                 this.errors.set('email', 'Email darf nicht leer sein!');
+             }
+             if (!this.emailIsValid(email)) {
+                 this.errors.set('email', 'Fehlerhaftes Email Format!');
+             }*/
+            /*if (passwort === undefined) {
                 passwort = 'leer';
             }
             if (passwort.length < 6) {
@@ -60,13 +59,13 @@ export class ProfilEditPage implements ViewDidEnter {
             }
             if (this.passwort !== this.passwortConfirm) {
                 this.errors.set('passwortConfirm', 'Passwörter stimmen nicht überein!');
-            }
+            }*/
             if (this.errors.size === 0) {
                 this.abzeichenService.checkUsernameChanged(this.alterNutzername);
                 if (nutzername.trim() === '') {
                     this.user.nutzername = this.alterNutzername;
                 }
-                this.authService.update(this.user, passwort)
+                this.authService.update(this.user)
                     .then(() => {
                         this.dismiss();
                     });
@@ -74,9 +73,9 @@ export class ProfilEditPage implements ViewDidEnter {
         }
     }
 
-    emailIsValid(email: string) {
+    /*emailIsValid(email: string) {
         return /\S+@\S+\.\S+/.test(email);
-    }
+    }*/
 
     dismiss() {
         if (this.user.nutzername.trim() === '') {
