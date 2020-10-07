@@ -36,10 +36,28 @@ export class ProfilPage {
     }
 
     async showEditModal() {
+        if (this.hasVerified){
         const modal = await this.modalController.create({
             component: ProfilEditPage
         });
         return await modal.present();
+        }else {
+            const alert = await this.alertController.create({
+                mode: 'ios',
+                header: 'Erinnerung!',
+                message: `<p> Sie müssen noch Ihre E-Mail: <em><b>` + this.user.email + `</b></em> bestätigen um Ihre Nutzerdaten ändern zu können.</p>`,
+                buttons: [
+                    {
+                        text: 'Verstanden',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: () => {
+                        }
+                    }
+                ]
+            });
+            return await alert.present();
+        }
     }
 
     async deleteWarning(user: User) {

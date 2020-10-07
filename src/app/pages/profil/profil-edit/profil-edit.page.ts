@@ -34,8 +34,10 @@ export class ProfilEditPage implements ViewDidEnter {
             }
             if (this.errors.size === 0) {
                 this.abzeichenService.checkUsernameChanged(this.alterNutzername);
-                this.authService.update(this.user, passwort);
-                this.dismiss();
+                if (passwort.trim() !== '') {
+                    this.authService.update(this.user, passwort);
+                    this.dismiss();
+                }
             }
         } else {
             if (!nutzername || nutzername.trim() === '') {
@@ -46,6 +48,9 @@ export class ProfilEditPage implements ViewDidEnter {
             }
             if (!this.emailIsValid(email)) {
                 this.errors.set('email', 'Fehlerhaftes Email Format!');
+            }
+            if (passwort === undefined){
+                passwort = 'leer';
             }
             if (passwort.length < 6) {
                 this.errors.set('passwort', 'Passwort muss mindestens 6 Zeichen besitzen!');
