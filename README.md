@@ -109,12 +109,14 @@ Um die API Dokumentation aufzurufen, muss folgender Befehl ausgeführt werden:
 Technologie | Verwendungszweck
 ---------------------|----------
 [WebStorm 2020.2.1](https://www.jetbrains.com/webstorm/) | Entwicklungsumgebung
-[Ionic 5](https://ionicframework.com/) | Cross-Platform Mobile App Development
+[Ionic 6.11.11](https://ionicframework.com/) | Cross-Platform Mobile App Development
 [Angular](https://angular.io/) | Frontend Development
-[Kuchen-Diagramm](https://valor-software.com/ng2-charts/) | Frontend Development
+[chart.js](https://valor-software.com/ng2-charts/) | Frontend Development (pie-chart)
 [Firebase Firestore](https://firebase.google.com/docs/firestore) | Datenbank (Cloud Firestore)
 [Firebase Storage](https://firebase.google.com/docs/storage) | Datenbank (Storage)
-[Push Notifications](https://firebase.google.com/docs/cloud-messaging) | Benachrichtigungen
+[Google People API](https://developers.google.com/people) | Authentifizierung
+[GoogleAuth](https://github.com/CodetrixStudio/CapacitorGoogleAuth) | Authentifizierung auf Android
+[Compodoc](https://compodoc.app/) | Schnittstellen Dokumentation
 
 
 
