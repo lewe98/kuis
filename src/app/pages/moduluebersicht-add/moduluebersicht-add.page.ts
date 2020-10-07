@@ -114,6 +114,6 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
     }
 
     ionViewDidEnter() {
-        setTimeout(() => this.search.setFocus(), 10);
+        setTimeout(() => this.search.setFocus(), 100);
     }
 }
