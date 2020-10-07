@@ -175,13 +175,21 @@ export class ModulService {
         }
     }
 
+    /**
+     * This Method Sorts the this.module Array ASC, DESC, after the Date of adding a Module or after the Date of the last Game.
+     * @param $event is an Object that needs a value of zuletztGespielt, absteigend, aufsteigend, hinzugefügt or
+     * a default same as zuletztGespielt.
+     * a event Object has to look like: {target: {value: 'value'}}.
+     */
     sortModule($event) {
         this.sortiert = $event.target.value;
         switch (this.sortiert) {
             case 'zuletztGespielt':
-                this.module = this.module.sort((a, b) =>
-                    new Date(b.zuletztGespielt).getMilliseconds() - new Date(a.zuletztGespielt).getMilliseconds());
-                this.setModuleEqual();
+                this.module = this.module.sort((a, b) => {
+                        console.log(b.zuletztGespielt + ' und ' + a.zuletztGespielt + (new Date(b.zuletztGespielt).getTime() - new Date(a.zuletztGespielt).getTime()));
+                        return new Date(b.zuletztGespielt).getTime() - new Date(a.zuletztGespielt).getTime();
+                });
+                this.filterModule({target: {value: this.filter}});
                 break;
             case 'absteigend':
                 this.module = this.module.sort((a, b) => {
@@ -193,7 +201,7 @@ export class ModulService {
                     }
                     return 0;
                 });
-                this.setModuleEqual();
+                this.filterModule({target: {value: this.filter}});
                 break;
             case 'aufsteigend':
                 this.module = this.module.sort((a, b) => {
@@ -205,19 +213,19 @@ export class ModulService {
                     }
                     return 0;
                 });
-                this.setModuleEqual();
+                this.filterModule({target: {value: this.filter}});
                 break;
             case 'hinzugefügt':
                 this.module = this.module.sort((a, b) => {
                     return new Date(b.hinzugefuegt).getTime() - new Date(a.hinzugefuegt).getTime();
                 });
-                this.setModuleEqual();
+                this.filterModule({target: {value: this.filter}});
                 break;
             default:
                 this.sortiert = 'zuletztGespielt';
                 this.module = this.module.sort((a, b) =>
                     new Date(b.zuletztGespielt).getTime() - new Date(a.zuletztGespielt).getTime());
-                this.setModuleEqual();
+                this.filterModule({target: {value: this.filter}});
         }
     }
 

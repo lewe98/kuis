@@ -171,9 +171,11 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      * sets focus on ViewEnter
      */
     ionViewDidEnter() {
-        if (this.modulService.module.length > 0) {
-            setTimeout(() => this.search.setFocus(), 10);
-        }
+        setTimeout(() => {
+            if (this.modulService.module.length > 0) {
+                this.search.setFocus();
+            }
+        }, 100);
     }
 
     /**
