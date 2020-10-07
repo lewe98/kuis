@@ -54,7 +54,6 @@ export class QuizPage implements OnDestroy {
      */
     async initialize() {
         if (this.modulService.isLernmodus) {
-            console.log(this.authService.user.importierteModule.length);
             if (this.authService.user.importierteModule.length) {
                 this.authService.user.importierteModule.forEach(elem => {
                     this.storageService.findAllFragenLernmodus(elem.id, elem.titel)
@@ -76,7 +75,6 @@ export class QuizPage implements OnDestroy {
      * Method to choose ten questions from before created array and checks if the user have a legit number of imported questions.
      */
     pushFrage() {
-        console.log(this.alleFragen);
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.alleFragen.length; i++) {
             this.sum = this.sum + this.alleFragen[i].length;
