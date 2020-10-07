@@ -25,6 +25,7 @@ export class ModulService {
     isLernmodus = false;
     started = false;
     isFreiermodus = false;
+    disableStart = false;
 
     constructor(private afs: AngularFirestore,
                 private storageService: StorageService,
@@ -225,6 +226,7 @@ export class ModulService {
      * @param module - the module the user want delete
      */
     deleteModule(module: Modul) {
+        this.disableStart = true;
         const user = this.authService.getUser();
         const removeIndex = user.importierteModule.map(item => item.id).indexOf(module.id);
         if (removeIndex >= 0) {
@@ -238,13 +240,17 @@ export class ModulService {
                     user.alreadyLearned.splice(j - 1, 1);
                 }
             }
-            this.toastService.presentLoadingDuration(module.name + '-Quiz zum löschen vorbereitet', 1000).then(() => {
-                user.importierteModule.splice(removeIndex, 1);
-                this.abzeichenService.checkAbzeichenModulGeloescht();
-                this.authService.updateProfile(user);
-                this.toastService.presentToastSuccess(module.name + '-Quiz wurde gelöscht!');
-            });
+            this.toastService.presentLoadingDuration(module.name + '-Quiz zum löschen vorbereitet', 1000)
+                .then(() => {
+                    user.importierteModule.splice(removeIndex, 1);
+                    this.abzeichenService.checkAbzeichenModulGeloescht();
+                    this.authService.updateProfile(user);
+                    this.toastService.presentToastSuccess(module.name + '-Quiz wurde gelöscht!');
+                });
         }
+        setTimeout(() => {
+            this.disableStart = false;
+        }, 1500);
     }
 
     setModuleEqual() {

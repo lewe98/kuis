@@ -48,13 +48,15 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      * @param bild name of the picture of the chosen quiz.
      */
     chooseQuiz(titel: string, id: string, bild: string, name: string) {
-        this.modulService.started = true;
-        this.modulService.isFreiermodus = true;
-        localStorage.setItem('modus', 'frei');
-        this.storageService.findAllFragen(id, titel, name)
-            .then(() => {
-                this.router.navigate(['/quiz']);
-            });
+        if (this.modulService.disableStart === false) {
+            this.modulService.started = true;
+            this.modulService.isFreiermodus = true;
+            localStorage.setItem('modus', 'frei');
+            this.storageService.findAllFragen(id, titel, name)
+                .then(() => {
+                    this.router.navigate(['/quiz']);
+                });
+        }
     }
 
     /**

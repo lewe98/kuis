@@ -79,18 +79,20 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
      * @param module the modul the user have choose
      */
     addModule(module: Modul) {
-        this.toastService.presentLoadingDuration(module.name + '-Quiz wird heruntergeladen', 1000).then(() => {
-            this.lastImportedModuleID = module.id;
-            this.lastImportedModuleTitel = module.titel;
-            this.lastImportedModuleName = module.name;
-            module.hinzugefuegt = new Date().toLocaleString();
-            module.zuletztGespielt = '1995-12-17T03:24:00';
-            this.addQuestions(module);
-            this.abzeichenService.checkAbzeichenModulImportiert();
-            this.module.splice(this.module.indexOf(module), 1);
-            this.filteredModules = this.module;
-            this.toastService.presentToastSuccess(module.name + '-Quiz wurde importiert!');
-        });
+        this.lastImportedModuleID = module.id;
+        this.lastImportedModuleTitel = module.titel;
+        this.lastImportedModuleName = module.name;
+        module.hinzugefuegt = new Date().toLocaleString();
+        module.zuletztGespielt = '1995-12-17T03:24:00';
+        this.addQuestions(module);
+        this.abzeichenService.checkAbzeichenModulImportiert();
+        this.module.splice(this.module.indexOf(module), 1);
+        this.filteredModules = this.module;
+
+        this.toastService.presentLoadingDuration(module.name + '-Quiz wird heruntergeladen', 1000)
+            .then(() => {
+                this.toastService.presentToastSuccess(module.name + '-Quiz wurde importiert!');
+            });
     }
 
     /**
