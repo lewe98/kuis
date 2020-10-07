@@ -65,6 +65,9 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
         });
     }
 
+    /**
+     * Method to set the achievements of a User to true, if that User has achieved one.
+     */
     async checkAbzeichenBestanden() {
         const userAbzeichenArray = this.authService.getUser().abzeichen;
         // tslint:disable-next-line:prefer-for-of
@@ -77,6 +80,11 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
         }
     }
 
+    /**
+     * Takes the search-query and uses it to filter through the whole array of achievements.
+     *
+     * @return an array filled with the title or description equal to the search-query.
+     */
     async doSearch() {
         const input = await this.search.getInputElement();
         const searchValue = input.value;
@@ -86,11 +94,19 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
         });
     }
 
+    /**
+     * Clears the search-string and sets the filtered array of achievements equal to the whole array of achievments.
+     */
     clear() {
         this.search.value = '';
         this.filteredAbzeichenArray = this.abzeichenArray;
     }
 
+    /**
+     * Activates the Share-Plugin with a template that displays all of the Users Achievements.
+     * Iterates through all of the Achievements and compares them to the User to find the title.
+     * Adds the title to a list.
+     */
     async shareAbzeichen() {
         if (!this.platform.is('android')) {
             await this.toastService.presentWarningToast('Achtung.', 'Share API wird nur auf Android unterstützt.');
@@ -107,7 +123,6 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                     }
                 });
             }
-
             Plugins.Share.share({
                 title: 'Meine Kuis Abzeichen!',
                 text: 'Hey,\n' + 'das sind meine Abzeichen:\n' + list,

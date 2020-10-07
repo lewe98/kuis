@@ -59,16 +59,30 @@ export class AbzeichenService {
                 }));
     }
 
+    /**
+     * Sorts the achievements alphabetically.
+     *
+     * @param arr is the array in which the achievments are saved and sorted.
+     */
     sortAbzeichen(arr: Abzeichen[]): Abzeichen[] {
         return arr.sort(((a, b) => {
             return a.index - b.index;
         }));
     }
 
+    /**
+     * Returns the array of all achievments.
+     */
     getAbzeichen(): Abzeichen[] {
         return this.abzeichen;
     }
 
+    /**
+     * Contains the logic behind all time based achievments.
+     *
+     * @param timer is the numeric value which is given. Counts the time in seconds.
+     * @param abzeichenArray is the array in which all of the achievements are stored.
+     */
     checkAbzeichen(timer: number, abzeichenArray: Abzeichen[]) {
         const anzahl = this.authService.user.historieLernmodus.length;
 
@@ -184,6 +198,9 @@ export class AbzeichenService {
         this.authService.updateProfile(this.authService.user);
     }
 
+    /**
+     * Logic behind the achievment of checking the achievements-page.
+     */
     checkPage() {
         if (window.location.pathname === '/abzeichen' &&
             !this.authService.user.abzeichen.find(a => a === this.abzeichen[10].id)) {
@@ -201,6 +218,11 @@ export class AbzeichenService {
 
     }
 
+    /**
+     * Logic behind the achievement of changing the Username.
+     *
+     * @param alt is the string value of the previous Username.
+     */
     checkUsernameChanged(alt: string) {
         if (alt !== this.authService.user.nutzername &&
             !this.authService.user.abzeichen.find(a => a === this.abzeichen[9].id)) {
@@ -209,6 +231,9 @@ export class AbzeichenService {
         }
     }
 
+    /**
+     * Logic behind the achievement of importing the first module.
+     */
     checkAbzeichenModulImportiert() {
         if (!this.authService.user.abzeichen.find(a => a === this.abzeichen[11].id)) {
             this.authService.user.abzeichen.push(this.abzeichen[11].id);
@@ -216,6 +241,9 @@ export class AbzeichenService {
         }
     }
 
+    /**
+     * Logic behind the achievement of deleting the first module.
+     */
     checkAbzeichenModulGeloescht() {
         if (!this.authService.user.abzeichen.find(a => a === this.abzeichen[12].id)) {
             this.authService.user.abzeichen.push(this.abzeichen[12].id);
