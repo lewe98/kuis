@@ -3,9 +3,11 @@
 
 <ion-content>
     <div class="kuis-content">
-        <div *ngIf="this.modulService.started && !genugFragen else noQuestions">
+
+        <div *ngIf="this.modulService.started; else noQuestions">
           <app-frage></app-frage>
         </div>
+
         <ng-template #noQuestions>
             <ion-card class="card-border-rounded kuis-card-margin-topbottom">
                 <ion-card-content>

@@ -243,7 +243,6 @@ export class AuthService {
                 await firebase.auth().currentUser.sendEmailVerification();
                 await this.router.navigate(['/startseite']);
                 this.toastService.dismissLoading();
-                window.location.reload();
             })
             .catch((error) => {
                 this.toastService.presentWarningToast('Error!', error);

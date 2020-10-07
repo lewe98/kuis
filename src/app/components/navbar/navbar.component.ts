@@ -53,6 +53,7 @@ export class NavbarComponent {
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: () => {
+                        this.modulService.started = false;
                         if (this.modulService.isLernmodus) {
                             this.router.navigate(['startseite']);
                         }else{
