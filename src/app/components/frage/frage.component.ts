@@ -10,7 +10,9 @@ import {Subscription} from 'rxjs';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 import {Statistik} from '../../models/statistik';
 import {StatistikService} from '../../services/statistik/statistik.service';
-
+import {AlreadyLearned} from '../../models/alreadyLearned';
+import {PopoverController} from '@ionic/angular';
+import {PopoverQuelleComponent} from '../popover-quelle/popover-quelle.component';
 
 @Component({
     selector: 'app-frage',
@@ -34,9 +36,14 @@ export class FrageComponent {
     richtig2 = false;
     richtig3 = false;
     richtig4 = false;
+    falsch1 = false;
+    falsch2 = false;
+    falsch3 = false;
+    falsch4 = false;
     abzeichenArray: Abzeichen[] = [];
     subAbzeichen: Subscription;
     subUser: Subscription;
+    showQuelle = false;
 
     constructor(public storageService: StorageService,
                 public modulService: ModulService,
@@ -44,8 +51,9 @@ export class FrageComponent {
                 private authService: AuthService,
                 private toastService: ToastService,
                 private statistikService: StatistikService,
-                private router: Router) {
-        this.toastService.presentLoading('Abzeichen werden geladen...')
+                private router: Router,
+                private popoverController: PopoverController) {
+        this.toastService.presentLoading('Quiz wird geladen...')
             .then(async () => {
                 if (this.authService.user === undefined) {
                     if (localStorage.getItem('userID')) {
@@ -76,7 +84,7 @@ export class FrageComponent {
 
 
         this.initialize();
-        if (this.modulService.isLernmodus){
+        if (this.modulService.isLernmodus) {
             this.startTimer();
         }
     }
@@ -99,30 +107,42 @@ export class FrageComponent {
 
     /**
      * Method to show the next question, if the quiz is not finished yet.
+     * if this was the last question update user with stats and navigate to statistik
      */
     showNextQuestion() {
-        this.counter++;
-        if (this.counter === this.storageService.fragen.length) {
+        if (this.counter + 1 === this.storageService.fragen.length) {
             if (this.modulService.isLernmodus) {
                 this.pauseTimer();
                 this.authService.user.historieLernmodus.push(this.richtigBeantwortetLernmodusCounter);
                 this.authService.user.gesamtzeit = this.authService.user.gesamtzeit + this.timer;
                 this.modulService.isLernmodus = false;
-                this.swapQuestionsToForbidden();
+                this.swapQuestionsToalreadyLearned();
                 this.inkrementQuestionsCounterFromUser();
                 this.abzeichenService.checkAbzeichen(this.timer, this.abzeichenArray);
                 this.authService.updateProfile(this.authService.user);
-                this.statistikService.printLastRound(this.statistikArray);
+                this.statistikService.printLastRound(this.statistikArray, this.richtigBeantwortetLernmodusCounter);
                 this.router.navigate(['/statistik']);
             } else {
+                // tslint:disable-next-line:prefer-for-of
+                for (let i = 0; i < this.authService.user.importierteModule.length; i++) {
+                    if (this.authService.user.importierteModule[i].name === this.storageService.nameDesModuls) {
+                        if (this.authService.user.importierteModule[i].bestResult < this.richtigBeantwortetFreiermodusCounter){
+                            this.authService.user.importierteModule[i].bestResult = this.richtigBeantwortetFreiermodusCounter;
+                            this.authService.user.importierteModule[i].zuletztGespielt = new Date().toLocaleString();
+                            break;
+                        }
+                    }
+                }
                 this.authService.user.historieFreiermodusName.push(this.storageService.nameDesModuls);
                 this.authService.user.historieFreiermodusAnzahl.push(this.richtigBeantwortetFreiermodusCounter + '/' +
                     this.storageService.fragen.length);
+
                 this.authService.updateProfile(this.authService.user);
                 this.toastService.presentToast('Das Modul wurde abgeschlossen.');
                 this.router.navigate(['/moduluebersicht']);
             }
         } else {
+            this.counter++;
             this.initialize();
         }
     }
@@ -137,6 +157,8 @@ export class FrageComponent {
         this.shuffleAntworten(this.f.antworten);
         this.f.richtigeAntwort = this.storageService.fragen[this.counter].richtigeAntwort;
         this.f.bild = this.storageService.fragen[this.counter].bild;
+        this.f.quelle = this.storageService.fragen[this.counter].quelle;
+        this.showQuelle = false;
 
         await this.storageService.getPicture(this.f.bild)
             .then((url) => {
@@ -170,9 +192,10 @@ export class FrageComponent {
         statisticObject.richtigeAntwort = this.f.richtigeAntwort;
         statisticObject.gewaehlteAntwort = gewaehlteAntwort;
         statisticObject.frage = this.f.frage;
-        statisticObject.showBeschreibung = false;
+        statisticObject._showBeschreibung = false;
         this.statistikArray.push(statisticObject);
         if (this.f.richtigeAntwort === gewaehlteAntwort) {
+            // richtige Antwort markieren
             if (this.f.antworten[0] === gewaehlteAntwort) {
                 this.richtig1 = true;
             }
@@ -201,10 +224,38 @@ export class FrageComponent {
                 this.richtig2 = false;
                 this.richtig3 = false;
                 this.richtig4 = false;
-            }, 1000);
+            }, 1800);
         } else {
             if (this.modulService.isLernmodus) {
                 this.wrongIds.push(this.f.id);
+            }
+
+            // falsche Antwort markieren
+            if (gewaehlteAntwort === this.f.antworten[0]) {
+                this.falsch1 = true;
+            }
+            if (gewaehlteAntwort === this.f.antworten[1]) {
+                this.falsch2 = true;
+            }
+            if (gewaehlteAntwort === this.f.antworten[2]) {
+                this.falsch3 = true;
+            }
+            if (gewaehlteAntwort === this.f.antworten[3]) {
+                this.falsch4 = true;
+            }
+
+            // richtige Antwort markieren, wenn falsch beantwortet
+            if (this.f.antworten[0] === this.f.richtigeAntwort) {
+                this.richtig1 = true;
+            }
+            if (this.f.antworten[1] === this.f.richtigeAntwort) {
+                this.richtig2 = true;
+            }
+            if (this.f.antworten[2] === this.f.richtigeAntwort) {
+                this.richtig3 = true;
+            }
+            if (this.f.antworten[3] === this.f.richtigeAntwort) {
+                this.richtig4 = true;
             }
             this.disabled = true;
             setTimeout(() => {
@@ -214,16 +265,20 @@ export class FrageComponent {
                 this.richtig2 = false;
                 this.richtig3 = false;
                 this.richtig4 = false;
-            }, 1000);
+                this.falsch1 = false;
+                this.falsch2 = false;
+                this.falsch3 = false;
+                this.falsch4 = false;
+            }, 1800);
         }
 
     }
 
 
     /**
-     * Checks the Array one Time at the End of the Game
+     *  * Checks the Array one Time at the End of the Game and resets the counter of any wrong answered question to 0
      */
-    swapQuestionsToForbidden() {
+    swapQuestionsToalreadyLearned() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.wrongIds.length; i++) {
             // tslint:disable-next-line:prefer-for-of
@@ -238,11 +293,14 @@ export class FrageComponent {
     inkrementQuestionsCounterFromUser() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.correctIds.length; i++) {
+
             for (let j = 0; j < this.authService.user.availableQuestions.length; j++) {
                 if (this.correctIds[i] === this.authService.user.availableQuestions[j].id) {
                     this.authService.user.availableQuestions[j].counter += 1;
                     if (this.authService.user.availableQuestions[j].counter === 6) {
-                        this.authService.user.forbiddenQuestions.push(this.authService.user.availableQuestions[j].id);
+                        // tslint:disable-next-line:max-line-length
+                        const object = new AlreadyLearned(this.authService.user.availableQuestions[j].id, this.authService.user.availableQuestions[j].idModul);
+                        this.modulService.addAlreadyLearned(object);
                         this.authService.user.availableQuestions.splice(j, 1);
                     }
                 }
@@ -250,9 +308,29 @@ export class FrageComponent {
         }
     }
 
+    /**
+     * method to sort all abzeichen by index
+     */
     sortAbzeichen() {
         this.abzeichenArray.sort(((a, b) => {
             return a.index - b.index;
         }));
+    }
+
+    /**
+     * This Method shows a popover with the source of the Image.
+     * @param ev -  is the event within the event is target.
+     * @param quelle - from the picture
+     */
+    async setShowQuelle(ev: any, quelle: string) {
+        const popover = await this.popoverController.create({
+            component: PopoverQuelleComponent,
+            componentProps: {quelle},
+            event: ev,
+            translucent: true,
+            backdropDismiss: true,
+            mode: 'ios'
+        });
+        return await popover.present();
     }
 }

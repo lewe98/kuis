@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
-import {IonSlides} from '@ionic/angular';
+import {IonSlides, Platform} from '@ionic/angular';
 
 @Component({
     selector: 'app-landing',
     templateUrl: './landing.page.html',
     styleUrls: ['./landing.page.scss'],
 })
-export class LandingPage implements OnInit{
+export class LandingPage implements OnInit {
     @ViewChild('slideWithNav', {static: false}) slideWithNav: IonSlides;
 
     isOnline: boolean;
@@ -43,24 +43,32 @@ export class LandingPage implements OnInit{
         grabCursor: true
     };
 
-    constructor(private authService: AuthService,
-                private router: Router) {
+    constructor(public authService: AuthService,
+                private router: Router,
+                public platform: Platform) {
     }
 
-   ngOnInit() {
-       this.isOnline = false;
-       // If an user is found in Storage
-       this.isOnline = (sessionStorage.getItem('userID') !== null) || (localStorage.getItem('userID') !== null);
-       // dont allows to nav to loginpage while log in;
-       if (this.isOnline) {
-           this.router.navigate(['/startseite']);
-       }
-   }
+    ngOnInit() {
+        this.isOnline = false;
+        // If an user is found in Storage
+        this.isOnline = (sessionStorage.getItem('userID') !== null) || (localStorage.getItem('userID') !== null);
+        // dont allows to nav to loginpage while log in;
+        if (this.isOnline) {
+            this.router.navigate(['/startseite']);
+        }
+    }
 
     googleLogin() {
-        this.authService.GoogleAuth().then(() => {
-            this.router.navigate(['/startseite']);
-        });
+        if (this.platform.is('android')) {
+            this.authService.GoogleAuthCredential().then(() => {
+                this.router.navigate(['/startseite']);
+            });
+        } else {
+            this.authService.GoogleAuth().then(() => {
+                this.router.navigate(['/startseite']);
+            });
+        }
+
     }
 
 }

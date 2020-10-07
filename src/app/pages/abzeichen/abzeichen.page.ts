@@ -91,25 +91,29 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
         this.filteredAbzeichenArray = this.abzeichenArray;
     }
 
-    shareAbzeichen() {
+    async shareAbzeichen() {
         if (!this.platform.is('android')) {
-            this.toastService.presentWarningToast('Achtung.', 'Share API wird nur auf Android unterstützt.');
+            await this.toastService.presentWarningToast('Achtung.', 'Share API wird nur auf Android unterstützt.');
         } else if (!this.authService.getUser().abzeichen.length) {
-            this.toastService.presentWarningToast('Achtung.', 'Noch keine Abzeichen freigeschaltet...');
+            await this.toastService.presentWarningToast('Achtung.', 'Noch keine Abzeichen freigeschaltet...');
         } else {
             let list = '';
-            this.authService
-                .getUser().abzeichen
-                .forEach(abzeichen => {
-                    list += abzeichen + '%\n';
+            const userAbzeichenArray = this.authService.getUser().abzeichen;
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < this.abzeichenArray.length; i++) {
+                userAbzeichenArray.forEach(userAbzeichen => {
+                    if (userAbzeichen === this.abzeichenArray[i].id) {
+                        list += this.abzeichenArray[i].titel + '\n';
+                    }
                 });
+            }
 
             Plugins.Share.share({
                 title: 'Meine Kuis Abzeichen!',
                 text: 'Hey,\n' + 'das sind meine Abzeichen:\n' + list,
                 dialogTitle: 'Leistungen teilen'
             }).catch(reason => {
-                alert('Error: ' + reason);
+                this.toastService.presentWarningToast('Error', reason);
             });
         }
     }

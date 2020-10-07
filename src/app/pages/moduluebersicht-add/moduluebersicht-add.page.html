@@ -7,7 +7,7 @@
 
 
 <ion-content>
-    <ion-item>
+    <ion-item lines="none">
         <ion-input (ionInput)="doSearch()"
                    clearOnEdit="false"
                    color="primary"
@@ -29,8 +29,8 @@
         </ion-icon>
     </ion-item>
 
-    <div *ngIf="filteredModules.length > 0; else empty">
-        <app-quiz-wrapper (click)="addModule(modul)" [titel]="modul.titel" [add]="true"
+    <div *ngIf="filteredModules.length > 0; else empty" class="kuis-modul">
+        <app-quiz-wrapper (click)="addModule(modul)" [titel]="modul.name" [add]="true"
                           [bild]="modul.bild" *ngFor="let modul of filteredModules">
         </app-quiz-wrapper>
     </div>
@@ -38,9 +38,12 @@
 
 <ng-template #empty>
     <ion-col>
-        <ion-card>
+        <ion-card class="card-border-rounded">
             <ion-card-header>
-                <ion-card-title><h4>Die Suche ergab keinen Treffer.</h4></ion-card-title>
+                <ion-card-title>
+                    <h4 *ngIf="filteredModules.length == 0 && module.length != 0">Die Suche ergab keinen Treffer.</h4>
+                    <h4 *ngIf="module.length == 0">Es wurden alle verfügbaren Module importiert.</h4>
+                </ion-card-title>
             </ion-card-header>
         </ion-card>
     </ion-col>

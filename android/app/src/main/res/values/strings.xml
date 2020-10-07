@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">pictures-app</string>
+    <string name="title_activity_main">pictures-app</string>
+    <string name="package_name">io.ionic.starter</string>
+    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="server_client_id">721900546942-3ridpcj0jtmah106ir8vmk4241jp6tot.apps.googleusercontent.com</string>
+</resources>

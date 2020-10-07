@@ -5,6 +5,7 @@
   "homepage": "https://git.thm.de/ema-ss20/pictures-app",
   "scripts": {
     "ionic serve": "ionic serve",
+    "ema": "ionic build && npx cap sync && npx cap open android",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -13,7 +14,6 @@
     "e2e": "ng e2e",
     "compodoc": "./node_modules/.bin/compodoc -p tsconfig.json -w -s"
   },
-  "private": true,
   "dependencies": {
     "@angular/common": "~10.0.0",
     "@angular/core": "~10.0.0",
@@ -24,6 +24,7 @@
     "@angular/router": "~10.0.0",
     "@capacitor/android": "^2.4.0",
     "@capacitor/core": "2.4.0",
+    "@codetrix-studio/capacitor-google-auth": "^2.1.1",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/in-app-browser": "^5.28.0",
     "@ionic-native/splash-screen": "^5.0.0",
@@ -34,7 +35,7 @@
     "chartjs-plugin-datalabels": "^0.7.0",
     "cordova-plugin-inappbrowser": "^4.0.0",
     "crypto-js": "^4.0.0",
-    "firebase": "^7.19.0",
+    "firebase": "^7.22.1",
     "ng2-charts": "^2.4.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
@@ -65,5 +66,9 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.9.5"
-  }
+  },
+  "browser": {
+    "crypto": false
+  },
+  "private": true
 }

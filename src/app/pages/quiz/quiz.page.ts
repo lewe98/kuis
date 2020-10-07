@@ -3,6 +3,7 @@ import {ModulService} from '../../services/modul/modul.service';
 import {StorageService} from '../../services/storage/storage.service';
 import {AuthService} from '../../services/auth/auth.service';
 import {User} from '../../models/user';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-quiz',
@@ -18,14 +19,22 @@ export class QuizPage implements OnDestroy {
     sum = 0;
     genugFragen = false;
     correctQuestion = false;
-
     user: User;
 
     constructor(public modulService: ModulService,
                 private storageService: StorageService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private router: Router) {
+        this.authService.loadPageSubscription(() => {
+        });
         this.initialize();
-        this.user = this.authService.getUser();
+        if (!modulService.isLernmodus && !modulService.isFreiermodus) {
+            if (localStorage.getItem('modus') === 'frei') {
+                this.router.navigate(['moduluebersicht']);
+            } else {
+                this.router.navigate(['startseite']);
+            }
+        }
     }
 
     /**
@@ -33,6 +42,10 @@ export class QuizPage implements OnDestroy {
      */
     ngOnDestroy() {
         this.modulService.isLernmodus = false;
+        this.modulService.isFreiermodus = false;
+        this.alleFragen = [];
+        this.storageService.fragen = [];
+        this.modulService.started = false;
     }
 
     /**
@@ -41,22 +54,18 @@ export class QuizPage implements OnDestroy {
      */
     async initialize() {
         if (this.modulService.isLernmodus) {
-            this.modulService.findAllModuleLernmodus()
-                .then(res => {
-                    this.alleModule = res;
-
-                    // TODO: - forEach umgehen
-                    this.user.importierteModule.forEach(elem => {
-                        this.storageService.findAllFragenLernmodus(elem.id, elem.titel)
-                            .then(() => {
-                                this.alleFragen.push(this.storageService.fragen);
-                                this.globalCounter++;
-                                if (this.globalCounter === this.user.importierteModule.length) {
-                                    this.pushFrage();
-                                }
-                            });
-                    });
+            if (this.authService.user.importierteModule.length) {
+                this.authService.user.importierteModule.forEach(elem => {
+                    this.storageService.findAllFragenLernmodus(elem.id, elem.titel)
+                        .then(() => {
+                            this.alleFragen.push(this.storageService.fragen);
+                            this.globalCounter++;
+                            if (this.globalCounter === this.authService.user.importierteModule.length) {
+                                this.pushFrage();
+                            }
+                        });
                 });
+            }
         }
     }
 
@@ -70,8 +79,7 @@ export class QuizPage implements OnDestroy {
         for (let i = 0; i < this.alleFragen.length; i++) {
             this.sum = this.sum + this.alleFragen[i].length;
         }
-
-        this.sum = this.sum - this.user.forbiddenQuestions.length;
+        this.sum = this.sum - this.authService.user.alreadyLearned.length;
 
         if (this.sum < 10) {
             this.genugFragen = true;
@@ -89,13 +97,12 @@ export class QuizPage implements OnDestroy {
                 const zufallsZahlFragen = Math.floor(Math.random() * anzahlFragen);
 
                 // tslint:disable-next-line:prefer-for-of
-                for (let i = 0; i < this.user.forbiddenQuestions.length; i++) {
-                    if (this.user.forbiddenQuestions[i] === this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
+                for (let i = 0; i < this.authService.user.alreadyLearned.length; i++) {
+                    if (this.authService.user.alreadyLearned[i] === this.alleFragen[zufallsZahlModule][zufallsZahlFragen].id) {
                         this.correctQuestion = false;
                         break;
                     }
                 }
-
                 if (this.correctQuestion) {
                     if (this.lernmodusFragen.length === 0) {
                         this.lernmodusFragen.push(this.alleFragen[zufallsZahlModule][zufallsZahlFragen]);
@@ -114,6 +121,7 @@ export class QuizPage implements OnDestroy {
             }
             this.storageService.fragen = [];
             this.storageService.fragen = this.lernmodusFragen;
+            this.lernmodusFragen = [];
             this.modulService.started = true;
         }
     }

@@ -11,6 +11,9 @@ export class LogoutComponent {
     constructor(public authService: AuthService) {
     }
 
+    /**
+     * method to use logout for an User
+     */
     handleLogout() {
         this.authService.logOut();
     }

@@ -3,29 +3,29 @@
     <ion-grid class="kuis-content">
         <ion-row>
             <ion-col>
-                <ion-card class="card-color-white" (click)="routerNavigate('quiz'); modulService.toggleLernmodus()">
+                <ion-card class="card-color-white" [routerLink]="'/quiz'" (click)="modulService.toggleLernmodus()">
                     <div class="button-background">
                         <ion-icon class="button-icon" name="play-outline"></ion-icon>
                     </div>
                     <ion-card-header>
-                        <ion-card-title>Lern Modus</ion-card-title>
+                        <ion-card-title>Lernmodus</ion-card-title>
                     </ion-card-header>
                 </ion-card>
             </ion-col>
             <ion-col>
-                <ion-card class="card-color-white" (click)="routerNavigate('moduluebersicht')">
+                <ion-card class="card-color-white" [routerLink]="'/moduluebersicht'">
                     <div class="button-background">
                         <ion-icon class="button-icon" name="list-outline"></ion-icon>
                     </div>
                     <ion-card-header>
-                        <ion-card-title>Modul Übersicht</ion-card-title>
+                        <ion-card-title>Module</ion-card-title>
                     </ion-card-header>
                 </ion-card>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-card class="card-color-white" (click)="routerNavigate('statistik')">
+                <ion-card class="card-color-white" [routerLink]="'/statistik'">
                     <div class="button-background">
                         <ion-icon class="button-icon" name="stats-chart-outline"></ion-icon>
                     </div>
@@ -35,7 +35,7 @@
                 </ion-card>
             </ion-col>
             <ion-col>
-                <ion-card class="card-color-white" (click)="routerNavigate('abzeichen')">
+                <ion-card class="card-color-white" [routerLink]="'/abzeichen'">
                     <div class="button-background">
                         <ion-icon class="button-icon" name="trophy-outline"></ion-icon>
                     </div>
@@ -47,7 +47,7 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-card class="card-color-white" (click)="routerNavigate('profil')">
+                <ion-card class="card-color-white" [routerLink]="'/profil'">
                     <div class="button-background">
                         <ion-icon class="button-icon" name="person-outline"></ion-icon>
                     </div>
@@ -57,7 +57,7 @@
                 </ion-card>
             </ion-col>
             <ion-col>
-                <ion-card class="card-color-white" (click)="routerNavigate('hilfe')">
+                <ion-card class="card-color-white" [routerLink]="'/hilfe'">
                     <div class="button-background">
                         <ion-icon class="button-icon" name="help-outline"></ion-icon>
                     </div>
@@ -68,5 +68,5 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <app-footer></app-footer>
 </ion-content>
+<app-footer></app-footer>

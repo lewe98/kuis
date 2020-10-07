@@ -1,0 +1,12 @@
+<ion-list>
+  <div [hidden]="quelleBool">
+    <h5>Möchten Sie die Quelle wirklich sehen?</h5>
+    <p>Die Quelle könnte möglicherweise Aufschluss auf das Ergebnis geben!</p>
+    <ion-button (click)="quelleBool=true">Quelle ansehen</ion-button>
+  </div>
+  <div [hidden]="!quelleBool">
+    <h5>Quelle:</h5>
+    <p>{{quelle}}</p>
+  </div>
+</ion-list>
+

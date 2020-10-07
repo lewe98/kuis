@@ -6,6 +6,7 @@ import {ProfilEditPage} from './profil-edit/profil-edit.page';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {Subscription} from 'rxjs';
 import {ToastService} from '../../services/toast/toast.service';
+import * as firebase from 'firebase';
 
 @Component({
     selector: 'app-profil',
@@ -16,6 +17,7 @@ export class ProfilPage {
 
     user: User;
     subUser: Subscription;
+    hasVerified = true;
 
     constructor(public authService: AuthService,
                 private toastService: ToastService,
@@ -24,7 +26,10 @@ export class ProfilPage {
                 private iab: InAppBrowser) {
         this.user = this.authService.getUser();
         this.authService.loadPageSubscription(u => this.user = u);
+        this.hasVerified = firebase.auth().currentUser.emailVerified;
     }
+
+    // hasVerified2 = this.user.isVerified;
 
     openGoogleEdit() {
         this.iab.create('https://myaccount.google.com/');
@@ -39,6 +44,7 @@ export class ProfilPage {
 
     async deleteWarning(user: User) {
         const alert = await this.alertController.create({
+            mode: 'ios',
             header: 'Warnung!',
             subHeader: 'Diese Aktion kann nicht rückgängig gemacht werden.',
             message: `<p>Möchten Sie ihren Account <em><b>` + user.nutzername + `</b></em> wirklich löschen?</p>`,

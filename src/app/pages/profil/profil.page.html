@@ -1,14 +1,21 @@
+<ion-header>
 <app-navbar name="Profil" [showLogout]="true"></app-navbar>
+</ion-header>
+
+<ion-header *ngIf="hasVerified == false" style="background-color: red; color: white">
+    <p style="padding-left: 10px"><b>Dein Konto ist noch nicht bestätigt.</b><br>Bitte schau in deinem E-Mail Postfach nach der Bestätigung.<br>
+    Falls du deine E-Mail bereits bestätigt hast, lade die Seite nochmal neu.</p>
+</ion-header>
 
 <ion-content>
     <div class="kuis-content">
-        <ion-card>
-            <ion-card-header>
-                <ion-card-title>{{user.nutzername}}</ion-card-title>
-            </ion-card-header>
-
+        <ion-card class="margin">
             <ion-card-content>
-                <ion-item>
+                <ion-item lines="none">
+                    <h1><b>{{user.nutzername}}</b></h1>
+                </ion-item>
+
+                <ion-item lines="none">
                     <ion-icon color="black" name="mail-outline"></ion-icon>
                     {{user.email}}
                 </ion-item>
@@ -21,16 +28,10 @@
             </ion-card-content>
         </ion-card>
 
-        <div *ngIf="!user.googleAccount; else google">
-            <app-kuis-button [title]="'Profil bearbeiten'" (click)="showEditModal()"></app-kuis-button>
-        </div>
-
+        <app-kuis-button [title]="'Profil bearbeiten'" (click)="showEditModal()"></app-kuis-button>
         <app-kuis-button [title]="'Logout'" (click)="authService.logOut()"></app-kuis-button>
-        <ng-template #google>
-            <app-kuis-button [title]="'Google Profil öffnen'" (click)="openGoogleEdit()"></app-kuis-button>
-        </ng-template>
         <app-kuis-button [title]="'Account löschen'" (click)="deleteWarning(user)"></app-kuis-button>
-        <app-footer>
-        </app-footer>
+
     </div>
 </ion-content>
+<app-footer slot="fixed"></app-footer>

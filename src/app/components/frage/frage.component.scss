@@ -1,19 +1,140 @@
-.richtig1 {
-  background-color: green;
+@import 'src/global.scss';
+
+ion-card-content {
+  width: 100%;
+  height: auto;
+  padding: 15px 0;
+  border: 0;
+  margin: 0;
 }
 
-.richtig2 {
-  background-color: green;
+ion-grid, ion-col {
+  padding: 0;
 }
 
-.richtig3 {
-  background-color: green;
+ion-card-header {
+  padding: 0;
+  border: 0;
+  margin: 0;
 }
 
-.richtig4 {
-  background-color: green;
+ion-card-title {
+  color: $color-kuisBlack;
+  text-align: center;
 }
 
-.nochNichtGewaehlt{
+ion-row {
+  margin-left: auto;
+}
+
+.bild-container {
+  // border: solid 10px $color-kuis;
+  // border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.inneres-bild {
+  position: relative;
+  z-index: 2;
+  object-fit: contain;
+}
+
+img {
+  border-radius: 20px;
+  width: 100%;
+  height: 29vh;
+}
+
+.background-image {
+  left: 0;
+  top: 0;
+  z-index: 1;
+  position: absolute;
+  filter: blur(8px);
+  object-fit: fill;
+  display: inline-block;
+}
+
+.kuis-border {
+  z-index: 6;
+  width: 100%;
+  height: 30vh;
+  position: absolute;
+  border-radius: 20px;
+  border: solid 10px $color-kuis;
+}
+
+.antwort {
+  ion-card-title {
+    font-size: 20px;
+  }
+  height: 74px;
+  background-color: white;
+  width: 95%;
+  min-height: 10vh;
+  cursor: pointer;
+  border-radius: 20px;
+  text-align: center;
+  box-sizing: border-box;
+  border: 0 solid $color-kuisGray;
+}
+
+.richtig {
+  background-color: $color-kuis;
+  opacity: 1;
+}
+
+.falsch {
+  background-color: $color-kuisRed;
+  opacity: 1;
+}
+
+.antwort1 {
+  margin: 5% 5% 5% 0;
+}
+
+.antwort2 {
+  margin: 5% 0 5% 5%;
+}
+
+.antwort3 {
+  margin: 5% 5% 5% 0;
+}
+
+.antwort4 {
+  margin: 5% 0 5% 5%;
+}
+
+.disabled {
+  background: darken($color-kuisGray, 10%);
+
+  ion-card-title {
+    color: grey !important;
+  }
+}
+
+.nochNichtGewaehlt {
+}
+
+.info-icon {
+  z-index: 7;
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+button:focus {
+  outline: none;
+}
+
+@media (max-width: 700px) {
+  .antwort {
+    ion-card-title {
+      font-size: 15px;
+    }
+  }
 
 }

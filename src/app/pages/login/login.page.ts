@@ -76,15 +76,6 @@ export class LoginPage implements OnInit, ViewDidEnter {
     }
 
     /**
-     * method to use the google login
-     */
-    googleLogin() {
-        this.authService.GoogleAuth().then(() => {
-            this.router.navigate(['/startseite']);
-        });
-    }
-
-    /**
      * checks on init if the user is logged in and blocks the navigate to the loginview if he is logged in
      */
     ngOnInit() {

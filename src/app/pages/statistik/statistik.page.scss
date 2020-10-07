@@ -1,0 +1,13 @@
+@import 'src/global.scss';
+
+.richtig {
+  background-color: green;
+}
+
+.falsch {
+  background-color: red;
+}
+ion-item-group {
+  border-bottom: solid 1px $color-kuisGray;
+  margin: 10px;
+}

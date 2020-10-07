@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {StorageService} from '../../services/storage/storage.service';
 
 @Component({
     selector: 'app-quiz-wrapper',
@@ -8,20 +7,23 @@ import {StorageService} from '../../services/storage/storage.service';
 })
 export class QuizWrapperComponent implements OnInit {
 
+    @Input() length: number;
     @Input() titel: string;
     @Input() bild: string;
     @Input() add = false;
     @Input() edit = false;
     @Input() button = 'Starten';
+    @Input() bestResult: number;
 
-    constructor(private storageService: StorageService) {
-        /* alert(this.bild);
-         this.storageService.getPicture(this.bild).then((res) => {
-             alert(res);
-             this.url = res;
-         });
+    constructor() {
+    }
 
-         */
+    /**
+     * @return Returns a value which is >=1. Takes the highest personal score and compares it to the length of the module itself.
+     * Used to measure the progress that the player has made on that specific module.
+     */
+    progress() {
+        return this.bestResult / this.length;
     }
 
     ngOnInit() {

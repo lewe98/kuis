@@ -25,6 +25,7 @@ export class ToastService {
             duration: 3000,
             color: 'medium',
             position: 'top',
+            mode: 'ios',
             buttons: [
                 {
                     text: 'OK',
@@ -33,6 +34,40 @@ export class ToastService {
             ]
         });
         await toast.present();
+    }
+
+    /**
+     * Presents a toast in the middle of the screen for 2 sec
+     * @param message the message to be displayed
+     */
+    async presentToastSuccess(message) {
+        const toast = await this.toastController.create({
+            message,
+            duration: 3000,
+            mode: 'ios',
+            color: 'success',
+            position: 'top',
+            buttons: [
+                {
+                    text: 'OK',
+                    role: 'cancel'
+                }
+            ]
+        });
+        await toast.present();
+    }
+
+    async presentLoadingDuration(message: string, duration: number) {
+        const loading = await this.loadingController.create({
+            cssClass: 'my-custom-class',
+            message,
+            duration,
+            mode: 'ios',
+            spinner: 'dots'
+        });
+        await loading.present();
+
+        const { role, data } = await loading.onDidDismiss();
     }
 
     /**

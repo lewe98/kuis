@@ -8,8 +8,8 @@ import {Component, Input} from '@angular/core';
 export class QuizFortschrittComponent {
     @Input() anzahl: number;
     @Input() gesamtAnzahl: number;
+    @Input() fortschritt: string;
 
     constructor() {
     }
-
 }

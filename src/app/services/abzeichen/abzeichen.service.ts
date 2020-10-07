@@ -41,6 +41,24 @@ export class AbzeichenService {
             })));
     }
 
+    /**
+     * Method to find an "Abzeichen" by id
+     * @param id id of an "Abzeichen"
+     * @return Observable<Abzeichen> "Abzeichen" that was found
+     */
+    findById(id): Observable<Abzeichen> {
+        const changeAction = this.abzeichenCollection.doc<Abzeichen>(id);
+        return changeAction.snapshotChanges()
+            .pipe(
+                map(changes => {
+                    const data = changes.payload.data();
+                    if (data) {
+                        data.id = id;
+                    }
+                    return {...data};
+                }));
+    }
+
     sortAbzeichen(arr: Abzeichen[]): Abzeichen[] {
         return arr.sort(((a, b) => {
             return a.index - b.index;
@@ -176,7 +194,6 @@ export class AbzeichenService {
 
         if (window.location.pathname === '/hilfe' &&
             !this.authService.user.abzeichen.find(a => a === this.abzeichen[13].id)) {
-            console.log(this.authService.user.abzeichen);
             this.authService.user.abzeichen.push(this.abzeichen[13].id);
             this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[13].titel);
             this.authService.updateProfile(this.authService.user);
@@ -193,14 +210,16 @@ export class AbzeichenService {
     }
 
     checkAbzeichenModulImportiert() {
-        if (this.authService.user.importierteModule.length >= 1 &&
-            !this.authService.user.abzeichen.find(a => a === this.abzeichen[11].id)) {
+        if (!this.authService.user.abzeichen.find(a => a === this.abzeichen[11].id)) {
             this.authService.user.abzeichen.push(this.abzeichen[11].id);
             this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[11].titel);
         }
     }
 
     checkAbzeichenModulGeloescht() {
-        // TODO
+        if (!this.authService.user.abzeichen.find(a => a === this.abzeichen[12].id)) {
+            this.authService.user.abzeichen.push(this.abzeichen[12].id);
+            this.toastService.presentToast('Neues Abzeichen erreicht!\n' + this.abzeichen[12].titel);
+        }
     }
 }

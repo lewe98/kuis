@@ -1,7 +1,7 @@
 @import 'src/global.scss';
 
 ion-content {
-background-color: $color-kuisGray;
+  background-color: $color-kuisGray;
 }
 
 .headerText {
@@ -43,30 +43,26 @@ background-color: $color-kuisGray;
 .slide-text {
   text-align: center;
   position: relative;
-  color: white;
+  color: $color-kuisBlack;
   bottom: 100%;
 }
 
 .image {
-  width: 100%;
-  height: 80%;
+  width: 65%;
+  height: 65%;
   object-fit: scale-down;
 }
 
-.googleIMG {
-  margin: 0;
-  padding: 0;
-  background: white;
-  object-fit: scale-down;
-  width: 100%;
-  height: 100%;
-}
-
-@media  (max-width: 370px) {
+@media (max-width: 500px) {
   .slide-text {
     bottom: 35%;
   }
   .section-buttons {
     width: 90%;
+  }
+  .image {
+    width: 100%;
+    height: 80%;
+    object-fit: scale-down;
   }
 }

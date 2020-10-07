@@ -15,6 +15,7 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {KuisButtonComponent} from './components/button/kuis-button/kuis-button.component';
 import {ChartsModule} from 'ng2-charts';
+import '@codetrix-studio/capacitor-google-auth';
 
 @NgModule({
     declarations: [AppComponent],

@@ -1,6 +1,6 @@
-<div>
+<div class="component">
     <h1>{{anzahl}}/{{gesamtAnzahl}}</h1>
     <div class="kuis-fortschritt-balken-background">
-        <div class="kuis-fortschritt-balken"></div>
+        <div [ngStyle]="{'width': fortschritt}" class="kuis-fortschritt-balken"></div>
     </div>
 </div>

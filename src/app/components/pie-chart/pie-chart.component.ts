@@ -11,8 +11,6 @@ import {AuthService} from '../../services/auth/auth.service';
     styleUrls: ['./pie-chart.component.scss'],
 })
 export class PieChartComponent {
-    // Quelle: https://valor-software.com/ng2-charts/
-
     public pieChartOptions: ChartOptions = {
         responsive: true,
         legend: {
@@ -33,7 +31,7 @@ export class PieChartComponent {
     public pieChartPlugins = [pluginDataLabels];
     public pieChartColors = [
         {
-            backgroundColor: ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)'],
+            backgroundColor: ['rgba(193, 60, 60, 1)', 'rgba(18, 179, 154, 1)'],
         },
     ];
 
@@ -48,6 +46,10 @@ export class PieChartComponent {
     stunden = 0;
     tage = 0;
 
+    /**
+     * Prepair User for Statistik/Pie-Chart
+     * @param authService to get current logged in user
+     */
     constructor(public authService: AuthService) {
         this.user = this.authService.getUser();
 

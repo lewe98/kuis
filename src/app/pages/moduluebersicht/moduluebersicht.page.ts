@@ -1,14 +1,14 @@
-import {Component, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
 import {ModulService} from '../../services/modul/modul.service';
-import {Modul} from '../../models/modul';
-import {IonInput, IonRouterOutlet, ModalController, PopoverController, ViewDidEnter} from '@ionic/angular';
+import {AlertController, IonInput, IonRouterOutlet, ModalController, PopoverController, ViewDidEnter} from '@ionic/angular';
 import {ToastService} from '../../services/toast/toast.service';
 import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add.page';
 import {AuthService} from '../../services/auth/auth.service';
 import {Subscription} from 'rxjs';
 import {PopoverFilterComponent} from '../../components/popover-filter/popover-filter.component';
+import {Modul} from '../../models/modul';
 
 
 @Component({
@@ -19,7 +19,6 @@ import {PopoverFilterComponent} from '../../components/popover-filter/popover-fi
 export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
     isEdit = false;
     subUser: Subscription;
-    url = '';
     @ViewChild(IonInput) search: IonInput;
 
     constructor(private authService: AuthService,
@@ -29,28 +28,35 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                 private router: Router,
                 private modalController: ModalController,
                 private routerOutlet: IonRouterOutlet,
-                public popoverController: PopoverController) {
-        this.authService.loadPageSubscription(() => {
-            this.modulService.loadImportedModule();
-        });
-        }
-
-/**
- * Method to receive all questions from a quiz module.
- * @param name name of the chosen quiz.
- * @param id id of the chosen quiz.
- * @param bild name of the picture of the chosen quiz.
- */
-    chooseQuiz(name: string, id: string, bild: string) {
-        this.modulService.started = true;
-        this.storageService.findAllFragen(id, name)
-            .then(() => {
-                this.storageService.getPicture(bild)
-                    .then((res) => {
-                        this.url = res;
-                    });
-                this.router.navigate(['/quiz']);
+                public popoverController: PopoverController,
+                private alertController: AlertController) {
+        localStorage.removeItem('modus');
+        this.toastService.presentLoading('Module werden geladen...')
+            .then(async () => {
+                await this.authService.loadPageSubscription(() => {
+                    this.modulService.loadImportedModule();
+                });
+                await this.toastService.dismissLoading();
             });
+    }
+
+    /**
+     * Method to receive all questions from a quiz module.
+     * @param titel title of the chosen quiz.
+     * @param name name of the quiz-module.
+     * @param id id of the chosen quiz.
+     * @param bild name of the picture of the chosen quiz.
+     */
+    chooseQuiz(titel: string, id: string, bild: string, name: string) {
+        if (this.modulService.disableStart === false) {
+            this.modulService.started = true;
+            this.modulService.isFreiermodus = true;
+            localStorage.setItem('modus', 'frei');
+            this.storageService.findAllFragen(id, titel, name)
+                .then(() => {
+                    this.router.navigate(['/quiz']);
+                });
+        }
     }
 
     /**
@@ -60,7 +66,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         const input = await this.search.getInputElement();
         const searchValue = input.value;
         this.modulService.filteredModules = this.modulService.importedModule.filter(a => {
-            return a.titel.toLowerCase().includes(searchValue.toLowerCase());
+            return a.name.toLowerCase().includes(searchValue.toLowerCase());
         });
     }
 
@@ -76,18 +82,26 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      * Method opens Modal to import module.
      */
     async presentModalAddModule() {
+        this.isEdit = false;
         const modal = await this.modalController.create({
             component: ModuluebersichtAddPage,
             swipeToClose: true,
-            presentingElement: this.routerOutlet.nativeEl
+            presentingElement: this.routerOutlet.nativeEl,
+            mode: 'ios'
         });
         return await modal.present();
     }
 
+    /**
+     * toggle edit mode
+     */
     edit() {
         this.isEdit = true;
     }
 
+    /**
+     * toggle edit mode
+     */
     undoEdit() {
         this.isEdit = false;
     }
@@ -101,17 +115,16 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
      */
     async onButtonClick(module) {
         if (this.isEdit === false) {
-            this.chooseQuiz(module.titel, module.id, module.bild);
+            this.chooseQuiz(module.titel, module.id, module.bild, module.name);
         } else {
-            const user = await this.authService.getUser();
-            const removeIndex = await user.importierteModule.map(item => item.id).indexOf(module.id);
-            if (removeIndex >= 0) {
-                await user.importierteModule.splice(removeIndex, 1);
-                await this.authService.updateProfile(user);
-            }
+            this.presentAlertDelete(module);
         }
     }
 
+    /**
+     * This Method shows a popover to filter and sort the ModuleAnsicht.
+     * @param ev is the event within the event is target.
+     */
     async presentPopover(ev: any) {
         const popover = await this.popoverController.create({
             component: PopoverFilterComponent,
@@ -123,10 +136,52 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         return await popover.present();
     }
 
-    ionViewDidEnter() {
-        setTimeout(() => this.search.setFocus(), 10);
+    /**
+     * This Method opens a Modal with the choice to delete a Modul or cancel it.
+     * @param module is the Modul that will be deleted.
+     */
+    async presentAlertDelete(module: Modul) {
+        const alert = await this.alertController.create({
+            mode: 'ios',
+            header: module.name + ' Quiz löschen?',
+            message: 'Wenn Sie das Modul löschen gehen alle Spielstände verloren.',
+            buttons: [
+                {
+                    text: 'Abbrechen',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                    }
+                }, {
+                    text: 'Löschen',
+                    handler: () => {
+                        if (this.modulService.module.length === 1) {
+                            this.isEdit = false;
+                        }
+                        this.modulService.deleteModule(module);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
+
+    /**
+     * sets focus on ViewEnter
+     */
+    ionViewDidEnter() {
+        if (this.modulService.module.length > 0) {
+            setTimeout(() => this.search.setFocus(), 10);
+        }
+    }
+
+    /**
+     * unsubschribe modules when component is destroyed
+     */
     ngOnDestroy() {
-        this.modulService.subModule.unsubscribe();
+        // this.modulService.subModule.unsubscribe();
+        this.modulService.module = [];
+        this.modulService.filteredModules = [];
     }
 }

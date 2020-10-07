@@ -23,11 +23,11 @@ export class StorageService {
         return {id: doc.id, ...doc.data()};
     }
 
-    findAllFragen(id: string, name: string): Promise<any> {
+    findAllFragen(id: string, titel: string, name: string): Promise<any> {
         return new Promise((resolve) => {
             this.afs.collection('module')
                 .doc(id)
-                .collection(name)
+                .collection(titel)
                 .get()
                 .toPromise()
                 .then(snapshot => {

@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
+import {AlertController} from '@ionic/angular';
+import {ModulService} from '../../services/modul/modul.service';
 
 @Component({
     selector: 'app-navbar',
@@ -19,21 +21,53 @@ export class NavbarComponent {
     @Input() name: string;
     @Input() showLogout: boolean;
     @Input() showBack: boolean;
-
-    defaultHref = 'startseite';
-
+    @Input() questionsAvailable = false;
 
     constructor(public authService: AuthService,
-                private router: Router) {
+                private router: Router,
+                private alertController: AlertController,
+                private modulService: ModulService) {
         this.showBack = true;
-        if (window.location.pathname === '/login' || window.location.pathname === '/registrierung') {
-            this.defaultHref = 'landing';
+    }
+
+
+    stat() {
+        const pathname = window.location.pathname;
+        if (pathname === '/login' || pathname === '/registrierung') {
+            this.router.navigate(['landing']);
+        } else if (window.location.pathname === '/quiz' && this.questionsAvailable === true) {
+            this.presentAlertBack();
+        } else {
+            this.router.navigate(['startseite']);
         }
     }
 
-    stat() {
-        if (window.location.pathname === '/statistik') {
-            this.router.navigate(['startseite']);
-        }
+    async presentAlertBack() {
+        const alert = await this.alertController.create({
+            mode: 'ios',
+            header: 'Runde wirklich Abbrechen?',
+            message: 'Wenn Sie die Runde abbrechen gehen alle Erfolge verloren.',
+            buttons: [
+                {
+                    text: 'Spiel abbrechen',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        this.modulService.started = false;
+                        if (this.modulService.isLernmodus) {
+                            this.router.navigate(['startseite']);
+                        }else{
+                            this.router.navigate(['moduluebersicht']);
+                        }
+                    }
+                }, {
+                    text: 'Weiterspielen',
+                    handler: () => {
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }

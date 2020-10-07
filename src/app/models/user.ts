@@ -2,7 +2,6 @@ export class User {
     public id: string;
     public nutzername: string;
     public email: string;
-    public passwort: string;
     public emailBestaetigt: boolean;
     public isOnboarded: boolean;
     public abzeichen: string[];
@@ -12,13 +11,13 @@ export class User {
     public historieFreiermodusAnzahl: string[];
     public importierteModule: any[];
     public googleAccount: boolean;
-    public forbiddenQuestions: string[];
+    public alreadyLearned: any[];
     public availableQuestions: any[];
+    public isVerified: boolean;
 
-    constructor(nutzername: string, email: string, passwort: string, googleAccount: boolean) {
+    constructor(nutzername: string, email: string, googleAccount: boolean) {
         this.nutzername = nutzername;
         this.email = email;
-        this.passwort = passwort;
         this.googleAccount = googleAccount;
 
         this.emailBestaetigt = false;
@@ -30,6 +29,7 @@ export class User {
         this.abzeichen = [];
         this.importierteModule = [];
         this.availableQuestions = [];
-        this.forbiddenQuestions = [];
+        this.alreadyLearned = [];
+        this.isVerified = true;
     }
 }
