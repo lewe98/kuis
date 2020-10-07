@@ -4,7 +4,6 @@
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
-  "windowsAndroidStudioPath": "C:\\Users\\Nosun\\AppData\\Local\\JetBrains\\Toolbox\\apps\\AndroidStudio\\ch-0\\193.6514223\\bin\\studio64.exe",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
