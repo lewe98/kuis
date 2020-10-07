@@ -25,11 +25,11 @@ export class ProfilEditPage implements ViewDidEnter {
         this.alterNutzername = this.user.nutzername;
     }
 
-    save(nutzername, email: string, passwort: string) {
+    save(nutzername: string, email: string, passwort: string) {
         this.errors.clear();
 
         if (this.user.googleAccount) {
-            if (!nutzername) {
+            if (!nutzername || nutzername.trim() === '') {
                 this.errors.set('nutzername', 'Nutzername darf nicht leer sein!');
             }
             if (this.errors.size === 0) {
@@ -38,7 +38,7 @@ export class ProfilEditPage implements ViewDidEnter {
                 this.dismiss();
             }
         } else {
-            if (!nutzername) {
+            if (!nutzername || nutzername.trim() === '') {
                 this.errors.set('nutzername', 'Nutzername darf nicht leer sein!');
             }
             if (!email) {
@@ -58,6 +58,9 @@ export class ProfilEditPage implements ViewDidEnter {
             }
             if (this.errors.size === 0) {
                 this.abzeichenService.checkUsernameChanged(this.alterNutzername);
+                if (nutzername.trim() === '') {
+                    this.user.nutzername = this.alterNutzername;
+                }
                 this.authService.update(this.user, passwort)
                     .then(() => {
                         this.dismiss();
@@ -71,6 +74,9 @@ export class ProfilEditPage implements ViewDidEnter {
     }
 
     dismiss() {
+        if (this.user.nutzername.trim() === '') {
+            this.user.nutzername = this.alterNutzername;
+        }
         this.modalController.dismiss();
     }
 
