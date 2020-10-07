@@ -38,6 +38,12 @@
             <h5>Fertig</h5>
         </ion-col>
     </ion-row>
+    <ion-row>
+        <ion-col class="kuis-info">
+            <ion-icon class="kuis-icon-info" name="information-circle-outline"></ion-icon>
+            <ion-note class="kuis-note">Hier könnte deine Info stehen!</ion-note>
+        </ion-col>
+    </ion-row>
     <div *ngIf="modulService.filteredModules.length > 0; else empty">
         <app-quiz-wrapper (click)="onButtonClick(modul)"
                           [titel]="modul.name"
