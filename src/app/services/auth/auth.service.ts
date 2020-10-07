@@ -20,7 +20,6 @@ export class AuthService {
     user: User;
     subUser: Subscription;
     userCollection: AngularFirestoreCollection<User>;
-
     isLoggedIn = false;
     isSession = false;
 
@@ -130,6 +129,7 @@ export class AuthService {
                     .catch(error => {
                         this.toastService.dismissLoading();
                         this.toastService.presentWarningToast('Error!', error);
+                        u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                     });
                 await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
                 await this.toastService.dismissLoading();
@@ -150,9 +150,9 @@ export class AuthService {
      * @param user user to be deleted
      */
     async deleteProfile(user: User) {
+        const u = firebase.auth().currentUser;
         await this.toastService.presentLoading('Bitte warten. \n Dies kann einige Sekunden dauern.')
             .then(async () => {
-                const u = firebase.auth().currentUser;
                 if (user.googleAccount && !this.platform.is('android')) {
                     await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                 }
@@ -166,7 +166,8 @@ export class AuthService {
                 await this.userCollection.doc(user.id).delete();
             }).catch(err => {
                 this.toastService.dismissLoading();
-                this.toastService.presentWarningToast(Error, err);
+                this.toastService.presentWarningToast('Error', err);
+                u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
             });
         await this.toastService.dismissLoading();
         await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest ausgeloggt.');
