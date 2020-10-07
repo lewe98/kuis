@@ -1,7 +1,7 @@
 <div>
     <ion-card class="card-border-rounded kuis-margin">
         <ion-item lines="none">
-            <h3 slot="start">Gesamt-Statistik</h3>
+            <h3 slot="start">Überblick der Lernrunden</h3>
             <h5 style="margin-left: 0" slot="end">{{sumFragen}} Fragen</h5>
         </ion-item>
         <ion-card-content *ngIf="user.historieLernmodus.length != 0; else noHistory">
@@ -21,8 +21,7 @@
                 </div>
             </div>
             <ion-item lines="none">
-                <h3 slot="start">Spielzeit</h3>
-                <h3 slot="end">{{tage}}d {{stunden}}h {{minuten}}m {{sekunden}}s</h3>
+                <h3>Spielzeit {{tage}}d {{stunden}}h {{minuten}}m {{sekunden}}s</h3>
             </ion-item>
         </ion-card-content>
     </ion-card>
