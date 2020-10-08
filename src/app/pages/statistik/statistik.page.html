@@ -10,8 +10,8 @@
             <ion-card-content>
                 <ion-list>
                     <ion-item-group *ngFor="let statistik of tmpArray" (click)="showStatistik(statistik)">
-                        <ion-item lines="none" class="klickbar">
-                            {{statistik._frage}}
+                        <ion-item [class.farbe-richtig]="statistik._gewaehlteAntwort === statistik._richtigeAntwort" [class.farbe-falsch]="statistik._gewaehlteAntwort !== statistik._richtigeAntwort" color="green" lines="none" class="klickbar">
+                           {{statistik._frage}}
                             <br>
                             <ion-icon *ngIf="statistik._showBeschreibung" color="#000" slot="end"
                                       name="chevron-up-outline"></ion-icon>
