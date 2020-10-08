@@ -11,3 +11,11 @@ ion-item-group {
   border-bottom: solid 1px $color-kuisGray;
   margin: 10px;
 }
+
+.farbe-richtig {
+  color: $color-kuisGreen;
+}
+
+.farbe-falsch {
+  color: $color-kuisRed;
+}

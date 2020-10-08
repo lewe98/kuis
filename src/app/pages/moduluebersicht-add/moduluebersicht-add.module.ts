@@ -8,15 +8,17 @@ import { ModuluebersichtAddPageRoutingModule } from './moduluebersicht-add-routi
 
 import { ModuluebersichtAddPage } from './moduluebersicht-add.page';
 import {ModuluebersichtPageModule} from '../moduluebersicht/moduluebersicht.module';
+import {LandingPageModule} from '../landing/landing.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ModuluebersichtAddPageRoutingModule,
-    ModuluebersichtPageModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ModuluebersichtAddPageRoutingModule,
+        ModuluebersichtPageModule,
+        LandingPageModule
+    ],
   declarations: [ModuluebersichtAddPage]
 })
 export class ModuluebersichtAddPageModule {}

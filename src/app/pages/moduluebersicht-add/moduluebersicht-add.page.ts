@@ -5,7 +5,7 @@ import {ToastService} from '../../services/toast/toast.service';
 import {Modul} from '../../models/modul';
 import {AuthService} from '../../services/auth/auth.service';
 import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
-import {IonInput, ModalController} from '@ionic/angular';
+import {IonContent, IonInput, ModalController} from '@ionic/angular';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
 @Component({
@@ -23,6 +23,7 @@ export class ModuluebersichtAddPage {
     array = [];
     length: number;
     @ViewChild(IonInput) search: IonInput;
+    @ViewChild(IonContent) pageTop: IonContent;
 
     constructor(public modulService: ModulService,
                 private authService: AuthService,
@@ -112,5 +113,12 @@ export class ModuluebersichtAddPage {
     clear() {
         this.search.value = '';
         this.filteredModules = this.module;
+    }
+
+    /**
+     * method to scroll to the top of the page
+     */
+    pageScroller() {
+        this.pageTop.scrollToTop();
     }
 }

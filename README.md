@@ -251,15 +251,19 @@ Falls noch kein Emulations Device konfiguriert wurde, kann eines mithilfe des ``
 
 ## Fazit
 Die Projektarbeit ist unserer Meinung nach zufriedenstellend verlaufen und sehr gut gelungen.
-Durch die Erfahrungen, die wir mit der Entwicklung des Leistungensammlers machen durften, waren wir in der Lage, die App so zu entwickeln, sodass
+Durch die Erfahrungen, die wir mit der Entwicklung des Leistungssammlers machen durften, waren wir in der Lage, die App so zu entwickeln, sodass
 zum Einen die Anforderungen der Aufgabenstellung umgesetzt werden konnten. Zum Anderen könnten die Wünsche und Erwartungen der Probanden der User Experience Tests
 erfüllt wurden. Dadruch wurden viele zusätzliche Features implementiert, die das Projekt noch einmal abrunden.
 
 Durch eine durchdachte Planung war es möglich, mithilfe des Projektmanagement-Werkzeugs "Jira" und der "Scrum"-Methodik die Entwicklung in sieben Sprints aufzuteilen,
-sodass man eine stetige Entwicklung aufrecht erhalten konnte und man in keinen "Leerlauf" geraten ist.
+sodass man eine stetige Entwicklung aufrechterhalten konnte und man in keinen "Leerlauf" geraten ist.
 Trotz der aktuellen COVID-19 Pandemie war es möglich, mit Telekommunikations-Software wie "Zoom" und "Discord" kurze Kommunikationswege zu gewährleisten
 und sogar Pair-Programming dank "Screen-Sharing" durchzuführen.
 
+Das Projekt ist unserer Meinung nach sehr gut gelungen und konnten alle Anforderungen umsetzen. Zusätzlich wurden viele extra Features eingebaut die das Projekt noch einmal abrunden.
+
 Der komplette Entwicklungszyklus wurde dank eines sehr guten und freundschaftlichen Arbeitsklimas bestärkt und wir sind uns alle sicher, dass wir 
 jederzeit wieder in dieser Konstellation zusammen arbeiten würden.
+
+
 
