@@ -166,7 +166,14 @@ Falls noch kein Emulations Device konfiguriert wurde, kann eines mithilfe des ``
 │   ├── praesentation (Abbildungen für README.md)
 │   │   ├── ...
 │   ├── resources
+│   │   ├── resources
+│   │   |   ├── android (App-Icons und Splash-Screens für verschiedene Auflösungen)
+│   │   |   |   ├── icon
+│   │   |   |   |   ├── ...
+│   │   |   |   ├── splash
+│   │   |   |   |   ├── ...
 │   │   ├── icon.png (App-Icon)
+│   │   ├── splash.png (Splash-Screen-Icon)
 │   ├── src
 │   │   ├── app
 │   |   │   ├── components (Alle Komponenten)
