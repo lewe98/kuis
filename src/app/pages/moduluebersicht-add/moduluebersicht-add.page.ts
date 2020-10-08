@@ -5,7 +5,7 @@ import {ToastService} from '../../services/toast/toast.service';
 import {Modul} from '../../models/modul';
 import {AuthService} from '../../services/auth/auth.service';
 import {HilfsObjektFrage} from '../../models/hilfsObjektFrage';
-import {IonInput, ModalController, ViewDidEnter} from '@ionic/angular';
+import {IonInput, ModalController} from '@ionic/angular';
 import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 
 @Component({
@@ -13,7 +13,7 @@ import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
     templateUrl: './moduluebersicht-add.page.html',
     styleUrls: ['./moduluebersicht-add.page.scss'],
 })
-export class ModuluebersichtAddPage implements ViewDidEnter {
+export class ModuluebersichtAddPage {
 
     module: Modul[] = [];
     filteredModules: Modul[] = [];
@@ -112,12 +112,5 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
     clear() {
         this.search.value = '';
         this.filteredModules = this.module;
-    }
-
-    /**
-     * Sets focus on the searchbar.
-     */
-    ionViewDidEnter() {
-        setTimeout(() => this.search.setFocus(), 100);
     }
 }

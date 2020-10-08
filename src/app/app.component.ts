@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Platform} from '@ionic/angular';
 
 @Component({
     selector: 'app-root',
@@ -7,7 +8,19 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
 
-    constructor() {
+    showSplash = true;
+
+    constructor(private platform: Platform) {
+        this.initializeApp();
+    }
+
+    initializeApp() {
+        this.platform.ready()
+            .then(() => {
+                setTimeout(() => {
+                    this.showSplash = false;
+                }, 2000);
+            });
     }
 
 
