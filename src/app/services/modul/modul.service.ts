@@ -257,7 +257,7 @@ export class ModulService {
         }
         setTimeout(() => {
             this.disableStart = false;
-        }, 1500);
+        }, 2000);
     }
 
     /**
