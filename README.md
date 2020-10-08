@@ -1,16 +1,9 @@
 ## Kuis - Dein Bilderrätsel
 ###### *CS2018 Entwicklung mobiler Applikationen - Sommersemester 2020*
 
-> Die Kuis-App bietet dem Nutzer die Möglichkeit, sein Allgemeinwissen mithilfe von Rätseln diverser Kategorien zu verbessern.
-> Abzeichen und Statistiken steigern die Motivation und bieten einen langfristigen Spielspaß.
 
 
-
-# Anforderung Doku!!!!!!!!
-Für alle Punkte gilt natürlich, dass Sie nur beschreiben und mit Grafiken illustrieren, was wirklich relevant ist.
-Gerne können Sie noch weitere Punkte ergänzen, wenn diese zum Verständnis Ihrer Software nützlich sind.
-
-Die Dokumentation können sie direkt in ihr GitLab-Projekt-Wiki schreiben, oder als PDF-Datei im Repository ablegen.
+> Teste dein Wissen! - Messe deinen Fortschritt! - Erreiche Abzeichen!
 
 
 
@@ -42,7 +35,6 @@ Die Dokumentation können sie direkt in ihr GitLab-Projekt-Wiki schreiben, oder 
 
 
 ## Einleitung
-#TODO
 Die Kuis-App bietet dem Nutzer die Möglichkeit, sein Allgemeinwissen mithilfe von Rätseln diverser Kategorien zu verbessern.
 Abzeichen können im Laufe der Zeit gesammelt und Statistiken verbessert werden; diese steigern die Motivation und bieten einen langfristigen Spielspaß.
 
@@ -141,7 +133,7 @@ Technologie | Verwendungszweck
 
 
 ## Installationsanleitung
-- Das Repository mithilfe von Xcode klonen:
+- Das Repository klonen:
     - ``https://git.thm.de/ema-ss20/pictures-app`` > ``master`` branch auswählen > das Repository klonen
 
 - Abhängigkeiten installieren:
@@ -231,10 +223,10 @@ Falls noch kein Emulations Device konfiguriert wurde, kann eines mithilfe des ``
 
 
 ## Fazit
-Die Projektarbeit ist insgesamt sehr zufriedenstellend verlaufen.
+Die Projektarbeit ist unserer Meinung nach zufriedenstellend verlaufen und sehr gut gelungen.
 Durch die Erfahrungen, die wir mit der Entwicklung des Leistungensammlers machen durften, waren wir in der Lage, die App so zu entwickeln, sodass
 zum Einen die Anforderungen der Aufgabenstellung umgesetzt werden konnten. Zum Anderen könnten die Wünsche und Erwartungen der Probanden der User Experience Tests
-erfüllt wurden.
+erfüllt wurden. Dadruch wurden viele zusätzliche Features implementiert, die das Projekt noch einmal abrunden.
 
 Durch eine durchdachte Planung war es möglich, mithilfe des Projektmanagement-Werkzeugs "Jira" und der "Scrum"-Methodik die Entwicklung in sieben Sprints aufzuteilen,
 sodass man eine stetige Entwicklung aufrecht erhalten konnte und man in keinen "Leerlauf" geraten ist.
