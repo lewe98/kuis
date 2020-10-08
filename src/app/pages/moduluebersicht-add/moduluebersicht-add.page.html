@@ -34,6 +34,13 @@
                           [bild]="modul.bild" *ngFor="let modul of filteredModules">
         </app-quiz-wrapper>
     </div>
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button (click)="pageScroller()">
+            <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
 </ion-content>
 
 <ng-template #empty>
