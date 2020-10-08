@@ -54,17 +54,12 @@
             <h3>Historie der frei gewählten Module</h3>
         </ion-item>
         <ion-list class="kuis-overflow" *ngIf="this.freiermodusanzahl.length != 0; else noHistory">
-            <ion-item-group *ngFor="let anzahl of this.freiermodusanzahl; let i = index">
+            <ion-item-group *ngFor="let anzahl of this.freiermodusanzahl; let j = index">
                 <ion-item lines="none">
-                    <ion-label *ngIf="i == 0 else lol" >
-                        <h4>{{this.freiermodusname[0]}}</h4>
+                    <ion-label>
+                        <h4>{{this.user.historieFreiermodusAnzahl.length - j}}. Lernrunde </h4>
                     </ion-label>
 
-                    <ng-template #lol>
-                    <ion-label>
-                        <h4>{{this.freiermodusname[i]}}</h4>
-                    </ion-label>
-                    </ng-template>
 
                     <h4 slot="end">{{anzahl}}</h4>
                 </ion-item>
