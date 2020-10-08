@@ -315,6 +315,7 @@ export class AuthService {
                             }
                         });
                 }).catch((error) => {
+                    this.toastService.presentWarningToast('Error', error);
                     reject(error);
                 });
             await this.toastService.dismissLoading();

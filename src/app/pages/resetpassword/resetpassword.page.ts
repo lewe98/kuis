@@ -39,10 +39,11 @@ export class ResetpasswordPage implements ViewDidEnter {
     async reset(emailForPassReset: string) {
         this.errors.clear();
         const auth = firebase.auth();
-        await this.navCtrl.pop();
+        await this.navCtrl.back();
         await auth.sendPasswordResetEmail(emailForPassReset)
             .then(async () => {
                 const alert = await this.alertController.create({
+                    mode: 'ios',
                     header: 'Passwort zurückgesetzt',
                     message: 'Wir haben eine E-Mail zum Zurücksetzen deines Passwortes an deine Adresse versandt!',
                     buttons: ['Verstanden']

@@ -51,6 +51,9 @@ export class StatistikPage implements OnDestroy {
         this.tmpArray = [];
         this.statistikService.tmpArray = [];
         this.statistikService.richtigBeantwortet = 0;
+        this.statistikService.freiermodusanzahl = [];
+        this.statistikService.freiermodusname = [];
+        this.statistikService.lernmodushistorie = [];
     }
 
 

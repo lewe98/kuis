@@ -1,10 +1,12 @@
 <div>
-    <ion-card class="card-border-rounded kuis-margin">
+
+    <ion-card class="card-border-rounded kuis-margin" *ngIf="user.historieLernmodus.length != 0">
+
         <ion-item lines="none">
-            <h3 slot="start">Überblick der Lernrunden</h3>
-            <h5 style="margin-left: 0" slot="end">{{sumFragen}} Fragen</h5>
+            <h3 slot="start">Überblick des Lernmodus</h3>
         </ion-item>
-        <ion-card-content *ngIf="user.historieLernmodus.length != 0; else noHistory">
+
+        <ion-card-content>
             <div>
                 <div>
                     <div class="chart">
@@ -21,19 +23,26 @@
                 </div>
             </div>
             <ion-item lines="none">
+                <h3>{{sumFragen}} Fragen ausgewertet.</h3>
+            </ion-item>
+
+            <ion-item lines="none">
                 <h3>Spielzeit {{tage}}d {{stunden}}h {{minuten}}m {{sekunden}}s</h3>
             </ion-item>
         </ion-card-content>
     </ion-card>
+
+
+
     <ion-card class="card-border-rounded kuis-margin">
         <ion-item>
             <h3>Historie des Lernmodus</h3>
         </ion-item>
-        <ion-list class="kuis-overflow" *ngIf="this.lernmodushistorie.length != 0; else noHistory">
-            <ion-item-group *ngFor="let spiel of lernmodushistorie; let i = index">
+        <ion-list class="kuis-overflow" *ngIf="this.statservice.lernmodushistorie.length != 0; else noHistory">
+            <ion-item-group *ngFor="let spiel of statservice.lernmodushistorie; let i = index">
                 <ion-item lines="none">
                     <ion-label>
-                        <h4>{{this.lernmodushistorie.length - i}}. Lernrunde </h4>
+                        <h4>{{this.statservice.lernmodushistorie.length - i}}. Lernrunde </h4>
                     </ion-label>
                     <h4 slot="end">{{spiel}}/10</h4>
                 </ion-item>
@@ -42,13 +51,13 @@
     </ion-card>
     <ion-card class="card-border-rounded kuis-margin">
         <ion-item>
-            <h3>Historie der frei gewählte Module</h3>
+            <h3>Historie der frei gewählten Module</h3>
         </ion-item>
-        <ion-list class="kuis-overflow" *ngIf="this.freiermodusanzahl.length != 0; else noHistory">
-            <ion-item-group *ngFor="let anzahl of this.freiermodusanzahl; let i = index">
+        <ion-list class="kuis-overflow">
+            <ion-item-group *ngFor="let anzahl of this.statservice.freiermodusanzahl; let j = index">
                 <ion-item lines="none">
                     <ion-label>
-                        <h4>{{this.lernmodushistorie.length - i}}.  {{this.freiermodusname[i]}}</h4>
+                        <h4>{{this.user.historieFreiermodusAnzahl.length - j}}. {{this.statservice.freiermodusname[j]}}</h4>
                     </ion-label>
                     <h4 slot="end">{{anzahl}}</h4>
                 </ion-item>
@@ -60,7 +69,7 @@
 <ng-template #noHistory>
     <ion-item lines="none">
         <ion-label>
-            <h1> Keine Historie vorhanden.</h1>
+            <h1> Keine Historie.</h1>
         </ion-label>
     </ion-item>
 </ng-template>

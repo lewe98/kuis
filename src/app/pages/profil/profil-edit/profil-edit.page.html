@@ -34,24 +34,24 @@
                 </p>
             </ion-list>
 
-            <app-kuis-button (click)="dismiss()" [title]="'Passwort zurücksetzen'" [margin]="true"
-                             [routerLink]="['/resetpassword']"></app-kuis-button>
-
-            <ion-note class="margin">*Pflichtfeld</ion-note>
 
         </ng-container>
 
         <div class="section-buttons ion-padding">
-            <ion-button class="kuis-button ion-padding-horizontal"
-                        expand="block"
-                        shape="round"
-                        fill="solid"
-                        size="large"
-                        (click)="save(user.nutzername)">
-                Speichern
-            </ion-button>
+
+            <ion-note class="margin">*Pflichtfeld</ion-note>
+
+            <app-kuis-button [title]="'Speichern'"
+                             [margin]="true"
+                             (click)="save(user.nutzername)">
+            </app-kuis-button>
+
+            <app-kuis-button (click)="dismiss()" [title]="'Passwort zurücksetzen'"
+                             [margin]="true"
+                             [routerLink]="['/resetpassword']">
+            </app-kuis-button>
         </div>
     </div>
 
-</ion-content>
 
+</ion-content>
