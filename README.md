@@ -1,4 +1,4 @@
-## Kuis - das Bilder-Quiz
+## Kuis - Dein Bilderrätsel
 ###### *CS2018 Entwicklung mobiler Applikationen - Sommersemester 2020*
 
 > Die Kuis-App bietet dem Nutzer die Möglichkeit, sein Allgemeinwissen mithilfe von Rätseln diverser Kategorien zu verbessern.
@@ -10,15 +10,11 @@
 Für alle Punkte gilt natürlich, dass Sie nur beschreiben und mit Grafiken illustrieren, was wirklich relevant ist.
 Gerne können Sie noch weitere Punkte ergänzen, wenn diese zum Verständnis Ihrer Software nützlich sind.
 
-Des Weiteren sollten sie berücksichtigen, dass die Zielgruppe in erster Linie „Softwareentwickler“ sind.
-
-Der Idealfall wäre, wenn ich nach dem Lesen Ihrer Dokumentation, sofort mit der Entwicklung in diesem Projekt loslegen kann.
-
 Die Dokumentation können sie direkt in ihr GitLab-Projekt-Wiki schreiben, oder als PDF-Datei im Repository ablegen.
 
 
 
-![Kuis](https://www.brand-fit.de/wp-content/uploads/2016/05/Platzhalter.jpg)
+![Kuis](https://firebasestorage.googleapis.com/v0/b/pictures-app-68662.appspot.com/o/logo%2Fkuis.png?alt=media&token=f5871f7c-6370-4e2a-8378-4d8a6a7d0b55)
 
 
 
@@ -132,19 +128,17 @@ Technologie | Verwendungszweck
 
 ## Installationsanleitung
 - Das Repository mithilfe von Xcode klonen:
-    - Xcode öffnen > ``Clone an existing project`` > ``https://git.thm.de/jhmn46/itask`` > master oder staging branch auswählen
+    - ``https://git.thm.de/ema-ss20/pictures-app`` > ``master`` branch auswählen > das Repository klonen
 
-- Cocoa Pods installieren:
-    - Sobald das Repository geklont wurde, alle aktiven Xcode Fenster schließen. 
-      Im Anschluss mithilfe des Terminals in den Projektordner navigieren und ``$ pod install`` ausführen.
-      Dadurch werden die in der ``Podfile`` eingetragenen Abhängigkeiten installiert.
-      Diese werden mithilfe des CocoaPods dependency manager geladen. 
-      Sollte CocoaPods noch nicht installiert sein, muss folgender Befehl im Terminal eingegeben werden: ``$ sudo gem install cocoapods``.
+- Abhängigkeiten installieren:
+    - Sobald das Repository geklont wurde, können in der IDE oder dem Terminal mitilfe des Befehls
+    ``npm i`` alle Abhängigkeiten installiert werden. Für diesen Befehl wird die JavaScript-Laufzeitumgebung
+    [Node.js](https://nodejs.org/) benötigt.
 
-- Das Projekt öffnen:
-    - Durch die Installation der Abhängigkeiten wird eine ``.xcworkspace`` Datei generiert.
-      Diese wird in Zukunft verwendet, um das Projekt zu öffnen.
-      ``New Scheme...`` > Target: iTask > Name: iTask
+- Das Projekt starten:
+    - Nun kann das Projekt mit dem Befehl ``ionic serve`` gestartet werden. Das Projekt verwendet das
+    [Ionic-Framework](https://ionicframework.com/). Wenn der Befehl nicht eingegeben werden kann, muss Ionic mit dem Befehl 
+    ``npm install -g @ionic/cli`` installiert werden.
 
 
 
@@ -161,60 +155,56 @@ Falls noch kein Emulations Device konfiguriert wurde, kann eines mithilfe des ``
 
 
 ## Ordnerstruktur
-```iTask
-├── iTask
-│   ├── Confetti
-│   │   ├── ParticlesEmitter.swift (Logik, um Partikeleffekte zu generieren)
-│   │   ├── Confetti.swift (Darstellung der Partikeleffekte)
-│   ├── Sound
-│   │   ├── success.mp3 (Audio-Datei)
-│   │   ├── failure.mp3 (Audio-Datei)
-│   │   ├── later.mp3 (Audio-Datei)
-│   │   ├── plop.mp3 (Audio-Datei)
-│   │   ├── reset.mp3 (Audio-Datei)
-│   │   ├── PlaySound.swift (Funktion, um sämtliche Sounds abzuspielen)
-│   ├── InitViews
-│   │   ├── ContentView.swift (View für registrierte Nutzer)
-│   │   ├── Register.swift (Registrierungs-Formular)
-│   │   ├── Loading.swift (Ladebildschirm)
-│   ├── TabBar
-│   │   ├── HeuteView.swift (View für die täglichen Aufgbane)
-│   │   ├── UebersichtView.swift (View für Statistiken)
-│   │   ├── FreundeView.swift (View für Freunde)
-│   │   ├── EinstellungenView.swift (View für Einstellungen)
-│   ├── EinstellungenViews
-│   │   ├── ImpressumWebview.swift (Webview mit Impressum)
-│   │   ├── DatenschutzWebview.swift (Webview mit Datenschutzangaben)
-│   │   ├── AufgabenEinreichenView.swift (Sheet zum Einreichen von Aufgaben)
-│   │   ├── Einstellungen.swift (Verwaltung sämtlicher persistierter Einstellungen)
-│   ├── FreundeViews
-│   │   ├── FreundeHinzufuegenView.swift (Sheet zum Hinzufuegen von Freunden)
-│   ├── Models
-│   │   ├── UserModel.swift (Model des Users)
-│   │   ├── AufgabenModel.swift (Model der Aufgaben)
-│   ├── Services
-│   │   ├── FirebaseFunctions.swift (Sämtliche Firebase Funktionen)
-│   │   ├── CoraDataFunctions.swift (Sämtliche CoreData Funktionen)
-│   │   ├── GlobalFunctions.swift (Ausgelagerte, globale Funktionen)
-│   ├── BodyViews
-│   │   ├── AktuellFirstView.swift (View für Auswahl zwischen heutigen Aufgaben)
-│   │   ├── AktuellSecondView.swift (View für Anzeige ausgewählter Aufgabe)
-│   │   ├── AufgabeDetail.swift (Eigentliche Aufgabe, wird eingebunden)
-│   │   ├── Additives_diagramm.swift (Diagramm, um Statistiken darzustellen)
-│   │   ├── NavigationConfigurator.swift (ViewController für das Heute-Tab)
-│   ├── AppDelegate.swift
-│   ├── SceneDelegate.swift
-│   ├── LaunchScreen.storyboard
-│   ├── info.plist
-│   ├── GoogleService-info.plist
-│   ├── iTask.xcdatamodeld
-│   ├── Assets.xcassets
-│   ├── Preview Content
-│   │   ├── Preview Assets.xcassets
-├── Products
-│   ├── DoDay.app
-├── Pods
-├── Frameworks
+```pictures-app
+├── pictures-app
+│   ├── android (Beinhaltet das kompilierte Android Studio-Projekt)
+│   │   ├── ...
+│   ├── e2e (E2E Testing)
+│   │   ├── ...
+│   ├── node_modules (Beinhaltet alle installierten Node Pakete, sobald npm i ausgeführt wurde)
+│   │   ├── ...
+│   ├── praesentation (Abbildungen für README.md)
+│   │   ├── ...
+│   ├── resources
+│   │   ├── icon.png (App-Icon)
+│   ├── src
+│   │   ├── app
+│   |   │   ├── components (Alle Komponenten)
+│   |   │   |   ├── ...
+│   |   │   ├── models (Alle Models)
+│   |   │   |   ├── ...
+│   |   │   ├── pages (Alle Pages)
+│   |   │   |   ├── ...
+│   |   │   ├── services (Alle Services)
+│   |   │   |   ├── ...
+│   |   │   ├── app.component.html
+│   |   │   ├── app.component.scss
+│   |   │   ├── app.component.spec.ts
+│   |   │   ├── app.component.ts
+│   |   │   ├── app.module.ts
+│   |   │   ├── app-routing.module.ts
+│   │   ├── assets
+│   │   ├── environments
+│   │   ├── theme
+│   │   ├── global.scss
+│   │   ├── index.html
+│   │   ├── main.ts
+│   │   ├── polyfills.ts
+│   │   ├── test.ts
+│   │   ├── zone-flags.ts
+│   ├── .gitignore
+│   ├── angular.json
+│   ├── browserlist
+│   ├── capacitor.config.json
+│   ├── ionic.config.json
+│   ├── karma.conf.js
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── README.md
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.spec.json
+│   ├── tslint.json
 ```
 
 
