@@ -30,3 +30,25 @@
 ion-card-title {
   color: $color-kuisBlack;
 }
+
+.kuis-info {
+  margin-left: 20px;
+  text-align: justify;
+  display: table;
+  height: 25px;
+  overflow: hidden;
+}
+
+.kuis-icon-info, .kuis-note {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.kuis-icon-info {
+  font-size: 25px;
+  color: $color-kuisBlack;
+}
+ .kuis-note {
+   color: $color-kuisBlack;
+   padding-left: 5px;
+ }

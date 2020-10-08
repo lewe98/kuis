@@ -2,7 +2,7 @@ import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {StorageService} from '../../services/storage/storage.service';
 import {Router} from '@angular/router';
 import {ModulService} from '../../services/modul/modul.service';
-import {AlertController, IonInput, IonRouterOutlet, ModalController, PopoverController, ViewDidEnter} from '@ionic/angular';
+import {AlertController, IonInput, IonRouterOutlet, ModalController, PopoverController} from '@ionic/angular';
 import {ToastService} from '../../services/toast/toast.service';
 import {ModuluebersichtAddPage} from '../moduluebersicht-add/moduluebersicht-add.page';
 import {AuthService} from '../../services/auth/auth.service';
@@ -16,7 +16,7 @@ import {Modul} from '../../models/modul';
     templateUrl: './moduluebersicht.page.html',
     styleUrls: ['./moduluebersicht.page.scss'],
 })
-export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
+export class ModuluebersichtPage implements OnDestroy {
     isEdit = false;
     subUser: Subscription;
     @ViewChild(IonInput) search: IonInput;
@@ -158,6 +158,7 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
                         if (this.modulService.module.length === 1) {
                             this.isEdit = false;
                         }
+                        this.clear();
                         this.modulService.deleteModule(module);
                     }
                 }
@@ -165,15 +166,6 @@ export class ModuluebersichtPage implements ViewDidEnter, OnDestroy {
         });
 
         await alert.present();
-    }
-
-    /**
-     * sets focus on ViewEnter
-     */
-    ionViewDidEnter() {
-        if (this.modulService.module.length > 0) {
-            setTimeout(() => this.search.setFocus(), 10);
-        }
     }
 
     /**

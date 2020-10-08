@@ -20,7 +20,6 @@ export class AuthService {
     user: User;
     subUser: Subscription;
     userCollection: AngularFirestoreCollection<User>;
-
     isLoggedIn = false;
     isSession = false;
 
@@ -46,7 +45,6 @@ export class AuthService {
         copy.googleAccount = copy.googleAccount || null;
 
         copy.emailBestaetigt = copy.emailBestaetigt || false;
-        copy.isOnboarded = copy.isOnboarded || false;
         copy.gesamtzeit = copy.gesamtzeit || null;
         copy.historieLernmodus = copy.historieLernmodus || null;
         copy.historieFreiermodusName = copy.historieFreiermodusName || null;
@@ -95,40 +93,46 @@ export class AuthService {
     /**
      * Method to update the user's credential in the database
      * @param user user
-     * @param passwort user's new password
      */
-    async update(user: User, passwort: string) {
+    async update(user: User) {
         const u = firebase.auth().currentUser;
         this.toastService.presentLoading('Profil wird aktualisiert...')
             .then(async () => {
                 if (user.googleAccount && !this.platform.is('android')) {
                     await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                 }
-                if (this.platform.is('android')) {
-                    await u.reload();
+                if (user.googleAccount && this.platform.is('android')) {
+                    const googleUser = await Plugins.GoogleAuth.signIn();
+                    const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+                    await u.reauthenticateWithCredential(credential);
                 }
-                await u.updateEmail(user.email)
-                    .then(async () => {
-                        await u.sendEmailVerification();
-                        if (passwort) {
-                            await u.updatePassword(passwort)
-                                .catch((error) => {
-                                    this.toastService.presentWarningToast('Error!', error);
-                                });
-                        }
-                        await u.updateProfile({displayName: user.nutzername})
-                            .catch(error => {
-                                this.toastService.presentWarningToast('Error!', error);
-                            });
-                        this.user.isVerified = false;
-                        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-                        await this.logOut();
-                        await this.toastService.presentToast('Profil erfolgreich aktualisiert.\nBitte E-Mail bestätigen und erneut authentifizieren.');
-                    })
-                    .catch((error) => {
+                /*if (u.email !== user.email) {
+                    await u.updateEmail(user.email)
+                        .then(async () => {
+                            this.user.isVerified = false;
+                            await u.sendEmailVerification();
+                            await this.logOut();
+                            await this.toastService.presentToast('Bitte E-Mail bestätigen und erneut authentifizieren.');
+                        })
+                        .catch((error) => {
+                            this.toastService.presentWarningToast('Error!', error);
+                        });
+                }*/
+                /*if (passwort !== undefined && !user.googleAccount) {
+                    await u.updatePassword(passwort)
+                        .catch((error) => {
+                            this.toastService.presentWarningToast('Error!', error);
+                        });
+                }*/
+                await u.updateProfile({displayName: user.nutzername})
+                    .catch(error => {
+                        this.toastService.dismissLoading();
                         this.toastService.presentWarningToast('Error!', error);
+                        u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                     });
+                await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
                 await this.toastService.dismissLoading();
+                await this.toastService.presentToast('Profil erfolgreich aktualisiert.');
             });
     }
 
@@ -145,18 +149,24 @@ export class AuthService {
      * @param user user to be deleted
      */
     async deleteProfile(user: User) {
+        const u = firebase.auth().currentUser;
         await this.toastService.presentLoading('Bitte warten. \n Dies kann einige Sekunden dauern.')
             .then(async () => {
-                const u = firebase.auth().currentUser;
                 if (user.googleAccount && !this.platform.is('android')) {
                     await u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
                 }
-                if (this.platform.is('android')) {
-                    await u.reload();
+                if (user.googleAccount && this.platform.is('android')) {
+                    const googleUser = await Plugins.GoogleAuth.signIn();
+                    const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+                    await u.reauthenticateWithCredential(credential);
                 }
                 await this.logOut();
                 await u.delete();
                 await this.userCollection.doc(user.id).delete();
+            }).catch(err => {
+                this.toastService.dismissLoading();
+                this.toastService.presentWarningToast('Error', err);
+                u.reauthenticateWithPopup(new auth.GoogleAuthProvider());
             });
         await this.toastService.dismissLoading();
         await this.toastService.presentWarningToast('Account gelöscht.', 'Du wurdest ausgeloggt.');
@@ -191,7 +201,7 @@ export class AuthService {
 
     /**
      * Method to check whether a user is logged in or not
-     * @return Promise<boolean> true, if logged in (ID stored in local storage / session storage)
+     * @return Promise<boolean> resolves true, if logged in (ID stored in local storage / session storage)
      */
     checkIfLoggedIn(): Promise<boolean> {
         return new Promise((resolve) => {
@@ -206,21 +216,19 @@ export class AuthService {
     }
 
     /**
-     * Method to sign out a user
+     * Method to sign out a user and remove all of his/her data
      */
-    logOut() {
-        this.afAuth.signOut().then(() => {
-            this.isLoggedIn = false;
-            this.user = undefined;
-            this.storageService.fragen = [];
-            sessionStorage.clear();
-            localStorage.clear();
-            this.subUser.unsubscribe();
-            this.router.navigate(['/landing']);
-        });
+    async logOut() {
+        this.subUser.unsubscribe();
+        this.isLoggedIn = false;
+        this.user = undefined;
+        this.storageService.fragen = [];
+        sessionStorage.clear();
+        localStorage.clear();
+        await this.afAuth.signOut();
+        await this.router.navigate(['/landing']);
     }
 
-    // REGISTER
     /**
      * Method to sign up a user
      * @param nutzername user's username
@@ -250,7 +258,6 @@ export class AuthService {
             });
     }
 
-    // GOOGLE LOGIN
     /**
      * Method to provide a google authentication provider
      */
@@ -270,7 +277,7 @@ export class AuthService {
     /**
      * Method to authenticate with google login credentials
      * @param provider google authentication provider
-     * @return Promise resolves, if user could be logged in
+     * @return Promise<any> resolves, if user could be logged in
      */
     async AuthLogin(provider): Promise<any> {
         return new Promise(async (resolve, reject) => {
@@ -307,12 +314,18 @@ export class AuthService {
                             }
                         });
                 }).catch((error) => {
+                    this.toastService.presentWarningToast('Error', error);
                     reject(error);
                 });
             await this.toastService.dismissLoading();
         });
     }
 
+    /**
+     * Method to authenticate with google login credentials on Android
+     * @param credential google authentication credentials
+     * @return Promise<any> resolves, if user could be logged in
+     */
     async androidGoogleSignIn(credential): Promise<any> {
         return new Promise(async (resolve, reject) => {
             await this.toastService.presentLoading('Bitte warten...');
@@ -352,8 +365,8 @@ export class AuthService {
     }
 
     /***
-     * This Method subscribes the User from From Firebase and saves it in the Service.
-     * @param callback() is everytime called if the User in Firebase is changed.
+     * This method subscribes the user from Firebase and saves it in the service.
+     * @param callback() is everytime called if the User is changed in Firebase.
      */
     async loadPageSubscription(callback: (u: User) => void) {
         let counter = true;
@@ -373,7 +386,8 @@ export class AuthService {
     }
 
     /**
-     * method to get the userId from logged In User
+     * method to get the ID from the logged in user
+     * @return string returns the user's ID
      */
     getUserID(): string {
         if (localStorage.getItem('userID')) {

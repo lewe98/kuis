@@ -90,6 +90,7 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
 
         this.toastService.presentLoadingDuration(module.name + '-Quiz wird heruntergeladen', 1000)
             .then(() => {
+                this.clear();
                 this.toastService.presentToastSuccess(module.name + '-Quiz wurde importiert!');
             });
     }
@@ -113,7 +114,10 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
         this.filteredModules = this.module;
     }
 
+    /**
+     * Sets focus on the searchbar.
+     */
     ionViewDidEnter() {
-        setTimeout(() => this.search.setFocus(), 10);
+        setTimeout(() => this.search.setFocus(), 100);
     }
 }

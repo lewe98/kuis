@@ -17,6 +17,7 @@ export class StatistikPage implements OnDestroy {
                 public statistikService: StatistikService,
                 private toastService: ToastService) {
         this.tmpArray = this.statistikService.tmpArray;
+        console.log(this.tmpArray);
     }
 
     /**
@@ -33,6 +34,9 @@ export class StatistikPage implements OnDestroy {
         });
     }
 
+    /**
+     * Method to clear the array of the last "Lernrunden" game in order to see the total statistics
+     */
     async clear() {
         await this.toastService.presentLoading('Bitte warten...')
             .then(() => {
@@ -42,12 +46,15 @@ export class StatistikPage implements OnDestroy {
     }
 
     /**
-     * resets all used Variables and Array
+     * resets all used variables and arrays
      */
     ngOnDestroy() {
         this.tmpArray = [];
         this.statistikService.tmpArray = [];
         this.statistikService.richtigBeantwortet = 0;
+        this.statistikService.freiermodusanzahl = [];
+        this.statistikService.freiermodusname = [];
+        this.statistikService.lernmodushistorie = [];
     }
 
 

@@ -11,6 +11,9 @@ export class NotFoundPage {
     constructor(private router: Router) {
     }
 
+    /**
+     * If a page is not found, the User is redirected to the landing page.
+     */
     redirectToHomepage() {
         this.router.navigate(['/landing']);
     }

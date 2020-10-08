@@ -6,9 +6,16 @@ import {AuthService} from './auth.service';
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private authService: AuthService,
+                private router: Router) {
     }
 
+    /**
+     * Checks if the permission to view the next Page is valid.
+     *
+     * @param next is the targeted Route.
+     * @param state is the current Route.
+     */
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
         return new Promise((resolve) => {
             this.authService.checkIfLoggedIn()

@@ -30,10 +30,16 @@ export class NavbarComponent {
         this.showBack = true;
     }
 
-
+    /**
+     * Method to navigate the user depending on the chosen path
+     */
     stat() {
         const pathname = window.location.pathname;
-        if (pathname === '/login' || pathname === '/registrierung') {
+        if (pathname === '/hilfe' && !this.authService.isLoggedIn) {
+            this.router.navigate(['landing']);
+        } else if (pathname === '/resetpassword' && this.authService.user.email) {
+            this.router.navigate(['profil']);
+        } else if (pathname === '/login' || pathname === '/registrierung') {
             this.router.navigate(['landing']);
         } else if (window.location.pathname === '/quiz' && this.questionsAvailable === true) {
             this.presentAlertBack();
@@ -42,11 +48,14 @@ export class NavbarComponent {
         }
     }
 
+    /**
+     * Method to present a prompt, if the user wants to exit the game or not
+     */
     async presentAlertBack() {
         const alert = await this.alertController.create({
             mode: 'ios',
             header: 'Runde wirklich Abbrechen?',
-            message: 'Wenn Sie die Runde abbrechen gehen alle Erfolge verloren.',
+            message: 'Wenn Sie die Runde abbrechen wird der Spielstand <b>nicht</b> gespeichert!',
             buttons: [
                 {
                     text: 'Spiel abbrechen',
@@ -56,7 +65,7 @@ export class NavbarComponent {
                         this.modulService.started = false;
                         if (this.modulService.isLernmodus) {
                             this.router.navigate(['startseite']);
-                        }else{
+                        } else {
                             this.router.navigate(['moduluebersicht']);
                         }
                     }

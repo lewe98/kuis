@@ -19,10 +19,20 @@ export class StorageService {
         this.modulCollection = afs.collection<Modul>('module');
     }
 
+    /***
+     * Method to get the ID of a certain document
+     * @param doc
+     */
     getID(doc) {
         return {id: doc.id, ...doc.data()};
     }
 
+    /***
+     * Method to find all questions of a certain quiz-module
+     * @param id ID of the quiz-module
+     * @param titel title of the quiz-module
+     * @param name name of the quiz-module
+     */
     findAllFragen(id: string, titel: string, name: string): Promise<any> {
         return new Promise((resolve) => {
             this.afs.collection('module')
@@ -38,6 +48,11 @@ export class StorageService {
         });
     }
 
+    /***
+     * Method to find all fragen for the "Lernmodus"
+     * @param id ID of the quiz-module
+     * @param name Name of the quiz-module
+     */
     findAllFragenLernmodus(id: string, name: string): Promise<any> {
         return new Promise<any>(resolve => {
             this.afs.collection('module')
@@ -52,6 +67,11 @@ export class StorageService {
         });
     }
 
+    /***
+     * Method to receive the url of a picture in the Firebase storage
+     * @param name Name of the picture
+     * @return Promise<any> resolves the URL of the picture
+     */
     async getPicture(name: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.gsReference

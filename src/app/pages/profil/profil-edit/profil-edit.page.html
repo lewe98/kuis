@@ -17,66 +17,41 @@
 
                 <ion-item>
                     <ion-label>Nutzername*</ion-label>
-                    <ion-input #focus class="ion-text-end formControl" placeholder="Nutzername..."
+                    <ion-input #focus
+                               class="ion-text-end formControl"
+                               placeholder="Nutzername..."
                                [(ngModel)]="user.nutzername"
                                type="text"
-                               required></ion-input>
+                               required>
+
+                    </ion-input>
                 </ion-item>
 
-                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                <p class="ion-text-end ion-padding-end"
+                   style="color:var(--ion-color-danger)"
                    *ngIf="errors.get('nutzername')">
-                    {{errors.get('nutzername')}} </p>
-
-
-                <ion-item>
-                    <ion-label>E-Mail*</ion-label>
-                    <ion-input class="ion-text-end formControl" placeholder="Email..." [(ngModel)]="user.email"
-                               type="email"
-                               required></ion-input>
-                </ion-item>
-
-                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-                   *ngIf="errors.get('email')">
-                    {{errors.get('email')}} </p>
-
-                <div *ngIf="!user.googleAccount">
-                    <ion-item>
-                        <ion-label>aktuelles oder neues Passwort*</ion-label>
-                        <ion-input class="ion-text-end formControl" placeholder="Passwort..."
-                                   [(ngModel)]="passwort"
-                                   type="password"
-                                   required></ion-input>
-                    </ion-item>
-
-                    <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-                       *ngIf="errors.get('passwort')">
-                        {{errors.get('passwort')}} </p>
-
-
-                    <ion-item>
-                        <ion-label>Passwort bestätigen*</ion-label>
-                        <ion-input class="ion-text-end formControl" placeholder="Passwort bestätigen..."
-                                   [(ngModel)]="passwortConfirm" type="password"
-                                   required></ion-input>
-                    </ion-item>
-
-                    <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-                       *ngIf="errors.get('passwortConfirm')">
-                        {{errors.get('passwortConfirm')}} </p>
-                </div>
+                    {{errors.get('nutzername')}}
+                </p>
             </ion-list>
 
-            <ion-note class="margin">*Pflichtfeld</ion-note>
 
         </ng-container>
 
         <div class="section-buttons ion-padding">
-            <ion-button class="kuis-button ion-padding-horizontal" expand="block" color="" shape="round" fill="solid"
-                        size="large" (click)="save(user.nutzername, user.email, passwort)">
-                Speichern
-            </ion-button>
+
+            <ion-note class="margin">*Pflichtfeld</ion-note>
+
+            <app-kuis-button [title]="'Speichern'"
+                             [margin]="true"
+                             (click)="save(user.nutzername)">
+            </app-kuis-button>
+
+            <app-kuis-button (click)="dismiss()" [title]="'Passwort zurücksetzen'"
+                             [margin]="true"
+                             [routerLink]="['/resetpassword']">
+            </app-kuis-button>
         </div>
     </div>
 
-</ion-content>
 
+</ion-content>

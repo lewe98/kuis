@@ -11,6 +11,9 @@ export class ImprintPage {
     constructor(private modalController: ModalController) {
     }
 
+    /**
+     * Dismisses the modal for the imprint page.
+     */
     dismiss() {
         this.modalController.dismiss();
     }

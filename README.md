@@ -89,11 +89,12 @@ Kritische Issues wurden nach Absprache ebenfalls in Git als Issues angelegt.
 
 
 ## Systemarchitektur
-Welche Systeme sind beteiligt und wie kommunizieren diese miteinander.
+![Systemarchitektur](/praesentation/pictures/Screenshot_2020-10-08_124734.png)
 
 
 
 ## Softwarearchitektur
+![ERD](/praesentation/pictures/EMA_ERD.png)
 „Wichtige" statische und dynamische Aspekte der Softwarearchitektur mit 
 standardisierten Notationen, wie z.B. UML oder FMC beschreiben.
 
@@ -102,6 +103,8 @@ standardisierten Notationen, wie z.B. UML oder FMC beschreiben.
 ## Client Dokumentation
 Um die API Dokumentation aufzurufen, muss folgender Befehl ausgeführt werden:
 > npm run compodoc
+
+Nun kann man `http://127.0.0.1:8080` im Browser aufrufen, um die Dokumentation einzusehen.
 
 
 
