@@ -43,33 +43,47 @@ Die Dokumentation können sie direkt in ihr GitLab-Projekt-Wiki schreiben, oder 
 
 ## Einleitung
 #TODO
-Eine Einleitung, in der auf fachlicher Ebene beschrieben wird, um was es in ihrem Projekt geht 
-und was mit der Software schönes gemacht werden kann. 
-Hierzu gehören z.B. alle Anforderungen und die daraus resultierenden Anwendungsfälle + Datenmodell.
+Die Kuis-App bietet dem Nutzer die Möglichkeit, sein Allgemeinwissen mithilfe von Rätseln diverser Kategorien zu verbessern.
+Abzeichen können im Laufe der Zeit gesammelt und Statistiken verbessert werden; diese steigern die Motivation und bieten einen langfristigen Spielspaß.
+
+Hierzu werden die zu erreichbaren Abzeichen, sowie Module und Nutzerinformationen in einem Backend gespeichert.
+Ein Modul besteht aus einer unterschiedlichen Anzahl an Rätseln einer spezifischen Kategorie. 
+Eine Frage dieses Moduls enthält ein Bild, eine Frage und vier möglichen Antworten, von denen aber nur eine Antwort richtig ist.
+Die Module können von einem Nutzer aus dem Backend importiert und hinzugefügt werden.
+Um diese Module lernen zu können hat man die Wahl zwischen einem Freien- und einem Lernmodus.
+Anschließend können diese Module wieder von dem Nutzer entfernt werden, sollte er diese Kategorie nicht mehr lernen wollen.
+Dabei gehen alle Fortschritte dieses Moduls verloren.
+
+Zusätzlich hat der Nutzer die Möglichkeit eine Hilfeansicht zu öffnen in denen die wichtigsten Vorgänge beschrieben sind.
+Der Nutzer registriert sich um seine persönlichen Einstellungen und Fortschritte festzuhalten zu können, sowie einen personalisierten Bereich mit seinen Daten einsehen zu können.
+Hierfür hat man zusätzlich die Möglichkeit, sein bereits bestehendes Google-konto zu verwenden.
+Ein Nutzer kann sich jederzeit von jedem beliebigen Gerät mit Internetanbindung einloggen.
+Abgerundet wird die Kuis-App mit einem Impressum, Informationen zu dem Datenschutz und den Nutzungsbedingungen.
 
 
 
 ## Featureliste
+- Authentifikation
+    - Ein Nutzer kann sich manuell oder mit einem Google-Account registrieren und anmelden. Hierbei wird eine Bestätigungsmail an die verwendete E-Mail versendet.
+     Wird diese bestätigt, kann er in seinem personaliesierten Bereich sein Nutzernamen ändern. Zusätzlich hat er die Möglichkeit sein Passwort zurückzusetzen.
 - Landing
     - Die App begrüßt den Nutzer auf der Landingpage. Dort finden sich ein Onboarding-Screen, mit einer
     Übersicht der Features, sowie Weiterleitungen zur Authentifizierung und zur Hilfe.
 - Startseite
-    - Auf der Startseite erhält der Nutzer eine übersichtliche Darstellung aller zur Verfügung stehenden Seiten.
+    - Auf der Startseite erhält der Nutzer eine übersichtliche Darstellung aller zur Verfügung stehenden Seiten, sowie die Möglichkeit das Impressum zu erreichen oder sich auszuloggen.
 - Lernmodus
-    - Im Lernmodus bekommt der Benutzer ein Rätsel präsentiert, das aus einem Bild, einer Frage und 
-    vier möglichen Antworten besteht, von denen aber nur eine Antwort richtig ist.
-    Der Lernmodus enthält zehn zufällige Fragen, die sich aus den heruntergeladenen Quiz-Modulen zusammensetzen.
-    Sobald eine Frage sechs Mal in Folge richtig beantwortet wurde, wird sie nicht mehr im Lernmodus angezeigt.
+    - Der Lernmodus enthält zehn zufällige Fragen, die sich aus den heruntergeladenen Quiz-Modulen zusammensetzen.
+    Sobald eine Frage sechs Mal in Folge richtig beantwortet wurde, wird sie nicht mehr im Lernmodus angezeigt und gilt somit als gelernt.
 - Modulübersicht
-    - Die Mödulübersicht enthält alle vom Nutzer heruntergeladenen Quiz-Module. Die Module können dort heruntergeladen und
-    auch wieder gelöscht werden.
+    - Die Modulübersicht enthält alle vom Nutzer heruntergeladenen Quiz-Module. Die Module können dort importiert und
+    auch wieder gelöscht werden. Diese können unterschiedlich sortiert oder gefiltert werden. Zusätzlich können diese mit einer Suchleiste gesucht werden.
 - Statistik
-    - Auf der Statistikseite werden alle absolvierten Lernrunden, sowie frei ausgewählte Module der Modulübersicht ausgewertet.
-    Zudem findet man dort seine gesamte Spielzeit des Lernmodus, sowie richtig und falsch beantwortete Fragen.
+    - Auf der Statistikseite werden alle absolvierten Lernrunden, sowie frei ausgewählten Module der Modulübersicht ausgewertet.
+    Zudem findet man dort seine gesamte Spielzeit des Lernmodus, sowie die Anzahl der richtig und falsch beantworteten Fragen.
 - Abzeichen
-    - Um eine langfristige Motivation zu bieten, kann man als Nutzer diverse Abzeichen freischalten.
+    - Um eine langfristige Motivation zu bieten, kann man als Nutzer diverse Abzeichen freischalten. Dazu kann der Nutzer bis zu 17 unterschiedliche Abzeichen erreichen. 
 - Profil
-    - Auf der Profilseite finden sich zum Einen die Möglichkeit, seinen Nutzernamen zu bearbeiten, sich Auszuloggen oder 
+    - Auf der Profilseite finden sich zum einen die Möglichkeit, seinen Nutzernamen zu bearbeiten, sich auszuloggen oder 
     gar seinen Account zu löschen.
 - Hilfe
     - Falls man einmal nicht weiter weiß, bietet die Hilfe-Seite auf jede Frage eine hilfreiche Antwort.
