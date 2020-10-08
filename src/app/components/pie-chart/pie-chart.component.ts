@@ -55,10 +55,6 @@ export class PieChartComponent implements OnDestroy {
      */
     constructor(public authService: AuthService,
                 private statservice: StatistikService) {
-        console.log(this.statservice.freiermodusanzahl);
-        console.log(this.statservice.freiermodusname);
-        console.log(this.statservice.lernmodushistorie);
-
         this.user = this.authService.getUser();
         this.statservice.freiermodusanzahl = [];
         this.statservice.freiermodusname = [];

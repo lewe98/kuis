@@ -11,9 +11,8 @@
                 <ion-list>
                     <ion-item-group *ngFor="let statistik of tmpArray" (click)="showStatistik(statistik)">
                         <ion-item lines="none" class="klickbar">
-                            <ion-label>
-                                <h4>{{statistik._frage}}</h4>
-                            </ion-label>
+                            {{statistik._frage}}
+                            <br>
                             <ion-icon *ngIf="statistik._showBeschreibung" color="#000" slot="end"
                                       name="chevron-up-outline"></ion-icon>
                             <ion-icon *ngIf="!statistik._showBeschreibung" color="#000" slot="end"

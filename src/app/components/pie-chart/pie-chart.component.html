@@ -51,9 +51,9 @@
     </ion-card>
     <ion-card class="card-border-rounded kuis-margin">
         <ion-item>
-            <h3>Historie der frei gewählten Module</h3>
+            <h3>Historie des freien Modus</h3>
         </ion-item>
-        <ion-list class="kuis-overflow">
+        <ion-list class="kuis-overflow" *ngIf="this.statservice.freiermodusanzahl.length != 0; else noHistory">
             <ion-item-group *ngFor="let anzahl of this.statservice.freiermodusanzahl; let j = index">
                 <ion-item lines="none">
                     <ion-label>
@@ -69,7 +69,7 @@
 <ng-template #noHistory>
     <ion-item lines="none">
         <ion-label>
-            <h1> Keine Historie.</h1>
+            <p>Es wurde noch keine Runde abgeschlossen .</p>
         </ion-label>
     </ion-item>
 </ng-template>
