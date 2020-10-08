@@ -94,6 +94,7 @@ Kritische Issues wurden nach Absprache ebenfalls in Git als Issues angelegt.
 
 
 ## Softwarearchitektur
+![ERD](/praesentation/pictures/EMA_ERD.png)
 „Wichtige" statische und dynamische Aspekte der Softwarearchitektur mit 
 standardisierten Notationen, wie z.B. UML oder FMC beschreiben.
 
