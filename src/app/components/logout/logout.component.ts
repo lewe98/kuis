@@ -12,7 +12,7 @@ export class LogoutComponent {
     }
 
     /**
-     * method to use logout for an User
+     * method to perform the logout for the authenticated user
      */
     handleLogout() {
         this.authService.logOut();

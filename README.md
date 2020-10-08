@@ -104,6 +104,8 @@ standardisierten Notationen, wie z.B. UML oder FMC beschreiben.
 Um die API Dokumentation aufzurufen, muss folgender Befehl ausgeführt werden:
 > npm run compodoc
 
+Nun kann man `http://127.0.0.1:8080` im Browser aufrufen, um die Dokumentation einzusehen.
+
 
 
 ## Technologie-Stack

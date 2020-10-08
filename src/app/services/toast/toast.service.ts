@@ -16,7 +16,7 @@ export class ToastService {
     }
 
     /**
-     * Presents a toast on the top of the screen for 2 sec
+     * Presents a toast on the top of the screen for 2 seconds
      * @param message the message to be displayed
      */
     async presentToast(message) {
@@ -57,6 +57,11 @@ export class ToastService {
         await toast.present();
     }
 
+    /**
+     * Presents a spinning loading toast in the middle of the screen
+     * @param message the message to be displayed
+     * @param duration duration of the visibility
+     */
     async presentLoadingDuration(message: string, duration: number) {
         const loading = await this.loadingController.create({
             cssClass: 'my-custom-class',

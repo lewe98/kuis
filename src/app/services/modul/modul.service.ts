@@ -36,15 +36,15 @@ export class ModulService {
     }
 
     /**
-     * Method to mark the quiz as Lernmodus
+     * Method to mark the quiz as "Lernmodus"
      */
     toggleLernmodus() {
         this.isLernmodus = true;
     }
 
     /***
-     * This Method gets all Modules from Firebase.
-     * @return is a Observable Stream of the Module in the Firebase Database.
+     * This method gets all quiz-modules from Firebase.
+     * @return Observable<Modul[]> Observable Stream of the quiz-modules in the Firebase database.
      */
     findAllModule(): Observable<Modul[]> {
         const changeActions: Observable<DocumentChangeAction<Modul>[]> = this.modulCollection.snapshotChanges();
@@ -57,7 +57,7 @@ export class ModulService {
     }
 
     /**
-     * Method loads all imported Modules of a user and subscribes to the FirebaseCollection of the Modules.
+     * Method to load all imported quiz-modules of a user.
      */
     loadImportedModule() {
         this.module = [];
@@ -93,7 +93,7 @@ export class ModulService {
 
 
     /**
-     * Method to get all imported Modules from the current loggin in user
+     * Method to get all imported Modules from the current user
      */
     findAllModuleLernmodus(): Promise<any> {
         return new Promise<any>((resolve) => {
@@ -115,8 +115,8 @@ export class ModulService {
     }
 
     /**
-     * Method adds a imported Module to a user and Updates the User in the Firebase Database.
-     * @param modul is the Module that will be added to the Imported Moduls in the User.
+     * Method to add an imported quiz-module to an user and updates the user in the Firebase database.
+     * @param modul is the quiz-module that will be added to the imported quiz-modules in the user's array.
      */
     importModule(modul: Modul) {
         const newUser = this.authService.getUser();
@@ -126,16 +126,16 @@ export class ModulService {
     }
 
     /**
-     * Converts a hilfsObjektFragen Object to Firestore Format
-     * @param object - the hilfsObjektFragen
+     * Converts a "hilfsObjektFragen" object to Firestore format
+     * @param object - the "hilfsObjektFragen"
      */
     toFirestore(object: HilfsObjektFrage): firebase.firestore.DocumentData {
         return {id: object.id, counter: object.counter, idModul: object.idModul};
     }
 
     /**
-     * Converts a AlreadyLearned Object to Firestore Format
-     * @param object - the AlreadyLearned-Object
+     * Converts a "AlreadyLearned" object to Firestore format
+     * @param object - the "AlreadyLearned-Object"
      */
     alreadyLearnedToFirestore(object: AlreadyLearned): firebase.firestore.DocumentData {
         return {idModul: object.idModul, idQuestion: object.idQuestion};
@@ -143,8 +143,8 @@ export class ModulService {
 
 
     /**
-     * Preparation to update user with an alreadyLearned object
-     * @param object formated object
+     * Preparation to update a user with an "alreadyLearned" object
+     * @param object formatted object
      */
     addAlreadyLearned(object: any) {
         const newUser = this.authService.getUser();
@@ -152,9 +152,9 @@ export class ModulService {
     }
 
     /**
-     * The Method filters the Modules between 'nichtBearbeitet' and 'alleRichtig'.
-     * @param $event is an Object that needs a value of nichtBearbeitet, alleRichtig or a default if no filter is needed.
-     * a event Object has to look like: {target: {value: 'value'}}.
+     * The Method filters the Modules between 'nichtBearbeitet' and 'allesRichtig'.
+     * @param $event is an object that needs a value of nichtAbgeschlossen, allesRichtig or a default if no filter is needed.
+     * an event Object has to look like: {target: {value: 'value'}}.
      */
     filterModule($event) {
         const filter = $event.target.value;
@@ -164,8 +164,8 @@ export class ModulService {
                 this.importedModule = this.module.filter(modul => modul.bestResult !== modul.anzahlFragen);
                 this.filteredModules = this.importedModule;
                 break;
-            case 'alleRichtig':
-                this.filter = 'alleRichtig';
+            case 'allesRichtig':
+                this.filter = 'allesRichtig';
                 this.importedModule = this.module.filter(modul => modul.bestResult === modul.anzahlFragen);
                 this.filteredModules = this.importedModule;
                 break;
@@ -176,7 +176,7 @@ export class ModulService {
     }
 
     /**
-     * This Method Sorts the this.module Array ASC, DESC, after the Date of adding a Module or after the Date of the last Game.
+     * This method sorts the this.module array ASC, DESC, after the date of adding the quiz-modules or after the date of the last game.
      * @param $event is an Object that needs a value of zuletztGespielt, absteigend, aufsteigend, hinzugefügt or
      * a default same as zuletztGespielt.
      * a event Object has to look like: {target: {value: 'value'}}.
@@ -229,7 +229,7 @@ export class ModulService {
     }
 
     /**
-     * delete imported modules from logged in user
+     * Method to delete an imported quiz-module from the user
      * @param module - the module the user want delete
      */
     deleteModule(module: Modul) {

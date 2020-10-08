@@ -13,8 +13,6 @@ export class ProfilEditPage implements ViewDidEnter {
 
     user: User;
     alterNutzername: string;
-   /* passwort: string;
-    passwortConfirm: string;*/
     errors: Map<string, string> = new Map<string, string>();
     @ViewChild('focus') private nutzernameRef: IonInput;
 
@@ -25,58 +23,30 @@ export class ProfilEditPage implements ViewDidEnter {
         this.alterNutzername = this.user.nutzername;
     }
 
+    /**
+     * Method to save the new data of a user
+     * @param nutzername new username of the user
+     */
     save(nutzername: string) {
         this.errors.clear();
-        if (this.user.googleAccount) {
+        if (nutzername.trim() === '') {
+            this.errors.set('nutzername', 'Nutzername darf nicht leer sein!');
+        }
+        if (this.errors.size === 0) {
+            this.abzeichenService.checkUsernameChanged(this.alterNutzername);
             if (nutzername.trim() === '') {
-                this.errors.set('nutzername', 'Nutzername darf nicht leer sein!');
+                this.user.nutzername = this.alterNutzername;
             }
-            if (this.errors.size === 0) {
-                this.abzeichenService.checkUsernameChanged(this.alterNutzername);
-                this.authService.update(this.user)
-                    .then(() => {
-                        this.dismiss();
-                    });
-            }
-        } else {
-            if (nutzername.trim() === '') {
-                this.errors.set('nutzername', 'Nutzername darf nicht leer sein!');
-            }
-            /* if (!email) {
-                 this.errors.set('email', 'Email darf nicht leer sein!');
-             }
-             if (!this.emailIsValid(email)) {
-                 this.errors.set('email', 'Fehlerhaftes Email Format!');
-             }*/
-            /*if (passwort === undefined) {
-                passwort = 'leer';
-            }
-            if (passwort.length < 6) {
-                this.errors.set('passwort', 'Passwort muss mindestens 6 Zeichen besitzen!');
-            }
-            if (!this.passwort) {
-                this.errors.set('passwort', 'Passwort darf nicht leer sein!');
-            }
-            if (this.passwort !== this.passwortConfirm) {
-                this.errors.set('passwortConfirm', 'Passwörter stimmen nicht überein!');
-            }*/
-            if (this.errors.size === 0) {
-                this.abzeichenService.checkUsernameChanged(this.alterNutzername);
-                if (nutzername.trim() === '') {
-                    this.user.nutzername = this.alterNutzername;
-                }
-                this.authService.update(this.user)
-                    .then(() => {
-                        this.dismiss();
-                    });
-            }
+            this.authService.update(this.user)
+                .then(() => {
+                    this.dismiss();
+                });
         }
     }
 
-    /*emailIsValid(email: string) {
-        return /\S+@\S+\.\S+/.test(email);
-    }*/
-
+    /**
+     * Method to dismiss the modal
+     */
     dismiss() {
         if (this.user.nutzername.trim() === '') {
             this.user.nutzername = this.alterNutzername;

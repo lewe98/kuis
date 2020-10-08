@@ -126,7 +126,7 @@ export class FrageComponent {
                 // tslint:disable-next-line:prefer-for-of
                 for (let i = 0; i < this.authService.user.importierteModule.length; i++) {
                     if (this.authService.user.importierteModule[i].name === this.storageService.nameDesModuls) {
-                        if (this.authService.user.importierteModule[i].bestResult < this.richtigBeantwortetFreiermodusCounter){
+                        if (this.authService.user.importierteModule[i].bestResult < this.richtigBeantwortetFreiermodusCounter) {
                             this.authService.user.importierteModule[i].bestResult = this.richtigBeantwortetFreiermodusCounter;
                             this.authService.user.importierteModule[i].zuletztGespielt = new Date().toLocaleString();
                             break;
@@ -276,7 +276,7 @@ export class FrageComponent {
 
 
     /**
-     *  * Checks the Array one Time at the End of the Game and resets the counter of any wrong answered question to 0
+     * Checks the array one time at the end of the game and resets the counter of any wrong answered question to 0
      */
     swapQuestionsToalreadyLearned() {
         // tslint:disable-next-line:prefer-for-of
@@ -290,6 +290,10 @@ export class FrageComponent {
         }
     }
 
+    /**
+     * Method to remove a question from the user's available questions array,
+     * if the question was correctly answered six times in a row
+     */
     inkrementQuestionsCounterFromUser() {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.correctIds.length; i++) {
@@ -318,7 +322,7 @@ export class FrageComponent {
     }
 
     /**
-     * This Method shows a popover with the source of the Image.
+     * This method shows a popover with the source of the image.
      * @param ev -  is the event within the event is target.
      * @param quelle - from the picture
      */

@@ -27,8 +27,8 @@ export class AbzeichenService {
     }
 
     /***
-     * This Method returns a Observable of all 'Abzeichen'.
-     * @return Observable<Abzeichen[]> are all of the 'Abzeichen' in the Database.
+     * This method returns an observable of all 'Abzeichen'.
+     * @return Observable<Abzeichen[]> all 'Abzeichen' stored in the database.
      */
     findAllAbzeichen(): Observable<Abzeichen[]> {
         const changeActions: Observable<DocumentChangeAction<Abzeichen>[]> =
@@ -61,7 +61,6 @@ export class AbzeichenService {
 
     /**
      * Sorts the achievements alphabetically.
-     *
      * @param arr is the array in which the achievments are saved and sorted.
      */
     sortAbzeichen(arr: Abzeichen[]): Abzeichen[] {
@@ -79,7 +78,6 @@ export class AbzeichenService {
 
     /**
      * Contains the logic behind all time based achievments.
-     *
      * @param timer is the numeric value which is given. Counts the time in seconds.
      * @param abzeichenArray is the array in which all of the achievements are stored.
      */
@@ -219,9 +217,9 @@ export class AbzeichenService {
     }
 
     /**
-     * Logic behind the achievement of changing the Username.
+     * Logic behind the achievement of changing the username.
      *
-     * @param alt is the string value of the previous Username.
+     * @param alt the previous username.
      */
     checkUsernameChanged(alt: string) {
         if (alt !== this.authService.user.nutzername &&

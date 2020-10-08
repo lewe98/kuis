@@ -50,8 +50,8 @@ export class PieChartComponent {
     lernmodushistorie = [];
 
     /**
-     * Prepair User for Statistik/Pie-Chart
-     * @param authService to get current logged in user
+     * Prepare user for Statistik/Pie-Chart
+     * @param authService to get the current user
      */
     constructor(public authService: AuthService) {
         this.user = this.authService.getUser();
