@@ -8,7 +8,8 @@ import {AuthService} from '../../services/auth/auth.service';
     styleUrls: ['./startseite.page.scss'],
 })
 export class StartseitePage {
-    constructor(public modulService: ModulService, private authService: AuthService) {
+    constructor(public modulService: ModulService,
+                private authService: AuthService) {
         this.authService.loadPageSubscription(() => {
         });
     }

@@ -30,7 +30,9 @@ export class NavbarComponent {
         this.showBack = true;
     }
 
-
+    /**
+     * Method to navigate the user depending on the chosen path
+     */
     stat() {
         const pathname = window.location.pathname;
         if (pathname === '/login' || pathname === '/registrierung') {
@@ -42,6 +44,9 @@ export class NavbarComponent {
         }
     }
 
+    /**
+     * Method to present a prompt, if the user wants to exit the game or not
+     */
     async presentAlertBack() {
         const alert = await this.alertController.create({
             mode: 'ios',

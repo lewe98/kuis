@@ -202,7 +202,7 @@ export class AuthService {
 
     /**
      * Method to check whether a user is logged in or not
-     * @return Promise<boolean> true, if logged in (ID stored in local storage / session storage)
+     * @return Promise<boolean> resolves true, if logged in (ID stored in local storage / session storage)
      */
     checkIfLoggedIn(): Promise<boolean> {
         return new Promise((resolve) => {
@@ -217,7 +217,7 @@ export class AuthService {
     }
 
     /**
-     * Method to sign out a user
+     * Method to sign out a user and remove all of his/her data
      */
     async logOut() {
         this.subUser.unsubscribe();
@@ -230,7 +230,6 @@ export class AuthService {
         await this.router.navigate(['/landing']);
     }
 
-    // REGISTER
     /**
      * Method to sign up a user
      * @param nutzername user's username
@@ -260,7 +259,6 @@ export class AuthService {
             });
     }
 
-    // GOOGLE LOGIN
     /**
      * Method to provide a google authentication provider
      */
@@ -280,7 +278,7 @@ export class AuthService {
     /**
      * Method to authenticate with google login credentials
      * @param provider google authentication provider
-     * @return Promise resolves, if user could be logged in
+     * @return Promise<any> resolves, if user could be logged in
      */
     async AuthLogin(provider): Promise<any> {
         return new Promise(async (resolve, reject) => {
@@ -324,9 +322,9 @@ export class AuthService {
     }
 
     /**
-     * Logic behind the Google-Login. Submits the User's credentials to the Service and stores the User's ID to local storage.
-     *
-     * @param credential is the value which is submitted with the google-login. Used to create the user data.
+     * Method to authenticate with google login credentials on Android
+     * @param credential google authentication credentials
+     * @return Promise<any> resolves, if user could be logged in
      */
     async androidGoogleSignIn(credential): Promise<any> {
         return new Promise(async (resolve, reject) => {
@@ -367,8 +365,8 @@ export class AuthService {
     }
 
     /***
-     * This Method subscribes the User from From Firebase and saves it in the Service.
-     * @param callback() is everytime called if the User in Firebase is changed.
+     * This method subscribes the user from Firebase and saves it in the service.
+     * @param callback() is everytime called if the User is changed in Firebase.
      */
     async loadPageSubscription(callback: (u: User) => void) {
         let counter = true;
@@ -388,7 +386,8 @@ export class AuthService {
     }
 
     /**
-     * method to get the userId from logged In User
+     * method to get the ID from the logged in user
+     * @return string returns the user's ID
      */
     getUserID(): string {
         if (localStorage.getItem('userID')) {
