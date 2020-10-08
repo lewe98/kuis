@@ -158,6 +158,7 @@ export class ModuluebersichtPage implements OnDestroy {
                         if (this.modulService.module.length === 1) {
                             this.isEdit = false;
                         }
+                        this.clear();
                         this.modulService.deleteModule(module);
                     }
                 }

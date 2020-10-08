@@ -90,6 +90,7 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
 
         this.toastService.presentLoadingDuration(module.name + '-Quiz wird heruntergeladen', 1000)
             .then(() => {
+                this.clear();
                 this.toastService.presentToastSuccess(module.name + '-Quiz wurde importiert!');
             });
     }
