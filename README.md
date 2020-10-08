@@ -210,22 +210,16 @@ Falls noch kein Emulations Device konfiguriert wurde, kann eines mithilfe des ``
 
 
 ## Fazit
-#### Julian Hermanspahn
-Insgesamt hat mir die Veranstaltung sehr gut gefallen. Positiv hervorheben möchte ich, dass wir die gelernten Inhalte direkt umsetzen durften (Wahrzeichen, Core Data, etc.). Auch die Einteilung in Expertengruppen war eine tolle Idee. So hat man sich intensiv mit einem Thema beschäftigt und konnte sich sehr gut darin vertiefen. Allerdings gab es keine "Qualitätssicherung", wodurch man nicht wusste, ob man die Inhalte einer Expertengruppe "bedenkenlos" übernehmen konnte. Ich hätte mir insgesamt mehr Vorlesungen und Unterlagen gewünscht, um aus einer größeren Menge an Vorlagen und Hilfestellungen schöpfen zu können. 
+Die Projektarbeit ist insgesamt sehr zufriedenstellend verlaufen.
+Durch die Erfahrungen, die wir mit der Entwicklung des Leistungensammlers machen durften, waren wir in der Lage, die App so zu entwickeln, sodass
+zum Einen die Anforderungen der Aufgabenstellung umgesetzt werden konnten. Zum Anderen könnten die Wünsche und Erwartungen der Probanden der User Experience Tests
+erfüllt wurden.
 
-Natürlich ist es nicht möglich, eine komplette Programmiersprache innerhalb weniger Wochen zu vermitteln, daher sind natürlich öfters Probleme bei der Bearbeitung des persönlichen Projekts aufgetreten. Dadurch wurde der Workflow gestört und wir haben uns an gewissen Problemen die Zähne ausgebissen. Ich mir gewünscht, dass z.B. einmal pro Woche eine Sprechstunde mit den Dozenten stattgefunden hätte, um größere "Leerläufe" zu vermeiden. Allerdings wurde man auf diese Weise geschult, sich selbstständig in fremde Sachverhalte einzuarbeiten.
-Außerdem konnte man sich innerhalb des Teams durch eine gute Zusammenarbeit in vielen Bereichen ergänzen und weiterhelfen.
+Durch eine durchdachte Planung war es möglich, mithilfe des Projektmanagement-Werkzeugs "Jira" und der "Scrum"-Methodik die Entwicklung in sieben Sprints aufzuteilen,
+sodass man eine stetige Entwicklung aufrecht erhalten konnte und man in keinen "Leerlauf" geraten ist.
+Trotz der aktuellen COVID-19 Pandemie war es möglich, mit Telekommunikations-Software wie "Zoom" und "Discord" kurze Kommunikationswege zu gewährleisten
+und sogar Pair-Programming dank "Screen-Sharing" durchzuführen.
 
-
-
-#### Tim Hoffmann
-
-
-
-#### Lewe Lorenzen
-
-
-
-#### Mario Mollame
-
+Der komplette Entwicklungszyklus wurde dank eines sehr guten und freundschaftlichen Arbeitsklimas bestärkt und wir sind uns alle sicher, dass wir 
+jederzeit wieder in dieser Konstellation zusammen arbeiten würden.
 
