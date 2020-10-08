@@ -63,6 +63,13 @@ export class ProfilPage {
     }
 
     /**
+     * This Method reloads the Page.
+     */
+    reloadPage() {
+        window.location.reload();
+    }
+
+    /**
      * Deletes the current User from the App/Database. A Modal pops up to confirm the decision.
      * Either cancels the process or proceeds with the @deleteProfile(user).
      *

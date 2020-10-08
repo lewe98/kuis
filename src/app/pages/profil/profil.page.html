@@ -5,6 +5,7 @@
 <ion-header *ngIf="hasVerified == false" style="background-color: red; color: white">
     <p style="padding-left: 10px"><b>Dein Konto ist noch nicht bestätigt.</b><br>Bitte schau in deinem E-Mail Postfach nach der Bestätigung.<br>
     Falls du deine E-Mail bereits bestätigt hast, lade die Seite nochmal neu.</p>
+    <ion-note class="kuis-note-bestaetigung" (click)="reloadPage()">Email bereits bestätigt. Hier klicken!</ion-note>
 </ion-header>
 
 <ion-content>

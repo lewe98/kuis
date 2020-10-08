@@ -55,7 +55,7 @@ export class NavbarComponent {
         const alert = await this.alertController.create({
             mode: 'ios',
             header: 'Runde wirklich Abbrechen?',
-            message: 'Wenn Sie die Runde abbrechen gehen alle Erfolge verloren.',
+            message: 'Wenn Sie die Runde abbrechen wird der Spielstand <b>nicht</b> gespeichert!',
             buttons: [
                 {
                     text: 'Spiel abbrechen',

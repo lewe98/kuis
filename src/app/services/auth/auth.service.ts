@@ -45,7 +45,6 @@ export class AuthService {
         copy.googleAccount = copy.googleAccount || null;
 
         copy.emailBestaetigt = copy.emailBestaetigt || false;
-        copy.isOnboarded = copy.isOnboarded || false;
         copy.gesamtzeit = copy.gesamtzeit || null;
         copy.historieLernmodus = copy.historieLernmodus || null;
         copy.historieFreiermodusName = copy.historieFreiermodusName || null;

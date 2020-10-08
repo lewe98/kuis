@@ -3,7 +3,6 @@ export class User {
     public nutzername: string;
     public email: string;
     public emailBestaetigt: boolean;
-    public isOnboarded: boolean;
     public abzeichen: string[];
     public gesamtzeit: number;
     public historieLernmodus: number[];
@@ -13,7 +12,6 @@ export class User {
     public googleAccount: boolean;
     public alreadyLearned: any[];
     public availableQuestions: any[];
-    public isVerified: boolean;
 
     constructor(nutzername: string, email: string, googleAccount: boolean) {
         this.nutzername = nutzername;
@@ -21,7 +19,6 @@ export class User {
         this.googleAccount = googleAccount;
 
         this.emailBestaetigt = false;
-        this.isOnboarded = false;
         this.gesamtzeit = 0;
         this.historieLernmodus = [];
         this.historieFreiermodusName = [];
@@ -30,6 +27,5 @@ export class User {
         this.importierteModule = [];
         this.availableQuestions = [];
         this.alreadyLearned = [];
-        this.isVerified = true;
     }
 }
