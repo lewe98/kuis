@@ -17,6 +17,7 @@ export class StatistikPage implements OnDestroy {
                 public statistikService: StatistikService,
                 private toastService: ToastService) {
         this.tmpArray = this.statistikService.tmpArray;
+        console.log(this.tmpArray);
     }
 
     /**
