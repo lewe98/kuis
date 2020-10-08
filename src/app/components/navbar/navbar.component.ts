@@ -35,7 +35,9 @@ export class NavbarComponent {
      */
     stat() {
         const pathname = window.location.pathname;
-        if (pathname === '/resetpassword' && this.authService.user.email){
+        if (pathname === '/hilfe' && !this.authService.isLoggedIn) {
+            this.router.navigate(['landing']);
+        } else if (pathname === '/resetpassword' && this.authService.user.email) {
             this.router.navigate(['profil']);
         } else if (pathname === '/login' || pathname === '/registrierung') {
             this.router.navigate(['landing']);
@@ -63,7 +65,7 @@ export class NavbarComponent {
                         this.modulService.started = false;
                         if (this.modulService.isLernmodus) {
                             this.router.navigate(['startseite']);
-                        }else{
+                        } else {
                             this.router.navigate(['moduluebersicht']);
                         }
                     }

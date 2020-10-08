@@ -4,7 +4,7 @@ import {AbzeichenService} from '../../services/abzeichen/abzeichen.service';
 import {ToastService} from '../../services/toast/toast.service';
 import {AuthService} from '../../services/auth/auth.service';
 import {Subscription} from 'rxjs';
-import {IonInput, Platform, ViewDidEnter} from '@ionic/angular';
+import {IonInput, Platform} from '@ionic/angular';
 import {Plugins} from '@capacitor/core';
 import {User} from '../../models/user';
 
@@ -13,7 +13,7 @@ import {User} from '../../models/user';
     templateUrl: './abzeichen.page.html',
     styleUrls: ['./abzeichen.page.scss'],
 })
-export class AbzeichenPage implements ViewDidEnter, OnDestroy {
+export class AbzeichenPage implements OnDestroy {
 
     abzeichenArray: Abzeichen[] = [];
     filteredAbzeichenArray: Abzeichen[] = [];
@@ -131,13 +131,6 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
                 this.toastService.presentWarningToast('Error', reason);
             });
         }
-    }
-
-    /**
-     * Sets the focus on the searchbar.
-     */
-    ionViewDidEnter() {
-        setTimeout(() => this.search.setFocus(), 100);
     }
 
     /**

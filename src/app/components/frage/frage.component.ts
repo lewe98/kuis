@@ -139,6 +139,10 @@ export class FrageComponent {
 
                 this.authService.updateProfile(this.authService.user);
                 this.toastService.presentToast('Das Modul wurde abgeschlossen.');
+                this.modulService.disableStart = true;
+                setTimeout(() => {
+                        this.modulService.disableStart = false;
+                    }, 1000);
                 this.router.navigate(['/moduluebersicht']);
             }
         } else {
