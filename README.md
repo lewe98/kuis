@@ -46,6 +46,7 @@ Die Dokumentation können sie direkt in ihr GitLab-Projekt-Wiki schreiben, oder 
 
 
 ## Einleitung
+#TODO
 Eine Einleitung, in der auf fachlicher Ebene beschrieben wird, um was es in ihrem Projekt geht 
 und was mit der Software schönes gemacht werden kann. 
 Hierzu gehören z.B. alle Anforderungen und die daraus resultierenden Anwendungsfälle + Datenmodell.
@@ -55,21 +56,27 @@ Hierzu gehören z.B. alle Anforderungen und die daraus resultierenden Anwendungs
 ## Featureliste
 - Landing
     - Die App begrüßt den Nutzer auf der Landingpage. Dort finden sich ein Onboarding-Screen, mit einer
-    Übersicht der Features, sowie Weiterleitungen zur Authentifizierung.
+    Übersicht der Features, sowie Weiterleitungen zur Authentifizierung und zur Hilfe.
 - Startseite
     - Auf der Startseite erhält der Nutzer eine übersichtliche Darstellung aller zur Verfügung stehenden Seiten.
 - Lernmodus
-    - Im Lernmodus bekommt der Benutzer ein Rätsel präsentiert, das aus einem Bild mit optionalem Text und vier möglichen Antworten besteht, von denen aber nur eine Antwort richtig ist.
+    - Im Lernmodus bekommt der Benutzer ein Rätsel präsentiert, das aus einem Bild, einer Frage und 
+    vier möglichen Antworten besteht, von denen aber nur eine Antwort richtig ist.
+    Der Lernmodus enthält zehn zufällige Fragen, die sich aus den heruntergeladenen Quiz-Modulen zusammensetzen.
+    Sobald eine Frage sechs Mal in Folge richtig beantwortet wurde, wird sie nicht mehr im Lernmodus angezeigt.
 - Modulübersicht
-    - bla
+    - Die Mödulübersicht enthält alle vom Nutzer heruntergeladenen Quiz-Module. Die Module können dort heruntergeladen und
+    auch wieder gelöscht werden.
 - Statistik
-    - bla
+    - Auf der Statistikseite werden alle absolvierten Lernrunden, sowie frei ausgewählte Module der Modulübersicht ausgewertet.
+    Zudem findet man dort seine gesamte Spielzeit des Lernmodus, sowie richtig und falsch beantwortete Fragen.
 - Abzeichen
-    - bla
+    - Um eine langfristige Motivation zu bieten, kann man als Nutzer diverse Abzeichen freischalten.
 - Profil
-    - bla
+    - Auf der Profilseite finden sich zum Einen die Möglichkeit, seinen Nutzernamen zu bearbeiten, sich Auszuloggen oder 
+    gar seinen Account zu löschen.
 - Hilfe
-    - bla
+    - Falls man einmal nicht weiter weiß, bietet die Hilfe-Seite auf jede Frage eine hilfreiche Antwort.
 
 
 
