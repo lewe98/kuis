@@ -8,6 +8,9 @@ export class StatistikService {
 
     richtigBeantwortet = 0;
     tmpArray: Statistik[] = [];
+    freiermodusanzahl = [];
+    freiermodusname = [];
+    lernmodushistorie = [];
 
     constructor() {
     }

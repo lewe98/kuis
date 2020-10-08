@@ -4,6 +4,7 @@ import {Label} from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import {User} from '../../models/user';
 import {AuthService} from '../../services/auth/auth.service';
+import {StatistikService} from '../../services/statistik/statistik.service';
 
 @Component({
     selector: 'app-pie-chart',
@@ -45,30 +46,30 @@ export class PieChartComponent implements OnDestroy {
     minuten = 0;
     stunden = 0;
     tage = 0;
-    freiermodusanzahl = [];
-    freiermodusname = [];
-    lernmodushistorie = [];
+
 
     /**
      * Prepare user for Statistik/Pie-Chart
      * @param authService to get the current user
+     * @param statservice to get needed arrays - !!!must be private!!!
      */
-    constructor(public authService: AuthService) {
-        console.log(this.freiermodusanzahl);
-        console.log(this.freiermodusname);
-        console.log(this.lernmodushistorie);
+    constructor(public authService: AuthService,
+                private statservice: StatistikService) {
+        console.log(this.statservice.freiermodusanzahl);
+        console.log(this.statservice.freiermodusname);
+        console.log(this.statservice.lernmodushistorie);
 
         this.user = this.authService.getUser();
-        this.freiermodusanzahl = [];
-        this.freiermodusname = [];
-        this.lernmodushistorie = [];
+        this.statservice.freiermodusanzahl = [];
+        this.statservice.freiermodusname = [];
+        this.statservice.lernmodushistorie = [];
         for (let i = 0; i < this.user.historieFreiermodusAnzahl.length; i++) {
-            this.freiermodusanzahl.unshift(this.user.historieFreiermodusAnzahl[i]);
-            this.freiermodusname.unshift(this.user.historieFreiermodusName[i]);
+            this.statservice.freiermodusanzahl.unshift(this.user.historieFreiermodusAnzahl[i]);
+            this.statservice.freiermodusname.unshift(this.user.historieFreiermodusName[i]);
         }
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.user.historieLernmodus.length; i++) {
-            this.lernmodushistorie.unshift(this.user.historieLernmodus[i]);
+            this.statservice.lernmodushistorie.unshift(this.user.historieLernmodus[i]);
         }
 
 
@@ -90,8 +91,8 @@ export class PieChartComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this.freiermodusanzahl = [];
-        this.freiermodusname = [];
-        this.lernmodushistorie = [];
+        this.statservice.freiermodusanzahl = [];
+        this.statservice.freiermodusname = [];
+        this.statservice.lernmodushistorie = [];
     }
 }
