@@ -11,6 +11,9 @@ export class TermsPage {
     constructor(private modalController: ModalController) {
     }
 
+    /**
+     * Dismisses the Modal in the Terms Page.
+     */
     dismiss() {
         this.modalController.dismiss();
     }

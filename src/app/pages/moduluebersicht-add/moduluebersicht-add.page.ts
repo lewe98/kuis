@@ -113,6 +113,9 @@ export class ModuluebersichtAddPage implements ViewDidEnter {
         this.filteredModules = this.module;
     }
 
+    /**
+     * Sets focus on the searchbar.
+     */
     ionViewDidEnter() {
         setTimeout(() => this.search.setFocus(), 100);
     }

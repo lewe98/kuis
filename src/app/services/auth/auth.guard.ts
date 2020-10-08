@@ -10,6 +10,12 @@ export class AuthGuard implements CanActivate {
                 private router: Router) {
     }
 
+    /**
+     * Checks if the permission to view the next Page is valid.
+     *
+     * @param next is the targeted Route.
+     * @param state is the current Route.
+     */
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
         return new Promise((resolve) => {
             this.authService.checkIfLoggedIn()

@@ -29,12 +29,14 @@ export class ProfilPage {
         this.hasVerified = firebase.auth().currentUser.emailVerified;
     }
 
-    // hasVerified2 = this.user.isVerified;
-
     openGoogleEdit() {
         this.iab.create('https://myaccount.google.com/');
     }
 
+    /**
+     * Pops open a Modal in which the User either receives the option to change his Userdata, or receives the information that he has to
+     * verify his E-Mail.
+     */
     async showEditModal() {
         if (this.hasVerified) {
             const modal = await this.modalController.create({
@@ -60,6 +62,12 @@ export class ProfilPage {
         }
     }
 
+    /**
+     * Deletes the current User from the App/Database. A Modal pops up to confirm the decision.
+     * Either cancels the process or proceeds with the @deleteProfile(user).
+     *
+     * @param user is the current User who shall be removed.
+     */
     async deleteWarning(user: User) {
         const alert = await this.alertController.create({
             mode: 'ios',

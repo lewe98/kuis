@@ -133,10 +133,16 @@ export class AbzeichenPage implements ViewDidEnter, OnDestroy {
         }
     }
 
+    /**
+     * Sets the focus on the searchbar.
+     */
     ionViewDidEnter() {
         setTimeout(() => this.search.setFocus(), 100);
     }
 
+    /**
+     * Dissolves the Subscription on the Achievements.
+     */
     ngOnDestroy() {
         this.subAbzeichen.unsubscribe();
     }

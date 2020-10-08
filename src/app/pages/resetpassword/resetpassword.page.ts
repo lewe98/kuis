@@ -26,6 +26,9 @@ export class ResetpasswordPage implements ViewDidEnter {
         }
     }
 
+    /**
+     * Sets the focus on the E-Mail Input.
+     */
     ionViewDidEnter(): void {
         setTimeout(() => this.email.setFocus(), 10);
     }

@@ -27,16 +27,24 @@ export class RegistrierungPage implements OnInit, ViewDidEnter {
                 public modalController: ModalController) {
     }
 
+    /**
+     * Checks the local storage for a userID and redirects to the main menu if one is found.
+     */
     ngOnInit() {
         this.isOnline = false;
-        // If an user is found in Storage
         this.isOnline = (sessionStorage.getItem('userID') !== null) || (localStorage.getItem('userID') !== null);
-        // dont allows to nav to loginpage while log in;
         if (this.isOnline) {
             this.router.navigate(['/startseite']);
         }
     }
 
+    /**
+     * Method to transmit the data of a new User to the Database.
+     *
+     * @param nutzername is the User nickname.
+     * @param email is the E-Mail of the User.
+     * @param passwort is the password of the user.
+     */
     signUp(nutzername, email: string, passwort: string) {
         this.errors.clear();
 
@@ -64,16 +72,24 @@ export class RegistrierungPage implements OnInit, ViewDidEnter {
         }
     }
 
+    /**
+     * Checks if the given String, in this case an E-Mail, has all necessary Symbols, which have to be used.
+     *
+     * @param email is the given String, the users E-Mail.
+     */
     emailIsValid(email: string) {
         return /\S+@\S+\.\S+/.test(email);
     }
 
+    /**
+     * Redirects the User to the login-page.
+     */
     redirectToLogin() {
         this.router.navigate(['/login']);
     }
 
     /**
-     * Method to display terms of use
+     * Method to display terms of use.
      */
     async showTermsModal() {
         const modal = await this.modalController.create({
@@ -83,7 +99,7 @@ export class RegistrierungPage implements OnInit, ViewDidEnter {
     }
 
     /**
-     * Method to display privacy policy
+     * Method to display privacy policy.
      */
     async showPrivacyModal() {
         const modal = await this.modalController.create({
@@ -92,6 +108,9 @@ export class RegistrierungPage implements OnInit, ViewDidEnter {
         return await modal.present();
     }
 
+    /**
+     * Sets the focus on the first Input-field.
+     */
     ionViewDidEnter() {
         this.nutzernameRef.setFocus();
     }

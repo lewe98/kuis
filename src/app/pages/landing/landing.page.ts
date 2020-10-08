@@ -48,16 +48,22 @@ export class LandingPage implements OnInit {
                 public platform: Platform) {
     }
 
+    /**
+     * Sets the isOnline boolean to false until a UserID is found in the Storage.
+     * If a User is found, the User will be redirected to the main menu.
+     */
     ngOnInit() {
         this.isOnline = false;
-        // If an user is found in Storage
         this.isOnline = (sessionStorage.getItem('userID') !== null) || (localStorage.getItem('userID') !== null);
-        // dont allows to nav to loginpage while log in;
         if (this.isOnline) {
             this.router.navigate(['/startseite']);
         }
     }
 
+    /**
+     * Makes it possible to let Users authenticate with their Google Account.
+     * Redirects to the Google Authentication which is handled by an exterior service.
+     */
     googleLogin() {
         if (this.platform.is('android')) {
             this.authService.GoogleAuthCredential().then(() => {
