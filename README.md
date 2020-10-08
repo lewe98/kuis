@@ -89,7 +89,7 @@ Kritische Issues wurden nach Absprache ebenfalls in Git als Issues angelegt.
 
 
 ## Systemarchitektur
-Welche Systeme sind beteiligt und wie kommunizieren diese miteinander.
+![Systemarchitektur](/praesentation/pictures/Screenshot_2020-10-08_124734.png)
 
 
 
