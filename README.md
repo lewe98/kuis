@@ -83,17 +83,46 @@ Abgerundet wird die Kuis-App mit einem Impressum, Informationen zu dem Datenschu
 
 
 ## Softwareentwicklungsprozess
-Zu Beginn des Entwicklungsprozesses hat das Team sämtliche Aufgaben in Trello aufgeschrieben und priorisiert.
-Zum Start des ersten Sprints hat das Team gemeinsam Aufgaben verteilt, die für alle zu einem ähnlichen Workload führten.
-Die verteilten Aufgaben sollten bis Sprintende (eine Woche, je von Donnerstag bis Donnerstag) erledigt sein.
-An Montagen hat sich das Team zudem verbindlich getroffen und hat eventuelle Probleme und den aktuellen Stand besprochen.
-Die Kommunikation fand über die gemeinsame WhatsApp-Gruppe oder über Zoom statt.
-Nach dem dritten Sprint einigte sich das Team auf einen Wechsel von der autonomen Arbeitsweise zur Pair-Programming-Methode,
-um auftretende Problemstellungen besser zu bearbeiten.
+Zu Beginn des Entwicklungsprozesses hat das Team alle Anforderungen an die Anwendung in User-Storys formuliert. 
+Dies soll die Planung der Entwicklung vereinfachen. Visuell erweitern soll dies ein Prototyp, 
+der zu Beginn bereits mit Probanden getestet wird. Der Vorteil ist, dass bereits im Vorhinein ohne hohen Ressourcenaufwand 
+das Konzept der App nutzerzentriert getestet werden kann.
+Der Link zu dem Prototyp: https://xd.adobe.com/view/ac4bbdd2-16e4-4011-8a8b-52c1279ca1ed-f918/?fullscreen&hints=off
 
-Die App wurde durchgängig von allen drei Gruppenmitgliedern zu gleichen Teilen entwickelt. Aktuelle Entwicklungsstände wurden auf Branches in Git gepusht.
-Fertige Aufgaben wurden im Canban-Board Trello entsprechend von "In Progress" zu "Review" bewegt. Die reviewten Änderungen wurden anschließend in den "Staging"-Branch gemerged.
-Kritische Issues wurden nach Absprache ebenfalls in Git als Issues angelegt.
+Damit das Team einen Überblick über den Aufwand des Projektes bekommt, werden alle Userstorys in Epics unterteilt. 
+Beispielhafte Epics sind die Modulübersicht oder der Abzeichen-Bereich. 
+Ganz nach der agilen Projektmanagement Methode "Scrum" werden die User-Storys und ihre Epics in Sprints aufgeteilt. 
+Geplant sind 7 Sprints mit einer Länge von jeweils einer Woche. Zunächst werden alle Anforderung auf einer Excel-Tabelle gesammelt 
+und bewertet. Dies hat den Hintergrund, dass das Team hierdurch einen Überblick über alle Anforderungen sortiert 
+nach Epics bekommt. Anschließend werden die Userstorys für jeden Sprint in das Planungsprogramm "Jira" eingepflegt. 
+Es ermöglicht das Verwalten der Userstorys für die einzelnen Sprints und bietet die Möglichkeit des Zeit-Trackings, 
+um den Zeitaufwand für jeden weiteren Sprint besser im Blick zu behalten. 
+
+Zeitlich angesetzt sind 351 Storypoints für das gesamte Projekt, die sich aus den jeweiligen Userstorys ergeben. 
+Ein Storypoint entspricht einer Stunde.
+Diese Schätzung hat sich als sehr realistisch herausgestellt, wobei wir mit der Planung genau in diesem Zeitrahmen gelandet sind.
+
+Wie viele der Userstorys in einem Sprint umgesetzt werden, wird vorher im Sprint-Planing-Meeting festgelegt. 
+Hier wird auch festgelegt, dass es Sinn ergibt, die Kern-Features eines Epics in einen Sprint zu legen. 
+Jedoch wird ein Epic trotzdem in Prioritäten absteigend sortiert.
+Das bedeutet, die untersten - nicht so wichtigen - Storys werden eher später umgesetzt. 
+In den ersten Sprints werden nur die Grundpfeiler geschaffen, nicht die Kernfunktionen der Anwendung. 
+Hierzu gehört die Ordnerstruktur, die Modelle der Objekte und die Authentifizierung. 
+
+Anschließend werden die Kernfunktionalitäten umgesetzt. Hierbei geht es um die Modulübersicht und den Lern- und freien Quizmodus.
+Bei diesem Sprint kommt das Team zu dem Entschluss, dass es Sinn ergibt, diesen Sprint auf zwei Wochen zu strecken, 
+da es mehr als eine Woche benötigt, um das Ziel der funktionierenden Kernfunktionalitäten in einem Sprint zu lösen.
+Aufbauend auf die Kernfunktionalitäten können auch die weiteren Features wie z.B. 
+die Abzeichen und Statistiken in folgenden Sprints angegangen werden. 
+Im letzten Sprint werden keine neuen größeren Funktionalitäten aufgenommen. 
+
+Das Ziel der finalen Phase ist eher Fehler in der Anwendung zu finden und zu lösen. 
+Während der gesamten Zeit werden auf Git Issues gesammelt.
+Gerade der letzte Sprint dient dazu, diese zu lösen. Hierfür wird im letzten Sprint auch eine eigene Userstory erstellt,
+die diese Zeit berücksichtigt.
+
+Zu beachten ist, dass während, aber auch gerade am Ende der Entwicklungsphase, die App von Externen getestet wird.
+Dies gewährleistet zu jedem Zeitpunkt eine optimale User Experience.
 
 
 
