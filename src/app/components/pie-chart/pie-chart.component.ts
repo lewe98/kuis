@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ChartOptions, ChartType} from 'chart.js';
 import {Label} from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
@@ -10,7 +10,7 @@ import {AuthService} from '../../services/auth/auth.service';
     templateUrl: './pie-chart.component.html',
     styleUrls: ['./pie-chart.component.scss'],
 })
-export class PieChartComponent {
+export class PieChartComponent implements OnDestroy {
     public pieChartOptions: ChartOptions = {
         responsive: true,
         legend: {
@@ -54,18 +54,21 @@ export class PieChartComponent {
      * @param authService to get the current user
      */
     constructor(public authService: AuthService) {
+        this.authService.loadPageSubscription(u => this.user = u);
         this.user = this.authService.getUser();
         this.freiermodusanzahl = [];
         this.freiermodusname = [];
         this.lernmodushistorie = [];
-        for (let i = 0 ; i < this.user.historieFreiermodusAnzahl.length ; i++) {
+        for (let i = 0; i < this.user.historieFreiermodusAnzahl.length; i++) {
             this.freiermodusanzahl.unshift(this.user.historieFreiermodusAnzahl[i]);
             this.freiermodusname.unshift(this.user.historieFreiermodusName[i]);
         }
         // tslint:disable-next-line:prefer-for-of
-        for (let i = 0 ; i < this.user.historieLernmodus.length ; i++) {
+        for (let i = 0; i < this.user.historieLernmodus.length; i++) {
             this.lernmodushistorie.unshift(this.user.historieLernmodus[i]);
         }
+
+
         this.tage = Math.floor(this.user.gesamtzeit / (3600 * 24));
         this.stunden = Math.floor(this.user.gesamtzeit % (3600 * 24) / 3600);
         this.user.gesamtzeit %= 3600;
@@ -81,5 +84,11 @@ export class PieChartComponent {
         });
         this.falsch = this.sumFragen - this.richtig;
         this.pieChartData.push(this.falsch, this.richtig);
+    }
+
+    ngOnDestroy() {
+        this.freiermodusanzahl = [];
+        this.freiermodusname = [];
+        this.lernmodushistorie = [];
     }
 }

@@ -35,7 +35,9 @@ export class NavbarComponent {
      */
     stat() {
         const pathname = window.location.pathname;
-        if (pathname === '/login' || pathname === '/registrierung') {
+        if (pathname === '/resetpassword' && this.authService.user.email){
+            this.router.navigate(['profil']);
+        } else if (pathname === '/login' || pathname === '/registrierung') {
             this.router.navigate(['landing']);
         } else if (window.location.pathname === '/quiz' && this.questionsAvailable === true) {
             this.presentAlertBack();
