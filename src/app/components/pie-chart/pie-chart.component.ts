@@ -54,7 +54,6 @@ export class PieChartComponent implements OnDestroy {
      * @param authService to get the current user
      */
     constructor(public authService: AuthService) {
-        this.authService.loadPageSubscription(u => this.user = u);
         this.user = this.authService.getUser();
         this.freiermodusanzahl = [];
         this.freiermodusname = [];

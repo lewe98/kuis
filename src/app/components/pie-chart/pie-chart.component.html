@@ -57,12 +57,12 @@
             <ion-item-group *ngFor="let anzahl of this.freiermodusanzahl; let i = index">
                 <ion-item lines="none">
                     <ion-label *ngIf="i == 0 else lol" >
-                        <h4>1. {{this.freiermodusname[0]}}</h4>
+                        <h4>{{this.freiermodusname[0]}}</h4>
                     </ion-label>
 
                     <ng-template #lol>
                     <ion-label>
-                        <h4>{{i + 1}}. {{this.freiermodusname[i]}}</h4>
+                        <h4>{{this.freiermodusname[i]}}</h4>
                     </ion-label>
                     </ng-template>
 
