@@ -260,8 +260,6 @@ sodass man eine stetige Entwicklung aufrechterhalten konnte und man in keinen "L
 Trotz der aktuellen COVID-19 Pandemie war es möglich, mit Telekommunikations-Software wie "Zoom" und "Discord" kurze Kommunikationswege zu gewährleisten
 und sogar Pair-Programming dank "Screen-Sharing" durchzuführen.
 
-Das Projekt ist unserer Meinung nach sehr gut gelungen und konnten alle Anforderungen umsetzen. Zusätzlich wurden viele extra Features eingebaut die das Projekt noch einmal abrunden.
-
 Der komplette Entwicklungszyklus wurde dank eines sehr guten und freundschaftlichen Arbeitsklimas bestärkt und wir sind uns alle sicher, dass wir 
 jederzeit wieder in dieser Konstellation zusammen arbeiten würden.
 
